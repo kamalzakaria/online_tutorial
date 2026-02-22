@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bab 4: Kod Arahan | ASK Tingkatan 1</title>
+<style>
+  :root{
+    --c1:#15803d;--c2:#22c55e;--c3:#bbf7d0;--c4:#f0fdf4;
+    --dark:#0f172a;--mid:#1e293b;--text:#e2e8f0;--muted:#94a3b8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6;}
+
+  /* NAV */
+  nav{background:#1e293b;padding:.7rem 1.2rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;border-bottom:2px solid #334155;position:sticky;top:0;z-index:100;}
+  nav a{color:#94a3b8;text-decoration:none;padding:.35rem .75rem;border-radius:.4rem;font-size:.82rem;transition:all .2s;}
+  nav a:hover{color:#e2e8f0;background:#334155;}
+  nav a.active{color:#22c55e;background:#0f2d1e;font-weight:700;}
+  nav .brand{color:#22c55e;font-weight:800;margin-right:.5rem;font-size:.95rem;}
+
+  /* HEADER */
+  .hero{background:linear-gradient(135deg,#052e16 0%,#14532d 50%,#052e16 100%);padding:2.5rem 1.5rem;text-align:center;}
+  .hero h1{font-size:2.2rem;font-weight:900;color:#4ade80;}
+  .hero p{color:#86efac;margin-top:.5rem;font-size:1.05rem;}
+  .hero .badge{display:inline-block;background:#16a34a;color:#dcfce7;padding:.25rem .75rem;border-radius:1rem;font-size:.8rem;margin-top:.5rem;}
+
+  /* PROGRESS */
+  .prog-wrap{background:#1e293b;padding:.6rem 1.5rem;border-bottom:1px solid #334155;}
+  .prog-label{font-size:.8rem;color:#94a3b8;margin-bottom:.3rem;}
+  .prog-bar{height:8px;background:#334155;border-radius:4px;overflow:hidden;}
+  .prog-fill{height:100%;background:linear-gradient(90deg,#15803d,#22c55e);border-radius:4px;transition:width .4s ease;width:0%;}
+
+  /* SECTIONS */
+  section{max-width:960px;margin:2rem auto;padding:0 1rem;}
+  .sec-title{font-size:1.5rem;font-weight:800;color:#4ade80;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;}
+  .sec-title span{font-size:1.8rem;}
+
+  /* TOPIC CARDS */
+  .topic-card{background:#1e293b;border:1px solid #334155;border-radius:.75rem;margin-bottom:1.2rem;overflow:hidden;}
+  .topic-head{padding:1rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .2s;}
+  .topic-head:hover{background:#263447;}
+  .topic-head h3{font-size:1.05rem;font-weight:700;color:#86efac;}
+  .topic-head .chevron{color:#4ade80;font-size:1.2rem;transition:transform .3s;}
+  .topic-head.open .chevron{transform:rotate(180deg);}
+  .topic-body{display:none;padding:1.2rem;border-top:1px solid #334155;}
+  .topic-body.open{display:block;}
+
+  /* SCRATCH BLOCKS */
+  .scratch-block{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .8rem;border-radius:.4rem;font-size:.85rem;font-weight:700;color:#fff;margin:.2rem;cursor:default;border-bottom:3px solid rgba(0,0,0,.3);}
+  .sb-motion{background:#4c97ff;}
+  .sb-looks{background:#9966ff;}
+  .sb-sound{background:#cf63cf;}
+  .sb-events{background:#ffab19;}
+  .sb-control{background:#ffab19;}
+  .sb-sensing{background:#5cb1d6;}
+  .sb-operator{background:#59c059;}
+  .sb-variable{background:#ff8c1a;}
+  .sb-myblocks{background:#ff6680;}
+
+  /* CATEGORY GRID */
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem;margin:1rem 0;}
+  .cat-card{background:#0f172a;border:2px solid #334155;border-radius:.6rem;padding:.8rem;text-align:center;cursor:pointer;transition:all .2s;}
+  .cat-card:hover{transform:translateY(-2px);border-color:#22c55e;}
+  .cat-card.selected{border-color:#4ade80;background:#0d2818;}
+  .cat-card .cat-icon{font-size:2rem;margin-bottom:.4rem;}
+  .cat-card .cat-name{font-size:.85rem;font-weight:700;}
+  .cat-card .cat-desc{font-size:.72rem;color:#94a3b8;margin-top:.2rem;}
+
+  /* CODE BLOCK */
+  .code-block{background:#020617;border:1px solid #334155;border-radius:.6rem;padding:1rem;font-family:'Courier New',monospace;font-size:.85rem;margin:.8rem 0;overflow-x:auto;}
+  .code-block .kw{color:#f472b6;font-weight:700;}
+  .code-block .kw-blue{color:#60a5fa;font-weight:700;}
+  .code-block .kw-green{color:#4ade80;font-weight:700;}
+  .code-block .val{color:#fde68a;}
+  .code-block .cmt{color:#64748b;font-style:italic;}
+  .code-block .indent{display:block;padding-left:1.5rem;}
+  .code-block .indent2{display:block;padding-left:3rem;}
+
+  /* TABS */
+  .tabs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem;}
+  .tab-btn{padding:.4rem .9rem;border:1px solid #334155;border-radius:.4rem;background:transparent;color:#94a3b8;cursor:pointer;font-size:.82rem;transition:all .2s;}
+  .tab-btn.active{background:#15803d;color:#dcfce7;border-color:#15803d;font-weight:700;}
+  .tab-pane{display:none;}
+  .tab-pane.active{display:block;}
+
+  /* INFO BOXES */
+  .info-box{background:#0d2818;border-left:4px solid #22c55e;padding:.9rem 1rem;border-radius:0 .5rem .5rem 0;margin:.8rem 0;}
+  .info-box h4{color:#4ade80;font-size:.9rem;margin-bottom:.3rem;}
+  .warn-box{background:#1c1105;border-left:4px solid #f59e0b;padding:.9rem 1rem;border-radius:0 .5rem .5rem 0;margin:.8rem 0;}
+  .warn-box h4{color:#fbbf24;font-size:.9rem;margin-bottom:.3rem;}
+  .tip-box{background:#0c1a2e;border-left:4px solid #60a5fa;padding:.9rem 1rem;border-radius:0 .5rem .5rem 0;margin:.8rem 0;}
+  .tip-box h4{color:#93c5fd;font-size:.9rem;margin-bottom:.3rem;}
+
+  /* STORY BOX */
+  .story{background:linear-gradient(135deg,#052e16,#0d2818);border:2px dashed #22c55e;border-radius:.75rem;padding:1.2rem;margin:.8rem 0;}
+  .story h4{color:#4ade80;margin-bottom:.5rem;}
+
+  /* STEPS */
+  .steps{counter-reset:step;display:flex;flex-direction:column;gap:.6rem;margin:.8rem 0;}
+  .step{display:flex;align-items:flex-start;gap:.8rem;background:#0f172a;border:1px solid #334155;border-radius:.6rem;padding:.8rem;}
+  .step::before{counter-increment:step;content:counter(step);background:#15803d;color:#dcfce7;width:1.8rem;height:1.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;}
+  .step-content h4{font-size:.9rem;color:#4ade80;margin-bottom:.2rem;}
+  .step-content p{font-size:.83rem;color:#94a3b8;}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.85rem;}
+  th{background:#15803d;color:#dcfce7;padding:.6rem .8rem;text-align:left;}
+  td{padding:.55rem .8rem;border-bottom:1px solid #1e293b;color:#cbd5e1;}
+  tr:nth-child(even) td{background:#111827;}
+
+  /* FLOW DIAGRAM */
+  .flow-row{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;margin:.5rem 0;}
+  .flow-box{background:#15803d;color:#dcfce7;padding:.5rem .9rem;border-radius:.4rem;font-size:.8rem;font-weight:700;text-align:center;}
+  .flow-arrow{color:#4ade80;font-size:1.2rem;}
+
+  /* GAME AREAS */
+  .game-area{background:#020617;border:2px solid #1e293b;border-radius:.75rem;padding:1.2rem;margin:1rem 0;}
+  .game-area h3{color:#4ade80;margin-bottom:.8rem;font-size:1rem;}
+  .game-q{background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.9rem;margin:.6rem 0;}
+  .game-q p{font-size:.88rem;margin-bottom:.6rem;}
+  .game-opts{display:flex;flex-wrap:wrap;gap:.4rem;}
+  .game-opt{padding:.4rem .85rem;background:#1e293b;border:1px solid #334155;border-radius:.4rem;cursor:pointer;font-size:.82rem;transition:all .2s;}
+  .game-opt:hover{background:#263447;}
+  .game-opt.correct{background:#14532d;border-color:#22c55e;color:#86efac;}
+  .game-opt.wrong{background:#450a0a;border-color:#ef4444;color:#fca5a5;}
+  .game-result{font-size:.82rem;margin-top:.5rem;padding:.4rem .7rem;border-radius:.4rem;display:none;}
+  .game-result.show{display:block;}
+  .game-result.ok{background:#14532d;color:#86efac;}
+  .game-result.bad{background:#450a0a;color:#fca5a5;}
+
+  /* DRAG GAME */
+  .drag-container{display:flex;gap:1rem;flex-wrap:wrap;margin:.8rem 0;}
+  .drag-chips{display:flex;flex-wrap:wrap;gap:.4rem;min-height:60px;background:#0f172a;border:1px dashed #334155;border-radius:.5rem;padding:.5rem;}
+  .drag-chip{padding:.35rem .75rem;border-radius:.4rem;cursor:grab;font-size:.8rem;font-weight:700;user-select:none;color:#fff;}
+  .drag-chip:active{cursor:grabbing;}
+  .drag-zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem;flex:1;}
+  .drag-zone{background:#0f172a;border:2px dashed #334155;border-radius:.6rem;padding:.6rem;min-height:80px;}
+  .drag-zone h4{font-size:.8rem;color:#94a3b8;margin-bottom:.4rem;}
+  .drag-zone.hover-over{border-color:#4ade80;background:#0d2818;}
+
+  /* QUIZ */
+  .quiz-area{background:#020617;border:2px solid #1e293b;border-radius:.75rem;padding:1.5rem;margin:2rem 0;}
+  .quiz-area h2{color:#4ade80;margin-bottom:1.2rem;font-size:1.2rem;}
+  .q-item{background:#0f172a;border:1px solid #334155;border-radius:.6rem;padding:1rem;margin:.8rem 0;}
+  .q-item p{font-weight:600;margin-bottom:.6rem;font-size:.9rem;}
+  .q-opts{display:flex;flex-direction:column;gap:.4rem;}
+  .q-opt{padding:.55rem .85rem;background:#1e293b;border:1px solid #334155;border-radius:.4rem;cursor:pointer;font-size:.84rem;transition:all .2s;text-align:left;}
+  .q-opt:hover:not(.locked){background:#263447;}
+  .q-opt.correct{background:#14532d;border-color:#22c55e;color:#86efac;}
+  .q-opt.wrong{background:#450a0a;border-color:#ef4444;color:#fca5a5;}
+  .q-explain{display:none;margin-top:.6rem;font-size:.8rem;padding:.5rem .8rem;background:#0d2818;border-radius:.4rem;color:#86efac;border-left:3px solid #22c55e;}
+  .q-explain.show{display:block;}
+  .quiz-score{text-align:center;font-size:1.1rem;font-weight:700;color:#4ade80;margin-top:1rem;}
+
+  /* HTML DEMO */
+  .html-editor{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0;}
+  .html-code{background:#020617;border:1px solid #334155;border-radius:.6rem;padding:.8rem;font-family:'Courier New',monospace;font-size:.78rem;color:#e2e8f0;}
+  .html-preview{background:#fff;border:1px solid #334155;border-radius:.6rem;padding:.8rem;color:#333;font-size:.82rem;min-height:100px;}
+  .html-tag{color:#60a5fa;}
+  .html-attr{color:#fde68a;}
+  .html-val{color:#86efac;}
+  .html-text{color:#e2e8f0;}
+
+  /* SCRATCH VISUAL PROGRAM */
+  .scratch-prog{background:#1e293b;border:1px solid #334155;border-radius:.6rem;padding:.8rem;margin:.6rem 0;}
+  .scratch-prog .sp-title{font-size:.8rem;color:#94a3b8;margin-bottom:.5rem;}
+  .sb-stack{display:flex;flex-direction:column;gap:.15rem;align-items:flex-start;}
+  .sb-hat{border-radius:.4rem .4rem 0 0;padding:.4rem .9rem;position:relative;}
+  .sb-hat::after{content:'';position:absolute;bottom:-6px;left:10px;width:12px;height:12px;background:inherit;clip-path:polygon(0 0,100% 0,50% 100%);}
+  .sb-cmd{border-radius:.2rem;padding:.35rem .9rem;}
+  .sb-cblock{border-radius:.2rem;padding:.35rem .6rem;display:flex;flex-direction:column;gap:.1rem;}
+  .sb-inner{margin-left:1.2rem;padding-left:.4rem;border-left:2px solid rgba(255,255,255,.2);}
+
+  @media(max-width:600px){
+    .html-editor{grid-template-columns:1fr;}
+    .drag-container{flex-direction:column;}
+    .hero h1{font-size:1.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="brand">📱 ASK T1</span>
+  <a href="index.html">Bab 1: Pemikiran Komputasional</a>
+  <a href="bab2.html">Bab 2: Perwakilan Data</a>
+  <a href="bab3.html">Bab 3: Algoritma</a>
+  <a href="bab4.html" class="active">Bab 4: Kod Arahan</a>
+</nav>
+
+<!-- PROGRESS -->
+<div class="prog-wrap">
+  <div class="prog-label">Kemajuan Pembelajaran: <span id="prog-pct">0%</span></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="font-size:3rem;margin-bottom:.5rem">💻</div>
+  <h1>Bab 4: Kod Arahan</h1>
+  <p>Belajar mengaturcara dengan Scratch dan HTML!</p>
+  <div class="badge">Scratch 2.0 &nbsp;|&nbsp; HTML &nbsp;|&nbsp; Pemboleh Ubah &nbsp;|&nbsp; Kawalan</div>
+</div>
+
+<!-- OVERVIEW -->
+<section>
+  <div class="story">
+    <h4>🎮 Apa itu Kod Arahan?</h4>
+    <p>Bayangkan kamu nak suruh robot buat sesuatu. Kamu perlu tulis <strong>arahan satu persatu</strong> dalam bahasa yang robot faham. Itulah <strong>kod arahan</strong> — satu siri perintah yang ditulis dalam bahasa pengaturcaraan supaya komputer tahu apa yang perlu dilakukan.</p>
+    <p style="margin-top:.6rem">Dalam bab ini, kita akan belajar dua cara untuk bagi arahan kepada komputer:</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.8rem">
+      <div style="background:#0d2818;border:2px solid #22c55e;border-radius:.6rem;padding:.8rem;flex:1;min-width:140px;text-align:center">
+        <div style="font-size:2rem">🐱</div>
+        <div style="color:#4ade80;font-weight:700">4.1 Scratch</div>
+        <div style="font-size:.78rem;color:#86efac">Blok warna-warni</div>
+      </div>
+      <div style="background:#0c1a2e;border:2px solid #60a5fa;border-radius:.6rem;padding:.8rem;flex:1;min-width:140px;text-align:center">
+        <div style="font-size:2rem">🌐</div>
+        <div style="color:#93c5fd;font-weight:700">4.2 HTML</div>
+        <div style="font-size:.78rem;color:#bfdbfe">Laman web</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4.1 SCRATCH ===== -->
+<section>
+  <div class="sec-title"><span>🐱</span> 4.1 Pengaturcaraan Scratch</div>
+
+  <!-- WHAT IS SCRATCH -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>🧩 Apa itu Scratch?</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="story">
+        <h4>🎲 Cerita Mudah</h4>
+        <p>Scratch ialah bahasa pengaturcaraan yang menggunakan <strong>blok bergambar warna-warni</strong> — seperti kepingan puzzle. Kamu hanya perlu <strong>seret dan lepas</strong> blok-blok ini untuk membuat program. Tak perlu taip kod panjang-panjang!</p>
+        <p style="margin-top:.5rem">Dibuat oleh MIT (sebuah universiti terkenal), Scratch digunakan di seluruh dunia untuk mengajar pengaturcaraan.</p>
+      </div>
+      <div class="info-box">
+        <h4>💡 Antara Muka Scratch</h4>
+        <p style="font-size:.85rem">Scratch mempunyai 3 bahagian utama:</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.6rem">
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem;text-align:center">
+            <div style="font-size:1.5rem">🧱</div>
+            <div style="font-size:.8rem;font-weight:700;color:#4ade80">Palet Blok</div>
+            <div style="font-size:.72rem;color:#94a3b8">Semua blok tersedia</div>
+          </div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem;text-align:center">
+            <div style="font-size:1.5rem">⚙️</div>
+            <div style="font-size:.8rem;font-weight:700;color:#4ade80">Skrip</div>
+            <div style="font-size:.72rem;color:#94a3b8">Susun blok di sini</div>
+          </div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem;text-align:center">
+            <div style="font-size:1.5rem">🎬</div>
+            <div style="font-size:.8rem;font-weight:700;color:#4ade80">Pentas</div>
+            <div style="font-size:.72rem;color:#94a3b8">Lihat hasilnya</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCK CATEGORIES -->
+  <div class="topic-card">
+    <div class="topic-head open" onclick="toggleTopic(this)">
+      <h3>🌈 Kategori Blok Scratch</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body open">
+      <p style="font-size:.88rem;margin-bottom:.8rem">Setiap kategori mempunyai <strong>warna tersendiri</strong>. Klik kad di bawah untuk tahu lebih lanjut!</p>
+      <div class="cat-grid" id="cat-grid">
+        <div class="cat-card" onclick="showCatDetail('motion')">
+          <div class="cat-icon">🏃</div>
+          <div class="cat-name" style="color:#4c97ff">Gerakan</div>
+          <div class="cat-desc">Motion</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('looks')">
+          <div class="cat-icon">👁️</div>
+          <div class="cat-name" style="color:#9966ff">Penampilan</div>
+          <div class="cat-desc">Looks</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('sound')">
+          <div class="cat-icon">🔊</div>
+          <div class="cat-name" style="color:#cf63cf">Bunyi</div>
+          <div class="cat-desc">Sound</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('events')">
+          <div class="cat-icon">⚡</div>
+          <div class="cat-name" style="color:#ffab19">Peristiwa</div>
+          <div class="cat-desc">Events</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('control')">
+          <div class="cat-icon">🔄</div>
+          <div class="cat-name" style="color:#ffab19">Kawalan</div>
+          <div class="cat-desc">Control</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('sensing')">
+          <div class="cat-icon">🤔</div>
+          <div class="cat-name" style="color:#5cb1d6">Pengesanan</div>
+          <div class="cat-desc">Sensing</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('operator')">
+          <div class="cat-icon">➕</div>
+          <div class="cat-name" style="color:#59c059">Operator</div>
+          <div class="cat-desc">Operators</div>
+        </div>
+        <div class="cat-card" onclick="showCatDetail('variable')">
+          <div class="cat-icon">📦</div>
+          <div class="cat-name" style="color:#ff8c1a">Pemboleh Ubah</div>
+          <div class="cat-desc">Variables</div>
+        </div>
+      </div>
+      <div id="cat-detail" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:.6rem;padding:1rem;margin-top:.8rem;"></div>
+
+      <div style="margin-top:1rem">
+        <p style="font-size:.85rem;font-weight:700;color:#4ade80;margin-bottom:.6rem">Ringkasan Kategori Blok:</p>
+        <table>
+          <tr><th>Kategori</th><th>Warna</th><th>Fungsi</th><th>Contoh Blok</th></tr>
+          <tr><td>🏃 Gerakan</td><td style="color:#4c97ff">■ Biru</td><td>Gerakkan Sprite</td><td>move 10 steps, turn 90°</td></tr>
+          <tr><td>👁️ Penampilan</td><td style="color:#9966ff">■ Ungu</td><td>Tukar rupa Sprite</td><td>say "Hello", change size</td></tr>
+          <tr><td>🔊 Bunyi</td><td style="color:#cf63cf">■ Merah Jambu</td><td>Mainkan bunyi</td><td>play sound, set volume</td></tr>
+          <tr><td>⚡ Peristiwa</td><td style="color:#ffab19">■ Oren</td><td>Picu program</td><td>when 🚩 clicked, when key pressed</td></tr>
+          <tr><td>🔄 Kawalan</td><td style="color:#ffab19">■ Oren</td><td>Ulangan & pilihan</td><td>if, repeat, forever</td></tr>
+          <tr><td>🤔 Pengesanan</td><td style="color:#5cb1d6">■ Biru Muda</td><td>Sensor input</td><td>touching?, mouse-x</td></tr>
+          <tr><td>➕ Operator</td><td style="color:#59c059">■ Hijau</td><td>Matematik & logik</td><td>+, -, *, /, >, <, =</td></tr>
+          <tr><td>📦 Pemboleh Ubah</td><td style="color:#ff8c1a">■ Oren Terang</td><td>Simpan data</td><td>set, change, show</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEMBOLEH UBAH -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>📦 Pemboleh Ubah (Variables)</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="story">
+        <h4>🎒 Cerita Mudah: Beg Sekolah</h4>
+        <p>Bayangkan pemboleh ubah seperti <strong>beg berloker</strong>. Setiap loker ada <strong>nama</strong> (contoh: "skor") dan boleh simpan sesuatu di dalamnya. Kamu boleh ubah isi loker itu bila-bila masa.</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'pv1')">Jenis Data</button>
+        <button class="tab-btn" onclick="switchTab(this,'pv2')">Cara Guna</button>
+        <button class="tab-btn" onclick="switchTab(this,'pv3')">Contoh Program</button>
+      </div>
+
+      <div id="pv1" class="tab-pane active">
+        <table>
+          <tr><th>Jenis Data</th><th>Penerangan</th><th>Contoh</th></tr>
+          <tr><td>Nombor</td><td>Nilai berangka</td><td>42, 3.14, -5</td></tr>
+          <tr><td>Teks (String)</td><td>Perkataan / ayat</td><td>"Hello", "Ali"</td></tr>
+          <tr><td>Boolean</td><td>Benar atau Palsu</td><td>True / False</td></tr>
+        </table>
+        <div class="info-box">
+          <h4>💡 Cara Buat Pemboleh Ubah dalam Scratch</h4>
+          <p style="font-size:.84rem">1. Klik kategori <span class="scratch-block sb-variable" style="font-size:.75rem">📦 Pemboleh Ubah</span><br>
+          2. Klik "Buat Pemboleh Ubah" (Make a Variable)<br>
+          3. Taip nama, contoh: <strong>skor</strong><br>
+          4. Blok baharu akan muncul!</p>
+        </div>
+      </div>
+
+      <div id="pv2" class="tab-pane">
+        <p style="font-size:.85rem;margin-bottom:.6rem">Blok-blok penting untuk pemboleh ubah:</p>
+        <div style="display:flex;flex-direction:column;gap:.4rem">
+          <div style="display:flex;align-items:center;gap:.8rem;background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem">
+            <span class="scratch-block sb-variable">set skor to 0</span>
+            <span style="font-size:.82rem;color:#94a3b8">→ Tetapkan nilai. <strong>skor = 0</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.8rem;background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem">
+            <span class="scratch-block sb-variable">change skor by 1</span>
+            <span style="font-size:.82rem;color:#94a3b8">→ Tambah nilai. <strong>skor = skor + 1</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.8rem;background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem">
+            <span class="scratch-block sb-variable">show variable skor</span>
+            <span style="font-size:.82rem;color:#94a3b8">→ Tunjuk nilai pada pentas</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:.8rem;background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.6rem">
+            <span class="scratch-block sb-variable">hide variable skor</span>
+            <span style="font-size:.82rem;color:#94a3b8">→ Sembunyikan nilai</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="pv3" class="tab-pane">
+        <p style="font-size:.85rem;margin-bottom:.6rem">Program kira markah permainan:</p>
+        <div class="scratch-prog">
+          <div class="sp-title">🐱 Apabila bendera hijau diklik:</div>
+          <div class="sb-stack">
+            <div class="scratch-block sb-events sb-hat">when 🚩 clicked</div>
+            <div class="scratch-block sb-variable sb-cmd">set skor to 0</div>
+            <div class="scratch-block sb-control sb-cblock">
+              <span>forever</span>
+              <div class="sb-inner">
+                <div class="scratch-block sb-control sb-cblock" style="margin:.1rem 0">
+                  <span>if &lt;touching Cat2?&gt; then</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-variable sb-cmd">change skor by 1</div>
+                    <div class="scratch-block sb-sound sb-cmd">play sound "pop"</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tip-box">
+          <h4>📖 Penjelasan</h4>
+          <p style="font-size:.83rem">Program ini: (1) set skor = 0 pada mula, (2) selalu-selalu semak — jika Sprite menyentuh Cat2, tambah skor 1 dan mainkan bunyi.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATOR -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>➕ Operator (Operators)</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'op1')">Operator Matematik</button>
+        <button class="tab-btn" onclick="switchTab(this,'op2')">Operator Perbandingan</button>
+        <button class="tab-btn" onclick="switchTab(this,'op3')">Operator Logik</button>
+      </div>
+
+      <div id="op1" class="tab-pane active">
+        <table>
+          <tr><th>Simbol</th><th>Operasi</th><th>Contoh</th><th>Hasil</th></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) + ( )</span></td><td>Tambah</td><td>3 + 4</td><td>7</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) - ( )</span></td><td>Tolak</td><td>10 - 3</td><td>7</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) * ( )</span></td><td>Darab</td><td>3 * 4</td><td>12</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) / ( )</span></td><td>Bahagi</td><td>12 / 3</td><td>4</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) mod ( )</span></td><td>Baki (modulo)</td><td>10 mod 3</td><td>1</td></tr>
+        </table>
+      </div>
+
+      <div id="op2" class="tab-pane">
+        <table>
+          <tr><th>Blok</th><th>Maksud</th><th>Contoh</th><th>Hasil</th></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) &gt; ( )</span></td><td>Lebih besar</td><td>5 > 3</td><td>Benar</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) &lt; ( )</span></td><td>Lebih kecil</td><td>2 < 4</td><td>Benar</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">( ) = ( )</span></td><td>Sama dengan</td><td>3 = 3</td><td>Benar</td></tr>
+        </table>
+        <div class="warn-box">
+          <h4>⚠️ Ingat!</h4>
+          <p style="font-size:.83rem">Dalam Scratch, hasil perbandingan ialah <strong>Boolean</strong> — sama ada Benar (true) atau Palsu (false). Blok ini bentuknya <strong>bulat bujur</strong>, bukan segi empat.</p>
+        </div>
+      </div>
+
+      <div id="op3" class="tab-pane">
+        <table>
+          <tr><th>Blok</th><th>Maksud</th><th>Contoh</th><th>Hasil</th></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">&lt;&gt; and &lt;&gt;</span></td><td>DAN (kedua-dua benar)</td><td>5>3 AND 2<4</td><td>Benar</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">&lt;&gt; or &lt;&gt;</span></td><td>ATAU (salah satu benar)</td><td>5>10 OR 2<4</td><td>Benar</td></tr>
+          <tr><td><span class="scratch-block sb-operator" style="font-size:.75rem">not &lt;&gt;</span></td><td>TIDAK (songsangkan)</td><td>not (3=3)</td><td>Palsu</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRUKTUR KAWALAN -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>🔄 Struktur Kawalan dalam Scratch</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'sk1')">Pilihan (If)</button>
+        <button class="tab-btn" onclick="switchTab(this,'sk2')">Ulangan (Loop)</button>
+        <button class="tab-btn" onclick="switchTab(this,'sk3')">Contoh Lengkap</button>
+      </div>
+
+      <div id="sk1" class="tab-pane active">
+        <p style="font-size:.85rem;margin-bottom:.8rem">Ada <strong>3 jenis blok pilihan</strong> dalam Scratch:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem">
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:.6rem;padding:.8rem">
+            <div style="font-size:.8rem;font-weight:700;color:#ffab19;margin-bottom:.4rem">1. If ... then</div>
+            <div class="scratch-prog">
+              <div class="sb-stack">
+                <div class="scratch-block sb-control sb-cblock">
+                  <span>if &lt;markah ≥ 40&gt; then</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-looks sb-cmd">say "Lulus!" 2 secs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:.76rem;color:#94a3b8;margin-top:.4rem">Lakukan sesuatu HANYA jika syarat benar</p>
+          </div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:.6rem;padding:.8rem">
+            <div style="font-size:.8rem;font-weight:700;color:#ffab19;margin-bottom:.4rem">2. If ... then ... else</div>
+            <div class="scratch-prog">
+              <div class="sb-stack">
+                <div class="scratch-block sb-control sb-cblock">
+                  <span>if &lt;markah ≥ 40&gt; then</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-looks sb-cmd">say "Lulus!"</div>
+                  </div>
+                  <span>else</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-looks sb-cmd">say "Gagal"</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:.76rem;color:#94a3b8;margin-top:.4rem">Satu pilihan jika benar, satu lagi jika palsu</p>
+          </div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:.6rem;padding:.8rem">
+            <div style="font-size:.8rem;font-weight:700;color:#ffab19;margin-bottom:.4rem">3. If bersarang</div>
+            <div class="scratch-prog">
+              <div class="sb-stack">
+                <div class="scratch-block sb-control sb-cblock">
+                  <span>if &lt;markah ≥ 80&gt; then</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-looks sb-cmd">say "A"</div>
+                  </div>
+                  <span>else</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-control sb-cblock">
+                      <span>if &lt;markah ≥ 60&gt; then</span>
+                      <div class="sb-inner">
+                        <div class="scratch-block sb-looks sb-cmd">say "B"</div>
+                      </div>
+                      <span>else</span>
+                      <div class="sb-inner">
+                        <div class="scratch-block sb-looks sb-cmd">say "C"</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:.76rem;color:#94a3b8;margin-top:.4rem">Banyak syarat berlapis-lapis</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="sk2" class="tab-pane">
+        <p style="font-size:.85rem;margin-bottom:.8rem">Ada <strong>3 jenis blok ulangan</strong> dalam Scratch:</p>
+        <table>
+          <tr><th>Blok</th><th>Fungsi</th><th>Bila Guna</th></tr>
+          <tr>
+            <td><span class="scratch-block sb-control" style="font-size:.75rem">forever</span></td>
+            <td>Ulang selama-lamanya</td>
+            <td>Gerak sprite terus menerus</td>
+          </tr>
+          <tr>
+            <td><span class="scratch-block sb-control" style="font-size:.75rem">repeat (10)</span></td>
+            <td>Ulang bilangan tertentu</td>
+            <td>Ulang 10 kali, 5 kali, dll.</td>
+          </tr>
+          <tr>
+            <td><span class="scratch-block sb-control" style="font-size:.75rem">repeat until &lt;&gt;</span></td>
+            <td>Ulang sehingga syarat benar</td>
+            <td>Terus ulang sampai syarat dipenuhi</td>
+          </tr>
+          <tr>
+            <td><span class="scratch-block sb-control" style="font-size:.75rem">wait (1) secs</span></td>
+            <td>Tunggu sebentar</td>
+            <td>Buat jeda / delay</td>
+          </tr>
+        </table>
+        <div class="scratch-prog" style="margin-top:.8rem">
+          <div class="sp-title">Contoh: ulang 5 kali</div>
+          <div class="sb-stack">
+            <div class="scratch-block sb-events sb-hat">when 🚩 clicked</div>
+            <div class="scratch-block sb-control sb-cblock">
+              <span>repeat (5)</span>
+              <div class="sb-inner">
+                <div class="scratch-block sb-motion sb-cmd">move 10 steps</div>
+                <div class="scratch-block sb-control sb-cmd">wait 0.5 secs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sk3" class="tab-pane">
+        <p style="font-size:.85rem;margin-bottom:.6rem">Program lengkap — Kuiz Matematik:</p>
+        <div class="scratch-prog">
+          <div class="sb-stack">
+            <div class="scratch-block sb-events sb-hat">when 🚩 clicked</div>
+            <div class="scratch-block sb-variable sb-cmd">set skor to 0</div>
+            <div class="scratch-block sb-control sb-cblock">
+              <span>repeat (3)</span>
+              <div class="sb-inner">
+                <div class="scratch-block sb-sensing sb-cmd">ask "3 + 4 = ?" and wait</div>
+                <div class="scratch-block sb-control sb-cblock">
+                  <span>if &lt;answer = 7&gt; then</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-looks sb-cmd">say "Betul! 🎉" 1 secs</div>
+                    <div class="scratch-block sb-variable sb-cmd">change skor by 1</div>
+                  </div>
+                  <span>else</span>
+                  <div class="sb-inner">
+                    <div class="scratch-block sb-looks sb-cmd">say "Salah 😢" 1 secs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="scratch-block sb-looks sb-cmd">say (join "Skor: " skor) 3 secs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PEMBANGUNAN PROGRAM -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>🏗️ Peringkat Pembangunan Program</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="story">
+        <h4>🏠 Analogi: Bina Rumah</h4>
+        <p>Membuat program sama seperti membina rumah. Kamu tak boleh terus angkat batu bata — kamu perlu <strong>rancang dulu</strong>, buat pelan, bina, periksa, dan tulis manual.</p>
+      </div>
+      <div class="flow-row">
+        <div class="flow-box">1️⃣ Analisis</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">2️⃣ Reka Bentuk</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">3️⃣ Pengekodan</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">4️⃣ Pengujian</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">5️⃣ Dokumentasi</div>
+      </div>
+      <div class="steps" style="margin-top:1rem">
+        <div class="step">
+          <div class="step-content">
+            <h4>Analisis Masalah</h4>
+            <p>Fahami apa yang program perlu buat. Tanya: <em>"Apa input? Apa output? Apa masalah yang perlu diselesaikan?"</em></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Reka Bentuk (Design)</h4>
+            <p>Buat carta alir atau pseudokod. Rancang langkah-langkah penyelesaian sebelum menulis kod.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Pengekodan (Coding)</h4>
+            <p>Tulis kod sebenar dalam Scratch (atau bahasa pengaturcaraan lain) mengikut reka bentuk.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Pengujian & Penyahpepijatan (Testing & Debugging)</h4>
+            <p>Jalankan program, uji dengan pelbagai input, cari dan betulkan ralat (bug).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h4>Dokumentasi</h4>
+            <p>Tulis panduan penggunaan, terangkan cara program berfungsi untuk rujukan masa depan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JENIS RALAT -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>🐛 Jenis-Jenis Ralat (Bugs)</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="story">
+        <h4>🔍 Kenapa dipanggil "Bug"?</h4>
+        <p>Pada tahun 1947, serangga (bug) sebenar tersangkut dalam komputer dan menyebabkan kerosakan! Sejak itu, ralat program dipanggil "bug" dan mencari ralat dipanggil <strong>"debugging"</strong>.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem;margin:.8rem 0">
+        <div style="background:#1c0505;border:2px solid #ef4444;border-radius:.6rem;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🔴</div>
+          <div style="color:#f87171;font-weight:700;font-size:.9rem">Ralat Sintaks</div>
+          <div style="color:#fca5a5;font-size:.78rem;font-style:italic">Syntax Error</div>
+          <p style="font-size:.82rem;margin-top:.4rem;color:#e2e8f0">Kesilapan ejaan atau format kod yang salah. Dalam Scratch — blok tak boleh disambung.</p>
+          <div style="background:#2d0a0a;border-radius:.4rem;padding:.4rem;margin-top:.5rem;font-size:.76rem;color:#fca5a5">
+            Contoh: Blok kawalan tak boleh masuk ke dalam blok operator
+          </div>
+        </div>
+        <div style="background:#1c1005;border:2px solid #f97316;border-radius:.6rem;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🟠</div>
+          <div style="color:#fb923c;font-weight:700;font-size:.9rem">Ralat Masa Larian</div>
+          <div style="color:#fdba74;font-size:.78rem;font-style:italic">Runtime Error</div>
+          <p style="font-size:.82rem;margin-top:.4rem;color:#e2e8f0">Program berjalan tapi tiba-tiba berhenti. Berlaku semasa program dijalankan.</p>
+          <div style="background:#2d1505;border-radius:.4rem;padding:.4rem;margin-top:.5rem;font-size:.76rem;color:#fdba74">
+            Contoh: Bahagi dengan 0, atau pemboleh ubah tiada nilai
+          </div>
+        </div>
+        <div style="background:#0c1505;border:2px solid #22c55e;border-radius:.6rem;padding:.9rem">
+          <div style="font-size:1.5rem;margin-bottom:.4rem">🟡</div>
+          <div style="color:#4ade80;font-weight:700;font-size:.9rem">Ralat Logik</div>
+          <div style="color:#86efac;font-size:.78rem;font-style:italic">Logic Error</div>
+          <p style="font-size:.82rem;margin-top:.4rem;color:#e2e8f0">Program berjalan tapi hasilnya salah. Paling susah nak cari!</p>
+          <div style="background:#0d2805;border-radius:.4rem;padding:.4rem;margin-top:.5rem;font-size:.76rem;color:#86efac">
+            Contoh: Guna + bila patut guna *, atau syarat if terbalik
+          </div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <h4>🔍 Cara Penyahpepijatan (Debugging) dalam Scratch</h4>
+        <p style="font-size:.84rem">1. <strong>Klik blok satu-satu</strong> untuk uji setiap bahagian<br>
+        2. <strong>Gunakan "say"</strong> untuk paparkan nilai semasa<br>
+        3. <strong>Gunakan "wait"</strong> untuk pelahankan program<br>
+        4. <strong>Semak syarat if</strong> — adakah benar atau palsu?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY: BLOCK CATEGORY GAME ===== -->
+<section>
+  <div class="sec-title"><span>🎮</span> Aktiviti 1: Kenal Kategori Blok</div>
+  <div class="game-area">
+    <h3>Klik warna yang betul untuk setiap blok Scratch!</h3>
+    <div id="cat-game"></div>
+    <div id="cat-game-result" style="text-align:center;margin-top:.8rem;font-size:1rem;font-weight:700;color:#4ade80;display:none"></div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY: BUILD PROGRAM ===== -->
+<section>
+  <div class="sec-title"><span>🧩</span> Aktiviti 2: Susun Blok Program</div>
+  <div class="game-area">
+    <h3>Seret blok ke urutan yang betul untuk program "Salam Pengguna"</h3>
+    <p style="font-size:.82rem;color:#94a3b8;margin-bottom:.8rem">Program ini perlu: (1) mula apabila bendera diklik, (2) tanya nama, (3) ucap salam dengan nama tersebut</p>
+    <div id="sort-game">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div>
+          <p style="font-size:.82rem;color:#94a3b8;margin-bottom:.4rem">Kolam Blok (seret ke kanan):</p>
+          <div id="pool" style="background:#0f172a;border:2px dashed #334155;border-radius:.6rem;padding:.6rem;min-height:200px;display:flex;flex-direction:column;gap:.3rem"></div>
+        </div>
+        <div>
+          <p style="font-size:.82rem;color:#94a3b8;margin-bottom:.4rem">Susun Aturan Program:</p>
+          <div id="sequence" style="background:#0f172a;border:2px dashed #22c55e;border-radius:.6rem;padding:.6rem;min-height:200px;display:flex;flex-direction:column;gap:.3rem"></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:.8rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+        <button onclick="checkSort()" style="background:#15803d;color:#dcfce7;border:none;padding:.5rem 1.5rem;border-radius:.4rem;cursor:pointer;font-weight:700">✅ Semak</button>
+        <button onclick="resetSort()" style="background:#1e293b;color:#94a3b8;border:1px solid #334155;padding:.5rem 1rem;border-radius:.4rem;cursor:pointer">🔄 Reset</button>
+      </div>
+      <div id="sort-result" style="text-align:center;margin-top:.6rem;font-size:.9rem;font-weight:700;display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4.2 HTML ===== -->
+<section>
+  <div class="sec-title"><span>🌐</span> 4.2 Pengaturcaraan HTML</div>
+
+  <!-- HTML INTRO -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>🌐 Apa itu HTML?</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="story">
+        <h4>📄 HTML = Rangka Laman Web</h4>
+        <p><strong>HTML</strong> (HyperText Markup Language) ialah bahasa asas untuk membuat laman web. Ia seperti <strong>rangka tulang</strong> sesebuah laman web — menentukan apa yang ada dan di mana letaknya.</p>
+        <p style="margin-top:.5rem">Setiap laman web yang kamu lihat di internet menggunakan HTML!</p>
+      </div>
+      <div class="info-box">
+        <h4>💡 Struktur Asas HTML</h4>
+        <div class="code-block">
+          <span class="html-tag">&lt;!DOCTYPE html&gt;</span><br>
+          <span class="html-tag">&lt;html&gt;</span><br>
+          &nbsp;&nbsp;<span class="html-tag">&lt;head&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="html-tag">&lt;title&gt;</span><span class="html-text">Nama Laman Web</span><span class="html-tag">&lt;/title&gt;</span><br>
+          &nbsp;&nbsp;<span class="html-tag">&lt;/head&gt;</span><br>
+          &nbsp;&nbsp;<span class="html-tag">&lt;body&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="cmt">&lt;!-- Kandungan laman web --&gt;</span><br>
+          &nbsp;&nbsp;<span class="html-tag">&lt;/body&gt;</span><br>
+          <span class="html-tag">&lt;/html&gt;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML TAGS -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>🏷️ Tag-Tag HTML Asas</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(this,'ht1')">Teks</button>
+        <button class="tab-btn" onclick="switchTab(this,'ht2')">Pautan & Imej</button>
+        <button class="tab-btn" onclick="switchTab(this,'ht3')">Senarai</button>
+      </div>
+
+      <div id="ht1" class="tab-pane active">
+        <table>
+          <tr><th>Tag</th><th>Fungsi</th><th>Contoh Kod</th></tr>
+          <tr><td><code style="color:#60a5fa">&lt;h1&gt;</code> hingga <code style="color:#60a5fa">&lt;h6&gt;</code></td><td>Tajuk (h1 = terbesar)</td><td>&lt;h1&gt;Tajuk Besar&lt;/h1&gt;</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;p&gt;</code></td><td>Perenggan teks</td><td>&lt;p&gt;Ini teks saya.&lt;/p&gt;</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;b&gt;</code> / <code style="color:#60a5fa">&lt;strong&gt;</code></td><td>Teks tebal</td><td>&lt;b&gt;Tebal&lt;/b&gt;</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;i&gt;</code> / <code style="color:#60a5fa">&lt;em&gt;</code></td><td>Teks condong</td><td>&lt;i&gt;Condong&lt;/i&gt;</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;br&gt;</code></td><td>Baris baharu</td><td>Baris 1&lt;br&gt;Baris 2</td></tr>
+        </table>
+        <div class="html-editor">
+          <div class="html-code">
+            <span class="html-tag">&lt;h1&gt;</span><span class="html-text">Selamat Datang</span><span class="html-tag">&lt;/h1&gt;</span><br>
+            <span class="html-tag">&lt;h2&gt;</span><span class="html-text">Tentang Saya</span><span class="html-tag">&lt;/h2&gt;</span><br>
+            <span class="html-tag">&lt;p&gt;</span><span class="html-text">Nama saya </span><span class="html-tag">&lt;b&gt;</span><span class="html-text">Ali</span><span class="html-tag">&lt;/b&gt;</span><span class="html-text">.</span><span class="html-tag">&lt;/p&gt;</span><br>
+            <span class="html-tag">&lt;p&gt;</span><span class="html-text">Saya </span><span class="html-tag">&lt;i&gt;</span><span class="html-text">suka</span><span class="html-tag">&lt;/i&gt;</span><span class="html-text"> komputer.</span><span class="html-tag">&lt;/p&gt;</span>
+          </div>
+          <div class="html-preview">
+            <h1 style="font-size:1.2rem;margin-bottom:.2rem">Selamat Datang</h1>
+            <h2 style="font-size:1rem;margin-bottom:.2rem">Tentang Saya</h2>
+            <p style="margin-bottom:.2rem">Nama saya <strong>Ali</strong>.</p>
+            <p>Saya <em>suka</em> komputer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="ht2" class="tab-pane">
+        <table>
+          <tr><th>Tag</th><th>Fungsi</th><th>Atribut Penting</th></tr>
+          <tr><td><code style="color:#60a5fa">&lt;a&gt;</code></td><td>Pautan (hyperlink)</td><td>href="url"</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;img&gt;</code></td><td>Paparan imej</td><td>src="fail.jpg", alt="penerangan"</td></tr>
+        </table>
+        <div class="html-editor">
+          <div class="html-code">
+            <span class="html-tag">&lt;a </span><span class="html-attr">href=</span><span class="html-val">"https://google.com"</span><span class="html-tag">&gt;</span><br>
+            &nbsp;&nbsp;<span class="html-text">Klik sini!</span><br>
+            <span class="html-tag">&lt;/a&gt;</span><br><br>
+            <span class="html-tag">&lt;img </span><span class="html-attr">src=</span><span class="html-val">"gambar.jpg"</span><br>
+            &nbsp;&nbsp;&nbsp;<span class="html-attr">alt=</span><span class="html-val">"Gambar saya"</span><br>
+            &nbsp;&nbsp;&nbsp;<span class="html-attr">width=</span><span class="html-val">"200"</span><span class="html-tag">&gt;</span>
+          </div>
+          <div class="html-preview">
+            <a href="#" style="color:#2563eb;text-decoration:underline">Klik sini!</a><br><br>
+            <div style="background:#e5e7eb;width:100px;height:60px;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#6b7280;border:1px solid #d1d5db;border-radius:4px">🖼️ Gambar saya</div>
+          </div>
+        </div>
+        <div class="warn-box">
+          <h4>⚠️ Tag &lt;img&gt; tidak ada tag penutup!</h4>
+          <p style="font-size:.83rem">Tag &lt;img&gt; ialah <strong>tag kendiri-tutup</strong> (self-closing) — tidak perlu &lt;/img&gt;</p>
+        </div>
+      </div>
+
+      <div id="ht3" class="tab-pane">
+        <table>
+          <tr><th>Tag</th><th>Fungsi</th></tr>
+          <tr><td><code style="color:#60a5fa">&lt;ul&gt;</code></td><td>Senarai tidak bernombor (bullet)</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;ol&gt;</code></td><td>Senarai bernombor (ordered)</td></tr>
+          <tr><td><code style="color:#60a5fa">&lt;li&gt;</code></td><td>Item senarai</td></tr>
+        </table>
+        <div class="html-editor">
+          <div class="html-code">
+            <span class="html-tag">&lt;ul&gt;</span><br>
+            &nbsp;&nbsp;<span class="html-tag">&lt;li&gt;</span><span class="html-text">Epal</span><span class="html-tag">&lt;/li&gt;</span><br>
+            &nbsp;&nbsp;<span class="html-tag">&lt;li&gt;</span><span class="html-text">Mangga</span><span class="html-tag">&lt;/li&gt;</span><br>
+            <span class="html-tag">&lt;/ul&gt;</span><br><br>
+            <span class="html-tag">&lt;ol&gt;</span><br>
+            &nbsp;&nbsp;<span class="html-tag">&lt;li&gt;</span><span class="html-text">Pertama</span><span class="html-tag">&lt;/li&gt;</span><br>
+            &nbsp;&nbsp;<span class="html-tag">&lt;li&gt;</span><span class="html-text">Kedua</span><span class="html-tag">&lt;/li&gt;</span><br>
+            <span class="html-tag">&lt;/ol&gt;</span>
+          </div>
+          <div class="html-preview">
+            <ul style="margin:0 0 .5rem 1rem;font-size:.85rem">
+              <li>Epal</li>
+              <li>Mangga</li>
+            </ul>
+            <ol style="margin:0 0 0 1rem;font-size:.85rem">
+              <li>Pertama</li>
+              <li>Kedua</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML ACTIVITY -->
+  <div class="topic-card">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <h3>✏️ Cuba Tulis HTML!</h3>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topic-body">
+      <p style="font-size:.85rem;margin-bottom:.6rem">Taipkan HTML di bawah dan lihat hasil pratonton langsung:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <div>
+          <p style="font-size:.78rem;color:#94a3b8;margin-bottom:.3rem">Editor HTML:</p>
+          <textarea id="html-input" style="width:100%;height:180px;background:#020617;color:#e2e8f0;border:1px solid #334155;border-radius:.5rem;padding:.6rem;font-family:'Courier New',monospace;font-size:.8rem;resize:vertical" oninput="updatePreview()">&lt;h2&gt;Nama Saya&lt;/h2&gt;
+&lt;p&gt;Saya sedang belajar &lt;b&gt;HTML&lt;/b&gt;!&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Suka matematik&lt;/li&gt;
+  &lt;li&gt;Suka sains&lt;/li&gt;
+&lt;/ul&gt;</textarea>
+        </div>
+        <div>
+          <p style="font-size:.78rem;color:#94a3b8;margin-bottom:.3rem">Pratonton:</p>
+          <iframe id="html-preview-frame" style="width:100%;height:180px;background:#fff;border:1px solid #334155;border-radius:.5rem"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACTIVITY 3: SPOT THE BUG ===== -->
+<section>
+  <div class="sec-title"><span>🐛</span> Aktiviti 3: Cari Ralat!</div>
+  <div class="game-area">
+    <h3>Klik baris yang ada ralat dalam program Scratch berikut</h3>
+    <div id="bug-game"></div>
+  </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section>
+  <div class="quiz-area">
+    <h2>📝 Kuiz Bab 4: Kod Arahan (10 Soalan)</h2>
+    <div id="quiz-container"></div>
+    <div id="quiz-score" class="quiz-score" style="display:none"></div>
+    <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:1rem auto;background:#15803d;color:#dcfce7;border:none;padding:.6rem 2rem;border-radius:.5rem;cursor:pointer;font-weight:700;font-size:.9rem">Semak Jawapan</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:2rem;color:#475569;font-size:.8rem;border-top:1px solid #1e293b;margin-top:2rem">
+  <p>📚 Asas Sains Komputer Tingkatan 1 &nbsp;|&nbsp; Bab 4: Kod Arahan</p>
+  <p style="margin-top:.3rem">Teruskan belajar dengan semangat! 💚</p>
+</div>
+
+<script>
+// ============ PROGRESS ============
+let interactions = 0;
+const TOTAL = 25;
+function addInteraction(n=1){
+  interactions = Math.min(interactions+n, TOTAL);
+  const pct = Math.round(interactions/TOTAL*100);
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-pct').textContent = pct+'%';
+}
+
+// ============ TOPIC TOGGLE ============
+function toggleTopic(head){
+  head.classList.toggle('open');
+  const body = head.nextElementSibling;
+  body.classList.toggle('open');
+  addInteraction();
+}
+
+// ============ TABS ============
+function switchTab(btn, paneId){
+  const parent = btn.closest('.topic-body') || btn.closest('.tab-pane')?.parentElement || btn.parentElement.parentElement;
+  parent.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  parent.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  const pane = document.getElementById(paneId);
+  if(pane) pane.classList.add('active');
+  addInteraction();
+}
+
+// ============ CATEGORY DETAIL ============
+const catData = {
+  motion:{icon:'🏃',name:'Gerakan (Motion)',color:'#4c97ff',desc:'Blok Gerakan mengawal pergerakan Sprite di atas pentas.',blocks:['move 10 steps','turn ↷ 15 degrees','go to x:0 y:0','glide 1 secs to x:0 y:0','point in direction 90'],tip:'Gunakan blok Gerakan untuk buat sprite berlari, melompat, atau mengelilingi pentas!'},
+  looks:{icon:'👁️',name:'Penampilan (Looks)',color:'#9966ff',desc:'Blok Penampilan mengawal bagaimana Sprite kelihatan dan apa yang dikatakannya.',blocks:['say "Hello!" 2 secs','think "Hmm..." 2 secs','show','hide','change size by 10'],tip:'Gunakan "say" untuk buat sprite bercakap, "show/hide" untuk tunjuk atau sembunyi sprite.'},
+  sound:{icon:'🔊',name:'Bunyi (Sound)',color:'#cf63cf',desc:'Blok Bunyi memainkan muzik dan kesan bunyi.',blocks:['play sound "meow"','play sound until done','stop all sounds','set volume to 100%'],tip:'Mainkan bunyi semasa sprite menyentuh sesuatu untuk buat permainan lebih menarik!'},
+  events:{icon:'⚡',name:'Peristiwa (Events)',color:'#ffab19',desc:'Blok Peristiwa memulakan program apabila sesuatu berlaku.',blocks:['when 🚩 clicked','when space key pressed','when this sprite clicked','broadcast message1','when I receive message1'],tip:'"when 🚩 clicked" adalah blok yang paling biasa digunakan untuk mulakan program!'},
+  control:{icon:'🔄',name:'Kawalan (Control)',color:'#ffab19',desc:'Blok Kawalan mengawal aliran program — ulangan dan pilihan.',blocks:['wait 1 secs','repeat 10','forever','if <> then','if <> then else','repeat until <>','stop all'],tip:'Blok Kawalan seperti otak program — ia menentukan bila buat apa!'},
+  sensing:{icon:'🤔',name:'Pengesanan (Sensing)',color:'#5cb1d6',desc:'Blok Pengesanan mengesan input dari pengguna dan persekitaran.',blocks:['touching color ?','ask "What\'s your name?" and wait','answer','mouse x','mouse y','key space pressed?'],tip:'"ask and wait" berguna untuk buat kuiz interaktif — jawapan disimpan dalam "answer"!'},
+  operator:{icon:'➕',name:'Operator (Operators)',color:'#59c059',desc:'Blok Operator melakukan pengiraan matematik dan perbandingan logik.',blocks:['( ) + ( )','( ) - ( )','( ) * ( )','( ) / ( )','( ) > ( )','( ) < ( )','( ) = ( )','<> and <>','not <>'],tip:'Blok Operator selalu digunakan DI DALAM blok lain, seperti di dalam blok "if"!'},
+  variable:{icon:'📦',name:'Pemboleh Ubah (Variables)',color:'#ff8c1a',desc:'Blok Pemboleh Ubah menyimpan dan mengubah data.',blocks:['set skor to 0','change skor by 1','show variable skor','hide variable skor'],tip:'Cipta pemboleh ubah untuk kira markah, simpan nama, atau jejaki nyawa dalam permainan!'},
+};
+function showCatDetail(id){
+  const d = catData[id];
+  const el = document.getElementById('cat-detail');
+  el.style.display='block';
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem">
+    <span style="font-size:1.5rem">${d.icon}</span>
+    <span style="font-size:.95rem;font-weight:700;color:${d.color}">${d.name}</span>
+  </div>
+  <p style="font-size:.84rem;color:#cbd5e1;margin-bottom:.6rem">${d.desc}</p>
+  <p style="font-size:.8rem;color:#94a3b8;margin-bottom:.4rem">Contoh blok:</p>
+  <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.6rem">
+    ${d.blocks.map(b=>`<span style="background:${d.color};color:#fff;padding:.25rem .6rem;border-radius:.3rem;font-size:.75rem;font-weight:700">${b}</span>`).join('')}
+  </div>
+  <div style="background:#0d2818;border-left:3px solid #22c55e;padding:.5rem .7rem;border-radius:0 .3rem .3rem 0;font-size:.8rem;color:#86efac">💡 ${d.tip}</div>`;
+  addInteraction();
+}
+
+// ============ CATEGORY GAME ============
+const catQuestions = [
+  {block:'move 10 steps', correct:'motion', opts:['motion','control','looks','operator']},
+  {block:'repeat (10)', correct:'control', opts:['sensing','control','events','variable']},
+  {block:'set skor to 0', correct:'variable', opts:['operator','looks','variable','motion']},
+  {block:'say "Hello!" 2 secs', correct:'looks', opts:['looks','sound','events','sensing']},
+  {block:'when 🚩 clicked', correct:'events', opts:['events','control','sensing','motion']},
+  {block:'( ) + ( )', correct:'operator', opts:['operator','variable','looks','motion']},
+];
+const catColors = {motion:'#4c97ff',control:'#ffab19',variable:'#ff8c1a',looks:'#9966ff',sound:'#cf63cf',events:'#ffab19',operator:'#59c059',sensing:'#5cb1d6'};
+function buildCatGame(){
+  const container = document.getElementById('cat-game');
+  container.innerHTML = catQuestions.map((q,i)=>`
+    <div class="game-q" id="cgq${i}">
+      <p>Blok <strong style="font-size:.9rem">${q.block}</strong> termasuk dalam kategori:</p>
+      <div class="game-opts">
+        ${q.opts.map(o=>`<button class="game-opt" onclick="answerCatQ(${i},'${o}','${q.correct}')" style="border-left:3px solid ${catColors[o]}">${o}</button>`).join('')}
+      </div>
+      <div class="game-result" id="cgr${i}"></div>
+    </div>`).join('');
+}
+let catScore=0, catAnswered=0;
+function answerCatQ(i,chosen,correct){
+  const q = document.getElementById('cgq'+i);
+  if(q.dataset.done) return;
+  q.dataset.done='1';
+  const btns = q.querySelectorAll('.game-opt');
+  btns.forEach(b=>{
+    if(b.textContent===correct) b.classList.add('correct');
+    else if(b.textContent===chosen && chosen!==correct) b.classList.add('wrong');
+    b.classList.add('locked');
+  });
+  const res = document.getElementById('cgr'+i);
+  res.className='game-result show';
+  if(chosen===correct){catScore++;res.className+=' ok';res.textContent='✅ Betul! Kategori '+correct+' warnanya '+catColors[correct];}
+  else{res.className+=' bad';res.textContent='❌ Salah. Jawapan betul: '+correct;}
+  catAnswered++;
+  addInteraction();
+  if(catAnswered===catQuestions.length){
+    document.getElementById('cat-game-result').style.display='block';
+    document.getElementById('cat-game-result').textContent=`Skor: ${catScore}/${catQuestions.length} — ${catScore>=5?'Cemerlang! 🎉':catScore>=3?'Bagus! 👍':'Cuba lagi! 💪'}`;
+  }
+}
+
+// ============ SORT GAME ============
+const sortBlocks = [
+  {text:'say (join "Salam, " answer) 2 secs', cat:'looks', order:3},
+  {text:'when 🚩 clicked', cat:'events', order:1},
+  {text:'ask "Siapa nama kamu?" and wait', cat:'sensing', order:2},
+];
+const shuffled = [...sortBlocks].sort(()=>Math.random()-.5);
+function buildSortGame(){
+  const pool = document.getElementById('pool');
+  shuffled.forEach((b,i)=>{
+    const el = document.createElement('div');
+    el.className='scratch-block';
+    el.style.background = b.cat==='events'?'#ffab19':b.cat==='sensing'?'#5cb1d6':'#9966ff';
+    el.style.cursor='grab'; el.style.userSelect='none';
+    el.textContent=b.text; el.dataset.idx=i; el.dataset.order=b.order;
+    el.draggable=true;
+    el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text',i); el.style.opacity='.5';});
+    el.addEventListener('dragend',()=>{el.style.opacity='1';});
+    el.addEventListener('click',()=>moveBlock(el, pool, document.getElementById('sequence')));
+    pool.appendChild(el);
+  });
+  const seq = document.getElementById('sequence');
+  seq.addEventListener('dragover',e=>{e.preventDefault(); seq.style.borderColor='#4ade80';});
+  seq.addEventListener('dragleave',()=>{seq.style.borderColor='#22c55e';});
+  seq.addEventListener('drop',e=>{
+    e.preventDefault(); seq.style.borderColor='#22c55e';
+    const idx = e.dataTransfer.getData('text');
+    const el = document.querySelector(`[data-idx="${idx}"]`);
+    if(el){ seq.appendChild(el); addInteraction(); }
+  });
+  pool.addEventListener('dragover',e=>e.preventDefault());
+  pool.addEventListener('drop',e=>{
+    e.preventDefault();
+    const idx = e.dataTransfer.getData('text');
+    const el = document.querySelector(`[data-idx="${idx}"]`);
+    if(el) pool.appendChild(el);
+  });
+}
+function moveBlock(el, from, to){
+  if(el.parentElement===from) to.appendChild(el);
+  else from.appendChild(el);
+  addInteraction();
+}
+function checkSort(){
+  const seq = document.getElementById('sequence');
+  const items = [...seq.querySelectorAll('.scratch-block')];
+  const res = document.getElementById('sort-result');
+  if(items.length!==3){res.style.display='block';res.style.color='#fbbf24';res.textContent='⚠️ Seret semua 3 blok ke dalam aturan program dulu!';return;}
+  const orders = items.map(el=>parseInt(el.dataset.order));
+  const correct = orders[0]===1 && orders[1]===2 && orders[2]===3;
+  res.style.display='block';
+  if(correct){
+    res.style.color='#4ade80';
+    res.textContent='✅ Betul! Program akan: (1) mula, (2) tanya nama, (3) ucap salam.';
+    addInteraction(3);
+  } else {
+    res.style.color='#f87171';
+    res.textContent='❌ Susunan tidak betul. Cuba lagi! Fikir: apa yang perlu berlaku dulu?';
+  }
+}
+function resetSort(){
+  const pool=document.getElementById('pool');
+  const seq=document.getElementById('sequence');
+  [...seq.querySelectorAll('.scratch-block')].forEach(el=>pool.appendChild(el));
+  document.getElementById('sort-result').style.display='none';
+}
+
+// ============ BUG GAME ============
+const bugGames = [
+  {
+    title:'Program ini sepatutnya ucap "Tahniah!" apabila markah ≥ 40, tapi ia tak berfungsi. Klik baris yang salah:',
+    lines:[
+      {text:'when 🚩 clicked', correct:false, why:'Ini betul — blok permulaan'},
+      {text:'set markah to 55', correct:false, why:'Ini betul — tetapkan nilai'},
+      {text:'if markah > 40 then', correct:false, why:'Ini betul — markah 55 memang > 40'},
+      {text:'  say "Gagal" 2 secs', correct:true, why:'✅ Ralat Logik! Sepatutnya say "Tahniah!" bukan "Gagal"'},
+    ]
+  },
+  {
+    title:'Program ini sepatutnya ulang 3 kali, tapi ia berhenti serta-merta. Klik baris yang salah:',
+    lines:[
+      {text:'when 🚩 clicked', correct:false, why:'Ini betul'},
+      {text:'repeat 0', correct:true, why:'✅ Ralat Logik! "repeat 0" bermaksud ulang 0 kali. Sepatutnya "repeat 3"'},
+      {text:'  move 10 steps', correct:false, why:'Ini betul'},
+      {text:'  say "Helo!" 1 secs', correct:false, why:'Ini betul'},
+    ]
+  },
+];
+function buildBugGame(){
+  const container = document.getElementById('bug-game');
+  container.innerHTML = bugGames.map((g,gi)=>`
+    <div style="margin-bottom:1.2rem">
+      <p style="font-size:.85rem;margin-bottom:.5rem;color:#cbd5e1">${g.title}</p>
+      <div style="background:#020617;border:1px solid #334155;border-radius:.5rem;padding:.6rem;font-family:'Courier New',monospace;font-size:.83rem">
+        ${g.lines.map((l,li)=>`
+          <div class="bug-line" id="bl${gi}_${li}" onclick="checkBugLine(${gi},${li})"
+            style="padding:.3rem .5rem;border-radius:.3rem;cursor:pointer;transition:all .2s;color:${l.correct?'#fca5a5':'#86efac'}"
+            onmouseover="this.style.background='#1e293b'" onmouseout="this.style.background=''"
+          >${l.text}</div>
+          <div id="bex${gi}_${li}" style="display:none;padding:.3rem .8rem;font-size:.78rem;margin-left:1rem;font-family:sans-serif;border-radius:.3rem"></div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+function checkBugLine(gi,li){
+  const game = bugGames[gi];
+  const line = game.lines[li];
+  const el = document.getElementById(`bl${gi}_${li}`);
+  const exEl = document.getElementById(`bex${gi}_${li}`);
+  if(el.dataset.done) return;
+  el.dataset.done='1';
+  exEl.style.display='block';
+  if(line.correct){
+    el.style.background='#450a0a';
+    exEl.style.background='#14532d'; exEl.style.color='#86efac';
+    exEl.textContent=line.why;
+    addInteraction(2);
+  } else {
+    el.style.background='#1c1105';
+    exEl.style.background='#1c1105'; exEl.style.color='#fbbf24';
+    exEl.textContent='❌ '+line.why+' Cari baris yang salah!';
+  }
+}
+
+// ============ HTML PREVIEW ============
+function updatePreview(){
+  const code = document.getElementById('html-input').value;
+  const frame = document.getElementById('html-preview-frame');
+  const doc = frame.contentDocument || frame.contentWindow.document;
+  doc.open(); doc.write('<style>body{font-family:sans-serif;padding:8px;font-size:14px;color:#333}</style>'+code); doc.close();
+}
+
+// ============ QUIZ ============
+const quizData = [
+  {q:'Apakah fungsi blok "set skor to 0" dalam Scratch?',opts:['Menambah nilai skor sebanyak 1','Menetapkan nilai pemboleh ubah skor kepada 0','Menghilangkan paparan skor','Menghapuskan pemboleh ubah skor'],ans:1,exp:'"set [pemboleh ubah] to [nilai]" menetapkan nilai pemboleh ubah kepada nilai yang ditentukan.'},
+  {q:'Blok manakah digunakan untuk ulang kod selama-lamanya dalam Scratch?',opts:['repeat (10)','repeat until <>','forever','wait 1 secs'],ans:2,exp:'"forever" mengulangi kod di dalamnya selama-lamanya sehingga program dihentikan.'},
+  {q:'Dalam Scratch, blok "if <> then else" termasuk dalam kategori:',opts:['Gerakan (Motion)','Pengesanan (Sensing)','Kawalan (Control)','Operator'],ans:2,exp:'Blok pilihan (if/else) dan ulangan (repeat/forever) termasuk dalam kategori Kawalan (Control) yang berwarna oren.'},
+  {q:'Apakah jenis ralat jika program berjalan tetapi memberikan jawapan yang salah?',opts:['Ralat Sintaks','Ralat Masa Larian','Ralat Logik','Ralat Blok'],ans:2,exp:'Ralat Logik berlaku apabila program berfungsi tanpa ralat tetapi hasilnya tidak tepat — biasanya disebabkan oleh syarat atau formula yang salah.'},
+  {q:'Antara berikut, manakah peringkat PERTAMA dalam pembangunan program?',opts:['Pengekodan','Pengujian','Analisis Masalah','Dokumentasi'],ans:2,exp:'Peringkat pembangunan program: Analisis → Reka Bentuk → Pengekodan → Pengujian/Penyahpepijatan → Dokumentasi.'},
+  {q:'Tag HTML manakah digunakan untuk membuat tajuk terbesar?',opts:['<h6>','<h1>','<title>','<head>'],ans:1,exp:'<h1> ialah tajuk terbesar dalam HTML. <h6> ialah yang terkecil. Ingat: nombor kecil = saiz besar!'},
+  {q:'Apakah yang dilakukan oleh blok "change skor by 5"?',opts:['Menetapkan skor kepada 5','Menolak 5 daripada skor','Menambah 5 kepada nilai skor semasa','Membahagi skor dengan 5'],ans:2,exp:'"change [pemboleh ubah] by [n]" menambahkan n kepada nilai semasa. Contoh: jika skor=10, "change skor by 5" menjadikan skor=15.'},
+  {q:'Dalam HTML, tag manakah digunakan untuk memaparkan imej?',opts:['<picture>','<image>','<img>','<photo>'],ans:2,exp:'Tag <img> digunakan untuk memaparkan imej. Ia adalah tag kendiri-tutup (tidak perlu </img>) dan menggunakan atribut src untuk nyatakan fail gambar.'},
+  {q:'Apakah output blok berikut: "( 3 * 4 ) + ( 10 / 2 )"?',opts:['17','14','20','10'],ans:0,exp:'3 × 4 = 12, dan 10 ÷ 2 = 5. Maka 12 + 5 = 17. Dalam Scratch, operator * bermaksud darab dan / bermaksud bahagi.'},
+  {q:'Blok "ask [soalan] and wait" termasuk dalam kategori:',opts:['Penampilan (Looks)','Kawalan (Control)','Pengesanan (Sensing)','Peristiwa (Events)'],ans:2,exp:'"ask and wait" ialah blok Pengesanan (Sensing) yang berwarna biru muda. Ia meminta input daripada pengguna dan menyimpannya dalam "answer".'},
+];
+function buildQuiz(){
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = quizData.map((q,i)=>`
+    <div class="q-item" id="qitem${i}">
+      <p>${i+1}. ${q.q}</p>
+      <div class="q-opts">
+        ${q.opts.map((o,oi)=>`<button class="q-opt" id="qopt${i}_${oi}" onclick="selectQ(${i},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}
+      </div>
+      <div class="q-explain" id="qexp${i}">${q.exp}</div>
+    </div>`).join('');
+}
+const selected = {};
+function selectQ(qi,oi){
+  const item = document.getElementById('qitem'+qi);
+  if(item.dataset.locked) return;
+  selected[qi]=oi;
+  item.querySelectorAll('.q-opt').forEach((b,i)=>{
+    b.classList.remove('correct','wrong');
+    if(i===oi) b.style.borderColor='#22c55e'; else b.style.borderColor='';
+  });
+  addInteraction();
+}
+function submitQuiz(){
+  let score=0;
+  quizData.forEach((q,i)=>{
+    const item=document.getElementById('qitem'+i);
+    item.dataset.locked='1';
+    const ans=selected[i];
+    item.querySelectorAll('.q-opt').forEach((b,oi)=>{
+      b.classList.add('locked');
+      b.style.borderColor='';
+      if(oi===q.ans) b.classList.add('correct');
+      else if(oi===ans && ans!==q.ans) b.classList.add('wrong');
+    });
+    if(ans===q.ans) score++;
+    document.getElementById('qexp'+i).classList.add('show');
+  });
+  const s=document.getElementById('quiz-score');
+  s.style.display='block';
+  const msg = score>=8?'🏆 Cemerlang!':score>=6?'⭐ Bagus!':score>=4?'👍 OK, teruskan belajar!':'💪 Cuba lagi!';
+  s.textContent=`Skor Anda: ${score}/10 — ${msg}`;
+  document.getElementById('quiz-submit').style.display='none';
+  addInteraction(5);
+}
+
+// ============ INIT ============
+document.addEventListener('DOMContentLoaded',()=>{
+  buildCatGame();
+  buildSortGame();
+  buildBugGame();
+  buildQuiz();
+  updatePreview();
+  // Open first topic card
+  const firstHead = document.querySelector('.topic-head');
+  if(firstHead){ firstHead.classList.add('open'); firstHead.nextElementSibling.classList.add('open'); }
+});
+</script>
+</body>
+</html>
