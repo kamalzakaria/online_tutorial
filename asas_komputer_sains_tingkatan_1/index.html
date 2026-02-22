@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 1 – Pemikiran Komputasional | ASK Tingkatan 1</title>
+<style>
+:root{
+  --blue:#2563eb;--sky:#0ea5e9;--green:#16a34a;--lime:#65a30d;
+  --orange:#ea580c;--amber:#d97706;--purple:#7c3aed;--pink:#db2777;
+  --red:#dc2626;--teal:#0d9488;
+  --bg:#fafbff;--card:#fff;--text:#1e293b;--muted:#64748b;
+  --border:#e2e8f0;--r:1.2rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.7}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#1e3a8a 0%,#4338ca 40%,#7c3aed 100%);
+  color:#fff;text-align:center;padding:3rem 1rem 4rem;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;
+  background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%);
+}
+.hero .badge{
+  display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);
+  border-radius:2rem;padding:.3rem 1.1rem;font-size:.8rem;letter-spacing:.06em;margin-bottom:1rem;
+}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:.6rem}
+.hero p{font-size:1.05rem;opacity:.88;max-width:540px;margin:0 auto}
+.stars{font-size:2rem;margin-bottom:.5rem}
+
+/* ── PROGRESS ── */
+.prog-wrap{background:rgba(255,255,255,.2);border-radius:2rem;height:10px;max-width:360px;margin:1.5rem auto .4rem;overflow:hidden}
+.prog-fill{height:100%;background:#fff;border-radius:2rem;width:0%;transition:width .5s ease}
+.prog-txt{color:rgba(255,255,255,.8);font-size:.8rem;text-align:center}
+
+/* ── LAYOUT ── */
+main{max-width:860px;margin:0 auto;padding:2rem 1rem 5rem}
+
+/* ── SECTION HEADER ── */
+.sec-head{display:flex;align-items:center;gap:.9rem;margin:3.5rem 0 1.5rem}
+.sec-head:first-child{margin-top:1rem}
+.sec-icon{width:3.2rem;height:3.2rem;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.sec-head h2{font-size:1.4rem;font-weight:800}
+.sec-head p{font-size:.85rem;color:var(--muted)}
+
+/* ── CARD ── */
+.card{background:var(--card);border:2px solid var(--border);border-radius:var(--r);padding:1.8rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+
+/* ── DEFINITION BOX ── */
+.def-box{
+  background:linear-gradient(135deg,#eff6ff,#f5f3ff);
+  border:2px solid #c7d2fe;border-radius:var(--r);padding:1.8rem;margin-bottom:1.5rem;
+}
+.def-box .big-q{font-size:3.5rem;line-height:1;margin-bottom:.5rem}
+.def-box h3{font-size:1.2rem;font-weight:800;color:#3730a3;margin-bottom:.8rem}
+.def-box .def-text{
+  font-size:1.1rem;background:#fff;border-left:5px solid #6366f1;
+  padding:1rem 1.2rem;border-radius:0 .7rem .7rem 0;color:#1e293b;
+}
+.def-box .simple{margin-top:.9rem;font-size:.95rem;color:#374151}
+.pill{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .9rem;border-radius:2rem;font-size:.82rem;font-weight:700;margin:.25rem}
+
+/* ── FOUR SKILLS OVERVIEW ── */
+.four-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:500px){.four-grid{grid-template-columns:1fr}}
+.four-card{
+  border-radius:var(--r);padding:1.4rem;text-align:center;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;border:2px solid transparent;
+}
+.four-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.13)}
+.four-card .big-e{font-size:3rem;display:block;margin-bottom:.5rem}
+.four-card h3{font-size:1.05rem;font-weight:800;margin-bottom:.2rem}
+.four-card .en{font-size:.78rem;opacity:.6;font-style:italic;margin-bottom:.6rem}
+.four-card p{font-size:.88rem;line-height:1.5}
+.c1{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#93c5fd}
+.c2{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-color:#6ee7b7}
+.c3{background:linear-gradient(135deg,#fef9c3,#fde68a);border-color:#fcd34d}
+.c4{background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-color:#c4b5fd}
+
+/* ── TECHNIQUE DEEP DIVE ── */
+.tech{border-radius:var(--r);padding:2rem;margin-bottom:2rem}
+.tech.t1{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd}
+.tech.t2{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac}
+.tech.t3{background:linear-gradient(135deg,#fffbeb,#fef9c3);border:2px solid #fcd34d}
+.tech.t4{background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:2px solid #d8b4fe}
+.tech-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.tech-emoji{font-size:3rem}
+.tech-header h3{font-size:1.4rem;font-weight:900}
+.tech-header .en-label{font-size:.85rem;opacity:.6;font-style:italic}
+.tech-def{font-size:1rem;background:rgba(255,255,255,.7);border-radius:.8rem;padding:1rem 1.2rem;margin-bottom:1.2rem;border:1px solid rgba(0,0,0,.08)}
+.tech-def strong{color:#1d4ed8}
+
+/* visual story */
+.story-box{background:rgba(255,255,255,.8);border-radius:.8rem;padding:1.2rem;margin-bottom:1rem}
+.story-box h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:.8rem}
+.story-steps{display:flex;flex-direction:column;gap:.6rem}
+.story-step{display:flex;align-items:flex-start;gap:.9rem}
+.step-bubble{
+  width:2.2rem;height:2.2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.85rem;color:#fff;flex-shrink:0;margin-top:.1rem;
+}
+.step-bubble.b1{background:#2563eb}.step-bubble.b2{background:#16a34a}
+.step-bubble.b3{background:#d97706}.step-bubble.b4{background:#7c3aed}
+.step-bubble.bx{background:#64748b}
+.story-step p{font-size:.92rem;line-height:1.5}
+
+/* visual flow */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.8rem 0}
+.flow-item{
+  background:#fff;border:2px solid var(--border);border-radius:.6rem;
+  padding:.5rem .9rem;font-size:.88rem;font-weight:600;
+}
+.flow-arrow{font-size:1.3rem;color:var(--muted)}
+
+/* examples tabs */
+.ex-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem}
+.ex-tab{
+  background:rgba(255,255,255,.6);border:2px solid rgba(0,0,0,.1);border-radius:.5rem;
+  padding:.35rem .85rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;
+}
+.ex-tab.active,.ex-tab:hover{background:#fff;border-color:#6366f1;color:#4338ca}
+.ex-panel{display:none}.ex-panel.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* ── MINI GAMES ── */
+.game-card{background:#f8fafc;border:2.5px dashed #cbd5e1;border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
+.game-card h3{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.game-card .tag{background:var(--blue);color:#fff;font-size:.7rem;padding:.15rem .6rem;border-radius:1rem}
+.game-card .instr{font-size:.88rem;color:var(--muted);margin-bottom:1rem}
+
+/* pattern game */
+.seq-row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.6rem 0}
+.seq-item{
+  width:52px;height:52px;border-radius:.7rem;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;background:#fff;
+  font-weight:700;
+}
+.seq-blank{border:2.5px dashed #94a3b8;background:#f1f5f9;cursor:pointer}
+.seq-blank:hover{border-color:#6366f1;background:#eff6ff}
+.ans-opts{display:flex;gap:.5rem;flex-wrap:wrap;margin:.4rem 0}
+.ans-btn{
+  min-width:52px;height:44px;border-radius:.6rem;border:2px solid var(--border);
+  background:#fff;font-size:1.3rem;cursor:pointer;transition:.15s;font-weight:700;
+  display:flex;align-items:center;justify-content:center;padding:0 .7rem;
+}
+.ans-btn:hover:not(:disabled){border-color:#6366f1;transform:scale(1.08)}
+.ans-btn.ok{border-color:var(--green);background:#f0fdf4;color:var(--green)}
+.ans-btn.no{border-color:var(--red);background:#fef2f2;animation:shake .3s}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.game-fb{font-size:.88rem;padding:.5rem .9rem;border-radius:.5rem;margin-top:.5rem;display:none}
+.game-fb.ok{display:block;background:#f0fdf4;color:#15803d}
+.game-fb.no{display:block;background:#fef2f2;color:var(--red)}
+
+/* sort game */
+.sort-chips{display:flex;flex-wrap:wrap;gap:.5rem;min-height:50px;margin:.8rem 0}
+.chip{
+  background:#fff;border:2px solid #cbd5e1;border-radius:.5rem;
+  padding:.4rem .9rem;font-size:.85rem;font-weight:600;cursor:grab;user-select:none;
+  transition:.15s;
+}
+.chip:hover{border-color:#6366f1;transform:scale(1.04)}
+.chip.placed{opacity:.35;cursor:default;pointer-events:none}
+.drop-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-top:.8rem}
+@media(max-width:600px){.drop-cols{grid-template-columns:repeat(2,1fr)}}
+.drop-col{min-height:90px;border:2.5px dashed #cbd5e1;border-radius:.7rem;background:#fff;padding:.6rem;transition:.2s}
+.drop-col h4{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;text-align:center;margin-bottom:.4rem}
+.drop-col.over{border-color:#6366f1;background:#eff6ff}
+.drop-col.correct-col{border-color:var(--green);background:#f0fdf4}
+.placed-chip{
+  background:#6366f1;color:#fff;border-radius:.35rem;
+  padding:.2rem .5rem;font-size:.78rem;display:block;margin-bottom:.25rem;text-align:center;
+}
+
+/* ── REAL EXAM Q ── */
+.exam-label{
+  display:inline-flex;align-items:center;gap:.4rem;background:#fef9c3;
+  border:1.5px solid #fcd34d;border-radius:.4rem;padding:.2rem .7rem;
+  font-size:.75rem;font-weight:700;color:#92400e;margin-bottom:.7rem;
+}
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1.3rem 1.5rem;margin-bottom:1rem}
+.q-no{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-bottom:.4rem}
+.q-stem{font-size:1rem;font-weight:700;margin-bottom:1rem;line-height:1.55}
+.q-stem .scenario{
+  background:#f8fafc;border-left:4px solid #6366f1;padding:.7rem 1rem;
+  border-radius:0 .5rem .5rem 0;font-size:.92rem;font-weight:400;
+  color:#374151;margin-bottom:.8rem;display:block;
+}
+.opts{display:grid;gap:.5rem}
+.opt{
+  display:flex;align-items:center;gap:.8rem;padding:.65rem 1rem;
+  border:2px solid var(--border);border-radius:.6rem;cursor:pointer;
+  font-size:.92rem;transition:.15s;
+}
+.opt:hover:not(.locked){border-color:#6366f1;background:#eff6ff}
+.opt .ltr{
+  width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid #cbd5e1;
+  display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;
+}
+.opt.picked{border-color:#6366f1}.opt.picked .ltr{background:#6366f1;border-color:#6366f1;color:#fff}
+.opt.right{border-color:var(--green);background:#f0fdf4}.opt.right .ltr{background:var(--green);border-color:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:#fef2f2}.opt.wrong .ltr{background:var(--red);border-color:var(--red);color:#fff}
+.q-fb{font-size:.84rem;border-radius:.45rem;padding:.55rem .85rem;margin-top:.6rem;display:none}
+.q-fb.show{display:block}
+.q-fb.ok{background:#f0fdf4;color:#15803d}
+.q-fb.no{background:#fef2f2;color:var(--red)}
+
+/* score */
+.score-box{
+  background:linear-gradient(135deg,#f0fdf4,#dcfce7);
+  border:2px solid #86efac;border-radius:var(--r);padding:2rem;
+  text-align:center;display:none;margin-top:1rem;
+}
+.score-box.show{display:block;animation:fadeIn .4s ease}
+.score-big{font-size:3.5rem;font-weight:900;color:var(--green)}
+.score-msg{font-size:1.05rem;font-weight:600;margin-top:.5rem}
+.score-sub{color:var(--muted);font-size:.9rem;margin-top:.3rem}
+
+/* btn */
+.btn{
+  display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.6rem;
+  border-radius:.7rem;font-size:.95rem;font-weight:700;cursor:pointer;
+  border:none;transition:.15s;
+}
+.btn:hover{opacity:.86;transform:translateY(-1px)}
+.btn-blue{background:#4f46e5;color:#fff}
+.btn-green{background:var(--green);color:#fff}
+.btn-ghost{background:transparent;border:2px solid var(--border);color:var(--text)}
+
+/* summary */
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem}
+.sum-card{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1.2rem;text-align:center}
+.sum-card .se{font-size:2.5rem;margin-bottom:.5rem}
+.sum-card h4{font-weight:800;margin-bottom:.2rem;font-size:.95rem}
+.sum-card p{font-size:.82rem;color:var(--muted)}
+
+/* congrats banner */
+.congrats{
+  background:linear-gradient(135deg,#4338ca,#7c3aed);color:#fff;
+  border-radius:var(--r);padding:2rem;text-align:center;margin-top:2rem;
+}
+.congrats h3{font-size:1.4rem;font-weight:900;margin-bottom:.4rem}
+.congrats p{opacity:.9;font-size:.95rem}
+
+footer{text-align:center;padding:2rem 1rem;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
+
+/* utils */
+.mt-sm{margin-top:.5rem}.mt-md{margin-top:1rem}.mt-lg{margin-top:2rem}
+.highlight{background:#fef9c3;border-radius:.25rem;padding:0 .2rem}
+.bold{font-weight:800}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="stars">🧠 💡 🎯</div>
+  <span class="badge">Asas Sains Komputer · Tingkatan 1 · KSSM</span>
+  <h1>Bab 1<br>Pemikiran Komputasional</h1>
+  <p>Belajar 4 teknik hebat untuk selesaikan <em>sebarang</em> masalah!</p>
+  <div class="prog-wrap"><div class="prog-fill" id="pFill"></div></div>
+  <p class="prog-txt" id="pTxt">Kemajuan kamu: 0%</p>
+</header>
+
+<main>
+
+<!-- ════════════════════════════════ INTRO ════════════════════════════════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#eff6ff">🤔</div>
+  <div><h2>Apa itu Pemikiran Komputasional?</h2><p>Faham dulu sebelum kita mulakan!</p></div>
+</div>
+
+<div class="def-box">
+  <div class="big-q">💬</div>
+  <h3>Maksudnya…</h3>
+  <div class="def-text">
+    <span class="highlight bold">Pemikiran Komputasional</span> ialah cara berfikir yang sistematik untuk <strong>menyelesaikan masalah</strong> — sama seperti cara komputer "berfikir", tetapi dilakukan oleh <em>kita</em>!
+  </div>
+  <p class="simple" style="margin-top:.9rem">
+    🧒 Bayangkan kamu nak kemas bilik yang bersepah. Kamu tidak terus angkat semua barang sekaligus —
+    kamu <em>fikir dulu</em>, susun langkah, cari corak, dan buat pelan. Itulah pemikiran komputasional!
+  </p>
+  <div style="margin-top:1rem">
+    <span class="pill" style="background:#dbeafe;color:#1d4ed8">🧩 Leraian</span>
+    <span class="pill" style="background:#dcfce7;color:#166534">🔍 Pengecaman Corak</span>
+    <span class="pill" style="background:#fef9c3;color:#92400e">🎯 Peniskalaan</span>
+    <span class="pill" style="background:#f3e8ff;color:#6d28d9">♾️ Pengitlakan</span>
+  </div>
+</div>
+
+<!-- quick overview cards -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#f0fdf4">🗺️</div>
+  <div><h2>4 Teknik Sekilas Pandang</h2><p>Klik untuk baca huraian penuh di bawah</p></div>
+</div>
+
+<div class="four-grid">
+  <div class="four-card c1" onclick="scrollTo('tech1')">
+    <span class="big-e">🧩</span>
+    <h3>Leraian</h3>
+    <p class="en">Decomposition</p>
+    <p>Pecah masalah besar jadi <strong>bahagian kecil-kecil</strong></p>
+  </div>
+  <div class="four-card c2" onclick="scrollTo('tech2')">
+    <span class="big-e">🔍</span>
+    <h3>Pengecaman Corak</h3>
+    <p class="en">Pattern Recognition</p>
+    <p>Cari <strong>persamaan</strong> dalam masalah</p>
+  </div>
+  <div class="four-card c3" onclick="scrollTo('tech3')">
+    <span class="big-e">🎯</span>
+    <h3>Peniskalaan</h3>
+    <p class="en">Abstraction</p>
+    <p>Fokus benda <strong>penting</strong>, buang yang tidak perlu</p>
+  </div>
+  <div class="four-card c4" onclick="scrollTo('tech4')">
+    <span class="big-e">♾️</span>
+    <h3>Pengitlakan</h3>
+    <p class="en">Generalisation</p>
+    <p>Bina <strong>formula/cara</strong> yang boleh guna semula</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ TEKNIK 1 ════════════════════════════════ -->
+<div id="tech1"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dbeafe">🧩</div>
+  <div><h2>Teknik 1: Leraian</h2><p>Decomposition</p></div>
+</div>
+
+<div class="tech t1">
+  <div class="tech-header">
+    <span class="tech-emoji">🧩</span>
+    <div><h3>Leraian</h3><span class="en-label">Decomposition</span></div>
+  </div>
+  <div class="tech-def">
+    <strong>Definisi:</strong> Memecahkan masalah atau sistem yang <strong>kompleks</strong> kepada <strong>bahagian-bahagian yang lebih kecil</strong> supaya lebih mudah difahami dan diselesaikan.
+  </div>
+
+  <!-- Visual analogy -->
+  <div class="story-box">
+    <h4>🍕 Bayangkan begini…</h4>
+    <p style="font-size:.95rem;margin-bottom:.8rem">Kamu tak boleh telan pizza seketul besar sekaligus! Kamu <strong>potong jadi hirisan kecil</strong>, baru mudah makan. Itulah <em>leraian</em> — potong masalah besar jadi bahagian kecil.</p>
+    <div class="flow">
+      <div class="flow-item">🍕 Pizza besar</div>
+      <span class="flow-arrow">✂️→</span>
+      <div class="flow-item">🍕 Hirisan 1</div>
+      <div class="flow-item">🍕 Hirisan 2</div>
+      <div class="flow-item">🍕 Hirisan 3</div>
+      <span class="flow-arrow">😋</span>
+    </div>
+  </div>
+
+  <!-- Tabbed examples -->
+  <div class="ex-tabs">
+    <button class="ex-tab active" onclick="showEx('l','kemas')">🛏️ Kemas Bilik</button>
+    <button class="ex-tab" onclick="showEx('l','gosok')">🪥 Gosok Gigi</button>
+    <button class="ex-tab" onclick="showEx('l','beg')">🎒 Siap Beg Sekolah</button>
+  </div>
+
+  <div id="l-kemas" class="ex-panel active">
+    <div class="story-box">
+      <h4>🛏️ Contoh: Kemas Bilik</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Masalah besar: "Kemas bilik" dipecah kepada:</p>
+      <div class="story-steps">
+        <div class="story-step"><div class="step-bubble bx">1</div><p>Kumpul semua mainan yang berselerak</p></div>
+        <div class="story-step"><div class="step-bubble bx">2</div><p>Susun buku di rak mengikut saiz</p></div>
+        <div class="story-step"><div class="step-bubble bx">3</div><p>Lipat dan letak pakaian dalam almari</p></div>
+        <div class="story-step"><div class="step-bubble bx">4</div><p>Sapu dan mop lantai</p></div>
+        <div class="story-step"><div class="step-bubble bx">5</div><p>Kemaskan tilam dan bantal</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="l-gosok" class="ex-panel">
+    <div class="story-box">
+      <h4>🪥 Contoh: Gosok Gigi</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Masalah besar: "Gosok gigi" dipecah kepada:</p>
+      <div class="story-steps">
+        <div class="story-step"><div class="step-bubble bx">1</div><p>Ambil berus gigi dan ubat gigi</p></div>
+        <div class="story-step"><div class="step-bubble bx">2</div><p>Sapu ubat gigi pada berus</p></div>
+        <div class="story-step"><div class="step-bubble bx">3</div><p>Gosok gigi atas, bawah, kiri, kanan</p></div>
+        <div class="story-step"><div class="step-bubble bx">4</div><p>Kumur dengan air bersih</p></div>
+        <div class="story-step"><div class="step-bubble bx">5</div><p>Bilas berus dan simpan</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="l-beg" class="ex-panel">
+    <div class="story-box">
+      <h4>🎒 Contoh: Siap Beg Sekolah</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Masalah besar: "Siapkan beg sekolah" dipecah kepada:</p>
+      <div class="story-steps">
+        <div class="story-step"><div class="step-bubble bx">1</div><p>Semak jadual waktu untuk esok</p></div>
+        <div class="story-step"><div class="step-bubble bx">2</div><p>Masukkan buku dan fail yang diperlukan</p></div>
+        <div class="story-step"><div class="step-bubble bx">3</div><p>Masukkan alat tulis (pensel, pembaris, pemadam)</p></div>
+        <div class="story-step"><div class="step-bubble bx">4</div><p>Masukkan bekas air minum</p></div>
+        <div class="story-step"><div class="step-bubble bx">5</div><p>Semak sekali lagi, kemudian zip beg</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-md" style="background:rgba(37,99,235,.08);border-radius:.7rem;padding:.9rem 1.1rem">
+    <p style="font-size:.9rem">💡 <strong>Ingat:</strong> Teknik Leraian membantu kita selesaikan <em>satu bahagian pada satu masa</em> — lebih mudah, tidak keliru!</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ TEKNIK 2 ════════════════════════════════ -->
+<div id="tech2"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dcfce7">🔍</div>
+  <div><h2>Teknik 2: Pengecaman Corak</h2><p>Pattern Recognition</p></div>
+</div>
+
+<div class="tech t2">
+  <div class="tech-header">
+    <span class="tech-emoji">🔍</span>
+    <div><h3>Pengecaman Corak</h3><span class="en-label">Pattern Recognition</span></div>
+  </div>
+  <div class="tech-def">
+    <strong>Definisi:</strong> Mengenal pasti <strong>persamaan, corak atau ciri-ciri yang sama</strong> antara masalah-masalah yang telah dileraikan.
+  </div>
+
+  <div class="story-box">
+    <h4>🌸 Bayangkan begini…</h4>
+    <p style="font-size:.95rem;margin-bottom:.8rem">Semua bunga raya di Malaysia ada <strong>5 kelopak</strong> — walaupun warnanya berbeza-beza. Itulah corak! Apabila kita nampak corak, kita boleh <em>ramal</em> dan <em>faham</em> dengan lebih cepat.</p>
+    <div class="flow">
+      <div class="flow-item">🌺 Merah<br><small>5 kelopak</small></div>
+      <div class="flow-item">🌸 Putih<br><small>5 kelopak</small></div>
+      <div class="flow-item">💐 Merah Jambu<br><small>5 kelopak</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item" style="background:#dcfce7;border-color:#86efac">✅ Corak: Semua ada 5 kelopak!</div>
+    </div>
+  </div>
+
+  <div class="ex-tabs">
+    <button class="ex-tab active" onclick="showEx('p','haiwan')">🐾 Haiwan</button>
+    <button class="ex-tab" onclick="showEx('p','nombor')">🔢 Nombor</button>
+    <button class="ex-tab" onclick="showEx('p','sekolah')">🏫 Di Sekolah</button>
+  </div>
+
+  <div id="p-haiwan" class="ex-panel active">
+    <div class="story-box">
+      <h4>🐾 Contoh: Persamaan Haiwan</h4>
+      <div class="flow" style="margin-bottom:.8rem">
+        <div class="flow-item">🐯 Harimau<br><small>4 kaki, berbulu, menyusu</small></div>
+        <div class="flow-item">🐘 Gajah<br><small>4 kaki, berbulu, menyusu</small></div>
+        <div class="flow-item">🐄 Lembu<br><small>4 kaki, berbulu, menyusu</small></div>
+      </div>
+      <p style="font-size:.9rem">🔍 Corak yang ditemui: Semua haiwan ini ada <strong>4 kaki, berbulu dan menyusu</strong> — mereka semua adalah <em>mamalia!</em></p>
+    </div>
+  </div>
+
+  <div id="p-nombor" class="ex-panel">
+    <div class="story-box">
+      <h4>🔢 Contoh: Corak Nombor</h4>
+      <div class="flow">
+        <div class="flow-item">2</div><div class="flow-item">4</div>
+        <div class="flow-item">6</div><div class="flow-item">8</div>
+        <div class="flow-item" style="background:#dcfce7;border-color:#86efac">? = <strong>10</strong></div>
+      </div>
+      <p style="font-size:.9rem;margin-top:.6rem">🔍 Corak: Setiap nombor <strong>tambah 2</strong>. Jadi nombor seterusnya ialah 10!</p>
+      <div class="flow" style="margin-top:.8rem">
+        <div class="flow-item">1²=1</div><div class="flow-item">2²=4</div>
+        <div class="flow-item">3²=9</div><div class="flow-item">4²=16</div>
+        <div class="flow-item" style="background:#dcfce7;border-color:#86efac">5²=<strong>25</strong></div>
+      </div>
+      <p style="font-size:.9rem;margin-top:.6rem">🔍 Corak: Kuasa dua nombor berturutan. Ini soalan sebenar peperiksaan!</p>
+    </div>
+  </div>
+
+  <div id="p-sekolah" class="ex-panel">
+    <div class="story-box">
+      <h4>🏫 Contoh: Peraturan di Sekolah</h4>
+      <div class="story-steps">
+        <div class="story-step"><div class="step-bubble b2">✓</div><p>Semua rumah ada pintu</p></div>
+        <div class="story-step"><div class="step-bubble b2">✓</div><p>Semua kereta ada tayar</p></div>
+        <div class="story-step"><div class="step-bubble b2">✓</div><p>Semua bunga raya ada 5 kelopak</p></div>
+        <div class="story-step"><div class="step-bubble b2">✓</div><p>Semua sekolah ada pelajar dan guru</p></div>
+      </div>
+      <p style="font-size:.9rem;margin-top:.6rem">🔍 Semua pernyataan di atas menunjukkan <strong>pengecaman corak</strong> — ciri-ciri yang SAMA pada semua objek dalam kumpulan yang sama.</p>
+    </div>
+  </div>
+
+  <div class="mt-md" style="background:rgba(22,163,74,.08);border-radius:.7rem;padding:.9rem 1.1rem">
+    <p style="font-size:.9rem">💡 <strong>Ingat:</strong> Apabila kamu nampak sesuatu yang sama pada beberapa benda — itulah <em>corak!</em> Corak membantu kita selesaikan masalah serupa dengan lebih pantas.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ TEKNIK 3 ════════════════════════════════ -->
+<div id="tech3"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">🎯</div>
+  <div><h2>Teknik 3: Peniskalaan</h2><p>Abstraction</p></div>
+</div>
+
+<div class="tech t3">
+  <div class="tech-header">
+    <span class="tech-emoji">🎯</span>
+    <div><h3>Peniskalaan</h3><span class="en-label">Abstraction</span></div>
+  </div>
+  <div class="tech-def">
+    <strong>Definisi:</strong> Fokus kepada <strong>aspek-aspek penting</strong> sahaja dan <strong>abaikan</strong> butiran yang tidak diperlukan untuk menyelesaikan masalah.
+  </div>
+
+  <div class="story-box">
+    <h4>🗺️ Bayangkan begini…</h4>
+    <p style="font-size:.95rem;margin-bottom:.8rem">Nak pergi ke kedai, kamu guna <strong>peta ringkas</strong> — hanya jalan dan nama tempat. Kamu <em>tidak perlu</em> tahu bilangan pokok di tepi jalan, warna pagar rumah orang, atau nama kucing jiran. Buang maklumat tak perlu — fokus yang penting sahaja!</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+      <div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:.6rem;padding:.8rem;text-align:center">
+        <div style="font-size:1.5rem">😵</div>
+        <p style="font-size:.82rem;font-weight:700;color:#dc2626;margin-bottom:.3rem">Terlalu banyak maklumat</p>
+        <p style="font-size:.78rem;color:#64748b">Nama pokok, warna pagar, bilangan tingkap rumah orang…</p>
+      </div>
+      <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:.6rem;padding:.8rem;text-align:center">
+        <div style="font-size:1.5rem">😊</div>
+        <p style="font-size:.82rem;font-weight:700;color:var(--green);margin-bottom:.3rem">Maklumat penting sahaja</p>
+        <p style="font-size:.78rem;color:#64748b">Nama jalan, arah, jarak ke destinasi</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-tabs">
+    <button class="ex-tab active" onclick="showEx('a','login')">💻 Log Masuk Komputer</button>
+    <button class="ex-tab" onclick="showEx('a','masak')">🍳 Resepi Mee Goreng</button>
+    <button class="ex-tab" onclick="showEx('a','website')">🌐 Laman Web</button>
+  </div>
+
+  <div id="a-login" class="ex-panel active">
+    <div class="story-box">
+      <h4>💻 Contoh: Log Masuk Komputer</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem">
+        <div>
+          <p style="font-size:.8rem;font-weight:700;color:var(--red);margin-bottom:.4rem">❌ Tidak perlu tahu:</p>
+          <ul style="font-size:.82rem;padding-left:1.1rem;color:#64748b">
+            <li>Cara processor memproses data</li>
+            <li>Bagaimana kata laluan disimpan dalam ingatan</li>
+            <li>Berapa watt elektrik digunakan</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:.8rem;font-weight:700;color:var(--green);margin-bottom:.4rem">✅ Perlu tahu:</p>
+          <ul style="font-size:.82rem;padding-left:1.1rem;color:#374151">
+            <li>Nama pengguna (username)</li>
+            <li>Kata laluan (password)</li>
+            <li>Klik butang "Log Masuk"</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:.88rem">🎯 Peniskalaan = fokus pada <strong>nama pengguna dan kata laluan</strong> sahaja untuk log masuk.</p>
+    </div>
+  </div>
+
+  <div id="a-masak" class="ex-panel">
+    <div class="story-box">
+      <h4>🍳 Contoh: Resepi Mee Goreng</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem">
+        <div>
+          <p style="font-size:.8rem;font-weight:700;color:var(--red);margin-bottom:.4rem">❌ Tidak perlu tahu:</p>
+          <ul style="font-size:.82rem;padding-left:1.1rem;color:#64748b">
+            <li>Nama ladang yang tanam sayur</li>
+            <li>Bilangan pekerja kilang mee</li>
+            <li>Sejarah siapa yang cipta mee goreng</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-size:.8rem;font-weight:700;color:var(--green);margin-bottom:.4rem">✅ Perlu tahu:</p>
+          <ul style="font-size:.82rem;padding-left:1.1rem;color:#374151">
+            <li>Bahan-bahan yang diperlukan</li>
+            <li>Cara masak (langkah-langkah)</li>
+            <li>Suhu dan masa memasak</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="a-website" class="ex-panel">
+    <div class="story-box">
+      <h4>🌐 Contoh: Membina Laman Web (Soalan Peperiksaan!)</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Kumpulan James hendak bina laman web sekolah. Mereka kenal pasti:</p>
+      <div class="story-steps">
+        <div class="story-step"><div class="step-bubble b3">✓</div><p>Struktur laman web (berapa halaman)</p></div>
+        <div class="story-step"><div class="step-bubble b3">✓</div><p>Nombor halaman yang diperlukan</p></div>
+        <div class="story-step"><div class="step-bubble b3">✓</div><p>Aliran maklumat antara halaman</p></div>
+        <div class="story-step"><div class="step-bubble bx" style="background:#ef4444">✗</div><p>Warna dan reka bentuk (buang dulu untuk fasa merancang)</p></div>
+      </div>
+      <p style="font-size:.88rem;margin-top:.6rem;color:#92400e;background:#fef9c3;padding:.6rem;border-radius:.4rem">📝 Ini adalah <strong>soalan UASA sebenar</strong> — jawapannya ialah <strong>Peniskalaan</strong>!</p>
+    </div>
+  </div>
+
+  <div class="mt-md" style="background:rgba(217,119,6,.08);border-radius:.7rem;padding:.9rem 1.1rem">
+    <p style="font-size:.9rem">💡 <strong>Ingat:</strong> Peniskalaan = <em>"Fokus yang penting, buang yang tidak perlu."</em> Ia membolehkan masalah diselesaikan dengan <strong>lebih cepat dan tepat</strong>!</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ TEKNIK 4 ════════════════════════════════ -->
+<div id="tech4"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#f3e8ff">♾️</div>
+  <div><h2>Teknik 4: Pengitlakan</h2><p>Generalisation</p></div>
+</div>
+
+<div class="tech t4">
+  <div class="tech-header">
+    <span class="tech-emoji">♾️</span>
+    <div><h3>Pengitlakan</h3><span class="en-label">Generalisation</span></div>
+  </div>
+  <div class="tech-def">
+    <strong>Definisi:</strong> Membina <strong>model, formula, atau peraturan</strong> daripada penyelesaian yang berjaya, supaya boleh digunakan untuk masalah-masalah <strong>yang serupa</strong> pada masa hadapan.
+  </div>
+
+  <div class="story-box">
+    <h4>📋 Bayangkan begini…</h4>
+    <p style="font-size:.95rem;margin-bottom:.8rem">Ibu kamu buat <strong>resepi nasi goreng</strong> dan tuliskan dalam buku. Lepas tu, bila-bila masa pun boleh masak semula, orang lain pun boleh guna resepi yang sama! Resepi itu = <em>model pengitlakan.</em></p>
+    <div class="flow">
+      <div class="flow-item">✅ Berjaya masak sekali</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">📋 Tulis resepi (model)</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">♾️ Guna berkali-kali</div>
+    </div>
+  </div>
+
+  <div class="ex-tabs">
+    <button class="ex-tab active" onclick="showEx('g','tangga')">🏗️ Tangga Bangunan</button>
+    <button class="ex-tab" onclick="showEx('g','jadual')">📅 Jadual Waktu</button>
+    <button class="ex-tab" onclick="showEx('g','kubus')">📦 Kubus (Soalan Peperiksaan)</button>
+  </div>
+
+  <div id="g-tangga" class="ex-panel active">
+    <div class="story-box">
+      <h4>🏗️ Contoh: Formula Tangga</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Selepas kira berapa anak tangga untuk satu bangunan, tukang bina formula:</p>
+      <div style="background:#f5f3ff;border:2px solid #c4b5fd;border-radius:.7rem;padding:1rem;text-align:center;margin:.8rem 0">
+        <p style="font-size:1.1rem;font-weight:800;color:#4c1d95">Bilangan anak tangga = Ketinggian jumlah ÷ Ketinggian setiap anak tangga</p>
+      </div>
+      <p style="font-size:.9rem">♾️ Formula ini boleh guna untuk tangga <strong>mana-mana bangunan</strong> — rumah, sekolah, hospital!</p>
+    </div>
+  </div>
+
+  <div id="g-jadual" class="ex-panel">
+    <div class="story-box">
+      <h4>📅 Contoh: Jadual Waktu Sekolah</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Jadual waktu dibuat SEKALI dan digunakan SETIAP MINGGU sepanjang tahun:</p>
+      <div class="flow">
+        <div class="flow-item">📝 Buat jadual (sekali)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">📅 Isnin minggu 1</div>
+        <div class="flow-item">📅 Isnin minggu 2</div>
+        <div class="flow-item">📅 Isnin minggu 3…</div>
+      </div>
+      <p style="font-size:.9rem;margin-top:.6rem">♾️ Jadual itu adalah <strong>model pengitlakan</strong> — dibuat sekali, diguna berkali-kali!</p>
+    </div>
+  </div>
+
+  <div id="g-kubus" class="ex-panel">
+    <div class="story-box">
+      <h4>📦 Contoh: Corak Kubus (Soalan Peperiksaan UASA!)</h4>
+      <p style="font-size:.9rem;margin-bottom:.7rem">Aimi menyusun kubus dan dapati corak ini:</p>
+      <div class="flow">
+        <div class="flow-item">Susun 1:<br><strong>1² = 1</strong></div>
+        <div class="flow-item">Susun 2:<br><strong>2² = 4</strong></div>
+        <div class="flow-item">Susun 3:<br><strong>3² = 9</strong></div>
+        <div class="flow-item">Susun 4:<br><strong>4² = 16</strong></div>
+        <div class="flow-item">Susun 5:<br><strong>5² = 25</strong></div>
+      </div>
+      <div style="background:#f5f3ff;border:2px solid #c4b5fd;border-radius:.7rem;padding:.8rem;text-align:center;margin:.8rem 0">
+        <p style="font-size:1rem;font-weight:800;color:#4c1d95">Formula: Bilangan kubus = n² (n kuasa dua)</p>
+      </div>
+      <p style="font-size:.88rem;color:#6d28d9;background:#f5f3ff;padding:.6rem;border-radius:.4rem">📝 Soalan UASA sebenar bertanya Aimi menggunakan teknik apa? Jawapan: <strong>Pengecaman Corak</strong> (untuk cari corak) kemudian <strong>Pengitlakan</strong> (untuk buat formula n²)!</p>
+    </div>
+  </div>
+
+  <div class="mt-md" style="background:rgba(124,58,237,.08);border-radius:.7rem;padding:.9rem 1.1rem">
+    <p style="font-size:.9rem">💡 <strong>Ingat:</strong> Pengitlakan = <em>"Jangan buat kerja sama dua kali!"</em> Bina formula atau cara yang boleh digunakan berulang kali untuk masalah serupa.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ GAMES ════════════════════════════════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dcfce7">🎮</div>
+  <div><h2>Aktiviti Seronok!</h2><p>Cuba 2 permainan di bawah</p></div>
+</div>
+
+<!-- GAME 1: Pattern Recognition -->
+<div class="game-card">
+  <h3>🔍 Cari Corak Yang Hilang! <span class="tag">Permainan</span></h3>
+  <p class="instr">Klik jawapan yang betul untuk melengkapkan jujukan.</p>
+
+  <div id="pGame">
+    <div id="pg1" class="mb-1" style="margin-bottom:1.2rem">
+      <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">Soalan 1: Apakah yang seterusnya?</p>
+      <div class="seq-row">
+        <div class="seq-item">🍎</div><div class="seq-item">🍊</div>
+        <div class="seq-item">🍎</div><div class="seq-item">🍊</div>
+        <div class="seq-item seq-blank" id="sq1">❓</div>
+      </div>
+      <div class="ans-opts">
+        <button class="ans-btn" onclick="chkPat(1,'🍎',true,this)">🍎</button>
+        <button class="ans-btn" onclick="chkPat(1,'🍇',false,this)">🍇</button>
+        <button class="ans-btn" onclick="chkPat(1,'🍊',false,this)">🍊</button>
+        <button class="ans-btn" onclick="chkPat(1,'🍋',false,this)">🍋</button>
+      </div>
+      <p class="game-fb" id="gfb1"></p>
+    </div>
+
+    <div id="pg2" style="margin-bottom:1.2rem">
+      <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">Soalan 2: Nombor yang hilang?</p>
+      <div class="seq-row">
+        <div class="seq-item">5</div><div class="seq-item">10</div>
+        <div class="seq-item">15</div><div class="seq-item">20</div>
+        <div class="seq-item seq-blank" id="sq2">?</div>
+      </div>
+      <div class="ans-opts">
+        <button class="ans-btn" onclick="chkPat(2,'22',false,this)">22</button>
+        <button class="ans-btn" onclick="chkPat(2,'24',false,this)">24</button>
+        <button class="ans-btn" onclick="chkPat(2,'25',true,this)">25</button>
+        <button class="ans-btn" onclick="chkPat(2,'30',false,this)">30</button>
+      </div>
+      <p class="game-fb" id="gfb2"></p>
+    </div>
+
+    <div id="pg3" style="margin-bottom:1.2rem">
+      <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">Soalan 3: Apakah corak bentuk seterusnya?</p>
+      <div class="seq-row">
+        <div class="seq-item">🔴</div><div class="seq-item">🔵</div><div class="seq-item">🟢</div>
+        <div class="seq-item">🔴</div><div class="seq-item">🔵</div>
+        <div class="seq-item seq-blank" id="sq3">❓</div>
+      </div>
+      <div class="ans-opts">
+        <button class="ans-btn" onclick="chkPat(3,'🟢',true,this)">🟢</button>
+        <button class="ans-btn" onclick="chkPat(3,'🟡',false,this)">🟡</button>
+        <button class="ans-btn" onclick="chkPat(3,'🔴',false,this)">🔴</button>
+        <button class="ans-btn" onclick="chkPat(3,'🟣',false,this)">🟣</button>
+      </div>
+      <p class="game-fb" id="gfb3"></p>
+    </div>
+
+    <div id="pg4">
+      <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">Soalan 4: Corak nombor ganjil?</p>
+      <div class="seq-row">
+        <div class="seq-item">1</div><div class="seq-item">3</div>
+        <div class="seq-item">5</div><div class="seq-item">7</div>
+        <div class="seq-item seq-blank" id="sq4">?</div>
+      </div>
+      <div class="ans-opts">
+        <button class="ans-btn" onclick="chkPat(4,'8',false,this)">8</button>
+        <button class="ans-btn" onclick="chkPat(4,'9',true,this)">9</button>
+        <button class="ans-btn" onclick="chkPat(4,'10',false,this)">10</button>
+        <button class="ans-btn" onclick="chkPat(4,'11',false,this)">11</button>
+      </div>
+      <p class="game-fb" id="gfb4"></p>
+    </div>
+  </div>
+</div>
+
+<!-- GAME 2: Sort into techniques -->
+<div class="game-card">
+  <h3>🧩 Susun ke Teknik yang Betul! <span class="tag">Seret &amp; Lepas</span></h3>
+  <p class="instr">Seret setiap kenyataan dan lepaskan ke kotak teknik yang betul.</p>
+
+  <div class="sort-chips" id="sortChips">
+    <div class="chip" draggable="true" data-cat="leraian" ondragstart="ds(event)">Pecah "buat sandwich" jadi: ambil roti → sapukan → tutup → potong</div>
+    <div class="chip" draggable="true" data-cat="corak" ondragstart="ds(event)">Semua kucing ada 4 kaki dan berbulu</div>
+    <div class="chip" draggable="true" data-cat="peniskalaan" ondragstart="ds(event)">Untuk login, hanya perlukan username dan password</div>
+    <div class="chip" draggable="true" data-cat="pengitlakan" ondragstart="ds(event)">Bina formula Luas = Panjang × Lebar untuk semua segi empat</div>
+    <div class="chip" draggable="true" data-cat="leraian" ondragstart="ds(event)">Bahagikan "siap beg sekolah" kepada 5 langkah kecil</div>
+    <div class="chip" draggable="true" data-cat="corak" ondragstart="ds(event)">Semua bunga raya ada 5 kelopak</div>
+    <div class="chip" draggable="true" data-cat="peniskalaan" ondragstart="ds(event)">Dalam resepi, abaikan nama ladang sayur — fokus cara masak</div>
+    <div class="chip" draggable="true" data-cat="pengitlakan" ondragstart="ds(event)">Jadual waktu yang sama digunakan setiap minggu</div>
+  </div>
+
+  <div class="drop-cols">
+    <div class="drop-col" id="dc-leraian" ondragover="dov(event)" ondrop="dp(event,'leraian')">
+      <h4>🧩 Leraian</h4>
+    </div>
+    <div class="drop-col" id="dc-corak" ondragover="dov(event)" ondrop="dp(event,'corak')">
+      <h4>🔍 Corak</h4>
+    </div>
+    <div class="drop-col" id="dc-peniskalaan" ondragover="dov(event)" ondrop="dp(event,'peniskalaan')">
+      <h4>🎯 Peniskalaan</h4>
+    </div>
+    <div class="drop-col" id="dc-pengitlakan" ondragover="dov(event)" ondrop="dp(event,'pengitlakan')">
+      <h4>♾️ Pengitlakan</h4>
+    </div>
+  </div>
+  <p id="sortMsg" style="margin-top:.8rem;font-size:.9rem;display:none"></p>
+</div>
+
+<!-- ════════════════════════════════ REAL EXAM QUESTIONS ════════════════════════════════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">📝</div>
+  <div><h2>Soalan Peperiksaan Sebenar</h2><p>Soalan dari ujian bulanan, UASA &amp; peperiksaan lepas</p></div>
+</div>
+
+<div id="quizWrap">
+
+  <!-- Q1 -->
+  <div class="quiz-q" data-q="1">
+    <div class="exam-label">📋 Soalan Definisi</div>
+    <p class="q-no">SOALAN 1 / 10</p>
+    <p class="q-stem">Apakah yang dimaksudkan dengan pemikiran komputasional?</p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,1,'A')"><div class="ltr">A</div><span>Cara berfikir seperti robot</span></div>
+      <div class="opt" onclick="pick(this,1,'B')"><div class="ltr">B</div><span>Proses pemikiran untuk menyelesaikan masalah dengan menggunakan konsep asas sains komputer</span></div>
+      <div class="opt" onclick="pick(this,1,'C')"><div class="ltr">C</div><span>Kemahiran menggunakan perisian komputer</span></div>
+      <div class="opt" onclick="pick(this,1,'D')"><div class="ltr">D</div><span>Cara membuat atur cara (program) komputer</span></div>
+    </div>
+    <p class="q-fb" id="qf1"></p>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-q" data-q="2">
+    <div class="exam-label">📋 Soalan Teknik</div>
+    <p class="q-no">SOALAN 2 / 10</p>
+    <p class="q-stem">Manakah antara berikut merupakan urutan teknik pemikiran komputasional yang <strong>betul</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,2,'A')"><div class="ltr">A</div><span>Peniskalaan → Leraian → Pengecaman Corak → Pengitlakan</span></div>
+      <div class="opt" onclick="pick(this,2,'B')"><div class="ltr">B</div><span>Leraian → Pengecaman Corak → Peniskalaan → Pengitlakan</span></div>
+      <div class="opt" onclick="pick(this,2,'C')"><div class="ltr">C</div><span>Pengitlakan → Peniskalaan → Leraian → Pengecaman Corak</span></div>
+      <div class="opt" onclick="pick(this,2,'D')"><div class="ltr">D</div><span>Pengecaman Corak → Pengitlakan → Leraian → Peniskalaan</span></div>
+    </div>
+    <p class="q-fb" id="qf2"></p>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-q" data-q="3">
+    <div class="exam-label">📋 Soalan Definisi</div>
+    <p class="q-no">SOALAN 3 / 10</p>
+    <p class="q-stem">Teknik memecahkan masalah atau sistem yang kompleks kepada bahagian-bahagian yang lebih kecil bagi memudahkan pemahaman dan penyelesaian dikenali sebagai…</p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,3,'A')"><div class="ltr">A</div><span>Pengecaman Corak</span></div>
+      <div class="opt" onclick="pick(this,3,'B')"><div class="ltr">B</div><span>Peniskalaan</span></div>
+      <div class="opt" onclick="pick(this,3,'C')"><div class="ltr">C</div><span>Leraian</span></div>
+      <div class="opt" onclick="pick(this,3,'D')"><div class="ltr">D</div><span>Pengitlakan</span></div>
+    </div>
+    <p class="q-fb" id="qf3"></p>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-q" data-q="4">
+    <div class="exam-label">🏫 Soalan Situasi</div>
+    <p class="q-no">SOALAN 4 / 10</p>
+    <p class="q-stem">
+      <span class="scenario">Aminah mendapati cara membuat kek coklat, kek vanila dan kek pandan adalah hampir sama — hanya perisa yang berbeza.</span>
+      Teknik apakah yang digunakan oleh Aminah?
+    </p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,4,'A')"><div class="ltr">A</div><span>Leraian</span></div>
+      <div class="opt" onclick="pick(this,4,'B')"><div class="ltr">B</div><span>Pengecaman Corak</span></div>
+      <div class="opt" onclick="pick(this,4,'C')"><div class="ltr">C</div><span>Peniskalaan</span></div>
+      <div class="opt" onclick="pick(this,4,'D')"><div class="ltr">D</div><span>Pengitlakan</span></div>
+    </div>
+    <p class="q-fb" id="qf4"></p>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-q" data-q="5">
+    <div class="exam-label">🏫 Soalan Situasi – UASA</div>
+    <p class="q-no">SOALAN 5 / 10</p>
+    <p class="q-stem">
+      <span class="scenario">Kumpulan James hendak membina sebuah laman web. Mereka mengenal pasti struktur laman web, nombor halaman dan aliran maklumat antara halaman, tetapi tidak mengambil kira warna dan reka bentuk pada fasa perancangan.</span>
+      Teknik pemikiran komputasional manakah yang digunakan?
+    </p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,5,'A')"><div class="ltr">A</div><span>Leraian</span></div>
+      <div class="opt" onclick="pick(this,5,'B')"><div class="ltr">B</div><span>Pengecaman Corak</span></div>
+      <div class="opt" onclick="pick(this,5,'C')"><div class="ltr">C</div><span>Peniskalaan</span></div>
+      <div class="opt" onclick="pick(this,5,'D')"><div class="ltr">D</div><span>Pengitlakan</span></div>
+    </div>
+    <p class="q-fb" id="qf5"></p>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-q" data-q="6">
+    <div class="exam-label">🏫 Soalan Situasi – UASA</div>
+    <p class="q-no">SOALAN 6 / 10</p>
+    <p class="q-stem">
+      <span class="scenario">Aimi menyusun kubus dan mendapati bilangan kubus mengikut corak: 1², 2², 3², 4², 5²… Dia bina formula: bilangan kubus = n²</span>
+      Untuk membina formula tersebut, teknik manakah yang digunakan oleh Aimi?
+    </p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,6,'A')"><div class="ltr">A</div><span>Leraian</span></div>
+      <div class="opt" onclick="pick(this,6,'B')"><div class="ltr">B</div><span>Peniskalaan</span></div>
+      <div class="opt" onclick="pick(this,6,'C')"><div class="ltr">C</div><span>Pengecaman Corak</span></div>
+      <div class="opt" onclick="pick(this,6,'D')"><div class="ltr">D</div><span>Pengitlakan</span></div>
+    </div>
+    <p class="q-fb" id="qf6"></p>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-q" data-q="7">
+    <div class="exam-label">📋 Soalan Pengetahuan</div>
+    <p class="q-no">SOALAN 7 / 10</p>
+    <p class="q-stem">Manakah antara berikut <strong>BUKAN</strong> merupakan teknik dalam pemikiran komputasional?</p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,7,'A')"><div class="ltr">A</div><span>Leraian</span></div>
+      <div class="opt" onclick="pick(this,7,'B')"><div class="ltr">B</div><span>Pengaturcaraan (Coding)</span></div>
+      <div class="opt" onclick="pick(this,7,'C')"><div class="ltr">C</div><span>Peniskalaan</span></div>
+      <div class="opt" onclick="pick(this,7,'D')"><div class="ltr">D</div><span>Pengitlakan</span></div>
+    </div>
+    <p class="q-fb" id="qf7"></p>
+  </div>
+
+  <!-- Q8 -->
+  <div class="quiz-q" data-q="8">
+    <div class="exam-label">📋 Soalan Kepentingan</div>
+    <p class="q-no">SOALAN 8 / 10</p>
+    <p class="q-stem">Apakah kepentingan teknik <strong>Peniskalaan</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,8,'A')"><div class="ltr">A</div><span>Memudahkan masalah dipecahkan kepada bahagian kecil</span></div>
+      <div class="opt" onclick="pick(this,8,'B')"><div class="ltr">B</div><span>Membolehkan masalah diselesaikan dengan lebih cepat dan tepat</span></div>
+      <div class="opt" onclick="pick(this,8,'C')"><div class="ltr">C</div><span>Mengenal pasti persamaan antara masalah</span></div>
+      <div class="opt" onclick="pick(this,8,'D')"><div class="ltr">D</div><span>Membina model untuk digunakan semula</span></div>
+    </div>
+    <p class="q-fb" id="qf8"></p>
+  </div>
+
+  <!-- Q9 -->
+  <div class="quiz-q" data-q="9">
+    <div class="exam-label">📋 Soalan Pernyataan</div>
+    <p class="q-no">SOALAN 9 / 10</p>
+    <p class="q-stem">Pernyataan manakah yang menunjukkan teknik <strong>Pengecaman Corak</strong>?</p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,9,'A')"><div class="ltr">A</div><span>Pecahkan tugasan memasak kepada: beli bahan, sediakan, masak, hidang</span></div>
+      <div class="opt" onclick="pick(this,9,'B')"><div class="ltr">B</div><span>Semua spesies bunga kebangsaan mempunyai 5 kelopak</span></div>
+      <div class="opt" onclick="pick(this,9,'C')"><div class="ltr">C</div><span>Hanya ambil kira ketinggian dan lebar anak tangga</span></div>
+      <div class="opt" onclick="pick(this,9,'D')"><div class="ltr">D</div><span>Bina formula untuk kira bilangan jubin lantai</span></div>
+    </div>
+    <p class="q-fb" id="qf9"></p>
+  </div>
+
+  <!-- Q10 -->
+  <div class="quiz-q" data-q="10">
+    <div class="exam-label">🏫 Soalan Situasi</div>
+    <p class="q-no">SOALAN 10 / 10</p>
+    <p class="q-stem">
+      <span class="scenario">Ali ingin membuat sebuah meja kayu. Dia bahagikan kerja kepada: ukur kayu, potong kayu, cantum kayu, kemaskini permukaan, dan cat meja.</span>
+      Teknik apakah yang digunakan oleh Ali?
+    </p>
+    <div class="opts">
+      <div class="opt" onclick="pick(this,10,'A')"><div class="ltr">A</div><span>Leraian</span></div>
+      <div class="opt" onclick="pick(this,10,'B')"><div class="ltr">B</div><span>Pengecaman Corak</span></div>
+      <div class="opt" onclick="pick(this,10,'C')"><div class="ltr">C</div><span>Peniskalaan</span></div>
+      <div class="opt" onclick="pick(this,10,'D')"><div class="ltr">D</div><span>Pengitlakan</span></div>
+    </div>
+    <p class="q-fb" id="qf10"></p>
+  </div>
+
+  <div style="text-align:center;margin:1.5rem 0;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-blue" onclick="submitQ()">✅ Semak Jawapan</button>
+    <button class="btn btn-ghost" onclick="resetQ()">↺ Cuba Semula</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreBig">0/10</div>
+    <p class="score-sub">soalan dijawab betul</p>
+    <p class="score-msg" id="scoreMsg"></p>
+    <div style="margin-top:1.2rem">
+      <button class="btn btn-green" onclick="resetQ()">↺ Cuba Semula</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ SUMMARY ════════════════════════════════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">⭐</div>
+  <div><h2>Rumusan Bab 1</h2><p>Yang paling penting untuk ingat!</p></div>
+</div>
+
+<div class="sum-grid">
+  <div class="sum-card">
+    <div class="se">🧩</div><h4>Leraian</h4>
+    <p>Pecah masalah besar kepada bahagian kecil-kecil</p>
+  </div>
+  <div class="sum-card">
+    <div class="se">🔍</div><h4>Pengecaman Corak</h4>
+    <p>Cari persamaan dalam masalah-masalah</p>
+  </div>
+  <div class="sum-card">
+    <div class="se">🎯</div><h4>Peniskalaan</h4>
+    <p>Fokus yang penting, buang yang tidak perlu</p>
+  </div>
+  <div class="sum-card">
+    <div class="se">♾️</div><h4>Pengitlakan</h4>
+    <p>Bina formula / cara untuk guna semula</p>
+  </div>
+</div>
+
+<div class="congrats mt-lg">
+  <h3>🎉 Tahniah, Juara!</h3>
+  <p>Kamu telah habis Bab 1. Bab seterusnya: <strong>Perwakilan Data</strong> – bagaimana komputer simpan maklumat.</p>
+</div>
+
+</main>
+
+<footer>Asas Sains Komputer Tingkatan 1 KSSM &nbsp;·&nbsp; Dibina untuk pembelajaran interaktif</footer>
+
+<script>
+// ── scroll helper ──
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+// ── example tabs ──
+function showEx(prefix, key){
+  document.querySelectorAll(`[id^="${prefix}-"]`).forEach(el=>{el.classList.remove('active')});
+  document.querySelectorAll(`.ex-tab`).forEach(btn=>{
+    if(btn.getAttribute('onclick')===`showEx('${prefix}','${key}')`)btn.classList.add('active');
+    else if(btn.getAttribute('onclick')&&btn.getAttribute('onclick').startsWith(`showEx('${prefix}'`))btn.classList.remove('active');
+  });
+  document.getElementById(`${prefix}-${key}`).classList.add('active');
+  trackProgress();
+}
+
+// ── Pattern game ──
+const patDone={};let patScore=0;
+function chkPat(n,val,correct,btn){
+  if(patDone[n])return;
+  const sq=document.getElementById('sq'+n);
+  const fb=document.getElementById('gfb'+n);
+  const allBtns=btn.parentElement.querySelectorAll('.ans-btn');
+  if(correct){
+    patDone[n]=true; patScore++;
+    sq.textContent=val; sq.style.background='#f0fdf4'; sq.style.borderColor='#16a34a';
+    btn.classList.add('ok'); allBtns.forEach(b=>b.disabled=true);
+    fb.textContent='✅ Betul! Kamu kenal coraknya!'; fb.className='game-fb ok';
+    trackProgress();
+  } else {
+    btn.classList.add('no');
+    fb.textContent='❌ Cuba lagi! Perhatikan corak dengan teliti.'; fb.className='game-fb no';
+    setTimeout(()=>btn.classList.remove('no'),400);
+  }
+}
+
+// ── Sort/drag game ──
+let dragEl=null; let sortScore=0;
+function ds(e){dragEl=e.target}
+function dov(e){e.preventDefault();e.currentTarget.classList.add('over')}
+function dp(e,cat){
+  e.preventDefault();
+  const col=e.currentTarget;
+  col.classList.remove('over');
+  if(!dragEl||dragEl.classList.contains('placed'))return;
+  const correctCat=dragEl.dataset.cat;
+  if(correctCat===cat){
+    const span=document.createElement('span');
+    span.className='placed-chip';
+    span.textContent=dragEl.dataset? dragEl.textContent : '';
+    col.appendChild(span);
+    dragEl.classList.add('placed');
+    col.classList.add('correct-col');
+    sortScore++;
+    if(sortScore===8){
+      const m=document.getElementById('sortMsg');
+      m.innerHTML='🎉 <strong>Hebat!</strong> Semua item disusun dengan betul!';
+      m.style.cssText='display:block;background:#f0fdf4;border:1px solid #86efac;padding:.6rem 1rem;border-radius:.5rem;color:#15803d';
+    }
+    trackProgress();
+  } else {
+    col.style.borderColor='#ef4444'; col.style.background='#fef2f2';
+    setTimeout(()=>{col.style.borderColor='';col.style.background='';},500);
+  }
+}
+
+// ── Quiz ──
+const correct={1:'B',2:'B',3:'C',4:'B',5:'C',6:'D',7:'B',8:'B',9:'B',10:'A'};
+const explain={
+  1:'Pemikiran komputasional ialah proses pemikiran untuk menyelesaikan masalah menggunakan konsep asas sains komputer — bukan cara berfikir robot.',
+  2:'Urutan yang betul ialah: Leraian → Pengecaman Corak → Peniskalaan → Pengitlakan.',
+  3:'Leraian (Decomposition) = memecahkan masalah kompleks kepada bahagian lebih kecil.',
+  4:'Aminah mengenal pasti persamaan antara kek-kek yang berbeza — ini adalah Pengecaman Corak.',
+  5:'Kumpulan James memfokus pada perkara penting (struktur, halaman, aliran) dan abaikan yang kurang penting (warna, reka bentuk) — ini Peniskalaan.',
+  6:'Aimi membina formula n² yang boleh digunakan untuk semua susunan kubus serupa — ini Pengitlakan.',
+  7:'Pengaturcaraan (Coding) bukan teknik pemikiran komputasional. 4 teknik ialah: Leraian, Pengecaman Corak, Peniskalaan, Pengitlakan.',
+  8:'Peniskalaan membolehkan masalah diselesaikan dengan lebih cepat dan tepat kerana kita fokus pada aspek penting sahaja.',
+  9:'"Semua spesies bunga kebangsaan mempunyai 5 kelopak" menunjukkan ciri yang sama pada semua bunga — Pengecaman Corak.',
+  10:'Ali memecahkan kerja membuat meja kepada 5 langkah kecil — ini adalah Leraian.'
+};
+const picks={};
+function pick(el,q,choice){
+  const qEl=el.closest('.quiz-q');
+  if(qEl.classList.contains('locked'))return;
+  qEl.querySelectorAll('.opt').forEach(o=>o.classList.remove('picked'));
+  el.classList.add('picked');
+  picks[q]=choice;
+  trackProgress();
+}
+function submitQ(){
+  let sc=0;
+  for(let q=1;q<=10;q++){
+    const qEl=document.querySelector(`[data-q="${q}"]`);
+    qEl.classList.add('locked');
+    const ua=picks[q], ca=correct[q];
+    qEl.querySelectorAll('.opt').forEach((o,i)=>{
+      const ltr=['A','B','C','D'][i];
+      if(ltr===ca) o.classList.add('right');
+      if(ltr===ua&&ua!==ca) o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qf'+q);
+    if(ua===ca){sc++; fb.textContent='✅ Betul! '+explain[q]; fb.className='q-fb show ok';}
+    else if(ua){fb.textContent='❌ Jawapan betul: '+ca+'. '+explain[q]; fb.className='q-fb show no';}
+    else{fb.textContent='ℹ️ Tidak dijawab. Jawapan: '+ca+'. '+explain[q]; fb.className='q-fb show no';}
+  }
+  document.getElementById('scoreBig').textContent=sc+'/10';
+  const msgs=[[10,'🌟 SEMPURNA! Kamu bintang Bab 1!'],[8,'🎉 Cemerlang! Hampir sempurna!'],[6,'👍 Bagus! Ulang kaji sedikit.'],[4,'📚 Teruskan! Baca semula nota ya.'],[0,'💪 Jangan putus asa! Cuba semula!']];
+  for(const[min,txt]of msgs){if(sc>=min){document.getElementById('scoreMsg').textContent=txt;break;}}
+  const box=document.getElementById('scoreBox');
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQ(){
+  for(let q=1;q<=10;q++){
+    const qEl=document.querySelector(`[data-q="${q}"]`);
+    qEl.classList.remove('locked');
+    qEl.querySelectorAll('.opt').forEach(o=>o.classList.remove('picked','right','wrong'));
+    const fb=document.getElementById('qf'+q);
+    fb.className='q-fb'; fb.textContent='';
+    delete picks[q];
+  }
+  document.getElementById('scoreBox').classList.remove('show');
+  trackProgress();
+}
+
+// ── Progress ──
+function trackProgress(){
+  const techEx = document.querySelectorAll('.ex-panel.active').length;
+  const pg = Object.keys(patDone).filter(k=>patDone[k]).length;
+  const sq = Object.keys(picks).length;
+  const total = 9+4+10;
+  const done = techEx+pg+sq;
+  const pct = Math.min(100,Math.round(done/total*100));
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pTxt').textContent='Kemajuan kamu: '+pct+'%';
+}
+trackProgress();
+</script>
+</body>
+</html>
