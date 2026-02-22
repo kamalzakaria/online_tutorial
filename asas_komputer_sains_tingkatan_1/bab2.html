@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 2 – Perwakilan Data | ASK Tingkatan 1</title>
+<style>
+:root{
+  --teal:#0d9488;--sky:#0284c7;--blue:#2563eb;--indigo:#4f46e5;
+  --green:#16a34a;--amber:#d97706;--orange:#ea580c;--purple:#7c3aed;
+  --red:#dc2626;--pink:#db2777;
+  --bg:#f8faff;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--r:1.2rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.7}
+
+/* NAV */
+.top-nav{background:#1e293b;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.top-nav a{color:#94a3b8;text-decoration:none;font-size:.82rem;font-weight:600;padding:.3rem .7rem;border-radius:.4rem;transition:.15s}
+.top-nav a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.top-nav a.active{color:#fff;background:#4f46e5}
+.top-nav .home{color:#64748b;font-size:.8rem;margin-right:.3rem}
+
+/* HERO */
+.hero{
+  background:linear-gradient(160deg,#0f766e 0%,#0d9488 40%,#0ea5e9 100%);
+  color:#fff;text-align:center;padding:3rem 1rem 4rem;position:relative;overflow:hidden;
+}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:2rem;padding:.3rem 1.1rem;font-size:.8rem;letter-spacing:.06em;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:.6rem}
+.hero p{font-size:1.05rem;opacity:.88;max-width:540px;margin:0 auto}
+.prog-wrap{background:rgba(255,255,255,.2);border-radius:2rem;height:10px;max-width:360px;margin:1.5rem auto .4rem;overflow:hidden}
+.prog-fill{height:100%;background:#fff;border-radius:2rem;width:0%;transition:width .5s ease}
+.prog-txt{color:rgba(255,255,255,.8);font-size:.8rem;text-align:center}
+
+/* LAYOUT */
+main{max-width:880px;margin:0 auto;padding:2rem 1rem 5rem}
+.sec-head{display:flex;align-items:center;gap:.9rem;margin:3.5rem 0 1.5rem}
+.sec-head:first-child{margin-top:1rem}
+.sec-icon{width:3.2rem;height:3.2rem;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.sec-head h2{font-size:1.4rem;font-weight:800}
+.sec-head p{font-size:.85rem;color:var(--muted)}
+
+/* CARDS */
+.card{background:var(--card);border:2px solid var(--border);border-radius:var(--r);padding:1.8rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.def-box{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:2px solid #5eead4;border-radius:var(--r);padding:1.8rem;margin-bottom:1.5rem}
+.def-box h3{font-size:1.15rem;font-weight:800;color:#0f766e;margin-bottom:.7rem}
+.def-box .def-text{font-size:1.05rem;background:#fff;border-left:5px solid #0d9488;padding:1rem 1.2rem;border-radius:0 .7rem .7rem 0;color:#1e293b}
+.pill{display:inline-flex;align-items:center;gap:.3rem;padding:.3rem .8rem;border-radius:2rem;font-size:.82rem;font-weight:700;margin:.2rem}
+
+/* TOPIC BLOCKS */
+.topic{border-radius:var(--r);padding:2rem;margin-bottom:2rem}
+.topic.tp1{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:2px solid #5eead4}
+.topic.tp2{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd}
+.topic.tp3{background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:2px solid #d8b4fe}
+.topic-hd{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.topic-emoji{font-size:3rem}
+.topic-hd h3{font-size:1.35rem;font-weight:900}
+.topic-hd small{font-size:.85rem;opacity:.6;font-style:italic;display:block}
+
+/* binary place-value table */
+.pv-table{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:1rem 0}
+.pv-cell{text-align:center;border-radius:.5rem;padding:.4rem .1rem;font-size:.82rem}
+.pv-val{background:#0d9488;color:#fff;font-weight:800;font-size:.78rem;padding:.3rem;border-radius:.4rem .4rem 0 0}
+.pv-bit{background:#fff;border:2px solid #5eead4;font-size:1.1rem;font-weight:900;padding:.4rem;border-radius:0 0 .4rem .4rem;cursor:pointer;transition:.15s;user-select:none}
+.pv-bit:hover{background:#f0fdfa}
+.pv-bit.on{background:#0d9488;color:#fff;border-color:#0d9488}
+.pv-product{background:#f0fdfa;border:1px solid #99f6e4;font-size:.78rem;padding:.25rem;border-radius:.3rem;margin-top:2px;min-height:1.6rem;display:flex;align-items:center;justify-content:center;color:#0f766e;font-weight:700}
+.pv-result{background:#fff;border:2px solid #0d9488;border-radius:.7rem;padding:.8rem 1.2rem;text-align:center;font-size:1.1rem;font-weight:800;color:#0f766e;margin-top:.6rem}
+
+/* step-by-step */
+.step-row{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1rem}
+.step-num{width:2.2rem;height:2.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;flex-shrink:0}
+.sn-teal{background:#0d9488}.sn-blue{background:#2563eb}.sn-purple{background:#7c3aed}.sn-amber{background:#d97706}
+.step-row p{font-size:.92rem;line-height:1.55;padding-top:.15rem}
+
+/* div-2 table */
+.div2-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.8rem 0}
+.div2-table th{background:#0d9488;color:#fff;padding:.5rem .8rem;text-align:center}
+.div2-table td{border:1px solid #99f6e4;padding:.45rem .8rem;text-align:center}
+.div2-table tr:nth-child(even) td{background:#f0fdfa}
+.div2-table .rem1{color:#dc2626;font-weight:700}
+.div2-table .rem0{color:#0d9488;font-weight:700}
+
+/* flow/visual */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.8rem 0}
+.flow-item{background:#fff;border:2px solid var(--border);border-radius:.6rem;padding:.5rem .9rem;font-size:.88rem;font-weight:600}
+.flow-arrow{font-size:1.2rem;color:var(--muted)}
+
+/* data units ladder */
+.ladder{display:flex;flex-direction:column;gap:.5rem;margin:1rem 0}
+.rung{display:flex;align-items:center;gap:.8rem;background:#fff;border:2px solid var(--border);border-radius:.7rem;padding:.6rem 1rem;transition:.2s}
+.rung:hover{border-color:#0284c7;background:#eff6ff;transform:translateX(4px)}
+.rung .unit{font-size:1rem;font-weight:800;min-width:80px;color:#0f172a}
+.rung .eq{font-size:.85rem;color:var(--muted);flex:1}
+.rung .badge-r{background:#dbeafe;color:#1d4ed8;font-size:.75rem;font-weight:700;padding:.2rem .6rem;border-radius:1rem}
+.rung.bit-r{border-color:#fcd34d;background:#fffbeb}.rung.bit-r .unit{color:#92400e}
+.rung.byte-r{border-color:#86efac;background:#f0fdf4}.rung.byte-r .unit{color:#14532d}
+.rung.kb-r{border-color:#93c5fd;background:#eff6ff}.rung.kb-r .unit{color:#1e40af}
+.rung.mb-r{border-color:#c4b5fd;background:#f5f3ff}.rung.mb-r .unit{color:#4c1d95}
+.rung.gb-r{border-color:#f9a8d4;background:#fdf2f8}.rung.gb-r .unit{color:#9d174d}
+.rung.tb-r{border-color:#fca5a5;background:#fef2f2}.rung.tb-r .unit{color:#7f1d1d}
+
+/* tabs */
+.ex-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem}
+.ex-tab{background:rgba(255,255,255,.6);border:2px solid rgba(0,0,0,.1);border-radius:.5rem;padding:.35rem .85rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s}
+.ex-tab.active,.ex-tab:hover{background:#fff;border-color:#0d9488;color:#0f766e}
+.ex-panel{display:none}.ex-panel.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* story box */
+.story-box{background:rgba(255,255,255,.75);border-radius:.8rem;padding:1.2rem;margin-bottom:1rem}
+.story-box h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:.7rem}
+
+/* ASCII grid */
+.ascii-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:.4rem;margin:1rem 0}
+.ascii-card{background:#fff;border:2px solid var(--border);border-radius:.6rem;padding:.5rem .3rem;text-align:center;cursor:pointer;transition:.15s}
+.ascii-card:hover{border-color:#0d9488;background:#f0fdfa;transform:scale(1.05)}
+.ascii-card.active{border-color:#0d9488;background:#0d9488;color:#fff}
+.ascii-card .ac-char{font-size:1.3rem;font-weight:800}
+.ascii-card .ac-dec{font-size:.7rem;color:inherit;opacity:.7}
+.ascii-preview{background:#fff;border:2px solid #5eead4;border-radius:.8rem;padding:1rem;margin-top:.7rem;font-family:monospace;font-size:1rem;min-height:60px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ascii-preview .char-big{font-size:2.5rem;font-weight:900;color:#0d9488}
+.ascii-preview .bin-str{font-size:1.1rem;letter-spacing:.15em;color:#374151;font-family:monospace;margin-top:.3rem}
+.ascii-preview .dec-str{font-size:.85rem;color:var(--muted);margin-top:.2rem}
+
+/* interactive converter */
+.converter-wrap{background:rgba(255,255,255,.8);border-radius:.9rem;padding:1.2rem;margin:1rem 0}
+.converter-wrap h4{font-size:.9rem;font-weight:700;margin-bottom:.8rem;color:#0f766e}
+.conv-input{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.7rem}
+.conv-input input{
+  border:2px solid #5eead4;border-radius:.5rem;padding:.5rem .9rem;font-size:1.1rem;
+  font-family:monospace;width:160px;outline:none;
+}
+.conv-input input:focus{border-color:#0d9488}
+.conv-btn{background:#0d9488;color:#fff;border:none;border-radius:.5rem;padding:.5rem 1rem;font-size:.9rem;font-weight:700;cursor:pointer}
+.conv-btn:hover{background:#0f766e}
+.conv-result{background:#f0fdfa;border:2px solid #5eead4;border-radius:.6rem;padding:.7rem 1rem;font-size:1.05rem;font-family:monospace;font-weight:700;color:#0f766e;display:none}
+
+/* games */
+.game-card{background:#f8fafc;border:2.5px dashed #cbd5e1;border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
+.game-card h3{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.game-tag{background:#0d9488;color:#fff;font-size:.7rem;padding:.15rem .6rem;border-radius:1rem}
+.game-card .instr{font-size:.88rem;color:var(--muted);margin-bottom:1rem}
+.mc-opts{display:grid;gap:.5rem;margin-top:.7rem}
+.mc-opt{display:flex;align-items:center;gap:.8rem;padding:.6rem 1rem;border:2px solid var(--border);border-radius:.6rem;cursor:pointer;font-size:.9rem;transition:.15s}
+.mc-opt:hover:not(.locked){border-color:#0d9488;background:#f0fdfa}
+.mc-opt .ltr{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.mc-opt.picked{border-color:#0d9488}.mc-opt.picked .ltr{background:#0d9488;border-color:#0d9488;color:#fff}
+.mc-opt.right{border-color:var(--green);background:#f0fdf4}.mc-opt.right .ltr{background:var(--green);border-color:var(--green);color:#fff}
+.mc-opt.wrong{border-color:var(--red);background:#fef2f2}.mc-opt.wrong .ltr{background:var(--red);border-color:var(--red);color:#fff}
+.q-fb{font-size:.84rem;border-radius:.45rem;padding:.55rem .85rem;margin-top:.6rem;display:none}
+.q-fb.show{display:block}
+.q-fb.ok{background:#f0fdf4;color:#15803d}
+.q-fb.no{background:#fef2f2;color:var(--red)}
+
+/* quiz */
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1.3rem 1.5rem;margin-bottom:1rem}
+.q-no{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-bottom:.4rem}
+.q-stem{font-size:1rem;font-weight:700;margin-bottom:1rem;line-height:1.55}
+.scenario{background:#f8fafc;border-left:4px solid #0d9488;padding:.7rem 1rem;border-radius:0 .5rem .5rem 0;font-size:.92rem;font-weight:400;color:#374151;margin-bottom:.8rem;display:block}
+.exam-label{display:inline-flex;align-items:center;gap:.4rem;background:#f0fdfa;border:1.5px solid #5eead4;border-radius:.4rem;padding:.2rem .7rem;font-size:.75rem;font-weight:700;color:#0f766e;margin-bottom:.7rem}
+.score-box{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:2px solid #5eead4;border-radius:var(--r);padding:2rem;text-align:center;display:none;margin-top:1rem}
+.score-box.show{display:block;animation:fadeIn .4s ease}
+.score-big{font-size:3.5rem;font-weight:900;color:#0d9488}
+.score-msg{font-size:1.05rem;font-weight:600;margin-top:.5rem}
+.score-sub{color:var(--muted);font-size:.9rem;margin-top:.3rem}
+
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.6rem;border-radius:.7rem;font-size:.95rem;font-weight:700;cursor:pointer;border:none;transition:.15s}
+.btn:hover{opacity:.86;transform:translateY(-1px)}
+.btn-teal{background:#0d9488;color:#fff}
+.btn-ghost{background:transparent;border:2px solid var(--border);color:var(--text)}
+
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+.sum-card{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1.2rem;text-align:center}
+.sum-card .se{font-size:2.5rem;margin-bottom:.5rem}
+.sum-card h4{font-weight:800;margin-bottom:.2rem;font-size:.95rem}
+.sum-card p{font-size:.82rem;color:var(--muted)}
+.congrats{background:linear-gradient(135deg,#0f766e,#0284c7);color:#fff;border-radius:var(--r);padding:2rem;text-align:center;margin-top:2rem}
+.congrats h3{font-size:1.4rem;font-weight:900;margin-bottom:.4rem}
+
+.highlight{background:#fef9c3;border-radius:.25rem;padding:0 .2rem}
+.mono{font-family:monospace;font-weight:700}
+footer{text-align:center;padding:2rem 1rem;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
+@media(max-width:600px){.pv-table{gap:2px}.pv-cell{font-size:.7rem}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <span class="home">📚 ASK T1</span>
+  <a href="index.html">Bab 1: Pemikiran Komputasional</a>
+  <a href="bab2.html" class="active">Bab 2: Perwakilan Data</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div style="font-size:2.2rem;margin-bottom:.5rem">💾 0️⃣1️⃣ 🖼️</div>
+  <span class="badge">Asas Sains Komputer · Tingkatan 1 · KSSM</span>
+  <h1>Bab 2<br>Perwakilan Data</h1>
+  <p>Ketahui bagaimana komputer simpan segala-galanya sebagai 0 dan 1!</p>
+  <div class="prog-wrap"><div class="prog-fill" id="pFill"></div></div>
+  <p class="prog-txt" id="pTxt">Kemajuan kamu: 0%</p>
+</header>
+
+<main>
+
+<!-- INTRO -->
+<div class="sec-head" style="margin-top:1rem">
+  <div class="sec-icon" style="background:#f0fdfa">🤔</div>
+  <div><h2>Apa itu Perwakilan Data?</h2><p>Cara komputer "faham" maklumat</p></div>
+</div>
+
+<div class="def-box">
+  <h3>Ingat ini!</h3>
+  <div class="def-text">Komputer hanya faham dua benda: <span class="highlight"><strong>0</strong></span> dan <span class="highlight"><strong>1</strong></span>. Semua teks, gambar, bunyi, video — semuanya disimpan sebagai rangkaian 0 dan 1 dalam komputer!</div>
+  <p style="margin-top:.9rem;font-size:.95rem">🔦 Bayangkan suis lampu: <strong>0 = padam (OFF)</strong>, <strong>1 = hidup (ON)</strong>. Komputer ada berbilion-bilion "suis" kecil yang dipanggil <em>bit</em>!</p>
+  <div style="margin-top:1rem">
+    <span class="pill" style="background:#ccfbf1;color:#0f766e">💡 Sistem Nombor Perduaan</span>
+    <span class="pill" style="background:#dbeafe;color:#1e40af">🔡 Pengekodan ASCII</span>
+    <span class="pill" style="background:#f3e8ff;color:#6b21a8">📏 Ukuran Data</span>
+  </div>
+</div>
+
+<!-- ══════════════════ TOPIK 1: SISTEM NOMBOR PERDUAAN ══════════════════ -->
+<div id="topik1"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#ccfbf1">💡</div>
+  <div><h2>Topik 1: Sistem Nombor Perduaan</h2><p>Nombor dalam bahasa komputer</p></div>
+</div>
+
+<div class="topic tp1">
+  <div class="topic-hd">
+    <span class="topic-emoji">💡</span>
+    <div><h3>Sistem Nombor Perduaan</h3><small>Binary Number System</small></div>
+  </div>
+
+  <div class="story-box">
+    <h4>🔦 Fahami dengan analogi mudah</h4>
+    <p style="font-size:.95rem;margin-bottom:.8rem">Bayangkan kamu ada <strong>8 lampu</strong> dalam satu baris. Setiap lampu boleh <strong>HIDUP (1)</strong> atau <strong>PADAM (0)</strong>. Kombinasi lampu yang berbeza mewakili nombor yang berbeza!</p>
+    <div style="display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;margin:.6rem 0">
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#fbbf24;margin:0 auto;box-shadow:0 0 12px #fbbf24;font-size:1.2rem;display:flex;align-items:center;justify-content:center">💡</div><small style="font-size:.7rem">1</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#e2e8f0;margin:0 auto;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.4">💡</div><small style="font-size:.7rem">0</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#fbbf24;margin:0 auto;box-shadow:0 0 12px #fbbf24;font-size:1.2rem;display:flex;align-items:center;justify-content:center">💡</div><small style="font-size:.7rem">1</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#fbbf24;margin:0 auto;box-shadow:0 0 12px #fbbf24;font-size:1.2rem;display:flex;align-items:center;justify-content:center">💡</div><small style="font-size:.7rem">1</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#e2e8f0;margin:0 auto;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.4">💡</div><small style="font-size:.7rem">0</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#fbbf24;margin:0 auto;box-shadow:0 0 12px #fbbf24;font-size:1.2rem;display:flex;align-items:center;justify-content:center">💡</div><small style="font-size:.7rem">1</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#e2e8f0;margin:0 auto;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:.4">💡</div><small style="font-size:.7rem">0</small></div>
+      <div style="text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:#fbbf24;margin:0 auto;box-shadow:0 0 12px #fbbf24;font-size:1.2rem;display:flex;align-items:center;justify-content:center">💡</div><small style="font-size:.7rem">1</small></div>
+    </div>
+    <p style="text-align:center;font-size:.88rem;color:var(--muted)">1011 0101₂ = 181 dalam nombor biasa (perpuluhan)</p>
+  </div>
+
+  <!-- 1A: Binary to Decimal -->
+  <div class="story-box" style="margin-top:1rem">
+    <h4>📖 Cara 1: Tukar Perduaan → Perpuluhan</h4>
+    <p style="font-size:.9rem;margin-bottom:.8rem">Setiap kedudukan bit mempunyai <strong>nilai tempat</strong> yang berbeza (darab 2 setiap kali dari kanan):</p>
+
+    <div class="pv-table" id="demoTable">
+      <div class="pv-cell"><div class="pv-val">128</div><div class="pv-bit on" data-val="128" onclick="toggleBit(this)">1</div><div class="pv-product" id="pr-128">128</div></div>
+      <div class="pv-cell"><div class="pv-val">64</div><div class="pv-bit" data-val="64" onclick="toggleBit(this)">0</div><div class="pv-product" id="pr-64">0</div></div>
+      <div class="pv-cell"><div class="pv-val">32</div><div class="pv-bit on" data-val="32" onclick="toggleBit(this)">1</div><div class="pv-product" id="pr-32">32</div></div>
+      <div class="pv-cell"><div class="pv-val">16</div><div class="pv-bit on" data-val="16" onclick="toggleBit(this)">1</div><div class="pv-product" id="pr-16">16</div></div>
+      <div class="pv-cell"><div class="pv-val">8</div><div class="pv-bit" data-val="8" onclick="toggleBit(this)">0</div><div class="pv-product" id="pr-8">0</div></div>
+      <div class="pv-cell"><div class="pv-val">4</div><div class="pv-bit on" data-val="4" onclick="toggleBit(this)">1</div><div class="pv-product" id="pr-4">4</div></div>
+      <div class="pv-cell"><div class="pv-val">2</div><div class="pv-bit" data-val="2" onclick="toggleBit(this)">0</div><div class="pv-product" id="pr-2">0</div></div>
+      <div class="pv-cell"><div class="pv-val">1</div><div class="pv-bit on" data-val="1" onclick="toggleBit(this)">1</div><div class="pv-product" id="pr-1">1</div></div>
+    </div>
+    <div class="pv-result" id="pvResult">128 + 32 + 16 + 4 + 1 = <span style="color:#dc2626">181</span></div>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:.5rem;text-align:center">👆 Klik mana-mana bit untuk tukar antara 0 dan 1 — lihat nilai berubah!</p>
+  </div>
+
+  <!-- contoh manual -->
+  <div class="story-box">
+    <h4>✏️ Contoh Kiraan Manual: 1011₂ → Perpuluhan</h4>
+    <div style="overflow-x:auto">
+      <table style="border-collapse:collapse;font-size:.88rem;width:100%;text-align:center">
+        <tr>
+          <th style="background:#0d9488;color:#fff;padding:.4rem .6rem;border-radius:.4rem 0 0 0">Bit</th>
+          <th style="background:#0d9488;color:#fff;padding:.4rem .6rem">1</th>
+          <th style="background:#0d9488;color:#fff;padding:.4rem .6rem">0</th>
+          <th style="background:#0d9488;color:#fff;padding:.4rem .6rem">1</th>
+          <th style="background:#0d9488;color:#fff;padding:.4rem .6rem;border-radius:0 .4rem 0 0">1</th>
+        </tr>
+        <tr>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem;background:#f0fdfa;font-weight:700">Nilai Tempat</td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem">2³ = <strong>8</strong></td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem">2² = <strong>4</strong></td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem">2¹ = <strong>2</strong></td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem">2⁰ = <strong>1</strong></td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem;background:#f0fdfa;font-weight:700">Bit × Nilai</td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem;color:#dc2626;font-weight:700">1×8 = 8</td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem;color:var(--muted)">0×4 = 0</td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem;color:#dc2626;font-weight:700">1×2 = 2</td>
+          <td style="border:1px solid #99f6e4;padding:.4rem .6rem;color:#dc2626;font-weight:700">1×1 = 1</td>
+        </tr>
+      </table>
+    </div>
+    <div style="background:#f0fdfa;border:2px solid #5eead4;border-radius:.6rem;padding:.7rem;text-align:center;margin-top:.7rem;font-size:1rem;font-weight:800;color:#0f766e">
+      1011₂ = 8 + 0 + 2 + 1 = <span style="color:#dc2626;font-size:1.2rem">11</span>₁₀
+    </div>
+  </div>
+
+  <!-- Interactive converter B→D -->
+  <div class="converter-wrap">
+    <h4>🧮 Cuba Sendiri: Tukar Perduaan → Perpuluhan</h4>
+    <div class="conv-input">
+      <input type="text" id="binInput" placeholder="cth: 1010" maxlength="8" oninput="this.value=this.value.replace(/[^01]/g,'')"/>
+      <button class="conv-btn" onclick="convertBinToDec()">Tukar →</button>
+    </div>
+    <div class="conv-result" id="binResult"></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.4rem">Taip nombor perduaan (0 dan 1 sahaja, maks 8 digit)</p>
+  </div>
+
+  <!-- 1B: Decimal to Binary -->
+  <div class="story-box" style="margin-top:1rem">
+    <h4>📖 Cara 2: Tukar Perpuluhan → Perduaan (Kaedah Bahagi 2)</h4>
+    <p style="font-size:.9rem;margin-bottom:.8rem">Bahagi nombor dengan 2 berulang kali. Kumpul baki dari <strong>bawah ke atas</strong>.</p>
+    <p style="font-size:.9rem;margin-bottom:.6rem"><strong>Contoh: Tukar 25 → Perduaan</strong></p>
+    <table class="div2-table">
+      <tr><th>Nombor</th><th>÷ 2</th><th>Hasil</th><th>Baki</th></tr>
+      <tr><td>25</td><td>÷ 2</td><td>12</td><td class="rem1">1 ←</td></tr>
+      <tr><td>12</td><td>÷ 2</td><td>6</td><td class="rem0">0 ←</td></tr>
+      <tr><td>6</td><td>÷ 2</td><td>3</td><td class="rem0">0 ←</td></tr>
+      <tr><td>3</td><td>÷ 2</td><td>1</td><td class="rem1">1 ←</td></tr>
+      <tr><td>1</td><td>÷ 2</td><td>0</td><td class="rem1">1 ←</td></tr>
+    </table>
+    <div style="background:#f0fdfa;border:2px solid #5eead4;border-radius:.6rem;padding:.7rem;text-align:center;font-size:1rem;font-weight:800;color:#0f766e">
+      Baca baki dari bawah ke atas: 25₁₀ = <span style="color:#dc2626">11001</span>₂
+    </div>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:.5rem">✅ Semak: 16+8+0+0+1 = 25 ✓</p>
+  </div>
+
+  <!-- Interactive converter D→B -->
+  <div class="converter-wrap">
+    <h4>🧮 Cuba Sendiri: Tukar Perpuluhan → Perduaan</h4>
+    <div class="conv-input">
+      <input type="number" id="decInput" placeholder="cth: 25" min="0" max="255"/>
+      <button class="conv-btn" onclick="convertDecToBin()">Tukar →</button>
+    </div>
+    <div class="conv-result" id="decResult"></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.4rem">Taip nombor 0–255</p>
+  </div>
+
+  <!-- Binary addition -->
+  <div class="story-box" style="margin-top:1rem">
+    <h4>➕ Tambah Nombor Perduaan</h4>
+    <p style="font-size:.9rem;margin-bottom:.7rem">Peraturan mudah:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.5rem;margin-bottom:.8rem">
+      <div style="background:#fff;border:2px solid #5eead4;border-radius:.6rem;padding:.6rem;text-align:center"><span class="mono">0 + 0 = 0</span></div>
+      <div style="background:#fff;border:2px solid #5eead4;border-radius:.6rem;padding:.6rem;text-align:center"><span class="mono">0 + 1 = 1</span></div>
+      <div style="background:#fff;border:2px solid #5eead4;border-radius:.6rem;padding:.6rem;text-align:center"><span class="mono">1 + 0 = 1</span></div>
+      <div style="background:#fff;border:2px solid #5eead4;border-radius:.6rem;padding:.6rem;text-align:center"><span class="mono">1 + 1 = 10</span><br><span style="font-size:.72rem;color:var(--muted)">(tulis 0, bawa 1)</span></div>
+    </div>
+    <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">Contoh: 1010 + 0110</p>
+    <div style="font-family:monospace;font-size:1.1rem;background:#fff;border:2px solid #5eead4;border-radius:.6rem;padding:.9rem 1.2rem;line-height:2">
+      <div style="color:var(--muted);font-size:.78rem;letter-spacing:.1em">BAWA:&nbsp;&nbsp;&nbsp; 1 1 0 0</div>
+      <div>&nbsp;&nbsp;1 0 1 0</div>
+      <div>+ 0 1 1 0</div>
+      <div style="border-top:2px solid #0d9488;margin-top:.2rem;padding-top:.2rem;font-weight:900;color:#0d9488">&nbsp;&nbsp;1 0 0 0 0&nbsp; <span style="font-size:.8rem;font-weight:400;color:var(--muted)">= 16</span></div>
+    </div>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:.4rem">✅ Semak: 10 + 6 = 16 ✓</p>
+  </div>
+</div>
+
+<!-- ══════════════════ TOPIK 2: ASCII ══════════════════ -->
+<div id="topik2"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dbeafe">🔡</div>
+  <div><h2>Topik 2: Pengekodan ASCII</h2><p>Bagaimana huruf disimpan sebagai nombor</p></div>
+</div>
+
+<div class="topic tp2">
+  <div class="topic-hd">
+    <span class="topic-emoji">🔡</span>
+    <div><h3>ASCII</h3><small>American Standard Code for Information Interchange</small></div>
+  </div>
+
+  <div class="story-box">
+    <h4>💬 Fahami dengan mudah</h4>
+    <p style="font-size:.95rem;margin-bottom:.7rem">Komputer hanya faham nombor. Jadi bagaimana dia tahu huruf "A"? Jawapannya: setiap huruf diberikan <strong>nombor khas</strong>, kemudian nombor itu ditukar ke bentuk perduaan!</p>
+    <div class="flow">
+      <div class="flow-item">⌨️ Kamu taip "A"</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">🔢 ASCII: 65</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">💡 Perduaan: 01000001</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-item">💾 Disimpan dalam komputer</div>
+    </div>
+  </div>
+
+  <div class="story-box">
+    <h4>🔡 Corak ASCII Huruf Besar A–Z</h4>
+    <p style="font-size:.88rem;margin-bottom:.7rem">Huruf besar bermula dari <strong>A = 65</strong>. Setiap huruf seterusnya tambah 1. Huruf kecil bermula dari <strong>a = 97</strong>.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:.3rem;margin-bottom:.7rem">
+      <div style="text-align:center;background:#fff;border:1px solid #93c5fd;border-radius:.4rem;padding:.3rem"><strong>A</strong><br><small style="font-size:.7rem">65</small></div>
+      <div style="text-align:center;background:#fff;border:1px solid #93c5fd;border-radius:.4rem;padding:.3rem"><strong>B</strong><br><small style="font-size:.7rem">66</small></div>
+      <div style="text-align:center;background:#fff;border:1px solid #93c5fd;border-radius:.4rem;padding:.3rem"><strong>C</strong><br><small style="font-size:.7rem">67</small></div>
+      <div style="text-align:center;background:#fff;border:1px solid #93c5fd;border-radius:.4rem;padding:.3rem"><strong>D</strong><br><small style="font-size:.7rem">68</small></div>
+      <div style="text-align:center;background:#fff;border:1px solid #93c5fd;border-radius:.4rem;padding:.3rem"><strong>G</strong><br><small style="font-size:.7rem">71</small></div>
+      <div style="text-align:center;background:#fff;border:1px solid #93c5fd;border-radius:.4rem;padding:.3rem"><strong>H</strong><br><small style="font-size:.7rem">72</small></div>
+      <div style="text-align:center;background:#eff6ff;border:2px solid #6366f1;border-radius:.4rem;padding:.3rem"><strong>Z</strong><br><small style="font-size:.7rem">90</small></div>
+    </div>
+    <p style="font-size:.85rem;background:#eff6ff;padding:.6rem;border-radius:.5rem;color:#1e40af">💡 <strong>Tips ujian:</strong> Jika ASCII untuk 'G' = 01000111, maka 'H' = 01001000 (tambah 1 pada nombor perpuluhan dahulu: 71+1=72, kemudian tukar ke perduaan)</p>
+  </div>
+
+  <!-- ASCII interactive -->
+  <div class="story-box">
+    <h4>🎮 Terokai: Klik huruf untuk lihat kod ASCII & perduaannya!</h4>
+    <div class="ascii-grid" id="asciiGrid"></div>
+    <div class="ascii-preview" id="asciiPreview">
+      <p style="color:var(--muted);font-size:.9rem">👆 Klik mana-mana huruf di atas</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TOPIK 3: UKURAN DATA ══════════════════ -->
+<div id="topik3"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#f3e8ff">📏</div>
+  <div><h2>Topik 3: Ukuran Data</h2><p>Berapa besar sesuatu fail dalam komputer?</p></div>
+</div>
+
+<div class="topic tp3">
+  <div class="topic-hd">
+    <span class="topic-emoji">📏</span>
+    <div><h3>Unit Ukuran Data</h3><small>Data Measurement Units</small></div>
+  </div>
+
+  <div class="story-box">
+    <h4>🧁 Analogi mudah: Fikir macam bungkusan kuih!</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;font-size:.88rem">
+      <div style="background:#fffbeb;border:2px solid #fcd34d;border-radius:.6rem;padding:.7rem">
+        <strong>Bit</strong> = sebiji gula pasir (paling kecil!)<br>hanya boleh jadi 0 atau 1
+      </div>
+      <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:.6rem;padding:.7rem">
+        <strong>Byte</strong> = 1 biji kuih (8 biji gula = 1 kuih)<br>= 8 bit
+      </div>
+      <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:.6rem;padding:.7rem">
+        <strong>Kilobyte</strong> = 1 kotak kecil kuih<br>= 1,024 byte ≈ 1,000 byte
+      </div>
+      <div style="background:#faf5ff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.7rem">
+        <strong>Megabyte</strong> = 1 kotak besar kuih<br>= 1,024 KB ≈ 1 juta byte
+      </div>
+    </div>
+  </div>
+
+  <!-- Ladder -->
+  <div class="story-box">
+    <h4>📊 Tangga Saiz Data (klik untuk tahu lebih!)</h4>
+    <div class="ladder">
+      <div class="rung bit-r" onclick="showUnit('bit')">
+        <span class="unit">💡 Bit</span>
+        <span class="eq">Unit terkecil. Hanya 0 atau 1</span>
+        <span class="badge-r">Asas</span>
+      </div>
+      <div class="rung byte-r" onclick="showUnit('byte')">
+        <span class="unit">🍪 Byte</span>
+        <span class="eq">= 8 bit</span>
+        <span class="badge-r">1 huruf</span>
+      </div>
+      <div class="rung kb-r" onclick="showUnit('kb')">
+        <span class="unit">📄 Kilobyte (KB)</span>
+        <span class="eq">= 1,024 Byte</span>
+        <span class="badge-r">~1 halaman teks</span>
+      </div>
+      <div class="rung mb-r" onclick="showUnit('mb')">
+        <span class="unit">🖼️ Megabyte (MB)</span>
+        <span class="eq">= 1,024 KB</span>
+        <span class="badge-r">~1 gambar foto</span>
+      </div>
+      <div class="rung gb-r" onclick="showUnit('gb')">
+        <span class="unit">🎬 Gigabyte (GB)</span>
+        <span class="eq">= 1,024 MB</span>
+        <span class="badge-r">~1 filem HD</span>
+      </div>
+      <div class="rung tb-r" onclick="showUnit('tb')">
+        <span class="unit">🗄️ Terabyte (TB)</span>
+        <span class="eq">= 1,024 GB</span>
+        <span class="badge-r">~500 jam video</span>
+      </div>
+    </div>
+    <div id="unitDetail" style="display:none;background:#fff;border:2px solid #d8b4fe;border-radius:.7rem;padding:1rem;margin-top:.5rem;font-size:.9rem;animation:fadeIn .2s ease"></div>
+  </div>
+
+  <!-- Digital Image -->
+  <div class="ex-tabs">
+    <button class="ex-tab active" onclick="showEx('u','imej')">🖼️ Imej Digital</button>
+    <button class="ex-tab" onclick="showEx('u','audio')">🎵 Audio Digital</button>
+  </div>
+
+  <div id="u-imej" class="ex-panel active">
+    <div class="story-box">
+      <h4>🖼️ Cara Ukur Saiz Imej Digital</h4>
+      <p style="font-size:.9rem;margin-bottom:.8rem">Imej digital terdiri daripada <strong>piksel</strong> (titik-titik warna kecil). Saiz imej bergantung pada:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.8rem">
+        <div style="background:#fff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+          <p style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">📐 Resolusi</p>
+          <p style="font-size:.82rem;color:var(--muted)">Bilangan piksel (lebar × tinggi)<br>Contoh: 1920 × 1080 piksel</p>
+        </div>
+        <div style="background:#fff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+          <p style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">🎨 Kedalaman Warna</p>
+          <p style="font-size:.82rem;color:var(--muted)">Bit per piksel<br>1-bit = hitam/putih, 24-bit = warna penuh</p>
+        </div>
+      </div>
+      <div style="background:#f5f3ff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+        <p style="font-size:.88rem;font-weight:700;margin-bottom:.4rem">📝 Formula Saiz Imej:</p>
+        <p style="font-family:monospace;font-size:.95rem;font-weight:800;color:#4c1d95;text-align:center">Saiz = Lebar × Tinggi × Kedalaman Warna (bit) ÷ 8</p>
+        <p style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Contoh: 100×100 piksel, 24-bit warna = 100×100×24÷8 = <strong>30,000 byte = ~30 KB</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="u-audio" class="ex-panel">
+    <div class="story-box">
+      <h4>🎵 Cara Ukur Saiz Fail Audio Digital</h4>
+      <p style="font-size:.9rem;margin-bottom:.8rem">Audio digital diukur berdasarkan:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.8rem">
+        <div style="background:#fff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+          <p style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">🎚️ Kadar Pensampelan</p>
+          <p style="font-size:.82rem;color:var(--muted)">Berapa kali bunyi dirakam sesaat (kHz)<br>Contoh: 44.1 kHz, 128 kHz</p>
+        </div>
+        <div style="background:#fff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+          <p style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">🎙️ Kedalaman Bit</p>
+          <p style="font-size:.82rem;color:var(--muted)">Bit per sampel<br>Contoh: 8-bit, 16-bit, 24-bit</p>
+        </div>
+        <div style="background:#fff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+          <p style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">🔊 Saluran</p>
+          <p style="font-size:.82rem;color:var(--muted)">Mono = 1 saluran<br>Stereo = 2 saluran</p>
+        </div>
+        <div style="background:#fff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+          <p style="font-weight:800;font-size:.9rem;margin-bottom:.3rem">⏱️ Tempoh</p>
+          <p style="font-size:.82rem;color:var(--muted)">Berapa lama rakaman (saat/minit)</p>
+        </div>
+      </div>
+      <div style="background:#f5f3ff;border:2px solid #d8b4fe;border-radius:.6rem;padding:.8rem">
+        <p style="font-size:.88rem;font-weight:700;margin-bottom:.4rem">📝 Formula Saiz Audio:</p>
+        <p style="font-family:monospace;font-size:.88rem;font-weight:800;color:#4c1d95;text-align:center">Saiz = Kadar Pensampelan × Kedalaman Bit × Saluran × Tempoh</p>
+        <p style="font-size:.82rem;color:var(--muted);margin-top:.4rem">Contoh (soalan peperiksaan): 16-bit, Stereo, 128kHz, 3 minit:<br>= 128,000 × 16 × 2 × 180 = 737,280,000 bit ÷ 8 = <strong>~92 MB</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ GAMES ══════════════════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dcfce7">🎮</div>
+  <div><h2>Aktiviti Seronok!</h2><p>Uji kemahiran kamu</p></div>
+</div>
+
+<!-- Game: Convert binary quiz -->
+<div class="game-card">
+  <h3>💡 Teka Nilai Perduaan! <span class="game-tag">Permainan</span></h3>
+  <p class="instr">Tukar nombor perduaan kepada perpuluhan. Pilih jawapan yang betul.</p>
+  <div id="binGame"></div>
+</div>
+
+<!-- Game: Data unit quiz -->
+<div class="game-card">
+  <h3>📏 Padankan Saiz Data! <span class="game-tag">Permainan</span></h3>
+  <p class="instr">Pilih padanan yang betul untuk setiap unit data.</p>
+
+  <div id="dg1" style="margin-bottom:1.2rem">
+    <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">1 Byte = ?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="pickG(this,1,'A')"><div class="ltr">A</div><span>4 bit</span></div>
+      <div class="mc-opt" onclick="pickG(this,1,'B')"><div class="ltr">B</div><span>8 bit ✓</span></div>
+      <div class="mc-opt" onclick="pickG(this,1,'C')"><div class="ltr">C</div><span>16 bit</span></div>
+      <div class="mc-opt" onclick="pickG(this,1,'D')"><div class="ltr">D</div><span>1024 bit</span></div>
+    </div>
+    <p class="q-fb" id="gdf1"></p>
+  </div>
+
+  <div id="dg2" style="margin-bottom:1.2rem">
+    <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">1 Kilobyte (KB) = ?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="pickG(this,2,'A')"><div class="ltr">A</div><span>100 byte</span></div>
+      <div class="mc-opt" onclick="pickG(this,2,'B')"><div class="ltr">B</div><span>512 byte</span></div>
+      <div class="mc-opt" onclick="pickG(this,2,'C')"><div class="ltr">C</div><span>1,024 byte ✓</span></div>
+      <div class="mc-opt" onclick="pickG(this,2,'D')"><div class="ltr">D</div><span>1,000,000 byte</span></div>
+    </div>
+    <p class="q-fb" id="gdf2"></p>
+  </div>
+
+  <div id="dg3">
+    <p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">Antara berikut, yang manakah saiz terbesar?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="pickG(this,3,'A')"><div class="ltr">A</div><span>500 MB</span></div>
+      <div class="mc-opt" onclick="pickG(this,3,'B')"><div class="ltr">B</div><span>2 GB ✓</span></div>
+      <div class="mc-opt" onclick="pickG(this,3,'C')"><div class="ltr">C</div><span>1,500 MB</span></div>
+      <div class="mc-opt" onclick="pickG(this,3,'D')"><div class="ltr">D</div><span>0.5 TB</span></div>
+    </div>
+    <p class="q-fb" id="gdf3"></p>
+  </div>
+</div>
+
+<!-- ══════════════════ REAL EXAM QUIZ ══════════════════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">📝</div>
+  <div><h2>Soalan Peperiksaan Sebenar</h2><p>10 soalan dari ujian bulanan & UASA</p></div>
+</div>
+
+<div id="quizWrap">
+
+  <div class="quiz-q" data-q="1">
+    <div class="exam-label">📋 Definisi</div>
+    <p class="q-no">SOALAN 1 / 10</p>
+    <p class="q-stem">Apakah unit data yang paling kecil dalam komputer?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,1,'A')"><div class="ltr">A</div><span>Byte</span></div>
+      <div class="mc-opt" onclick="qpick(this,1,'B')"><div class="ltr">B</div><span>Bit</span></div>
+      <div class="mc-opt" onclick="qpick(this,1,'C')"><div class="ltr">C</div><span>Kilobyte</span></div>
+      <div class="mc-opt" onclick="qpick(this,1,'D')"><div class="ltr">D</div><span>Nibble</span></div>
+    </div>
+    <p class="q-fb" id="qf1"></p>
+  </div>
+
+  <div class="quiz-q" data-q="2">
+    <div class="exam-label">🔢 Penukaran</div>
+    <p class="q-no">SOALAN 2 / 10</p>
+    <p class="q-stem">Tukarkan nombor perduaan <strong class="mono">1011₂</strong> kepada nombor perpuluhan.</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,2,'A')"><div class="ltr">A</div><span>9</span></div>
+      <div class="mc-opt" onclick="qpick(this,2,'B')"><div class="ltr">B</div><span>11</span></div>
+      <div class="mc-opt" onclick="qpick(this,2,'C')"><div class="ltr">C</div><span>13</span></div>
+      <div class="mc-opt" onclick="qpick(this,2,'D')"><div class="ltr">D</div><span>15</span></div>
+    </div>
+    <p class="q-fb" id="qf2"></p>
+  </div>
+
+  <div class="quiz-q" data-q="3">
+    <div class="exam-label">🔢 Penukaran</div>
+    <p class="q-no">SOALAN 3 / 10</p>
+    <p class="q-stem">Tukarkan nombor perpuluhan <strong>25</strong> kepada nombor perduaan.</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,3,'A')"><div class="ltr">A</div><span class="mono">10101</span></div>
+      <div class="mc-opt" onclick="qpick(this,3,'B')"><div class="ltr">B</div><span class="mono">11001</span></div>
+      <div class="mc-opt" onclick="qpick(this,3,'C')"><div class="ltr">C</div><span class="mono">11011</span></div>
+      <div class="mc-opt" onclick="qpick(this,3,'D')"><div class="ltr">D</div><span class="mono">10011</span></div>
+    </div>
+    <p class="q-fb" id="qf3"></p>
+  </div>
+
+  <div class="quiz-q" data-q="4">
+    <div class="exam-label">📋 Definisi</div>
+    <p class="q-no">SOALAN 4 / 10</p>
+    <p class="q-stem">Berapa bilangan bit yang diperlukan untuk mewakili satu aksara dalam kod ASCII asas?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,4,'A')"><div class="ltr">A</div><span>4 bit</span></div>
+      <div class="mc-opt" onclick="qpick(this,4,'B')"><div class="ltr">B</div><span>8 bit</span></div>
+      <div class="mc-opt" onclick="qpick(this,4,'C')"><div class="ltr">C</div><span>16 bit</span></div>
+      <div class="mc-opt" onclick="qpick(this,4,'D')"><div class="ltr">D</div><span>32 bit</span></div>
+    </div>
+    <p class="q-fb" id="qf4"></p>
+  </div>
+
+  <div class="quiz-q" data-q="5">
+    <div class="exam-label">🔡 ASCII</div>
+    <p class="q-no">SOALAN 5 / 10</p>
+    <p class="q-stem"><span class="scenario">Kod ASCII untuk huruf 'G' ialah 01000111₂.</span>Apakah kod ASCII untuk huruf 'H'?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,5,'A')"><div class="ltr">A</div><span class="mono">01000110</span></div>
+      <div class="mc-opt" onclick="qpick(this,5,'B')"><div class="ltr">B</div><span class="mono">01000111</span></div>
+      <div class="mc-opt" onclick="qpick(this,5,'C')"><div class="ltr">C</div><span class="mono">01001000</span></div>
+      <div class="mc-opt" onclick="qpick(this,5,'D')"><div class="ltr">D</div><span class="mono">01001001</span></div>
+    </div>
+    <p class="q-fb" id="qf5"></p>
+  </div>
+
+  <div class="quiz-q" data-q="6">
+    <div class="exam-label">🔡 ASCII</div>
+    <p class="q-no">SOALAN 6 / 10</p>
+    <p class="q-stem"><span class="scenario">Kod ASCII untuk 'p' ialah 01110000.</span>Aksara apakah yang diwakili oleh kod 01110011?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,6,'A')"><div class="ltr">A</div><span>q</span></div>
+      <div class="mc-opt" onclick="qpick(this,6,'B')"><div class="ltr">B</div><span>r</span></div>
+      <div class="mc-opt" onclick="qpick(this,6,'C')"><div class="ltr">C</div><span>t</span></div>
+      <div class="mc-opt" onclick="qpick(this,6,'D')"><div class="ltr">D</div><span>s</span></div>
+    </div>
+    <p class="q-fb" id="qf6"></p>
+  </div>
+
+  <div class="quiz-q" data-q="7">
+    <div class="exam-label">📏 Ukuran Data</div>
+    <p class="q-no">SOALAN 7 / 10</p>
+    <p class="q-stem">Berapakah saiz 64 bit dalam byte?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,7,'A')"><div class="ltr">A</div><span>4 byte</span></div>
+      <div class="mc-opt" onclick="qpick(this,7,'B')"><div class="ltr">B</div><span>8 byte</span></div>
+      <div class="mc-opt" onclick="qpick(this,7,'C')"><div class="ltr">C</div><span>16 byte</span></div>
+      <div class="mc-opt" onclick="qpick(this,7,'D')"><div class="ltr">D</div><span>32 byte</span></div>
+    </div>
+    <p class="q-fb" id="qf7"></p>
+  </div>
+
+  <div class="quiz-q" data-q="8">
+    <div class="exam-label">➕ Operasi Perduaan</div>
+    <p class="q-no">SOALAN 8 / 10</p>
+    <p class="q-stem">Berapakah hasil penambahan <span class="mono">1010 + 0110</span>?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,8,'A')"><div class="ltr">A</div><span class="mono">1110</span></div>
+      <div class="mc-opt" onclick="qpick(this,8,'B')"><div class="ltr">B</div><span class="mono">10000</span></div>
+      <div class="mc-opt" onclick="qpick(this,8,'C')"><div class="ltr">C</div><span class="mono">10100</span></div>
+      <div class="mc-opt" onclick="qpick(this,8,'D')"><div class="ltr">D</div><span class="mono">11000</span></div>
+    </div>
+    <p class="q-fb" id="qf8"></p>
+  </div>
+
+  <div class="quiz-q" data-q="9">
+    <div class="exam-label">🖼️ Imej Digital</div>
+    <p class="q-no">SOALAN 9 / 10</p>
+    <p class="q-stem">Apakah dua faktor yang menentukan saiz fail imej digital?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,9,'A')"><div class="ltr">A</div><span>Warna latar belakang dan nama fail</span></div>
+      <div class="mc-opt" onclick="qpick(this,9,'B')"><div class="ltr">B</div><span>Resolusi (lebar × tinggi piksel) dan kedalaman warna (bit per piksel)</span></div>
+      <div class="mc-opt" onclick="qpick(this,9,'C')"><div class="ltr">C</div><span>Jenis perisian dan nama fail</span></div>
+      <div class="mc-opt" onclick="qpick(this,9,'D')"><div class="ltr">D</div><span>Saiz skrin monitor dan resolusi sahaja</span></div>
+    </div>
+    <p class="q-fb" id="qf9"></p>
+  </div>
+
+  <div class="quiz-q" data-q="10">
+    <div class="exam-label">🔢 Penukaran</div>
+    <p class="q-no">SOALAN 10 / 10</p>
+    <p class="q-stem">Tukarkan nombor perduaan <strong class="mono">11010₂</strong> kepada nombor perpuluhan.</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,10,'A')"><div class="ltr">A</div><span>24</span></div>
+      <div class="mc-opt" onclick="qpick(this,10,'B')"><div class="ltr">B</div><span>26</span></div>
+      <div class="mc-opt" onclick="qpick(this,10,'C')"><div class="ltr">C</div><span>28</span></div>
+      <div class="mc-opt" onclick="qpick(this,10,'D')"><div class="ltr">D</div><span>30</span></div>
+    </div>
+    <p class="q-fb" id="qf10"></p>
+  </div>
+
+  <div style="text-align:center;margin:1.5rem 0;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-teal" onclick="submitQ()">✅ Semak Jawapan</button>
+    <button class="btn btn-ghost" onclick="resetQ()">↺ Cuba Semula</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreBig">0/10</div>
+    <p class="score-sub">soalan dijawab betul</p>
+    <p class="score-msg" id="scoreMsg"></p>
+    <div style="margin-top:1.2rem"><button class="btn btn-teal" onclick="resetQ()">↺ Cuba Semula</button></div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">⭐</div>
+  <div><h2>Rumusan Bab 2</h2><p>Yang paling penting!</p></div>
+</div>
+<div class="sum-grid">
+  <div class="sum-card"><div class="se">💡</div><h4>Sistem Perduaan</h4><p>Komputer guna 0 dan 1 sahaja</p></div>
+  <div class="sum-card"><div class="se">🔡</div><h4>ASCII</h4><p>Setiap huruf punya kod nombor khas</p></div>
+  <div class="sum-card"><div class="se">📏</div><h4>Ukuran Data</h4><p>Bit → Byte → KB → MB → GB → TB</p></div>
+  <div class="sum-card"><div class="se">🖼️</div><h4>Imej & Audio</h4><p>Diukur dengan resolusi, kedalaman bit, kadar pensampelan</p></div>
+</div>
+
+<div class="congrats">
+  <h3>🎉 Tahniah! Bab 2 Selesai!</h3>
+  <p>Bab seterusnya: <strong>Algoritma</strong> – cara beri arahan langkah demi langkah kepada komputer.</p>
+  <div style="margin-top:1rem">
+    <a href="index.html" style="color:rgba(255,255,255,.8);font-size:.9rem;text-decoration:none">← Kembali ke Bab 1</a>
+  </div>
+</div>
+
+</main>
+<footer>Asas Sains Komputer Tingkatan 1 KSSM &nbsp;·&nbsp; Dibina untuk pembelajaran interaktif</footer>
+
+<script>
+// ── ASCII data (A–Z, a–z, 0–9) ──
+const asciiData=[
+  ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((c,i)=>({c,d:65+i})),
+  ...'abcdefghijklmnopqrstuvwxyz'.split('').map((c,i)=>({c,d:97+i})),
+  ...'0123456789'.split('').map((c,i)=>({c,d:48+i})),
+];
+const grid=document.getElementById('asciiGrid');
+asciiData.forEach(({c,d})=>{
+  const el=document.createElement('div');
+  el.className='ascii-card';
+  el.innerHTML=`<div class="ac-char">${c}</div><div class="ac-dec">${d}</div>`;
+  el.onclick=()=>showASCII(c,d,el);
+  grid.appendChild(el);
+});
+function showASCII(c,d,el){
+  document.querySelectorAll('.ascii-card').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  const bin=d.toString(2).padStart(8,'0');
+  document.getElementById('asciiPreview').innerHTML=
+    `<div class="char-big">${c}</div>
+     <div class="bin-str">${bin}</div>
+     <div class="dec-str">Kod ASCII: ${d} &nbsp;|&nbsp; Perduaan: ${bin}</div>`;
+  trackProgress();
+}
+
+// ── Interactive bit toggle ──
+function toggleBit(el){
+  el.classList.toggle('on');
+  el.textContent=el.classList.contains('on')?'1':'0';
+  updatePVResult();
+  trackProgress();
+}
+function updatePVResult(){
+  const vals=[128,64,32,16,8,4,2,1];
+  let total=0,parts=[];
+  vals.forEach(v=>{
+    const bit=document.querySelector(`.pv-bit[data-val="${v}"]`);
+    const prod=document.getElementById('pr-'+v);
+    if(bit.classList.contains('on')){total+=v;parts.push(v);prod.textContent=v;}
+    else{prod.textContent='0';}
+  });
+  document.getElementById('pvResult').innerHTML=
+    parts.length?`${parts.join(' + ')} = <span style="color:#dc2626">${total}</span>`:
+    `<span style="color:#dc2626">0</span>`;
+}
+
+// ── Converters ──
+function convertBinToDec(){
+  const val=document.getElementById('binInput').value.trim();
+  const res=document.getElementById('binResult');
+  if(!val){res.style.display='none';return;}
+  const dec=parseInt(val,2);
+  const steps=val.split('').map((b,i)=>{
+    const place=Math.pow(2,val.length-1-i);
+    return b==='1'?`${b}×${place}=${place}`:`${b}×${place}=0`;
+  }).join(' + ');
+  res.innerHTML=`<span style="font-size:.85rem;color:var(--muted)">${steps}</span><br><strong>${val}₂ = ${dec}₁₀</strong>`;
+  res.style.display='block'; trackProgress();
+}
+function convertDecToBin(){
+  const val=parseInt(document.getElementById('decInput').value);
+  const res=document.getElementById('decResult');
+  if(isNaN(val)||val<0||val>255){res.style.display='none';return;}
+  const bin=val.toString(2);
+  res.innerHTML=`<strong>${val}₁₀ = ${bin}₂</strong>`;
+  res.style.display='block'; trackProgress();
+}
+
+// ── Data unit details ──
+const unitInfo={
+  bit:'<strong>Bit</strong> — unit data paling kecil. Hanya boleh menjadi 0 atau 1 (seperti suis ON/OFF). Singkatan: <em>b</em> (huruf kecil)',
+  byte:'<strong>Byte</strong> = 8 bit. Mewakili satu aksara (huruf, nombor atau simbol). Contoh: huruf "A" = 01000001 (1 byte). Singkatan: <em>B</em> (huruf besar)',
+  kb:'<strong>Kilobyte (KB)</strong> = 1,024 Byte. Kira-kira saiz satu halaman dokumen teks biasa. Contoh: e-mel ringkas ~5 KB',
+  mb:'<strong>Megabyte (MB)</strong> = 1,024 KB = lebih kurang satu juta byte. Gambar foto biasa 1–5 MB. Lagu MP3 3–5 MB.',
+  gb:'<strong>Gigabyte (GB)</strong> = 1,024 MB. Filem HD kira-kira 4–8 GB. Telefon pintar biasanya 64–256 GB simpanan.',
+  tb:'<strong>Terabyte (TB)</strong> = 1,024 GB. Cakera keras komputer biasanya 1–4 TB. Boleh simpan ~500 jam video HD!'
+};
+function showUnit(u){
+  const d=document.getElementById('unitDetail');
+  d.innerHTML=unitInfo[u];
+  d.style.display='block';
+  trackProgress();
+}
+
+// ── Binary game ──
+const binQuestions=[
+  {q:'1010₂ = ?',opts:['8','10','12','14'],ans:1},
+  {q:'1100₂ = ?',opts:['10','11','12','14'],ans:2},
+  {q:'0111₂ = ?',opts:['5','6','7','8'],ans:2},
+  {q:'10001₂ = ?',opts:['15','17','19','21'],ans:1},
+];
+let bgDone={};
+const bgEl=document.getElementById('binGame');
+binQuestions.forEach((q,qi)=>{
+  const div=document.createElement('div');
+  div.style.marginBottom='1.2rem';
+  div.innerHTML=`<p style="font-size:.9rem;font-weight:700;margin-bottom:.5rem">${qi+1}. ${q.q}</p>
+  <div class="mc-opts">
+    ${q.opts.map((o,oi)=>`<div class="mc-opt" onclick="pickBG(this,${qi},${oi},${q.ans})" data-qi="${qi}" data-oi="${oi}"><div class="ltr">${['A','B','C','D'][oi]}</div><span>${o}</span></div>`).join('')}
+  </div>
+  <p class="q-fb" id="bgfb${qi}"></p>`;
+  bgEl.appendChild(div);
+});
+function pickBG(el,qi,oi,ans){
+  if(bgDone[qi])return;
+  const fb=document.getElementById('bgfb'+qi);
+  el.closest('.mc-opts').querySelectorAll('.mc-opt').forEach(o=>o.classList.add('locked'));
+  if(oi===ans){
+    el.classList.add('right');
+    fb.textContent='✅ Betul!'; fb.className='q-fb show ok';
+    bgDone[qi]=true; trackProgress();
+  } else {
+    el.classList.add('wrong');
+    fb.textContent='❌ Cuba lagi!'; fb.className='q-fb show no';
+    setTimeout(()=>{
+      el.classList.remove('wrong');
+      el.closest('.mc-opts').querySelectorAll('.mc-opt').forEach(o=>o.classList.remove('locked'));
+      fb.className='q-fb';
+    },700);
+  }
+}
+
+// ── Data game ──
+const dgCorrect={1:'B',2:'C',3:'D'};
+const dgDone={};
+function pickG(el,q,choice){
+  if(dgDone[q])return;
+  const fb=document.getElementById('gdf'+q);
+  el.closest('.mc-opts').querySelectorAll('.mc-opt').forEach(o=>o.classList.add('locked'));
+  if(choice===dgCorrect[q]){
+    el.classList.add('right');
+    fb.textContent={1:'✅ Betul! 1 Byte = 8 bit.',2:'✅ Betul! 1 KB = 1,024 Byte.',3:'✅ Betul! 0.5 TB = 512 GB > 2 GB. Tapi antara pilihan A, B, C: 2 GB = 2048 MB > 1500 MB > 500 MB.'}[q];
+    fb.className='q-fb show ok';
+    dgDone[q]=true; trackProgress();
+  } else {
+    el.classList.add('wrong');
+    fb.textContent='❌ Cuba lagi!'; fb.className='q-fb show no';
+    setTimeout(()=>{
+      el.classList.remove('wrong');
+      el.closest('.mc-opts').querySelectorAll('.mc-opt').forEach(o=>o.classList.remove('locked'));
+      fb.className='q-fb';
+    },700);
+  }
+}
+
+// ── Quiz ──
+const qCorrect={1:'B',2:'B',3:'B',4:'B',5:'C',6:'D',7:'B',8:'B',9:'B',10:'B'};
+const qExplain={
+  1:'Bit adalah unit data paling kecil — hanya boleh menjadi 0 atau 1.',
+  2:'1011₂ = (1×8)+(0×4)+(1×2)+(1×1) = 8+0+2+1 = 11.',
+  3:'25 ÷ 2: baki 1,1,0,0,1 (bawah ke atas) = 11001₂.',
+  4:'ASCII asas menggunakan 8 bit (1 byte) untuk mewakili setiap aksara.',
+  5:'G = 01000111 = 71₁₀. H = 72₁₀ = 01001000₂.',
+  6:'p = 01110000 = 112₁₀. 01110011 = 115₁₀. a=97, jadi 115-97 = 18. a+18 = s.',
+  7:'64 bit ÷ 8 = 8 byte.',
+  8:'1010 (10) + 0110 (6) = 16 = 10000₂.',
+  9:'Saiz imej = Resolusi (piksel) × Kedalaman warna (bit per piksel).',
+  10:'11010₂ = (1×16)+(1×8)+(0×4)+(1×2)+(0×1) = 16+8+0+2+0 = 26.',
+};
+const qPicks={};
+function qpick(el,q,choice){
+  const qEl=el.closest('.quiz-q');
+  if(qEl.classList.contains('locked'))return;
+  qEl.querySelectorAll('.mc-opt').forEach(o=>o.classList.remove('picked'));
+  el.classList.add('picked'); qPicks[q]=choice; trackProgress();
+}
+function submitQ(){
+  let sc=0;
+  for(let q=1;q<=10;q++){
+    const qEl=document.querySelector(`[data-q="${q}"]`);
+    qEl.classList.add('locked');
+    const ua=qPicks[q],ca=qCorrect[q];
+    qEl.querySelectorAll('.mc-opt').forEach((o,i)=>{
+      const l=['A','B','C','D'][i];
+      if(l===ca)o.classList.add('right');
+      if(l===ua&&ua!==ca)o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qf'+q);
+    if(ua===ca){sc++;fb.textContent='✅ Betul! '+qExplain[q];fb.className='q-fb show ok';}
+    else if(ua){fb.textContent='❌ Jawapan: '+ca+'. '+qExplain[q];fb.className='q-fb show no';}
+    else{fb.textContent='ℹ️ Tidak dijawab. Jawapan: '+ca+'. '+qExplain[q];fb.className='q-fb show no';}
+  }
+  document.getElementById('scoreBig').textContent=sc+'/10';
+  const msgs=[[10,'🌟 SEMPURNA!'],[8,'🎉 Cemerlang!'],[6,'👍 Bagus!'],[4,'📚 Teruskan!'],[0,'💪 Cuba lagi!']];
+  for(const[m,t]of msgs)if(sc>=m){document.getElementById('scoreMsg').textContent=t;break;}
+  const box=document.getElementById('scoreBox');
+  box.classList.add('show'); box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQ(){
+  for(let q=1;q<=10;q++){
+    document.querySelector(`[data-q="${q}"]`).classList.remove('locked');
+    document.querySelector(`[data-q="${q}"]`).querySelectorAll('.mc-opt').forEach(o=>o.classList.remove('picked','right','wrong'));
+    document.getElementById('qf'+q).className='q-fb';
+    delete qPicks[q];
+  }
+  document.getElementById('scoreBox').classList.remove('show'); trackProgress();
+}
+
+// ── Tabs ──
+function showEx(prefix,key){
+  document.querySelectorAll(`[id^="${prefix}-"]`).forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.ex-tab').forEach(btn=>{
+    const match=btn.getAttribute('onclick')===`showEx('${prefix}','${key}')`;
+    btn.classList.toggle('active',match);
+  });
+  document.getElementById(`${prefix}-${key}`).classList.add('active');
+  trackProgress();
+}
+
+// ── Progress ──
+function trackProgress(){
+  const interactions=[
+    Object.keys(bgDone).filter(k=>bgDone[k]).length,
+    Object.keys(dgDone).filter(k=>dgDone[k]).length,
+    Object.keys(qPicks).length,
+    document.getElementById('binResult').style.display==='block'?1:0,
+    document.getElementById('decResult').style.display==='block'?1:0,
+    document.querySelector('.ascii-card.active')?1:0,
+    document.getElementById('unitDetail').style.display!=='none'?1:0,
+  ];
+  const total=4+3+10+1+1+1+1;
+  const done=interactions.reduce((a,b)=>a+b,0);
+  const pct=Math.min(100,Math.round(done/total*100));
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pTxt').textContent='Kemajuan kamu: '+pct+'%';
+}
+
+// init
+updatePVResult();
+</script>
+</body>
+</html>
