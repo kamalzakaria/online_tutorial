@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematik Tahun 1 - Bab 1: Nombor Bulat hingga 100</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+        header h1 { font-size: 2em; margin-bottom: 10px; }
+        header p { opacity: 0.9; }
+        .nav-buttons { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #f8f9fa; flex-wrap: wrap; }
+        .nav-btn { padding: 12px 24px; border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s ease; background: #e9ecef; color: #495057; }
+        .nav-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; transform: scale(1.05); }
+        .nav-btn:hover:not(.active) { background: #dee2e6; transform: scale(1.02); }
+        .content { padding: 30px; display: none; }
+        .content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .section { background: #f8f9fa; border-radius: 15px; padding: 25px; margin-bottom: 25px; border-left: 5px solid #667eea; }
+        .section h2 { color: #333; margin-bottom: 15px; font-size: 1.5em; }
+        .section p { color: #666; line-height: 1.8; margin-bottom: 15px; }
+        .number-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin: 20px 0; }
+        .number-cell { background: white; border: 2px solid #667eea; border-radius: 8px; padding: 10px; text-align: center; font-weight: bold; color: #333; font-size: 1.1em; }
+        .number-cell.highlight { background: #667eea; color: white; }
+        .example-box { background: #e8f4fd; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .example-box h3 { color: #1976d2; margin-bottom: 10px; }
+        .question { background: #fff3e0; border-radius: 15px; padding: 25px; margin-bottom: 20px; }
+        .question h3 { color: #e65100; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 15px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        .option:hover { border-color: #667eea; transform: translateX(5px); }
+        .option.selected { background: #667eea; color: white; border-color: #667eea; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .option-letter { background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .option.selected .option-letter { background: white; color: #667eea; }
+        .option.correct .option-letter { background: white; color: #4caf50; }
+        .option.wrong .option-letter { background: white; color: #f44336; }
+        .fill-blank { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .fill-blank input { width: 80px; padding: 10px; border: 2px solid #667eea; border-radius: 8px; font-size: 1.2em; text-align: center; }
+        .fill-blank input:focus { outline: none; border-color: #764ba2; box-shadow: 0 0 10px rgba(102, 126, 234, 0.3); }
+        .fill-blank input.correct { border-color: #4caf50; background: #e8f5e9; }
+        .fill-blank input.wrong { border-color: #f44336; background: #ffebee; }
+        .check-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; margin-top: 15px; transition: transform 0.3s ease; }
+        .check-btn:hover { transform: scale(1.05); }
+        .check-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .score-display { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+        .score-display h2 { font-size: 1.8em; }
+        .score-display .score-number { font-size: 3em; font-weight: bold; }
+        .progress-bar { width: 100%; height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin: 15px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #4caf50, #8bc34a); transition: width 0.5s ease; }
+        .result-message { padding: 20px; border-radius: 15px; text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 15px; }
+        .result-message.success { background: #e8f5e9; color: #2e7d32; }
+        .result-message.partial { background: #fff3e0; color: #e65100; }
+        .result-message.fail { background: #ffebee; color: #c62828; }
+        .tips-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 15px; border-radius: 0 10px 10px 0; margin: 15px 0; }
+        .tips-box h4 { color: #f57c00; margin-bottom: 10px; }
+        .tips-toggle { background: #e3f2fd; border: 2px solid #2196f3; color: #1565c0; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-bottom: 15px; transition: all 0.3s ease; }
+        .tips-toggle:hover { background: #2196f3; color: white; }
+        .tips-content { display: none; background: #e3f2fd; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .tips-content.show { display: block; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 500px; } }
+        .compare-area { display: flex; align-items: center; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
+        .compare-box { background: white; border: 3px solid #667eea; border-radius: 15px; padding: 20px; font-size: 2em; font-weight: bold; min-width: 80px; text-align: center; }
+        .compare-symbol { font-size: 2.5em; color: #e65100; }
+        footer { text-align: center; padding: 20px; background: #f8f9fa; color: #666; }
+        .star-rating { font-size: 2em; margin: 10px 0; }
+        .question-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .question-nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; cursor: pointer; font-weight: bold; background: #e0e0e0; color: #333; transition: all 0.3s ease; }
+        .question-nav-btn.active { background: #667eea; color: white; }
+        .question-nav-btn.correct { background: #4caf50; color: white; }
+        .question-nav-btn.wrong { background: #f44336; color: white; }
+        .question-nav-btn:hover { transform: scale(1.1); }
+        @media (max-width: 600px) { .number-grid { grid-template-columns: repeat(5, 1fr); } header h1 { font-size: 1.5em; } .nav-buttons { gap: 5px; } .nav-btn { padding: 8px 16px; font-size: 0.9em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Matematik Tahun 1</h1>
+            <h2>Bab 1: Nombor Bulat hingga 100</h2>
+            <p>Pembelajaran Interaktif KSSR</p>
+        </header>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="window.location.href='chapter2.html'">📖 Bab 2: Tambah dan Tolak</button>
+            <button class="nav-btn active" onclick="showContent('tutorial')">📖 Tutorial</button>
+            <button class="nav-btn" onclick="showContent('latihan')">✏️ Latihan (50)</button>
+            <button class="nav-btn" onclick="showContent('exam')">📝 Exam (20)</button>
+            <button class="nav-btn" onclick="showContent('results')">📊 Keputusan</button>
+        </div>
+
+        <!-- Tutorial Section -->
+        <div id="tutorial" class="content active">
+            <div class="section">
+                <h2>🔢 Mengenal Nombor 1 hingga 100</h2>
+                <p>Dalam bab ini, kita akan belajar tentang nombor bulat dari 1 hingga 100.</p>
+                <div class="number-grid">
+                    <script>for(let i = 1; i <= 20; i++) { document.write(`<div class="number-cell ${i <= 10 ? 'highlight' : ''}">${i}</div>`); }</script>
+                </div>
+                <div class="tips-box"><h4>💡 Tips:</h4><p>Nombor 1-10 dipanggil <strong>nombor asas</strong>. Hafal semua!</p></div>
+            </div>
+            <div class="section"><h2>🔢 Nilai Tempat: Puluhan dan Sa</h2><p>Nombor dua digit: <strong>puluhan</strong> (d hadapan) + <strong>sa</strong> (belah kanan).</p><div class="example-box"><h3>Contoh:</h3><p><strong>47</strong> = 4 puluhan + 7 sa</p><p><strong>83</strong> = 8 puluhan + 3 sa</p></div></div>
+            <div class="section"><h2>➕ Menambah</h2><p>Gabungkan nombor.</p><div class="example-box"><h3>Contoh:</h3><p>3 + 4 = 7 | 12 + 5 = 17 | 20 + 30 = 50</p></div></div>
+            <div class="section"><h2>➖ Menolak</h2><p>Kurangkan nombor.</p><div class="example-box"><h3>Contoh:</h3><p>8 - 3 = 5 | 15 - 7 = 8 | 40 - 20 = 20</p></div></div>
+            <div class="section"><h2>🔄 Pola Nombor</h2><p>Cari perubahan antara nombor.</p><div class="example-box"><h3>Contoh:</h3><p>2, 4, 6, 8... (+2) | 5, 10, 15, 20... (+5) | 10, 20, 30... (+10)</p></div></div>
+            <div class="section"><h2>⚖️ Perbandingan</h2><p><strong>&gt;</strong> = lebih besar | <strong>&lt;</strong> = lebih kecil | <strong>=</strong> = sama</p></div>
+        </div>
+
+        <!-- Practice Section -->
+        <div id="latihan" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">✏️ Latihan Interaktif (50 Soalan)</h2>
+            <div class="question-nav" id="practice-nav"></div>
+
+            <!-- Practice Question 1 -->
+            <div class="question" id="q1">
+                <h3>Soalan 1: Nombor dalam Perkataan</h3>
+                <p>"Sembilan belas" dalam angka adalah?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips1')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips1">"Sembilan" = 9, "belas" = 10. Campur: 9 + 10 = 19. Jawapan: 19</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>19</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>90</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>91</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>109</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q1')">Semak</button>
+            </div>
+
+            <!-- Practice Question 2 -->
+            <div class="question" id="q2">
+                <h3>Soalan 2: Pola Nombor</h3>
+                <p>Lengkapkan: 3, 5, 7, <input type="text" id="q2-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 11</p>
+                <button class="tips-toggle" onclick="toggleTips('tips2')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips2">3→5 (+2), 5→7 (+2). Jadi 7+2 = 9</div>
+                <button class="check-btn" onclick="checkFillBlank('q2', '9')">Semak</button>
+            </div>
+
+            <!-- Practice Question 3 -->
+            <div class="question" id="q3">
+                <h3>Soalan 3: Nilai Puluhan</h3>
+                <p>Berapakah nilai puluhan dalam 48?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips3')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips3">48: 4 adalah puluhan (40), 8 adalah sa. Jawapan: 4 puluh = 40, tapi bila tanya "nilai puluhan" kita tulis 4</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>8</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>40</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>4</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>48</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q3')">Semak</button>
+            </div>
+
+            <!-- Practice Question 4 -->
+            <div class="question" id="q4">
+                <h3>Soalan 4: Perbandingan</h3>
+                <p>25 ? 52</p>
+                <button class="tips-toggle" onclick="toggleTips('tips4')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips4">25 (2 puluh) < 52 (5 puluh). Guna "&lt;" (lebih kecil)</div>
+                <div class="compare-area">
+                    <div class="compare-box">25</div>
+                    <select id="q4-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #667eea;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">52</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q4', '<')">Semak</button>
+            </div>
+
+            <!-- Practice Question 5 -->
+            <div class="question" id="q5">
+                <h3>Soalan 5: Tambah</h3>
+                <p style="font-size:1.3em;">15 + 23 = <input type="text" id="q5-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips5')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips5">5+3=8, 1+2=3. Jadi 15+23=38</div>
+                <button class="check-btn" onclick="checkFillBlank('q5', '38')">Semak</button>
+            </div>
+
+            <!-- Practice Question 6 -->
+            <div class="question" id="q6">
+                <h3>Soalan 6: Tolak</h3>
+                <p style="font-size:1.3em;">47 - 15 = <input type="text" id="q6-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips6')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips6">7-5=2, 4-1=3. Jadi 47-15=32</div>
+                <button class="check-btn" onclick="checkFillBlank('q6', '32')">Semak</button>
+            </div>
+
+            <!-- Practice Question 7 -->
+            <div class="question" id="q7">
+                <h3>Soalan 7: Susun Menaik</h3>
+                <p>Susun: 45, 23, 67, 12</p>
+                <button class="tips-toggle" onclick="toggleTips('tips7')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips7">Susun dari kecil ke besar: 12, 23, 45, 67</div>
+                <p>Jawapan: <input type="text" id="q7-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;" placeholder="12, 23, 45, 67"></p>
+                <button class="check-btn" onclick="checkFillBlank('q7', '12, 23, 45, 67')">Semak</button>
+            </div>
+
+            <!-- Practice Question 8 -->
+            <div class="question" id="q8">
+                <h3>Soalan 8: Pola +10</h3>
+                <p>10, 20, <input type="text" id="q8-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 40, 50</p>
+                <button class="tips-toggle" onclick="toggleTips('tips8')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips8">Setiap nombor tambah 10. 20+10=30</div>
+                <button class="check-btn" onclick="checkFillBlank('q8', '30')">Semak</button>
+            </div>
+
+            <!-- Practice Question 9 -->
+            <div class="question" id="q9">
+                <h3>Soalan 9: Nilai Sa</h3>
+                <p>Apakah nilai sa dalam 73?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips9')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips9">73: 7=puluhan (70), 3=sa. Nilai sa adalah 3</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>7</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>70</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>3</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>73</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q9')">Semak</button>
+            </div>
+
+            <!-- Practice Question 10 -->
+            <div class="question" id="q10">
+                <h3>Soalan 10: Nombor Ganjil</h3>
+                <p>Yang mana nombor ganjil?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips10')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips10">Nombor ganjil: 1,3,5,7,9... Cuba bahagi 2, kalau ada baki=ganjil. 24÷2=12 (genap), 17÷2=8.5 (ganjil), 30÷2=15 (genap), 46÷2=23 (genap)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>24</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>17</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>30</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>46</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q10')">Semak</button>
+            </div>
+
+            <!-- Practice Question 11 -->
+            <div class="question" id="q11">
+                <h3>Soalan 11: Tambah 2 Digit</h3>
+                <p style="font-size:1.3em;">34 + 45 = <input type="text" id="q11-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips11')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips11">4+5=9, 3+4=7. Jadi 34+45=79</div>
+                <button class="check-btn" onclick="checkFillBlank('q11', '79')">Semak</button>
+            </div>
+
+            <!-- Practice Question 12 -->
+            <div class="question" id="q12">
+                <h3>Soalan 12: Tolak 2 Digit</h3>
+                <p style="font-size:1.3em;">78 - 35 = <input type="text" id="q12-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips12')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips12">8-5=3, 7-3=4. Jadi 78-35=43</div>
+                <button class="check-btn" onclick="checkFillBlank('q12', '43')">Semak</button>
+            </div>
+
+            <!-- Practice Question 13 -->
+            <div class="question" id="q13">
+                <h3>Soalan 13: Susun Menurun</h3>
+                <p>Susun menurun: 33, 11, 55, 22</p>
+                <button class="tips-toggle" onclick="toggleTips('tips13')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips13">Susun dari besar ke kecil: 55, 33, 22, 11</div>
+                <p>Jawapan: <input type="text" id="q13-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('q13', '55, 33, 22, 11')">Semak</button>
+            </div>
+
+            <!-- Practice Question 14 -->
+            <div class="question" id="q14">
+                <h3>Soalan 14: Pola +5</h3>
+                <p>5, 10, 15, <input type="text" id="q14-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 25</p>
+                <button class="tips-toggle" onclick="toggleTips('tips14')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips14">Tambah 5 setiap kali: 15+5=20</div>
+                <button class="check-btn" onclick="checkFillBlank('q14', '20')">Semak</button>
+            </div>
+
+            <!-- Practice Question 15 -->
+            <div class="question" id="q15">
+                <h3>Soalan 15: Nombor Genap</h3>
+                <p>Pilih nombor genap:</p>
+                <button class="tips-toggle" onclick="toggleTips('tips15')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips15">Nombor genap: 2,4,6,8,10... Cuba bahagi 2, kalau tak ada baki=genap. 18÷2=9 (genap)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>18</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>23</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>37</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>49</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q15')">Semak</button>
+            </div>
+
+            <!-- Practice Question 16 -->
+            <div class="question" id="q16">
+                <h3>Soalan 16: Perkataan ke Angka</h3>
+                <p>"Lima puluh lapan" = ?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips16')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips16">"Lima puluh" = 50, "lapan" = 8. Campur: 50+8=58</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>85</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>508</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>58</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>85</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q16')">Semak</button>
+            </div>
+
+            <!-- Practice Question 17 -->
+            <div class="question" id="q17">
+                <h3>Soalan 17: Tambah 3 Nombor</h3>
+                <p style="font-size:1.3em;">12 + 15 + 13 = <input type="text" id="q17-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips17')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips17">Tambah satu-satu: 12+15=27, 27+13=40</div>
+                <button class="check-btn" onclick="checkFillBlank('q17', '40')">Semak</button>
+            </div>
+
+            <!-- Practice Question 18 -->
+            <div class="question" id="q18">
+                <h3>Soalan 18: Pola +3</h3>
+                <p>1, 4, 7, <input type="text" id="q18-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 13</p>
+                <button class="tips-toggle" onclick="toggleTips('tips18')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips18">Tambah 3 setiap kali: 7+3=10</div>
+                <button class="check-btn" onclick="checkFillBlank('q18', '10')">Semak</button>
+            </div>
+
+            <!-- Practice Question 19 -->
+            <div class="question" id="q19">
+                <h3>Soalan 19: Banding > </h3>
+                <p>67 ? 45</p>
+                <button class="tips-toggle" onclick="toggleTips('tips19')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips19">67 (6 puluh) > 45 (4 puluh). Guna ">"</div>
+                <div class="compare-area">
+                    <div class="compare-box">67</div>
+                    <select id="q19-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #667eea;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">45</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q19', '>')">Semak</button>
+            </div>
+
+            <!-- Practice Question 20 -->
+            <div class="question" id="q20">
+                <h3>Soalan 20: Nombor 100</h3>
+                <p>"Seratus" dalam angka adalah?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips20')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips20">Seratus = 100 (satu nombor 3 digit)</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>10</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>1000</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>100</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>1</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q20')">Semak</button>
+            </div>
+
+            <!-- Practice Questions 21-50 -->
+            <!-- Question 21 -->
+            <div class="question" id="q21">
+                <h3>Soalan 21: Tambah 2 Digit</h3>
+                <p style="font-size:1.3em;">28 + 31 = <input type="text" id="q21-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips21')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips21">8+1=9, 2+3=5. Jadi 28+31=59</div>
+                <button class="check-btn" onclick="checkFillBlank('q21', '59')">Semak</button>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question" id="q22">
+                <h3>Soalan 22: Tolak 2 Digit</h3>
+                <p style="font-size:1.3em;">85 - 42 = <input type="text" id="q22-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips22')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips22">5-2=3, 8-4=4. Jadi 85-42=43</div>
+                <button class="check-btn" onclick="checkFillBlank('q22', '43')">Semak</button>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question" id="q23">
+                <h3>Soalan 23: Nilai Tempat</h3>
+                <p>Dalam 56, apakah nilai 5?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips23')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips23">5 dalam 56 adalah 5 puluhan = 50</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>50</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>5</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>56</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>6</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q23')">Semak</button>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question" id="q24">
+                <h3>Soalan 24: Pola +2</h3>
+                <p>2, 4, 6, <input type="text" id="q24-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 10</p>
+                <button class="tips-toggle" onclick="toggleTips('tips24')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips24">Tambah 2: 6+2=8</div>
+                <button class="check-btn" onclick="checkFillBlank('q24', '8')">Semak</button>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question" id="q25">
+                <h3>Soalan 25: Perbandingan</h3>
+                <p>44 ? 44</p>
+                <button class="tips-toggle" onclick="toggleTips('tips25')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips25">Kedua-dua nombor sama. Guna "="</div>
+                <div class="compare-area">
+                    <div class="compare-box">44</div>
+                    <select id="q25-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #667eea;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">44</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q25', '=')">Semak</button>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question" id="q26">
+                <h3>Soalan 26: Tambah</h3>
+                <p style="font-size:1.3em;">19 + 25 = <input type="text" id="q26-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips26')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips26">9+5=14 (carry 1), 1+2+1=4. Jadi 19+25=44</div>
+                <button class="check-btn" onclick="checkFillBlank('q26', '44')">Semak</button>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question" id="q27">
+                <h3>Soalan 27: Tolak</h3>
+                <p style="font-size:1.3em;">63 - 28 = <input type="text" id="q27-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips27')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips27">3 cannot minus 8, pinjam: 13-8=5, 5-2-1=2. Jadi 63-28=35</div>
+                <button class="check-btn" onclick="checkFillBlank('q27', '35')">Semak</button>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question" id="q28">
+                <h3>Soalan 28: Susun Menaik</h3>
+                <p>Susun: 88, 33, 55, 77</p>
+                <button class="tips-toggle" onclick="toggleTips('tips28')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips28">Dari kecil ke besar: 33, 55, 77, 88</div>
+                <p>Jawapan: <input type="text" id="q28-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('q28', '33, 55, 77, 88')">Semak</button>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question" id="q29">
+                <h3>Soalan 29: Nombor Antara</h3>
+                <p>Antara 35 dan 39, nombor berapa yang tertinggal?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips29')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips29">35, 36, 37, 38, 39. Yang tertinggal: 36, 37, 38</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>36</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>36, 37, 38</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>37</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>35</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q29')">Semak</button>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question" id="q30">
+                <h3>Soalan 30: Tambah 3 Nombor</h3>
+                <p style="font-size:1.3em;">10 + 20 + 30 = <input type="text" id="q30-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips30')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips30">10+20=30, 30+30=60</div>
+                <button class="check-btn" onclick="checkFillBlank('q30', '60')">Semak</button>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question" id="q31">
+                <h3>Soalan 31: Digit Terbesar</h3>
+                <p>Dalam nombor 92, digit manakah lebih besar?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips31')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips31">9 (puluhan) > 2 (sa). Digit 9 lebih besar</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>9</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>2</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Sama</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>92</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q31')">Semak</button>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question" id="q32">
+                <h3>Soalan 32: Pola +4</h3>
+                <p>4, 8, 12, <input type="text" id="q32-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 20</p>
+                <button class="tips-toggle" onclick="toggleTips('tips32')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips32">Tambah 4: 12+4=16</div>
+                <button class="check-btn" onclick="checkFillBlank('q32', '16')">Semak</button>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question" id="q33">
+                <h3>Soalan 33: Tolak</h3>
+                <p style="font-size:1.3em;">50 - 25 = <input type="text" id="q33-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips33')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips33">0 cannot minus 5, pinjam: 10-5=5, 4-2=2. Jadi 50-25=25</div>
+                <button class="check-btn" onclick="checkFillBlank('q33', '25')">Semak</button>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question" id="q34">
+                <h3>Soalan 34: Nombor 1-100</h3>
+                <p>Nombor manakah antara 50 dan 55?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips34')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips34">50, 51, 52, 53, 54, 55. Semua antara 50 dan 55 adalah jawapan</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>48</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>56</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>53</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>60</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q34')">Semak</button>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question" id="q35">
+                <h3>Soalan 35: Tambah 2 Digit</h3>
+                <p style="font-size:1.3em;">56 + 33 = <input type="text" id="q35-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips35')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips35">6+3=9, 5+3=8. Jadi 56+33=89</div>
+                <button class="check-btn" onclick="checkFillBlank('q35', '89')">Semak</button>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question" id="q36">
+                <h3>Soalan 36: Susun Menurun</h3>
+                <p>Susun menurun: 21, 87, 45, 63</p>
+                <button class="tips-toggle" onclick="toggleTips('tips36')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips36">Dari besar ke kecil: 87, 63, 45, 21</div>
+                <p>Jawapan: <input type="text" id="q36-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('q36', '87, 63, 45, 21')">Semak</button>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question" id="q37">
+                <h3>Soalan 37: Pola +10</h3>
+                <p>11, 21, <input type="text" id="q37-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 41, 51</p>
+                <button class="tips-toggle" onclick="toggleTips('tips37')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips37">Tambah 10: 21+10=31</div>
+                <button class="check-btn" onclick="checkFillBlank('q37', '31')">Semak</button>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question" id="q38">
+                <h3>Soalan 38: Digit Terkecil</h3>
+                <p>Dalam 74, digit manakah lebih kecil?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips38')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips38">7 > 4. Digit 4 lebih kecil</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>7</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>4</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Sama</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>74</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q38')">Semak</button>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question" id="q39">
+                <h3>Soalan 39: Tolak 2 Digit</h3>
+                <p style="font-size:1.3em;">72 - 19 = <input type="text" id="q39-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips39')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips39">2 cannot minus 9, pinjam: 12-9=3, 6-1=5. Jadi 72-19=53</div>
+                <button class="check-btn" onclick="checkFillBlank('q39', '53')">Semak</button>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question" id="q40">
+                <h3>Soalan 40: Nombor 50-an</h3>
+                <p>"Lima puluh tiga" = ?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips40')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips40">50 + 3 = 53</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>35</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>503</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>53</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>35</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q40')">Semak</button>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question" id="q41">
+                <h3>Soalan 41: Tambah 3 Nombor</h3>
+                <p style="font-size:1.3em;">14 + 22 + 14 = <input type="text" id="q41-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips41')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips41">14+22=36, 36+14=50</div>
+                <button class="check-btn" onclick="checkFillBlank('q41', '50')">Semak</button>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question" id="q42">
+                <h3>Soalan 42: Pola Ganjil</h3>
+                <p>1, 3, 5, <input type="text" id="q42-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 9</p>
+                <button class="tips-toggle" onclick="toggleTips('tips42')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips42">Nombor ganjil tambah 2: 5+2=7</div>
+                <button class="check-btn" onclick="checkFillBlank('q42', '7')">Semak</button>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question" id="q43">
+                <h3>Soalan 43: Perbandingan</h3>
+                <p>99 ? 66</p>
+                <button class="tips-toggle" onclick="toggleTips('tips43')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips43">99 > 66</div>
+                <div class="compare-area">
+                    <div class="compare-box">99</div>
+                    <select id="q43-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #667eea;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">66</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q43', '>')">Semak</button>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question" id="q44">
+                <h3>Soalan 44: Tolak 2 Digit</h3>
+                <p style="font-size:1.3em;">81 - 37 = <input type="text" id="q44-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips44')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips44">1 cannot minus 7, pinjam: 11-7=4, 7-3=4. Jadi 81-37=44</div>
+                <button class="check-btn" onclick="checkFillBlank('q44', '44')">Semak</button>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question" id="q45">
+                <h3>Soalan 45: Susun Menaik</h3>
+                <p>Susun: 91, 19, 39, 71</p>
+                <button class="tips-toggle" onclick="toggleTips('tips45')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips45">Dari kecil ke besar: 19, 39, 71, 91</div>
+                <p>Jawapan: <input type="text" id="q45-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('q45', '19, 39, 71, 91')">Semak</button>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question" id="q46">
+                <h3>Soalan 46: Tambah 2 Digit</h3>
+                <p style="font-size:1.3em;">47 + 26 = <input type="text" id="q46-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips46')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips46">7+6=13 (carry 1), 4+2+1=7. Jadi 47+26=73</div>
+                <button class="check-btn" onclick="checkFillBlank('q46', '73')">Semak</button>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question" id="q47">
+                <h3>Soalan 47: Nombor 80-an</h3>
+                <p>"Lapan puluh satu" = ?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips47')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips47">80 + 1 = 81</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>81</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>18</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>801</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>108</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q47')">Semak</button>
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question" id="q48">
+                <h3>Soalan 48: Pola +5</h3>
+                <p>20, 25, 30, <input type="text" id="q48-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 40</p>
+                <button class="tips-toggle" onclick="toggleTips('tips48')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips48">Tambah 5: 30+5=35</div>
+                <button class="check-btn" onclick="checkFillBlank('q48', '35')">Semak</button>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question" id="q49">
+                <h3>Soalan 49: Susun Menurun</h3>
+                <p>Susun menurun: 54, 27, 81, 36</p>
+                <button class="tips-toggle" onclick="toggleTips('tips49')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips49">Dari besar ke kecil: 81, 54, 36, 27</div>
+                <p>Jawapan: <input type="text" id="q49-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('q49', '81, 54, 36, 27')">Semak</button>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question" id="q50">
+                <h3>Soalan 50: Tolak 2 Digit</h3>
+                <p style="font-size:1.3em;">64 - 28 = <input type="text" id="q50-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="tips-toggle" onclick="toggleTips('tips50')">💡 Tunjuk Cara Settle</button>
+                <div class="tips-content" id="tips50">4 cannot minus 8, pinjam: 14-8=6, 5-2=3. Jadi 64-28=36</div>
+                <button class="check-btn" onclick="checkFillBlank('q50', '36')">Semak</button>
+            </div>
+
+            <div class="score-display" id="practice-score">
+                <h2>Markah Latihan:</h2>
+                <div class="score-number"><span id="practice-current">0</span>/50</div>
+                <div class="progress-bar"><div class="progress-fill" id="practice-progress" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <!-- Exam Section -->
+        <div id="exam" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">📝 Soalan Peperiksaan (20 Soalan)</h2>
+            <p style="margin-bottom: 20px;">Jawab semua soalan. Setiap soalan 5 markah.</p>
+            <div class="question-nav" id="exam-nav"></div>
+
+            <!-- Exam 1 -->
+            <div class="question" id="eq1">
+                <h3>Soalan 1 (5 markah)</h3>
+                <p>"Tiga puluh enam" = ?</p>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>306</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>36</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>63</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>30</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq1')">Semak</button>
+            </div>
+
+            <!-- Exam 2 -->
+            <div class="question" id="eq2">
+                <h3>Soalan 2 (5 markah)</h3>
+                <p>Nombor terbesar: 45, 54, 78, 87</p>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>45</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>54</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>78</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>87</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq2')">Semak</button>
+            </div>
+
+            <!-- Exam 3 -->
+            <div class="question" id="eq3">
+                <h3>Soalan 3 (5 markah)</h3>
+                <p style="font-size:1.3em;">56 + 24 = <input type="text" id="eq3-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq3', '80')">Semak</button>
+            </div>
+
+            <!-- Exam 4 -->
+            <div class="question" id="eq4">
+                <h3>Soalan 4 (5 markah)</h3>
+                <p style="font-size:1.3em;">93 - 41 = <input type="text" id="eq4-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq4', '52')">Semak</button>
+            </div>
+
+            <!-- Exam 5 -->
+            <div class="question" id="eq5">
+                <h3>Soalan 5 (5 markah)</h3>
+                <p>Nilai sa dalam 89?</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>9</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>8</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>80</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>89</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq5')">Semak</button>
+            </div>
+
+            <!-- Exam 6 -->
+            <div class="question" id="eq6">
+                <h3>Soalan 6 (5 markah)</h3>
+                <p>Pola: 15, 20, 25, <input type="text" id="eq6-answer" style="width:60px;padding:5px;border:2px solid #667eea;border-radius:5px;">, 35</p>
+                <button class="check-btn" onclick="checkFillBlank('eq6', '30')">Semak</button>
+            </div>
+
+            <!-- Exam 7 -->
+            <div class="question" id="eq7">
+                <h3>Soalan 7 (5 markah)</h3>
+                <p>Susun menurun: 33, 11, 55, 22</p>
+                <p>Jawapan: <input type="text" id="eq7-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq7', '55, 33, 22, 11')">Semak</button>
+            </div>
+
+            <!-- Exam 8 -->
+            <div class="question" id="eq8">
+                <h3>Soalan 8 (5 markah)</h3>
+                <p style="font-size:1.3em;">34 + 17 + 8 = <input type="text" id="eq8-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq8', '59')">Semak</button>
+            </div>
+
+            <!-- Exam 9 -->
+            <div class="question" id="eq9">
+                <h3>Soalan 9 (5 markah)</h3>
+                <p>4 kumpulan × 6 biji = ?</p>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>10</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>20</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>24</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>26</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq9')">Semak</button>
+            </div>
+
+            <!-- Exam 10 -->
+            <div class="question" id="eq10">
+                <h3>Soalan 10 (5 markah)</h3>
+                <p>65 - 18 = ?</p>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>45</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>47</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>57</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>83</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq10')">Semak</button>
+            </div>
+
+            <!-- Exam 11 -->
+            <div class="question" id="eq11">
+                <h3>Soalan 11 (5 markah)</h3>
+                <p style="font-size:1.3em;">48 + 36 = <input type="text" id="eq11-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq11', '84')">Semak</button>
+            </div>
+
+            <!-- Exam 12 -->
+            <div class="question" id="eq12">
+                <h3>Soalan 12 (5 markah)</h3>
+                <p style="font-size:1.3em;">77 - 29 = <input type="text" id="eq12-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq12', '48')">Semak</button>
+            </div>
+
+            <!-- Exam 13 -->
+            <div class="question" id="eq13">
+                <h3>Soalan 13 (5 markah)</h3>
+                <p>"Enam puluh sembilan" = ?</p>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>96</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>609</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>69</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>96</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq13')">Semak</button>
+            </div>
+
+            <!-- Exam 14 -->
+            <div class="question" id="eq14">
+                <h3>Soalan 14 (5 markah)</h3>
+                <p>Antara berikut, yang mana ganjil?</p>
+                <div class="options" data-answer="D">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>22</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>44</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>66</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>57</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq14')">Semak</button>
+            </div>
+
+            <!-- Exam 15 -->
+            <div class="question" id="eq15">
+                <h3>Soalan 15 (5 markah)</h3>
+                <p style="font-size:1.3em;">25 + 38 + 17 = <input type="text" id="eq15-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq15', '80')">Semak</button>
+            </div>
+
+            <!-- Exam 16 -->
+            <div class="question" id="eq16">
+                <h3>Soalan 16 (5 markah)</h3>
+                <p>Nilai puluhan dalam 82?</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>80</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>8</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>2</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>82</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq16')">Semak</button>
+            </div>
+
+            <!-- Exam 17 -->
+            <div class="question" id="eq17">
+                <h3>Soalan 17 (5 markah)</h3>
+                <p>Susun menaiki: 76, 23, 98, 41</p>
+                <p>Jawapan: <input type="text" id="eq17-answer" style="width:150px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq17', '23, 41, 76, 98')">Semak</button>
+            </div>
+
+            <!-- Exam 18 -->
+            <div class="question" id="eq18">
+                <h3>Soalan 18 (5 markah)</h3>
+                <p>58 ? 85</p>
+                <div class="compare-area">
+                    <div class="compare-box">58</div>
+                    <select id="eq18-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #667eea;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">85</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('eq18', '<')">Semak</button>
+            </div>
+
+            <!-- Exam 19 -->
+            <div class="question" id="eq19">
+                <h3>Soalan 19 (5 markah)</h3>
+                <p style="font-size:1.3em;">100 - 45 = <input type="text" id="eq19-answer" style="width:80px;padding:8px;border:2px solid #667eea;border-radius:5px;"></p>
+                <button class="check-btn" onclick="checkFillBlank('eq19', '55')">Semak</button>
+            </div>
+
+            <!-- Exam 20 -->
+            <div class="question" id="eq20">
+                <h3>Soalan 20 (5 markah)</h3>
+                <p>Ahmad ada 23 biji epal. Dia give away 17 biji. Baki?</p>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>40</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>6</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>6</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>40</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq20')">Semak</button>
+            </div>
+
+            <div class="score-display" id="exam-score">
+                <h2>Markah Peperiksaan:</h2>
+                <div class="score-number"><span id="exam-current">0</span>/20</div>
+                <div class="progress-bar"><div class="progress-fill" id="exam-progress" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">📊 Keputusan Anda</h2>
+            <div class="score-display"><h2>Latihan</h2><div class="score-number"><span id="final-practice">0</span>/50</div><div class="star-rating" id="practice-stars"></div><div class="progress-bar"><div class="progress-fill" id="final-practice-progress" style="width: 0%"></div></div></div>
+            <div class="score-display" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><h2>Peperiksaan</h2><div class="score-number"><span id="final-exam">0</span>/20</div><div class="star-rating" id="exam-stars"></div><div class="progress-bar"><div class="progress-fill" id="final-exam-progress" style="width: 0%"></div></div></div>
+            <div id="overall-message" class="result-message"></div>
+            <button class="check-btn" onclick="resetAll()" style="display:block;margin:20px auto;">🔄 Cuba Lagi</button>
+        </div>
+
+        <footer><p>📚 Matematik Tahun 1 - Bab 1: Nombor Bulat hingga 100</p><p>Berdasarkan Buku Teks KSSR</p></footer>
+    </div>
+
+    <script>
+        let practiceScore = 0;
+        let examScore = 0;
+        let practiceAnswered = new Set();
+        let examAnswered = new Set();
+
+        // Generate navigation buttons
+        function generateNav() {
+            const practiceNav = document.getElementById('practice-nav');
+            const examNav = document.getElementById('exam-nav');
+            for(let i = 1; i <= 50; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i;
+                btn.onclick = () => scrollToQuestion('q' + i);
+                practiceNav.appendChild(btn);
+            }
+            for(let i = 1; i <= 20; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i;
+                btn.onclick = () => scrollToQuestion('eq' + i);
+                examNav.appendChild(btn);
+            }
+        }
+        generateNav();
+
+        function scrollToQuestion(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showContent(contentId) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(contentId).classList.add('active');
+            const btnMap = {'tutorial':0, 'latihan':1, 'exam':2, 'results':3};
+            document.querySelectorAll('.nav-btn')[btnMap[contentId]].classList.add('active');
+            if(contentId === 'results') updateResults();
+        }
+
+        function toggleTips(id) {
+            document.getElementById(id).classList.toggle('show');
+        }
+
+        document.querySelectorAll('.options').forEach(optionsDiv => {
+            optionsDiv.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = this.closest('.question').id;
+                    const optionsContainer = this.closest('.options');
+                    if(optionsContainer.classList.contains('checked')) return;
+                    optionsContainer.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+
+        function checkAnswer(questionId) {
+            const question = document.getElementById(questionId);
+            const options = question.querySelector('.options');
+            const correctAnswer = options.dataset.answer;
+            const selectedOption = options.querySelector('.option.selected');
+            if(!selectedOption) { alert('Sila pilih satu jawapan!'); return; }
+            options.classList.add('checked');
+            options.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if(opt.dataset.value === correctAnswer) opt.classList.add('correct');
+                else if(opt.classList.contains('selected') && opt.dataset.value !== correctAnswer) opt.classList.add('wrong');
+            });
+            const isCorrect = selectedOption.dataset.value === correctAnswer;
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function checkFillBlank(questionId, correctAnswer) {
+            const question = document.getElementById(questionId);
+            let input;
+            if(questionId.startsWith('eq')) input = document.getElementById(questionId + '-answer');
+            else input = document.getElementById(questionId + '-answer');
+            const userAnswer = input.value.trim();
+            if(userAnswer === '') { alert('Sila masukkan jawapan!'); return; }
+            input.disabled = true;
+            const isCorrect = userAnswer === correctAnswer;
+            if(isCorrect) input.classList.add('correct');
+            else { input.classList.add('wrong'); input.value = correctAnswer + ' (Betul)'; }
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function checkCompare(questionId, correctAnswer) {
+            const select = document.getElementById(questionId + '-answer');
+            const userAnswer = select.value;
+            if(userAnswer === '') { alert('Sila pilih simbol!'); return; }
+            select.disabled = true;
+            const isCorrect = userAnswer === correctAnswer;
+            if(isCorrect) { select.style.borderColor = '#4caf50'; select.style.backgroundColor = '#e8f5e9'; }
+            else { select.style.borderColor = '#f44336'; select.style.backgroundColor = '#ffebee'; select.value = correctAnswer + ' (Betul)'; }
+            const question = document.getElementById(questionId);
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function updateNavButton(questionId, isCorrect) {
+            let navId, btns;
+            if(questionId.startsWith('eq')) { navId = 'exam-nav'; btns = document.getElementById(navId).querySelectorAll('.question-nav-btn'); btns[parseInt(questionId.replace('eq',''))-1].classList.add(isCorrect ? 'correct' : 'wrong'); }
+            else { navId = 'practice-nav'; btns = document.getElementById(navId).querySelectorAll('.question-nav-btn'); btns[parseInt(questionId.replace('q',''))-1].classList.add(isCorrect ? 'correct' : 'wrong'); }
+        }
+
+        function updateScore(type) {
+            if(type === 'practice') {
+                document.getElementById('practice-current').textContent = practiceScore;
+                document.getElementById('practice-progress').style.width = (practiceScore / 50 * 100) + '%';
+            } else {
+                document.getElementById('exam-current').textContent = examScore;
+                document.getElementById('exam-progress').style.width = (examScore / 20 * 100) + '%';
+            }
+        }
+
+        function updateResults() {
+            document.getElementById('final-practice').textContent = practiceScore;
+            document.getElementById('final-exam').textContent = examScore;
+            document.getElementById('final-practice-progress').style.width = (practiceScore / 50 * 100) + '%';
+            document.getElementById('final-exam-progress').style.width = (examScore / 20 * 100) + '%';
+            document.getElementById('practice-stars').innerHTML = getStars(practiceScore, 50);
+            document.getElementById('exam-stars').innerHTML = getStars(examScore, 20);
+            const totalScore = practiceScore + examScore;
+            const totalMax = 70;
+            const percentage = (totalScore / totalMax * 100);
+            const messageDiv = document.getElementById('overall-message');
+            if(percentage >= 90) { messageDiv.className = 'result-message success'; messageDiv.innerHTML = '🎉 Tahniah! Ane kerja cemerlang! ❤️'; }
+            else if(percentage >= 70) { messageDiv.className = 'result-message partial'; messageDiv.innerHTML = '👍 Bagus! Cuba lagi untuk lebih baik! 💪'; }
+            else { messageDiv.className = 'result-message fail'; messageDiv.innerHTML = '📚 JanganGive up! Cuba lagi! 🌟'; }
+        }
+
+        function getStars(score, max) {
+            const percentage = score / max;
+            let stars = '';
+            if(percentage >= 0.9) stars = '⭐⭐⭐⭐⭐';
+            else if(percentage >= 0.7) stars = '⭐⭐⭐⭐';
+            else if(percentage >= 0.5) stars = '⭐⭐⭐';
+            else if(percentage >= 0.3) stars = '⭐⭐';
+            else stars = '⭐';
+            return stars;
+        }
+
+        function resetAll() {
+            practiceScore = 0; examScore = 0; practiceAnswered.clear(); examAnswered.clear();
+            document.getElementById('practice-current').textContent = '0';
+            document.getElementById('exam-current').textContent = '0';
+            document.getElementById('practice-progress').style.width = '0%';
+            document.getElementById('exam-progress').style.width = '0%';
+            document.querySelectorAll('.question-nav-btn').forEach(btn => btn.className = 'question-nav-btn');
+            document.querySelectorAll('.question').forEach(q => {
+                const options = q.querySelector('.options');
+                if(options) { options.classList.remove('checked'); options.querySelectorAll('.option').forEach(opt => { opt.classList.remove('selected', 'correct', 'wrong'); opt.style.pointerEvents = 'auto'; }); }
+                q.querySelectorAll('input').forEach(input => { input.value = ''; input.disabled = false; input.classList.remove('correct', 'wrong'); });
+                q.querySelectorAll('select').forEach(select => { select.value = ''; select.disabled = false; select.style.borderColor = '#667eea'; select.style.backgroundColor = ''; });
+                const btn = q.querySelector('.check-btn');
+                if(btn) btn.disabled = false;
+            });
+            showContent('tutorial');
+        }
+    </script>
+</body>
+</html>
