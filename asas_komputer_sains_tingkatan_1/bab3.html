@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 3 – Algoritma | ASK Tingkatan 1</title>
+<style>
+:root{
+  --orange:#ea580c;--amber:#d97706;--rose:#e11d48;--violet:#7c3aed;
+  --blue:#2563eb;--green:#16a34a;--teal:#0d9488;--sky:#0284c7;
+  --bg:#fffbf5;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--r:1.2rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.7}
+
+/* NAV */
+.top-nav{background:#1e293b;padding:.7rem 1.2rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.top-nav a{color:#94a3b8;text-decoration:none;font-size:.82rem;font-weight:600;padding:.3rem .7rem;border-radius:.4rem;transition:.15s;white-space:nowrap}
+.top-nav a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.top-nav a.active{color:#fff;background:#ea580c}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#7c2d12 0%,#ea580c 50%,#f59e0b 100%);color:#fff;text-align:center;padding:3rem 1rem 4rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:2rem;padding:.3rem 1.1rem;font-size:.8rem;letter-spacing:.06em;margin-bottom:1rem}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:.6rem}
+.hero p{font-size:1.05rem;opacity:.88;max-width:540px;margin:0 auto}
+.prog-wrap{background:rgba(255,255,255,.2);border-radius:2rem;height:10px;max-width:360px;margin:1.5rem auto .4rem;overflow:hidden}
+.prog-fill{height:100%;background:#fff;border-radius:2rem;width:0%;transition:width .5s ease}
+.prog-txt{color:rgba(255,255,255,.8);font-size:.8rem;text-align:center}
+
+/* LAYOUT */
+main{max-width:880px;margin:0 auto;padding:2rem 1rem 5rem}
+.sec-head{display:flex;align-items:center;gap:.9rem;margin:3.5rem 0 1.5rem}
+.sec-head:first-child{margin-top:1rem}
+.sec-icon{width:3.2rem;height:3.2rem;border-radius:.8rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.sec-head h2{font-size:1.4rem;font-weight:800}
+.sec-head p{font-size:.85rem;color:var(--muted)}
+
+/* CARDS */
+.card{background:var(--card);border:2px solid var(--border);border-radius:var(--r);padding:1.8rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.def-box{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #fed7aa;border-radius:var(--r);padding:1.8rem;margin-bottom:1.5rem}
+.def-box h3{font-size:1.15rem;font-weight:800;color:#9a3412;margin-bottom:.7rem}
+.def-box .def-text{font-size:1.05rem;background:#fff;border-left:5px solid #ea580c;padding:1rem 1.2rem;border-radius:0 .7rem .7rem 0;color:#1e293b}
+.pill{display:inline-flex;align-items:center;gap:.3rem;padding:.3rem .8rem;border-radius:2rem;font-size:.82rem;font-weight:700;margin:.2rem}
+
+/* TOPIC */
+.topic{border-radius:var(--r);padding:2rem;margin-bottom:2rem}
+.topic.tp-sym{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #fed7aa}
+.topic.tp-pseudo{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #93c5fd}
+.topic.tp-struct{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac}
+.topic.tp-err{background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:2px solid #f9a8d4}
+.topic-hd{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.topic-emoji{font-size:3rem}
+.topic-hd h3{font-size:1.35rem;font-weight:900}
+.topic-hd small{font-size:.85rem;opacity:.6;font-style:italic;display:block}
+
+/* FLOWCHART SYMBOLS (CSS shapes) */
+.sym-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1rem 0}
+.sym-card{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1rem;text-align:center;cursor:pointer;transition:.2s}
+.sym-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.sym-card.active{border-color:#ea580c;background:#fff7ed}
+.sym-card h4{font-size:.88rem;font-weight:800;margin:.5rem 0 .2rem}
+.sym-card p{font-size:.75rem;color:var(--muted)}
+
+/* shape drawings */
+.shape-oval{width:80px;height:36px;background:#fbbf24;border-radius:50px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#1e293b}
+.shape-rect{width:80px;height:36px;background:#60a5fa;border-radius:4px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff}
+.shape-diamond{width:44px;height:44px;background:#f87171;transform:rotate(45deg);margin:6px auto;display:flex;align-items:center;justify-content:center}
+.shape-diamond-text{transform:rotate(-45deg);font-size:.62rem;font-weight:700;color:#fff;white-space:nowrap}
+.shape-para{width:80px;height:36px;background:#34d399;clip-path:polygon(10% 0%,100% 0%,90% 100%,0% 100%);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff}
+.shape-arrow{font-size:1.8rem;color:#94a3b8;margin:0 auto;display:block;text-align:center;line-height:1}
+
+/* symbol detail */
+.sym-detail{background:#fff;border:2px solid #fed7aa;border-radius:.8rem;padding:1.2rem;margin-top:.8rem;display:none;animation:fadeIn .2s ease}
+.sym-detail.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* PSEUDOCODE block */
+.pseudo-block{background:#1e293b;color:#e2e8f0;border-radius:.8rem;padding:1.2rem 1.5rem;font-family:monospace;font-size:.92rem;line-height:1.9;margin:.8rem 0;position:relative;overflow:hidden}
+.pseudo-block .kw{color:#f59e0b;font-weight:700}
+.pseudo-block .kw-blue{color:#60a5fa;font-weight:700}
+.pseudo-block .kw-green{color:#34d399;font-weight:700}
+.pseudo-block .kw-pink{color:#f9a8d4;font-weight:700}
+.pseudo-block .comment{color:#64748b;font-style:italic}
+.pseudo-block .val{color:#fb923c}
+.pseudo-block .indent{padding-left:1.5rem;display:block}
+.pseudo-block .indent2{padding-left:3rem;display:block}
+
+/* FLOWCHART visual */
+.fc-wrap{display:flex;flex-direction:column;align-items:center;gap:0;margin:1rem 0}
+.fc-node{display:flex;flex-direction:column;align-items:center;gap:0}
+.fc-oval{background:#fbbf24;border:2px solid #d97706;border-radius:40px;padding:.4rem 1.5rem;font-size:.85rem;font-weight:800;color:#1e293b;min-width:120px;text-align:center}
+.fc-rect{background:#60a5fa;border:2px solid #3b82f6;border-radius:.4rem;padding:.5rem 1rem;font-size:.82rem;font-weight:600;color:#fff;min-width:150px;text-align:center}
+.fc-para{background:#34d399;border:2px solid #10b981;padding:.5rem 1.2rem;font-size:.82rem;font-weight:600;color:#fff;min-width:150px;text-align:center;clip-path:polygon(8% 0%,100% 0%,92% 100%,0% 100%)}
+.fc-diamond{background:#f87171;border:2px solid #ef4444;width:110px;height:55px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;margin:.5rem}
+.fc-diamond-inner{transform:rotate(-45deg);font-size:.72rem;font-weight:700;color:#fff;text-align:center;line-height:1.2}
+.fc-arrow{font-size:1.4rem;color:#94a3b8;line-height:1;margin:.05rem 0}
+.fc-branch{display:flex;align-items:flex-start;gap:2rem;margin:0}
+.fc-branch-label{font-size:.75rem;font-weight:700;color:#64748b;margin:.3rem}
+
+/* TABS */
+.ex-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem}
+.ex-tab{background:rgba(255,255,255,.6);border:2px solid rgba(0,0,0,.1);border-radius:.5rem;padding:.35rem .85rem;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s}
+.ex-tab.active,.ex-tab:hover{background:#fff;border-color:#ea580c;color:#9a3412}
+.ex-panel{display:none}.ex-panel.active{display:block;animation:fadeIn .25s ease}
+
+/* STORY BOX */
+.story-box{background:rgba(255,255,255,.75);border-radius:.8rem;padding:1.2rem;margin-bottom:1rem}
+.story-box h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:.7rem}
+
+/* step row */
+.step-row{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:.9rem}
+.step-dot{width:2.2rem;height:2.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;flex-shrink:0;margin-top:.1rem}
+.sd-or{background:#ea580c}.sd-bl{background:#2563eb}.sd-gr{background:#16a34a}.sd-vi{background:#7c3aed}
+
+/* INTERACTIVE builder */
+.builder-wrap{background:#f1f5f9;border-radius:.9rem;padding:1.2rem;margin:.8rem 0}
+.builder-wrap h4{font-size:.9rem;font-weight:800;margin-bottom:.8rem;color:#9a3412}
+.builder-palette{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.palette-item{background:#fff;border:2px solid var(--border);border-radius:.5rem;padding:.35rem .75rem;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:.4rem}
+.palette-item:hover{border-color:#ea580c;background:#fff7ed}
+.builder-canvas{min-height:80px;background:#fff;border:2px dashed #cbd5e1;border-radius:.7rem;padding:.8rem;display:flex;flex-direction:column;align-items:center;gap:.3rem;transition:.2s}
+.builder-canvas.over{border-color:#ea580c;background:#fff7ed}
+.canvas-node{display:flex;flex-direction:column;align-items:center;gap:.1rem;animation:fadeIn .2s ease}
+.canvas-oval{background:#fef08a;border:2px solid #ca8a04;border-radius:30px;padding:.3rem 1.2rem;font-size:.8rem;font-weight:700}
+.canvas-rect{background:#bfdbfe;border:2px solid #3b82f6;border-radius:.3rem;padding:.3rem 1rem;font-size:.8rem;font-weight:700;min-width:130px;text-align:center}
+.canvas-para{background:#bbf7d0;border:2px solid #16a34a;padding:.3rem 1.2rem;font-size:.8rem;font-weight:700;clip-path:polygon(8% 0%,100% 0%,92% 100%,0% 100%);min-width:130px;text-align:center}
+.canvas-dia{background:#fecaca;border:2px solid #ef4444;width:80px;height:40px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center}
+.canvas-dia-txt{transform:rotate(-45deg);font-size:.65rem;font-weight:700;text-align:center;line-height:1.1}
+.canvas-arr{font-size:1.2rem;color:#94a3b8}
+.remove-btn{font-size:.65rem;color:#ef4444;cursor:pointer;opacity:0;transition:.15s}
+.canvas-node:hover .remove-btn{opacity:1}
+
+/* ERROR DETECTION */
+.err-pseudo{background:#1e1e1e;color:#e2e8f0;border-radius:.8rem;padding:1.2rem;font-family:monospace;font-size:.9rem;line-height:2;margin:.8rem 0;position:relative}
+.err-line{cursor:pointer;border-radius:.3rem;padding:0 .4rem;transition:.15s;display:block}
+.err-line:hover{background:rgba(234,88,12,.2)}
+.err-line.selected{background:rgba(234,88,12,.35);outline:2px solid #ea580c}
+.err-line.correct-err{background:rgba(220,38,38,.35)}
+.err-line.wrong-sel{background:rgba(234,88,12,.15)}
+.err-fb{font-size:.85rem;padding:.6rem 1rem;border-radius:.5rem;margin-top:.5rem;display:none}
+.err-fb.show{display:block}
+.err-fb.ok{background:#f0fdf4;color:#15803d}
+.err-fb.no{background:#fef2f2;color:#dc2626}
+
+/* GAMES */
+.game-card{background:#f8fafc;border:2.5px dashed #cbd5e1;border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
+.game-card h3{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.game-tag{background:#ea580c;color:#fff;font-size:.7rem;padding:.15rem .6rem;border-radius:1rem}
+.game-card .instr{font-size:.88rem;color:var(--muted);margin-bottom:1rem}
+
+/* MATCH game */
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.8rem 0}
+@media(max-width:500px){.match-wrap{grid-template-columns:1fr}}
+.match-col h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.5rem}
+.match-item{background:#fff;border:2px solid var(--border);border-radius:.6rem;padding:.5rem .9rem;font-size:.85rem;cursor:pointer;transition:.15s;margin-bottom:.4rem;user-select:none}
+.match-item:hover{border-color:#ea580c}
+.match-item.sel-left{border-color:#ea580c;background:#fff7ed}
+.match-item.sel-right{border-color:#ea580c;background:#fff7ed}
+.match-item.matched{border-color:#16a34a;background:#f0fdf4;cursor:default;opacity:.7}
+.match-item.wrong{border-color:#ef4444;background:#fef2f2;animation:shake .3s}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* QUIZ */
+.exam-label{display:inline-flex;align-items:center;gap:.4rem;background:#fff7ed;border:1.5px solid #fed7aa;border-radius:.4rem;padding:.2rem .7rem;font-size:.75rem;font-weight:700;color:#9a3412;margin-bottom:.7rem}
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1.3rem 1.5rem;margin-bottom:1rem}
+.q-no{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.06em;margin-bottom:.4rem}
+.q-stem{font-size:1rem;font-weight:700;margin-bottom:1rem;line-height:1.55}
+.scenario{background:#f8fafc;border-left:4px solid #ea580c;padding:.7rem 1rem;border-radius:0 .5rem .5rem 0;font-size:.92rem;font-weight:400;color:#374151;margin-bottom:.8rem;display:block}
+.mc-opts{display:grid;gap:.5rem}
+.mc-opt{display:flex;align-items:center;gap:.8rem;padding:.65rem 1rem;border:2px solid var(--border);border-radius:.6rem;cursor:pointer;font-size:.9rem;transition:.15s}
+.mc-opt:hover:not(.locked){border-color:#ea580c;background:#fff7ed}
+.mc-opt .ltr{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.mc-opt.picked{border-color:#ea580c}.mc-opt.picked .ltr{background:#ea580c;border-color:#ea580c;color:#fff}
+.mc-opt.right{border-color:var(--green);background:#f0fdf4}.mc-opt.right .ltr{background:var(--green);border-color:var(--green);color:#fff}
+.mc-opt.wrong{border-color:#ef4444;background:#fef2f2}.mc-opt.wrong .ltr{background:#ef4444;border-color:#ef4444;color:#fff}
+.q-fb{font-size:.84rem;border-radius:.45rem;padding:.55rem .85rem;margin-top:.6rem;display:none}
+.q-fb.show{display:block}
+.q-fb.ok{background:#f0fdf4;color:#15803d}
+.q-fb.no{background:#fef2f2;color:#dc2626}
+.score-box{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #fed7aa;border-radius:var(--r);padding:2rem;text-align:center;display:none;margin-top:1rem}
+.score-box.show{display:block;animation:fadeIn .4s ease}
+.score-big{font-size:3.5rem;font-weight:900;color:#ea580c}
+.score-msg{font-size:1.05rem;font-weight:600;margin-top:.5rem}
+
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.6rem;border-radius:.7rem;font-size:.95rem;font-weight:700;cursor:pointer;border:none;transition:.15s}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn-or{background:#ea580c;color:#fff}
+.btn-ghost{background:transparent;border:2px solid var(--border);color:var(--text)}
+
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:1rem}
+.sum-card{background:#fff;border:2px solid var(--border);border-radius:.9rem;padding:1.2rem;text-align:center}
+.sum-card .se{font-size:2.5rem;margin-bottom:.5rem}
+.sum-card h4{font-weight:800;margin-bottom:.25rem;font-size:.95rem}
+.sum-card p{font-size:.82rem;color:var(--muted)}
+.congrats{background:linear-gradient(135deg,#7c2d12,#ea580c);color:#fff;border-radius:var(--r);padding:2rem;text-align:center;margin-top:2rem}
+.congrats h3{font-size:1.4rem;font-weight:900;margin-bottom:.4rem}
+footer{text-align:center;padding:2rem 1rem;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
+.highlight{background:#fef9c3;border-radius:.25rem;padding:0 .2rem}
+.bold{font-weight:800}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <span style="color:#64748b;font-size:.8rem">📚 ASK T1</span>
+  <a href="index.html">Bab 1: Pemikiran Komputasional</a>
+  <a href="bab2.html">Bab 2: Perwakilan Data</a>
+  <a href="bab3.html" class="active">Bab 3: Algoritma</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div style="font-size:2.2rem;margin-bottom:.5rem">📋 🔄 ✅</div>
+  <span class="badge">Asas Sains Komputer · Tingkatan 1 · KSSM</span>
+  <h1>Bab 3<br>Algoritma</h1>
+  <p>Belajar tulis arahan langkah-demi-langkah untuk selesaikan masalah!</p>
+  <div class="prog-wrap"><div class="prog-fill" id="pFill"></div></div>
+  <p class="prog-txt" id="pTxt">Kemajuan kamu: 0%</p>
+</header>
+
+<main>
+
+<!-- ─── INTRO ─── -->
+<div class="sec-head" style="margin-top:1rem">
+  <div class="sec-icon" style="background:#fff7ed">🤔</div>
+  <div><h2>Apa itu Algoritma?</h2><p>Faham konsep asas dahulu</p></div>
+</div>
+
+<div class="def-box">
+  <h3>Definisi Algoritma</h3>
+  <div class="def-text"><span class="highlight bold">Algoritma</span> ialah satu set urutan langkah yang <strong>bertertib dan terhingga</strong> untuk menyelesaikan sesuatu masalah.</div>
+  <p style="margin-top:.9rem;font-size:.95rem">🍳 Bayangkan <strong>resepi masakan</strong> — ia ada langkah yang jelas, tersusun, dan kalau ikut betul-betul, hasilnya mesti sama setiap kali. Itulah algoritma!</p>
+  <div style="margin-top:.7rem;display:flex;flex-wrap:wrap;gap:.3rem">
+    <span class="pill" style="background:#ffedd5;color:#9a3412">📊 Carta Alir</span>
+    <span class="pill" style="background:#dbeafe;color:#1e40af">📝 Pseudokod</span>
+    <span class="pill" style="background:#dcfce7;color:#166534">🔀 Struktur Kawalan</span>
+    <span class="pill" style="background:#fce7f3;color:#9d174d">🔍 Pengesanan Ralat</span>
+  </div>
+</div>
+
+<div class="story-box card">
+  <h4>📋 Ciri-ciri algoritma yang baik</h4>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;margin-top:.5rem">
+    <div style="background:#fff7ed;border:2px solid #fed7aa;border-radius:.6rem;padding:.8rem;text-align:center"><div style="font-size:1.5rem">📥</div><strong style="font-size:.88rem">Ada Input</strong><p style="font-size:.78rem;color:var(--muted)">Menerima maklumat masuk</p></div>
+    <div style="background:#fff7ed;border:2px solid #fed7aa;border-radius:.6rem;padding:.8rem;text-align:center"><div style="font-size:1.5rem">📤</div><strong style="font-size:.88rem">Ada Output</strong><p style="font-size:.78rem;color:var(--muted)">Menghasilkan jawapan</p></div>
+    <div style="background:#fff7ed;border:2px solid #fed7aa;border-radius:.6rem;padding:.8rem;text-align:center"><div style="font-size:1.5rem">🎯</div><strong style="font-size:.88rem">Jelas & Tepat</strong><p style="font-size:.78rem;color:var(--muted)">Setiap langkah mudah difahami</p></div>
+    <div style="background:#fff7ed;border:2px solid #fed7aa;border-radius:.6rem;padding:.8rem;text-align:center"><div style="font-size:1.5rem">🏁</div><strong style="font-size:.88rem">Ada Penghujung</strong><p style="font-size:.78rem;color:var(--muted)">Mesti berhenti akhirnya</p></div>
+  </div>
+</div>
+
+<p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;background:#fff;border:2px solid var(--border);border-radius:.8rem;padding:.9rem 1.2rem">
+  📌 <strong>Dua cara tulis algoritma:</strong><br>
+  1. <strong>Pseudokod</strong> — tulis dalam bahasa ringkas (seperti Bahasa Melayu/Inggeris)<br>
+  2. <strong>Carta Alir</strong> — lukis menggunakan simbol dan anak panah
+</p>
+
+<!-- ════ TOPIK 1: SIMBOL CARTA ALIR ════ -->
+<div id="topik1"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#ffedd5">📊</div>
+  <div><h2>Topik 1: Simbol Carta Alir</h2><p>5 simbol yang perlu hafal</p></div>
+</div>
+
+<div class="topic tp-sym">
+  <div class="topic-hd">
+    <span class="topic-emoji">📊</span>
+    <div><h3>Simbol Carta Alir</h3><small>Flowchart Symbols</small></div>
+  </div>
+
+  <p style="font-size:.9rem;margin-bottom:1rem">Carta alir menggunakan <strong>bentuk geometri khusus</strong>. Klik setiap simbol untuk baca penerangannya!</p>
+
+  <div class="sym-grid">
+    <div class="sym-card" onclick="showSym('oval',this)">
+      <div class="shape-oval">MULA / TAMAT</div>
+      <h4>Bujur (Oval)</h4>
+      <p>Mula / Tamat</p>
+    </div>
+    <div class="sym-card" onclick="showSym('rect',this)">
+      <div class="shape-rect">PROSES</div>
+      <h4>Segi Empat Tepat</h4>
+      <p>Proses / Pengiraan</p>
+    </div>
+    <div class="sym-card" onclick="showSym('diamond',this)">
+      <div style="margin:4px auto;width:50px;height:50px;position:relative">
+        <div class="shape-diamond"><div class="shape-diamond-text">Ya / Tidak</div></div>
+      </div>
+      <h4>Berlian</h4>
+      <p>Keputusan / Pilihan</p>
+    </div>
+    <div class="sym-card" onclick="showSym('para',this)">
+      <div class="shape-para">INPUT/OUTPUT</div>
+      <h4>Selari Sisi</h4>
+      <p>Input / Output</p>
+    </div>
+    <div class="sym-card" onclick="showSym('arrow',this)">
+      <span class="shape-arrow">↓</span>
+      <h4>Anak Panah</h4>
+      <p>Aliran / Sambungan</p>
+    </div>
+  </div>
+
+  <div id="symDetail" class="sym-detail"></div>
+
+  <!-- full symbol table -->
+  <div class="story-box" style="margin-top:1rem">
+    <h4>📋 Jadual Ringkas Simbol Carta Alir</h4>
+    <div style="overflow-x:auto">
+      <table style="border-collapse:collapse;width:100%;font-size:.88rem">
+        <tr style="background:#ea580c;color:#fff">
+          <th style="padding:.5rem .8rem;text-align:left">Simbol</th>
+          <th style="padding:.5rem .8rem;text-align:left">Nama</th>
+          <th style="padding:.5rem .8rem;text-align:left">Kegunaan</th>
+          <th style="padding:.5rem .8rem;text-align:left">Contoh</th>
+        </tr>
+        <tr><td style="border:1px solid #fed7aa;padding:.45rem .8rem">⬭ Bujur</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Terminal</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Mula / Tamat algoritma</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem;font-family:monospace">MULA / TAMAT</td></tr>
+        <tr style="background:#fffbf5"><td style="border:1px solid #fed7aa;padding:.45rem .8rem">▭ Segi Empat</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Proses</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Pengiraan atau tindakan</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem;font-family:monospace">jumlah = a + b</td></tr>
+        <tr><td style="border:1px solid #fed7aa;padding:.45rem .8rem">◇ Berlian</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Keputusan</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Soalan Ya/Tidak</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem;font-family:monospace">markah ≥ 40?</td></tr>
+        <tr style="background:#fffbf5"><td style="border:1px solid #fed7aa;padding:.45rem .8rem">▱ Selari Sisi</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Input/Output</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Masukkan / Paparkan data</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem;font-family:monospace">INPUT nama / OUTPUT markah</td></tr>
+        <tr><td style="border:1px solid #fed7aa;padding:.45rem .8rem">→ Anak Panah</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Aliran</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Arah langkah seterusnya</td><td style="border:1px solid #fed7aa;padding:.45rem .8rem">Sambungkan semua simbol</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TOPIK 2: PSEUDOKOD ════ -->
+<div id="topik2"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dbeafe">📝</div>
+  <div><h2>Topik 2: Pseudokod</h2><p>Tulis algoritma dalam bahasa ringkas</p></div>
+</div>
+
+<div class="topic tp-pseudo">
+  <div class="topic-hd">
+    <span class="topic-emoji">📝</span>
+    <div><h3>Pseudokod</h3><small>Pseudocode</small></div>
+  </div>
+
+  <div class="story-box">
+    <h4>💬 Maksudnya…</h4>
+    <p style="font-size:.95rem">Pseudokod adalah seperti <strong>"draf resepi"</strong> — ditulis dalam bahasa biasa (bukan bahasa komputer sebenar), tetapi cukup terperinci untuk diikuti langkah demi langkah.</p>
+  </div>
+
+  <!-- keyword table -->
+  <div class="story-box">
+    <h4>🔑 Kata Kunci Pseudokod yang Biasa Digunakan</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem;margin-top:.5rem">
+      <div style="background:#1e293b;color:#f59e0b;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88rem"><strong>MULA / TAMAT</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— mulakan / tamatkan</span></div>
+      <div style="background:#1e293b;color:#34d399;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88rem"><strong>INPUT</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— dapatkan nilai dari pengguna</span></div>
+      <div style="background:#1e293b;color:#34d399;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88rem"><strong>OUTPUT / PAPARAN</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— tunjukkan hasil</span></div>
+      <div style="background:#1e293b;color:#60a5fa;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88rem"><strong>IF … THEN … ELSE … ENDIF</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— pilihan</span></div>
+      <div style="background:#1e293b;color:#f9a8d4;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88rem"><strong>WHILE … ENDWHILE</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— ulang selagi syarat benar</span></div>
+      <div style="background:#1e293b;color:#f9a8d4;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88em"><strong>FOR … TO … ENDFOR</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— ulang bilangan tertentu</span></div>
+      <div style="background:#1e293b;color:#f9a8d4;border-radius:.5rem;padding:.5rem .9rem;font-family:monospace;font-size:.88rem"><strong>REPEAT … UNTIL</strong> <span style="color:#94a3b8;font-family:sans-serif;font-size:.75rem">— ulang sehingga syarat benar</span></div>
+    </div>
+  </div>
+
+  <!-- Worked example: sequence -->
+  <div class="story-box">
+    <h4>✏️ Contoh 1 – Turutan (Sequence): Kira Luas Segi Empat</h4>
+    <div class="pseudo-block">
+      <span class="kw">MULA</span><br>
+      <span class="indent"><span class="kw-green">INPUT</span> panjang</span>
+      <span class="indent"><span class="kw-green">INPUT</span> lebar</span>
+      <span class="indent">luas = panjang × lebar</span>
+      <span class="indent"><span class="kw-green">OUTPUT</span> luas</span>
+      <span class="kw">TAMAT</span>
+    </div>
+    <div class="fc-wrap" style="padding:.5rem">
+      <div class="fc-node">
+        <div class="fc-oval">MULA</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-para">INPUT panjang</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-para">INPUT lebar</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-rect">luas = panjang × lebar</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-para">OUTPUT luas</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-oval">TAMAT</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TOPIK 3: STRUKTUR KAWALAN ════ -->
+<div id="topik3"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dcfce7">🔀</div>
+  <div><h2>Topik 3: Struktur Kawalan</h2><p>3 cara untuk kawal aliran algoritma</p></div>
+</div>
+
+<div class="topic tp-struct">
+  <div class="topic-hd">
+    <span class="topic-emoji">🔀</span>
+    <div><h3>Struktur Kawalan</h3><small>Control Structures</small></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1.2rem">
+    <div style="background:#fff;border:2px solid #86efac;border-radius:.7rem;padding:.9rem;text-align:center;cursor:pointer" onclick="scrollToId('s-turutan')">
+      <div style="font-size:1.8rem">➡️</div><h4 style="font-size:.9rem;font-weight:800">Turutan</h4><p style="font-size:.75rem;color:var(--muted)">Sequence</p>
+    </div>
+    <div style="background:#fff;border:2px solid #86efac;border-radius:.7rem;padding:.9rem;text-align:center;cursor:pointer" onclick="scrollToId('s-pilihan')">
+      <div style="font-size:1.8rem">↔️</div><h4 style="font-size:.9rem;font-weight:800">Pilihan</h4><p style="font-size:.75rem;color:var(--muted)">Selection</p>
+    </div>
+    <div style="background:#fff;border:2px solid #86efac;border-radius:.7rem;padding:.9rem;text-align:center;cursor:pointer" onclick="scrollToId('s-ulangan')">
+      <div style="font-size:1.8rem">🔁</div><h4 style="font-size:.9rem;font-weight:800">Ulangan</h4><p style="font-size:.75rem;color:var(--muted)">Repetition</p>
+    </div>
+  </div>
+
+  <!-- 3A: TURUTAN -->
+  <div id="s-turutan" class="story-box">
+    <h4>➡️ Struktur 1: Turutan (Sequence)</h4>
+    <p style="font-size:.92rem;margin-bottom:.7rem">Langkah-langkah dilaksanakan <strong>satu persatu</strong>, dari atas ke bawah. Tiada lompatan atau ulangan.</p>
+    <p style="font-size:.88rem;color:var(--muted)">Kita sudah nampak contohnya di Topik 2 — "Kira Luas Segi Empat" itu adalah turutan tulen.</p>
+    <div class="fc-wrap" style="margin-top:.6rem">
+      <div class="fc-node">
+        <div class="fc-oval">MULA</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-para">INPUT A</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-rect">Proses dengan A</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-para">OUTPUT Hasil</div>
+        <div class="fc-arrow">↓</div>
+        <div class="fc-oval">TAMAT</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3B: PILIHAN -->
+  <div id="s-pilihan" class="story-box" style="margin-top:1rem">
+    <h4>↔️ Struktur 2: Pilihan (Selection)</h4>
+    <p style="font-size:.92rem;margin-bottom:.8rem">Algoritma <strong>membuat keputusan</strong> berdasarkan syarat — sama ada Ya atau Tidak. Ada tiga jenis:</p>
+
+    <div class="ex-tabs">
+      <button class="ex-tab active" onclick="showEx('sel','tunggal')">Pilihan Tunggal</button>
+      <button class="ex-tab" onclick="showEx('sel','dua')">Dwipilihan</button>
+      <button class="ex-tab" onclick="showEx('sel','pelbagai')">Pelbagai Pilihan</button>
+    </div>
+
+    <!-- Single selection -->
+    <div id="sel-tunggal" class="ex-panel active">
+      <p style="font-size:.88rem;margin-bottom:.7rem"><strong>Pilihan Tunggal:</strong> Lakukan sesuatu HANYA JIKA syarat benar. Kalau tidak benar, terus langkau.</p>
+      <div class="pseudo-block">
+        <span class="kw">MULA</span><br>
+        <span class="indent"><span class="kw-green">INPUT</span> markah</span>
+        <span class="indent"><span class="kw-blue">IF</span> markah &gt;= 90 <span class="kw-blue">THEN</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"Tahniah! Markah Cemerlang!"</span></span>
+        <span class="indent"><span class="kw-blue">ENDIF</span></span>
+        <span class="kw">TAMAT</span>
+      </div>
+      <div class="fc-wrap" style="gap:.3rem">
+        <div class="fc-oval">MULA</div><div class="fc-arrow">↓</div>
+        <div class="fc-para">INPUT markah</div><div class="fc-arrow">↓</div>
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center">
+          <div class="fc-diamond"><div class="fc-diamond-inner">markah<br>≥ 90?</div></div>
+          <div style="display:flex;gap:2.5rem;align-items:flex-start;margin-top:.2rem">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <span style="font-size:.72rem;font-weight:700;color:#16a34a">YA ↓</span>
+              <div class="fc-para" style="font-size:.75rem">OUTPUT "Tahniah!"</div>
+              <div class="fc-arrow" style="font-size:1rem">↓</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <span style="font-size:.72rem;font-weight:700;color:#dc2626">TIDAK →</span>
+            </div>
+          </div>
+        </div>
+        <div class="fc-oval">TAMAT</div>
+      </div>
+    </div>
+
+    <!-- Double selection -->
+    <div id="sel-dua" class="ex-panel">
+      <p style="font-size:.88rem;margin-bottom:.7rem"><strong>Dwipilihan:</strong> Dua kemungkinan — kalau YA buat A, kalau TIDAK buat B.</p>
+      <div class="pseudo-block">
+        <span class="kw">MULA</span><br>
+        <span class="indent"><span class="kw-green">INPUT</span> markah</span>
+        <span class="indent"><span class="kw-blue">IF</span> markah &gt;= 40 <span class="kw-blue">THEN</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"LULUS"</span></span>
+        <span class="indent"><span class="kw-blue">ELSE</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"GAGAL"</span></span>
+        <span class="indent"><span class="kw-blue">ENDIF</span></span>
+        <span class="kw">TAMAT</span>
+      </div>
+      <p style="font-size:.85rem;background:#eff6ff;border-radius:.5rem;padding:.6rem;margin-top:.5rem;color:#1e40af">🧒 Logiknya: "Kalau markah ≥ 40, cetak LULUS. Kalau tidak, cetak GAGAL."</p>
+    </div>
+
+    <!-- Multiple selection -->
+    <div id="sel-pelbagai" class="ex-panel">
+      <p style="font-size:.88rem;margin-bottom:.7rem"><strong>Pelbagai Pilihan:</strong> Lebih dari dua kemungkinan — semak syarat satu persatu.</p>
+      <div class="pseudo-block">
+        <span class="kw">MULA</span><br>
+        <span class="indent"><span class="kw-green">INPUT</span> markah</span>
+        <span class="indent"><span class="kw-blue">IF</span> markah &gt;= 80 <span class="kw-blue">THEN</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"Gred A"</span></span>
+        <span class="indent"><span class="kw-blue">ELSE IF</span> markah &gt;= 60 <span class="kw-blue">THEN</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"Gred B"</span></span>
+        <span class="indent"><span class="kw-blue">ELSE IF</span> markah &gt;= 40 <span class="kw-blue">THEN</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"Gred C"</span></span>
+        <span class="indent"><span class="kw-blue">ELSE</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> <span class="val">"Gagal"</span></span>
+        <span class="indent"><span class="kw-blue">ENDIF</span></span>
+        <span class="kw">TAMAT</span>
+      </div>
+      <p style="font-size:.85rem;background:#f0fdf4;border-radius:.5rem;padding:.6rem;margin-top:.5rem;color:#166534">✅ <strong>Tips ujian:</strong> Semak dari syarat paling tinggi ke paling rendah!</p>
+    </div>
+  </div>
+
+  <!-- 3C: ULANGAN -->
+  <div id="s-ulangan" class="story-box" style="margin-top:1rem">
+    <h4>🔁 Struktur 3: Ulangan (Repetition)</h4>
+    <p style="font-size:.92rem;margin-bottom:.8rem">Ulangi set tindakan <strong>berulang kali</strong> — sama ada untuk bilangan yang ditetapkan atau selagi syarat terpenuhi.</p>
+
+    <div class="ex-tabs">
+      <button class="ex-tab active" onclick="showEx('rep','for')">FOR (Bilangan Tetap)</button>
+      <button class="ex-tab" onclick="showEx('rep','while')">WHILE (Syarat Dulu)</button>
+      <button class="ex-tab" onclick="showEx('rep','repeat')">REPEAT-UNTIL (Buat Dulu)</button>
+    </div>
+
+    <div id="rep-for" class="ex-panel active">
+      <p style="font-size:.88rem;margin-bottom:.7rem"><strong>FOR:</strong> Ulang untuk <em>bilangan yang sudah diketahui</em>. Seperti "lakukan ini 5 kali".</p>
+      <div class="pseudo-block">
+        <span class="kw">MULA</span><br>
+        <span class="indent"><span class="comment">// Cetak nombor 1 hingga 5</span></span>
+        <span class="indent"><span class="kw-pink">FOR</span> i = <span class="val">1</span> <span class="kw-pink">TO</span> <span class="val">5</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> i</span>
+        <span class="indent"><span class="kw-pink">ENDFOR</span></span>
+        <span class="kw">TAMAT</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:.5rem">Output: 1, 2, 3, 4, 5</p>
+    </div>
+
+    <div id="rep-while" class="ex-panel">
+      <p style="font-size:.88rem;margin-bottom:.7rem"><strong>WHILE:</strong> Semak syarat <em>dahulu</em>, kemudian lakukan tindakan. Kalau syarat tidak terpenuhi dari awal, tindakan tidak dilaksanakan langsung.</p>
+      <div class="pseudo-block">
+        <span class="kw">MULA</span><br>
+        <span class="indent">kiraan = <span class="val">1</span></span>
+        <span class="indent"><span class="kw-pink">WHILE</span> kiraan &lt;= <span class="val">5</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> kiraan</span>
+        <span class="indent2">kiraan = kiraan + <span class="val">1</span></span>
+        <span class="indent"><span class="kw-pink">ENDWHILE</span></span>
+        <span class="kw">TAMAT</span>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:.5rem">Output: 1, 2, 3, 4, 5</p>
+      <div class="fc-wrap" style="margin-top:.7rem">
+        <div class="fc-oval">MULA</div><div class="fc-arrow">↓</div>
+        <div class="fc-rect">kiraan = 1</div><div class="fc-arrow">↓</div>
+        <div style="display:flex;flex-direction:column;align-items:center">
+          <div class="fc-diamond"><div class="fc-diamond-inner">kiraan<br>≤ 5?</div></div>
+          <div style="display:flex;gap:2rem;margin-top:.2rem">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <span style="font-size:.72rem;font-weight:700;color:#16a34a">YA ↓</span>
+              <div class="fc-para" style="font-size:.75rem">OUTPUT kiraan</div>
+              <div class="fc-arrow" style="font-size:1rem">↓</div>
+              <div class="fc-rect" style="font-size:.75rem">kiraan = kiraan+1</div>
+              <div class="fc-arrow" style="font-size:.9rem">↑ (balik semula)</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;padding-top:.5rem">
+              <span style="font-size:.72rem;font-weight:700;color:#dc2626">TIDAK →</span>
+            </div>
+          </div>
+        </div>
+        <div class="fc-oval" style="margin-top:.3rem">TAMAT</div>
+      </div>
+    </div>
+
+    <div id="rep-repeat" class="ex-panel">
+      <p style="font-size:.88rem;margin-bottom:.7rem"><strong>REPEAT-UNTIL:</strong> Lakukan tindakan <em>dahulu</em>, kemudian semak syarat. Dijamin berlaku <em>sekurang-kurangnya sekali</em>.</p>
+      <div class="pseudo-block">
+        <span class="kw">MULA</span><br>
+        <span class="indent">kiraan = <span class="val">1</span></span>
+        <span class="indent"><span class="kw-pink">REPEAT</span></span>
+        <span class="indent2"><span class="kw-green">OUTPUT</span> kiraan</span>
+        <span class="indent2">kiraan = kiraan + <span class="val">1</span></span>
+        <span class="indent"><span class="kw-pink">UNTIL</span> kiraan > <span class="val">5</span></span>
+        <span class="kw">TAMAT</span>
+      </div>
+      <p style="font-size:.85rem;background:#fff7ed;border-radius:.5rem;padding:.6rem;margin-top:.5rem">⚠️ <strong>Perbezaan dengan WHILE:</strong> REPEAT-UNTIL laksanakan tindakan DAHULU, baru semak syarat. WHILE semak syarat DAHULU.</p>
+    </div>
+  </div>
+
+  <!-- comparison table -->
+  <div class="story-box" style="margin-top:1rem">
+    <h4>📊 Perbandingan 3 Jenis Ulangan</h4>
+    <div style="overflow-x:auto">
+      <table style="border-collapse:collapse;width:100%;font-size:.85rem">
+        <tr style="background:#16a34a;color:#fff">
+          <th style="padding:.5rem .8rem">Jenis</th><th style="padding:.5rem .8rem">Kata Kunci</th>
+          <th style="padding:.5rem .8rem">Bila semak syarat?</th><th style="padding:.5rem .8rem">Min. bilangan ulangan</th>
+        </tr>
+        <tr><td style="border:1px solid #86efac;padding:.45rem .8rem;font-weight:700">FOR</td><td style="border:1px solid #86efac;padding:.45rem .8rem;font-family:monospace">FOR … TO … ENDFOR</td><td style="border:1px solid #86efac;padding:.45rem .8rem">Sebelum</td><td style="border:1px solid #86efac;padding:.45rem .8rem">0 (jika mula > tamat)</td></tr>
+        <tr style="background:#f0fdf4"><td style="border:1px solid #86efac;padding:.45rem .8rem;font-weight:700">WHILE</td><td style="border:1px solid #86efac;padding:.45rem .8rem;font-family:monospace">WHILE … ENDWHILE</td><td style="border:1px solid #86efac;padding:.45rem .8rem">Sebelum (mula)</td><td style="border:1px solid #86efac;padding:.45rem .8rem">0</td></tr>
+        <tr><td style="border:1px solid #86efac;padding:.45rem .8rem;font-weight:700">REPEAT-UNTIL</td><td style="border:1px solid #86efac;padding:.45rem .8rem;font-family:monospace">REPEAT … UNTIL</td><td style="border:1px solid #86efac;padding:.45rem .8rem">Selepas (akhir)</td><td style="border:1px solid #86efac;padding:.45rem .8rem">1 (sekurang-kurangnya)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TOPIK 4: PENGESANAN RALAT ════ -->
+<div id="topik4"></div>
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fce7f3">🔍</div>
+  <div><h2>Topik 4: Pengesanan Ralat</h2><p>Cari kesilapan dalam algoritma</p></div>
+</div>
+
+<div class="topic tp-err">
+  <div class="topic-hd">
+    <span class="topic-emoji">🔍</span>
+    <div><h3>Pengesanan & Pembetulan Ralat</h3><small>Error Detection</small></div>
+  </div>
+
+  <div class="story-box">
+    <h4>🐛 Apa itu ralat logik?</h4>
+    <p style="font-size:.92rem;margin-bottom:.7rem"><strong>Ralat logik</strong> berlaku apabila algoritma berjalan tanpa error tetapi memberikan <em>jawapan yang salah</em>. Contoh: rumus luas ditulis sebagai <code style="background:#fee2e2;padding:0 .3rem;border-radius:.2rem">panjang + lebar</code> bukannya <code style="background:#dcfce7;padding:0 .3rem;border-radius:.2rem">panjang × lebar</code>.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+      <div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:.6rem;padding:.8rem">
+        <p style="font-size:.82rem;font-weight:700;color:#dc2626;margin-bottom:.4rem">❌ Cara kesan ralat:</p>
+        <ul style="font-size:.82rem;padding-left:1.1rem;color:#64748b">
+          <li>Semak semula setiap langkah</li>
+          <li>Uji dengan data contoh (desk check)</li>
+          <li>Kenal pasti langkah yang menghasilkan output salah</li>
+        </ul>
+      </div>
+      <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:.6rem;padding:.8rem">
+        <p style="font-size:.82rem;font-weight:700;color:#16a34a;margin-bottom:.4rem">✅ Dua kaedah pengesahan:</p>
+        <ul style="font-size:.82rem;padding-left:1.1rem;color:#374151">
+          <li><strong>Semakan Meja (Desk Check)</strong> — jejak manual dengan data sampel</li>
+          <li><strong>Penerusan Langkah (Step-through)</strong> — semak logik baris demi baris</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ GAMES ════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#dcfce7">🎮</div>
+  <div><h2>Aktiviti Seronok!</h2><p>Cuba 3 permainan interaktif</p></div>
+</div>
+
+<!-- GAME 1: Symbol Match -->
+<div class="game-card">
+  <h3>📊 Padankan Simbol Carta Alir! <span class="game-tag">Permainan</span></h3>
+  <p class="instr">Padankan setiap penerangan di sebelah kiri dengan nama simbol yang betul di sebelah kanan.</p>
+  <div class="match-wrap">
+    <div class="match-col">
+      <h4>Penerangan</h4>
+      <div class="match-item" id="ml1" onclick="selLeft('ml1','Menandakan permulaan atau pengakhiran program')">Menandakan permulaan atau pengakhiran program</div>
+      <div class="match-item" id="ml2" onclick="selLeft('ml2','Mewakili pengiraan atau sebarang proses')">Mewakili pengiraan atau sebarang proses</div>
+      <div class="match-item" id="ml3" onclick="selLeft('ml3','Digunakan untuk membuat keputusan YA/TIDAK')">Digunakan untuk membuat keputusan YA/TIDAK</div>
+      <div class="match-item" id="ml4" onclick="selLeft('ml4','Mewakili operasi input atau output data')">Mewakili operasi input atau output data</div>
+    </div>
+    <div class="match-col">
+      <h4>Nama Simbol</h4>
+      <div class="match-item" id="mr1" onclick="selRight('mr1','Bujur (Oval)')">Bujur (Oval)</div>
+      <div class="match-item" id="mr2" onclick="selRight('mr2','Segi Empat Tepat')">Segi Empat Tepat</div>
+      <div class="match-item" id="mr3" onclick="selRight('mr3','Berlian (Diamond)')">Berlian (Diamond)</div>
+      <div class="match-item" id="mr4" onclick="selRight('mr4','Selari Sisi (Parallelogram)')">Selari Sisi (Parallelogram)</div>
+    </div>
+  </div>
+  <p id="matchMsg" style="font-size:.88rem;margin-top:.5rem;display:none"></p>
+</div>
+
+<!-- GAME 2: Spot the Error -->
+<div class="game-card">
+  <h3>🔍 Cari Ralat dalam Pseudokod! <span class="game-tag">Permainan</span></h3>
+  <p class="instr">Pseudokod di bawah ada SATU ralat logik. Klik pada baris yang salah!</p>
+
+  <div id="errGame">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:.5rem">Tujuan: Kira luas segi tiga (luas = ½ × tapak × tinggi)</p>
+    <div class="err-pseudo" id="errBlock">
+      <span class="err-line" id="el1" onclick="checkErr(1,false)">MULA</span>
+      <span class="err-line" id="el2" onclick="checkErr(2,false)">&nbsp;&nbsp;INPUT tapak</span>
+      <span class="err-line" id="el3" onclick="checkErr(3,false)">&nbsp;&nbsp;INPUT tinggi</span>
+      <span class="err-line" id="el4" onclick="checkErr(4,true)">&nbsp;&nbsp;luas = tapak × tinggi &nbsp;&nbsp;<span style="color:#f87171">← klik di sini jika salah</span></span>
+      <span class="err-line" id="el5" onclick="checkErr(5,false)">&nbsp;&nbsp;OUTPUT luas</span>
+      <span class="err-line" id="el6" onclick="checkErr(6,false)">TAMAT</span>
+    </div>
+    <p class="err-fb" id="errFb"></p>
+  </div>
+
+  <div id="errGame2" style="margin-top:1.2rem">
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:.5rem">Soalan 2: Cetak 1 hingga 3 — cari ralat!</p>
+    <div class="err-pseudo">
+      <span class="err-line" id="eg2l1" onclick="checkErr2(1,false)">MULA</span>
+      <span class="err-line" id="eg2l2" onclick="checkErr2(2,false)">&nbsp;&nbsp;i = 1</span>
+      <span class="err-line" id="eg2l3" onclick="checkErr2(3,true)">&nbsp;&nbsp;WHILE i > 3 &nbsp;&nbsp;<span style="color:#94a3b8;font-size:.8rem">← betul ke syarat ini?</span></span>
+      <span class="err-line" id="eg2l4" onclick="checkErr2(4,false)">&nbsp;&nbsp;&nbsp;&nbsp;OUTPUT i</span>
+      <span class="err-line" id="eg2l5" onclick="checkErr2(5,false)">&nbsp;&nbsp;&nbsp;&nbsp;i = i + 1</span>
+      <span class="err-line" id="eg2l6" onclick="checkErr2(6,false)">&nbsp;&nbsp;ENDWHILE</span>
+      <span class="err-line" id="eg2l7" onclick="checkErr2(7,false)">TAMAT</span>
+    </div>
+    <p class="err-fb" id="errFb2"></p>
+  </div>
+</div>
+
+<!-- GAME 3: Fill in pseudocode -->
+<div class="game-card">
+  <h3>📝 Lengkapkan Pseudokod! <span class="game-tag">Isi Tempat Kosong</span></h3>
+  <p class="instr">Pilih kata kunci yang betul untuk lengkapkan pseudokod ini.</p>
+
+  <div id="fillGame" style="margin-bottom:.8rem">
+    <p style="font-size:.88rem;margin-bottom:.5rem">Pseudokod: Semak sama ada pelajar LULUS atau GAGAL (syarat lulus: markah ≥ 40)</p>
+    <div style="background:#1e293b;color:#e2e8f0;border-radius:.8rem;padding:1.2rem;font-family:monospace;font-size:.92rem;line-height:2.2">
+      <span style="color:#f59e0b">MULA</span><br>
+      &nbsp;&nbsp;<span style="color:#34d399">INPUT</span> markah<br>
+      &nbsp;&nbsp;<span id="fill1" style="display:inline-block;background:#374151;border:2px dashed #6366f1;border-radius:.3rem;min-width:60px;text-align:center;cursor:pointer;color:#a5b4fc" onclick="cycleKw(1)">____</span> markah &gt;= 40 <span id="fill2" style="display:inline-block;background:#374151;border:2px dashed #6366f1;border-radius:.3rem;min-width:60px;text-align:center;cursor:pointer;color:#a5b4fc" onclick="cycleKw(2)">____</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#34d399">OUTPUT</span> <span style="color:#fb923c">"LULUS"</span><br>
+      &nbsp;&nbsp;<span id="fill3" style="display:inline-block;background:#374151;border:2px dashed #6366f1;border-radius:.3rem;min-width:60px;text-align:center;cursor:pointer;color:#a5b4fc" onclick="cycleKw(3)">____</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#34d399">OUTPUT</span> <span style="color:#fb923c">"GAGAL"</span><br>
+      &nbsp;&nbsp;<span id="fill4" style="display:inline-block;background:#374151;border:2px dashed #6366f1;border-radius:.3rem;min-width:70px;text-align:center;cursor:pointer;color:#a5b4fc" onclick="cycleKw(4)">____</span><br>
+      <span style="color:#f59e0b">TAMAT</span>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.4rem">👆 Klik setiap kotak untuk tukar kata kunci</p>
+    <div style="margin-top:.7rem">
+      <button class="btn btn-or" onclick="checkFill()" style="font-size:.85rem;padding:.5rem 1.2rem">Semak Jawapan</button>
+      <button class="btn btn-ghost" onclick="resetFill()" style="font-size:.85rem;padding:.5rem 1.2rem;margin-left:.5rem">↺ Reset</button>
+    </div>
+    <p class="err-fb" id="fillFb"></p>
+  </div>
+</div>
+
+<!-- ════ REAL EXAM QUIZ ════ -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">📝</div>
+  <div><h2>Soalan Peperiksaan Sebenar</h2><p>10 soalan dari ujian bulanan & UASA</p></div>
+</div>
+
+<div id="quizWrap">
+
+  <div class="quiz-q" data-q="1">
+    <div class="exam-label">📋 Definisi</div>
+    <p class="q-no">SOALAN 1 / 10</p>
+    <p class="q-stem">Apakah yang dimaksudkan dengan algoritma?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,1,'A')"><div class="ltr">A</div><span>Bahasa pengaturcaraan komputer</span></div>
+      <div class="mc-opt" onclick="qpick(this,1,'B')"><div class="ltr">B</div><span>Set urutan langkah yang bertertib dan terhingga untuk menyelesaikan masalah</span></div>
+      <div class="mc-opt" onclick="qpick(this,1,'C')"><div class="ltr">C</div><span>Program komputer yang telah siap dibina</span></div>
+      <div class="mc-opt" onclick="qpick(this,1,'D')"><div class="ltr">D</div><span>Rajah yang menunjukkan rekabentuk sistem</span></div>
+    </div>
+    <p class="q-fb" id="qf1"></p>
+  </div>
+
+  <div class="quiz-q" data-q="2">
+    <div class="exam-label">📊 Simbol Carta Alir</div>
+    <p class="q-no">SOALAN 2 / 10</p>
+    <p class="q-stem">Simbol apakah yang digunakan untuk mewakili <strong>keputusan (decision)</strong> dalam carta alir?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,2,'A')"><div class="ltr">A</div><span>Segi empat tepat (rectangle)</span></div>
+      <div class="mc-opt" onclick="qpick(this,2,'B')"><div class="ltr">B</div><span>Bujur (oval)</span></div>
+      <div class="mc-opt" onclick="qpick(this,2,'C')"><div class="ltr">C</div><span>Berlian (diamond)</span></div>
+      <div class="mc-opt" onclick="qpick(this,2,'D')"><div class="ltr">D</div><span>Selari sisi (parallelogram)</span></div>
+    </div>
+    <p class="q-fb" id="qf2"></p>
+  </div>
+
+  <div class="quiz-q" data-q="3">
+    <div class="exam-label">📊 Simbol Carta Alir</div>
+    <p class="q-no">SOALAN 3 / 10</p>
+    <p class="q-stem">Simbol <strong>selari sisi (parallelogram)</strong> dalam carta alir digunakan untuk mewakili…</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,3,'A')"><div class="ltr">A</div><span>Permulaan atau pengakhiran program</span></div>
+      <div class="mc-opt" onclick="qpick(this,3,'B')"><div class="ltr">B</div><span>Proses atau pengiraan</span></div>
+      <div class="mc-opt" onclick="qpick(this,3,'C')"><div class="ltr">C</div><span>Operasi input atau output</span></div>
+      <div class="mc-opt" onclick="qpick(this,3,'D')"><div class="ltr">D</div><span>Syarat atau keputusan</span></div>
+    </div>
+    <p class="q-fb" id="qf3"></p>
+  </div>
+
+  <div class="quiz-q" data-q="4">
+    <div class="exam-label">🔀 Struktur Kawalan</div>
+    <p class="q-no">SOALAN 4 / 10</p>
+    <p class="q-stem">Antara berikut, yang manakah merupakan struktur kawalan <strong>ulangan</strong>?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,4,'A')"><div class="ltr">A</div><span>IF … THEN … ENDIF</span></div>
+      <div class="mc-opt" onclick="qpick(this,4,'B')"><div class="ltr">B</div><span>INPUT … OUTPUT</span></div>
+      <div class="mc-opt" onclick="qpick(this,4,'C')"><div class="ltr">C</div><span>WHILE … ENDWHILE</span></div>
+      <div class="mc-opt" onclick="qpick(this,4,'D')"><div class="ltr">D</div><span>IF … ELSE … ENDIF</span></div>
+    </div>
+    <p class="q-fb" id="qf4"></p>
+  </div>
+
+  <div class="quiz-q" data-q="5">
+    <div class="exam-label">🏫 Soalan Situasi</div>
+    <p class="q-no">SOALAN 5 / 10</p>
+    <p class="q-stem"><span class="scenario">Seorang guru ingin bina algoritma yang memberi markah pelajar dan mencetak "LULUS" jika markah ≥ 40, atau "GAGAL" jika tidak.</span>Apakah struktur kawalan yang paling sesuai?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,5,'A')"><div class="ltr">A</div><span>Turutan sahaja</span></div>
+      <div class="mc-opt" onclick="qpick(this,5,'B')"><div class="ltr">B</div><span>Dwipilihan (IF … ELSE … ENDIF)</span></div>
+      <div class="mc-opt" onclick="qpick(this,5,'C')"><div class="ltr">C</div><span>FOR loop</span></div>
+      <div class="mc-opt" onclick="qpick(this,5,'D')"><div class="ltr">D</div><span>REPEAT-UNTIL</span></div>
+    </div>
+    <p class="q-fb" id="qf5"></p>
+  </div>
+
+  <div class="quiz-q" data-q="6">
+    <div class="exam-label">📝 Pseudokod</div>
+    <p class="q-no">SOALAN 6 / 10</p>
+    <p class="q-stem"><span class="scenario">FOR i = 1 TO 3<br>&nbsp;&nbsp;OUTPUT i<br>ENDFOR</span>Apakah output yang dihasilkan oleh pseudokod di atas?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,6,'A')"><div class="ltr">A</div><span>1 2 3 4</span></div>
+      <div class="mc-opt" onclick="qpick(this,6,'B')"><div class="ltr">B</div><span>0 1 2 3</span></div>
+      <div class="mc-opt" onclick="qpick(this,6,'C')"><div class="ltr">C</div><span>1 2 3</span></div>
+      <div class="mc-opt" onclick="qpick(this,6,'D')"><div class="ltr">D</div><span>3 2 1</span></div>
+    </div>
+    <p class="q-fb" id="qf6"></p>
+  </div>
+
+  <div class="quiz-q" data-q="7">
+    <div class="exam-label">🔍 Ralat Algoritma</div>
+    <p class="q-no">SOALAN 7 / 10</p>
+    <p class="q-stem">Ralat dalam algoritma di mana algoritma berjalan tanpa masalah tetapi menghasilkan jawapan yang salah dipanggil…</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,7,'A')"><div class="ltr">A</div><span>Ralat sintaks</span></div>
+      <div class="mc-opt" onclick="qpick(this,7,'B')"><div class="ltr">B</div><span>Ralat logik</span></div>
+      <div class="mc-opt" onclick="qpick(this,7,'C')"><div class="ltr">C</div><span>Ralat masa larian</span></div>
+      <div class="mc-opt" onclick="qpick(this,7,'D')"><div class="ltr">D</div><span>Ralat komputer</span></div>
+    </div>
+    <p class="q-fb" id="qf7"></p>
+  </div>
+
+  <div class="quiz-q" data-q="8">
+    <div class="exam-label">🔀 Struktur Kawalan</div>
+    <p class="q-no">SOALAN 8 / 10</p>
+    <p class="q-stem">Perbezaan utama antara WHILE dan REPEAT-UNTIL ialah…</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,8,'A')"><div class="ltr">A</div><span>WHILE lebih pantas daripada REPEAT-UNTIL</span></div>
+      <div class="mc-opt" onclick="qpick(this,8,'B')"><div class="ltr">B</div><span>WHILE semak syarat SEBELUM melaksanakan tindakan; REPEAT-UNTIL melaksanakan tindakan DAHULU kemudian semak syarat</span></div>
+      <div class="mc-opt" onclick="qpick(this,8,'C')"><div class="ltr">C</div><span>WHILE hanya boleh digunakan sekali; REPEAT-UNTIL boleh digunakan berkali-kali</span></div>
+      <div class="mc-opt" onclick="qpick(this,8,'D')"><div class="ltr">D</div><span>Tiada perbezaan, ia sama sahaja</span></div>
+    </div>
+    <p class="q-fb" id="qf8"></p>
+  </div>
+
+  <div class="quiz-q" data-q="9">
+    <div class="exam-label">🏫 Soalan Situasi</div>
+    <p class="q-no">SOALAN 9 / 10</p>
+    <p class="q-stem"><span class="scenario">Seorang pelajar menulis pseudokod untuk cetak 1 hingga 10. Dia menulis: kiraan = 1, WHILE kiraan > 10 ... Walau bagaimanapun, tiada output dihasilkan.</span>Apakah kesilapannya?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,9,'A')"><div class="ltr">A</div><span>Sepatutnya guna FOR, bukan WHILE</span></div>
+      <div class="mc-opt" onclick="qpick(this,9,'B')"><div class="ltr">B</div><span>Syarat sepatutnya kiraan &lt;= 10, bukan kiraan > 10</span></div>
+      <div class="mc-opt" onclick="qpick(this,9,'C')"><div class="ltr">C</div><span>Nilai permulaan kiraan sepatutnya 0</span></div>
+      <div class="mc-opt" onclick="qpick(this,9,'D')"><div class="ltr">D</div><span>Sepatutnya guna REPEAT-UNTIL</span></div>
+    </div>
+    <p class="q-fb" id="qf9"></p>
+  </div>
+
+  <div class="quiz-q" data-q="10">
+    <div class="exam-label">📊 Carta Alir</div>
+    <p class="q-no">SOALAN 10 / 10</p>
+    <p class="q-stem">Dalam carta alir, apakah dua simbol yang wajib ada dalam <strong>setiap</strong> carta alir?</p>
+    <div class="mc-opts">
+      <div class="mc-opt" onclick="qpick(this,10,'A')"><div class="ltr">A</div><span>Berlian dan Segi empat tepat</span></div>
+      <div class="mc-opt" onclick="qpick(this,10,'B')"><div class="ltr">B</div><span>Bujur (MULA) dan Bujur (TAMAT)</span></div>
+      <div class="mc-opt" onclick="qpick(this,10,'C')"><div class="ltr">C</div><span>Selari sisi dan Berlian</span></div>
+      <div class="mc-opt" onclick="qpick(this,10,'D')"><div class="ltr">D</div><span>Segi empat tepat dan Selari sisi</span></div>
+    </div>
+    <p class="q-fb" id="qf10"></p>
+  </div>
+
+  <div style="text-align:center;margin:1.5rem 0;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-or" onclick="submitQ()">✅ Semak Jawapan</button>
+    <button class="btn btn-ghost" onclick="resetQ()">↺ Cuba Semula</button>
+  </div>
+
+  <div class="score-box" id="scoreBox">
+    <div class="score-big" id="scoreBig">0/10</div>
+    <p style="color:var(--muted);font-size:.9rem;margin-top:.3rem">soalan dijawab betul</p>
+    <p class="score-msg" id="scoreMsg"></p>
+    <div style="margin-top:1.2rem"><button class="btn btn-or" onclick="resetQ()">↺ Cuba Semula</button></div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sec-head">
+  <div class="sec-icon" style="background:#fef9c3">⭐</div>
+  <div><h2>Rumusan Bab 3</h2><p>Yang paling penting untuk ingat!</p></div>
+</div>
+<div class="sum-grid">
+  <div class="sum-card"><div class="se">📊</div><h4>5 Simbol Carta Alir</h4><p>Bujur, Segi Empat, Berlian, Selari Sisi, Anak Panah</p></div>
+  <div class="sum-card"><div class="se">📝</div><h4>Pseudokod</h4><p>Arahan ringkas dalam bahasa biasa</p></div>
+  <div class="sum-card"><div class="se">↔️</div><h4>Pilihan</h4><p>IF THEN / IF ELSE / Pelbagai</p></div>
+  <div class="sum-card"><div class="se">🔁</div><h4>Ulangan</h4><p>FOR / WHILE / REPEAT-UNTIL</p></div>
+</div>
+
+<div class="congrats">
+  <h3>🎉 Tahniah! Bab 3 Selesai!</h3>
+  <p>Bab seterusnya: <strong>Kod Arahan</strong> – tulis kod komputer yang sebenar!</p>
+  <div style="margin-top:1rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="index.html" style="color:rgba(255,255,255,.8);font-size:.9rem;text-decoration:none">← Bab 1</a>
+    <a href="bab2.html" style="color:rgba(255,255,255,.8);font-size:.9rem;text-decoration:none">← Bab 2</a>
+  </div>
+</div>
+
+</main>
+<footer>Asas Sains Komputer Tingkatan 1 KSSM &nbsp;·&nbsp; Dibina untuk pembelajaran interaktif</footer>
+
+<script>
+// ── scroll ──
+function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+
+// ── Symbol detail ──
+const symInfo={
+  oval:{name:'Bujur (Oval) — Terminal',color:'#fef08a',desc:'Digunakan untuk menandakan <strong>permulaan</strong> atau <strong>pengakhiran</strong> sesuatu algoritma. Setiap carta alir MESTI bermula dan berakhir dengan simbol ini.',ex:'MULA ... TAMAT'},
+  rect:{name:'Segi Empat Tepat — Proses',color:'#bfdbfe',desc:'Digunakan untuk mewakili <strong>proses, tindakan atau pengiraan</strong> yang dilaksanakan dalam algoritma.',ex:'jumlah = a + b<br>luas = panjang × lebar'},
+  diamond:{name:'Berlian (Diamond) — Keputusan',color:'#fecaca',desc:'Digunakan untuk <strong>membuat keputusan</strong>. Mempunyai DUA laluan keluar: <strong>YA</strong> dan <strong>TIDAK</strong>.',ex:'markah >= 40?<br>umur > 18?'},
+  para:{name:'Selari Sisi (Parallelogram) — Input/Output',color:'#bbf7d0',desc:'Digunakan untuk mewakili <strong>operasi input</strong> (masukkan data) atau <strong>output</strong> (paparkan hasil).',ex:'INPUT nama<br>OUTPUT markah'},
+  arrow:{name:'Anak Panah — Aliran',color:'#e2e8f0',desc:'Menunjukkan <strong>arah aliran</strong> dari satu simbol ke simbol yang lain. Menyambungkan semua simbol dalam carta alir.',ex:'Sambungkan semua simbol'}
+};
+function showSym(type,card){
+  document.querySelectorAll('.sym-card').forEach(c=>c.classList.remove('active'));
+  card.classList.add('active');
+  const d=symInfo[type];
+  const det=document.getElementById('symDetail');
+  det.innerHTML=`<div style="background:${d.color};border-radius:.5rem;padding:.7rem 1rem;margin-bottom:.6rem"><strong>${d.name}</strong></div>
+    <p style="font-size:.88rem">${d.desc}</p>
+    <p style="font-size:.82rem;margin-top:.5rem;color:var(--muted)">Contoh: <code style="background:#f1f5f9;padding:0 .3rem;border-radius:.2rem;font-size:.85rem">${d.ex}</code></p>`;
+  det.classList.add('show');
+  trackProgress('sym');
+}
+
+// ── Tabs ──
+function showEx(prefix,key){
+  document.querySelectorAll(`[id^="${prefix}-"]`).forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.ex-tab').forEach(btn=>{
+    btn.classList.toggle('active',btn.getAttribute('onclick')===`showEx('${prefix}','${key}')`);
+  });
+  document.getElementById(`${prefix}-${key}`).classList.add('active');
+  trackProgress('tab');
+}
+
+// ── Match game ──
+const matchAnswers={'ml1':'mr1','ml2':'mr2','ml3':'mr3','ml4':'mr4'};
+const matchDesc={'ml1':'Menandakan permulaan atau pengakhiran program','ml2':'Mewakili pengiraan atau sebarang proses','ml3':'Digunakan untuk membuat keputusan YA/TIDAK','ml4':'Mewakili operasi input atau output data'};
+const matchName={'mr1':'Bujur (Oval)','mr2':'Segi Empat Tepat','mr3':'Berlian (Diamond)','mr4':'Selari Sisi (Parallelogram)'};
+let selL=null,selR=null,matchDone=0;
+function selLeft(id,desc){
+  if(document.getElementById(id).classList.contains('matched'))return;
+  document.querySelectorAll('[id^="ml"]').forEach(e=>e.classList.remove('sel-left'));
+  selL=id; document.getElementById(id).classList.add('sel-left');
+  tryMatch();
+}
+function selRight(id,name){
+  if(document.getElementById(id).classList.contains('matched'))return;
+  document.querySelectorAll('[id^="mr"]').forEach(e=>e.classList.remove('sel-right'));
+  selR=id; document.getElementById(id).classList.add('sel-right');
+  tryMatch();
+}
+function tryMatch(){
+  if(!selL||!selR)return;
+  const correct=matchAnswers[selL]===selR;
+  const lEl=document.getElementById(selL),rEl=document.getElementById(selR);
+  if(correct){
+    lEl.classList.add('matched'); rEl.classList.add('matched');
+    lEl.classList.remove('sel-left'); rEl.classList.remove('sel-right');
+    matchDone++;
+    if(matchDone===4){
+      const m=document.getElementById('matchMsg');
+      m.textContent='🎉 Tahniah! Semua padanan betul!';
+      m.style.cssText='display:block;background:#f0fdf4;border:1px solid #86efac;padding:.5rem .9rem;border-radius:.5rem;color:#15803d';
+      trackProgress('match');
+    }
+  } else {
+    lEl.classList.add('wrong'); rEl.classList.add('wrong');
+    setTimeout(()=>{lEl.classList.remove('wrong','sel-left');rEl.classList.remove('wrong','sel-right');},600);
+  }
+  selL=null; selR=null;
+}
+
+// ── Error game ──
+let errDone=false;
+function checkErr(line,correct){
+  if(errDone)return;
+  const fb=document.getElementById('errFb');
+  if(correct){
+    errDone=true;
+    document.getElementById('el'+line).classList.add('correct-err');
+    fb.innerHTML='✅ <strong>Betul!</strong> Baris itu sepatutnya: <code>luas = 0.5 × tapak × tinggi</code> (perlu darab ½). Formula segi tiga ialah ½ × tapak × tinggi!';
+    fb.className='err-fb show ok'; trackProgress('err');
+  } else {
+    document.getElementById('el'+line).classList.add('wrong-sel');
+    fb.textContent='❌ Baris itu betul. Cuba baris lain!';
+    fb.className='err-fb show no';
+    setTimeout(()=>{document.getElementById('el'+line).classList.remove('wrong-sel');fb.className='err-fb';},800);
+  }
+}
+let errDone2=false;
+function checkErr2(line,correct){
+  if(errDone2)return;
+  const fb=document.getElementById('errFb2');
+  const id='eg2l'+line;
+  if(correct){
+    errDone2=true;
+    document.getElementById(id).classList.add('correct-err');
+    fb.innerHTML='✅ <strong>Betul!</strong> Syarat WHILE sepatutnya <code>i &lt;= 3</code>, bukan <code>i > 3</code>. Kerana i bermula dengan 1, syarat i > 3 adalah PALSU dari awal — jadi gelung tidak pernah berjalan!';
+    fb.className='err-fb show ok'; trackProgress('err');
+  } else {
+    document.getElementById(id).classList.add('wrong-sel');
+    fb.textContent='❌ Baris itu betul. Cuba baris lain!';
+    fb.className='err-fb show no';
+    setTimeout(()=>{document.getElementById(id).classList.remove('wrong-sel');fb.className='err-fb';},800);
+  }
+}
+
+// ── Fill game ──
+const kwOptions={1:['IF','WHILE','FOR','REPEAT'],2:['THEN','DO','BEGIN','START'],3:['ELSE','OR','AND','BUT'],4:['ENDIF','ENDWHILE','ENDFOR','END']};
+const kwIdx={1:0,2:0,3:0,4:0};
+const kwCorrect={1:'IF',2:'THEN',3:'ELSE',4:'ENDIF'};
+function cycleKw(n){
+  kwIdx[n]=(kwIdx[n]+1)%kwOptions[n].length;
+  document.getElementById('fill'+n).textContent=kwOptions[n][kwIdx[n]];
+}
+function checkFill(){
+  const fb=document.getElementById('fillFb');
+  const answers=[kwOptions[1][kwIdx[1]],kwOptions[2][kwIdx[2]],kwOptions[3][kwIdx[3]],kwOptions[4][kwIdx[4]]];
+  const correct=answers[0]==='IF'&&answers[1]==='THEN'&&answers[2]==='ELSE'&&answers[3]==='ENDIF';
+  if(correct){
+    fb.textContent='✅ Sempurna! IF … THEN … ELSE … ENDIF adalah struktur dwipilihan yang betul!';
+    fb.className='err-fb show ok'; trackProgress('fill');
+  } else {
+    const wrong=[];
+    if(answers[0]!=='IF')wrong.push('kotak 1 sepatutnya IF');
+    if(answers[1]!=='THEN')wrong.push('kotak 2 sepatutnya THEN');
+    if(answers[2]!=='ELSE')wrong.push('kotak 3 sepatutnya ELSE');
+    if(answers[3]!=='ENDIF')wrong.push('kotak 4 sepatutnya ENDIF');
+    fb.textContent='❌ Belum tepat: '+wrong.join(', ')+'. Cuba lagi!';
+    fb.className='err-fb show no';
+  }
+}
+function resetFill(){
+  for(let n=1;n<=4;n++){kwIdx[n]=0;document.getElementById('fill'+n).textContent='____';}
+  document.getElementById('fillFb').className='err-fb';
+}
+
+// ── Quiz ──
+const qCorrect={1:'B',2:'C',3:'C',4:'C',5:'B',6:'C',7:'B',8:'B',9:'B',10:'B'};
+const qExplain={
+  1:'Algoritma ialah set urutan langkah yang bertertib dan terhingga untuk menyelesaikan masalah — bukan bahasa pengaturcaraan.',
+  2:'Simbol berlian (diamond) digunakan untuk keputusan — ia mempunyai dua laluan keluar: YA dan TIDAK.',
+  3:'Selari sisi (parallelogram) digunakan untuk operasi input (terima data) atau output (papar data).',
+  4:'WHILE … ENDWHILE adalah struktur kawalan ulangan. IF adalah pilihan; INPUT/OUTPUT adalah turutan.',
+  5:'Dua kemungkinan (LULUS atau GAGAL) memerlukan dwipilihan — IF … ELSE … ENDIF.',
+  6:'FOR i=1 TO 3 bermaksud cetak i untuk i=1, 2, 3. Output: 1 2 3.',
+  7:'Ralat logik berlaku apabila algoritma berjalan tanpa error tetapi menghasilkan jawapan yang salah.',
+  8:'WHILE semak syarat SEBELUM melaksanakan badan gelung; REPEAT-UNTIL melaksanakan badan gelung DAHULU kemudian semak syarat.',
+  9:'Syarat "kiraan > 10" adalah PALSU apabila kiraan=1, jadi gelung WHILE tidak pernah berjalan. Sepatutnya "kiraan <= 10".',
+  10:'Setiap carta alir mesti ada dua simbol bujur: MULA (di atas) dan TAMAT (di bawah).'
+};
+const qPicks={};
+function qpick(el,q,choice){
+  const qEl=el.closest('.quiz-q');
+  if(qEl.classList.contains('locked'))return;
+  qEl.querySelectorAll('.mc-opt').forEach(o=>o.classList.remove('picked'));
+  el.classList.add('picked'); qPicks[q]=choice; trackProgress('quiz');
+}
+function submitQ(){
+  let sc=0;
+  for(let q=1;q<=10;q++){
+    const qEl=document.querySelector(`[data-q="${q}"]`);
+    qEl.classList.add('locked');
+    const ua=qPicks[q],ca=qCorrect[q];
+    qEl.querySelectorAll('.mc-opt').forEach((o,i)=>{
+      const l=['A','B','C','D'][i];
+      if(l===ca)o.classList.add('right');
+      if(l===ua&&ua!==ca)o.classList.add('wrong');
+    });
+    const fb=document.getElementById('qf'+q);
+    if(ua===ca){sc++;fb.textContent='✅ Betul! '+qExplain[q];fb.className='q-fb show ok';}
+    else if(ua){fb.textContent='❌ Jawapan: '+ca+'. '+qExplain[q];fb.className='q-fb show no';}
+    else{fb.textContent='ℹ️ Tidak dijawab. Jawapan: '+ca+'. '+qExplain[q];fb.className='q-fb show no';}
+  }
+  document.getElementById('scoreBig').textContent=sc+'/10';
+  const msgs=[[10,'🌟 SEMPURNA!'],[8,'🎉 Cemerlang!'],[6,'👍 Bagus!'],[4,'📚 Teruskan!'],[0,'💪 Cuba lagi!']];
+  for(const[m,t]of msgs)if(sc>=m){document.getElementById('scoreMsg').textContent=t;break;}
+  document.getElementById('scoreBox').classList.add('show');
+  document.getElementById('scoreBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQ(){
+  for(let q=1;q<=10;q++){
+    document.querySelector(`[data-q="${q}"]`).classList.remove('locked');
+    document.querySelector(`[data-q="${q}"]`).querySelectorAll('.mc-opt').forEach(o=>o.classList.remove('picked','right','wrong'));
+    document.getElementById('qf'+q).className='q-fb';
+    delete qPicks[q];
+  }
+  document.getElementById('scoreBox').classList.remove('show');
+}
+
+// ── Progress ──
+const progDone={sym:false,tab:false,match:false,err:false,fill:false,quiz:false};
+function trackProgress(key){
+  if(key)progDone[key]=true;
+  const done=Object.values(progDone).filter(Boolean).length + Object.keys(qPicks).length;
+  const total=6+10;
+  const pct=Math.min(100,Math.round(done/total*100));
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pTxt').textContent='Kemajuan kamu: '+pct+'%';
+}
+</script>
+</body>
+</html>
