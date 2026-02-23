@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematik Tahun 1 - Bab 3: Ukuran dan Sukatan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; text-align: center; }
+        header h1 { font-size: 2em; margin-bottom: 10px; }
+        header p { opacity: 0.9; }
+        .nav-buttons { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #f8f9fa; flex-wrap: wrap; }
+        .nav-btn { padding: 12px 24px; border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s ease; background: #e9ecef; color: #495057; }
+        .nav-btn.active { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; transform: scale(1.05); }
+        .nav-btn:hover:not(.active) { background: #dee2e6; transform: scale(1.02); }
+        .content { padding: 30px; display: none; }
+        .content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .section { background: #f0fdf4; border-radius: 15px; padding: 25px; margin-bottom: 25px; border-left: 5px solid #11998e; }
+        .section h2 { color: #333; margin-bottom: 15px; font-size: 1.5em; }
+        .section p { color: #666; line-height: 1.8; margin-bottom: 15px; }
+        .example-box { background: #ecfdf5; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .example-box h3 { color: #059669; margin-bottom: 10px; }
+        .question { background: #f0fdf4; border-radius: 15px; padding: 25px; margin-bottom: 20px; border: 2px solid #86efac; }
+        .question h3 { color: #166534; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 15px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        .option:hover { border-color: #11998e; transform: translateX(5px); }
+        .option.selected { background: #11998e; color: white; border-color: #11998e; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .option-letter { background: #11998e; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .option.selected .option-letter { background: white; color: #11998e; }
+        .option.correct .option-letter { background: white; color: #4caf50; }
+        .option.wrong .option-letter { background: white; color: #f44336; }
+        .fill-blank input { width: 80px; padding: 10px; border: 2px solid #11998e; border-radius: 8px; font-size: 1.2em; text-align: center; }
+        .fill-blank input:focus { outline: none; border-color: #38ef7d; box-shadow: 0 0 10px rgba(17, 153, 142, 0.3); }
+        .fill-blank input.correct { border-color: #4caf50; background: #e8f5e9; }
+        .fill-blank input.wrong { border-color: #f44336; background: #ffebee; }
+        .check-btn { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; margin-top: 15px; transition: transform 0.3s ease; }
+        .check-btn:hover { transform: scale(1.05); }
+        .check-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .score-display { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+        .score-display h2 { font-size: 1.8em; }
+        .score-display .score-number { font-size: 3em; font-weight: bold; }
+        .progress-bar { width: 100%; height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin: 15px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #11998e, #38ef7d); transition: width 0.5s ease; }
+        .result-message { padding: 20px; border-radius: 15px; text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 15px; }
+        .result-message.success { background: #e8f5e9; color: #2e7d32; }
+        .result-message.partial { background: #fff3e0; color: #e65100; }
+        .result-message.fail { background: #ffebee; color: #c62828; }
+        .tips-toggle { background: #d1fae5; border: 2px solid #11998e; color: #065f46; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-bottom: 15px; transition: all 0.3s ease; }
+        .tips-toggle:hover { background: #11998e; color: white; }
+        .tips-content { display: none; background: #d1fae5; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .tips-content.show { display: block; }
+        .word-problem { background: #dcfce7; border-left: 4px solid #22c55e; padding: 15px; border-radius: 0 10px 10px 0; margin: 15px 0; }
+        .word-problem h4 { color: #166534; margin-bottom: 10px; }
+        .measure-icon { font-size: 3em; text-align: center; margin: 15px 0; }
+        footer { text-align: center; padding: 20px; background: #f8f9fa; color: #666; }
+        .star-rating { font-size: 2em; margin: 10px 0; }
+        .question-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .question-nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; cursor: pointer; font-weight: bold; background: #e0e0e0; color: #333; transition: all 0.3s ease; }
+        .question-nav-btn.active { background: #11998e; color: white; }
+        .question-nav-btn.correct { background: #4caf50; color: white; }
+        .question-nav-btn.wrong { background: #f44336; color: white; }
+        .question-nav-btn:hover { transform: scale(1.1); }
+        .compare-area { display: flex; align-items: center; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
+        .compare-box { background: white; border: 3px solid #11998e; border-radius: 15px; padding: 15px 25px; font-size: 1.5em; font-weight: bold; min-width: 80px; text-align: center; }
+        @media (max-width: 600px) { header h1 { font-size: 1.5em; } .nav-buttons { gap: 5px; } .nav-btn { padding: 8px 16px; font-size: 0.9em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Matematik Tahun 1</h1>
+            <h2>Bab 3: Ukuran dan Sukatan</h2>
+            <p>Pembelajaran Interaktif KSSR</p>
+        </header>
+
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showContent('tutorial')">📖 Tutorial</button>
+            <button class="nav-btn" onclick="showContent('latihan')">✏️ Latihan (50)</button>
+            <button class="nav-btn" onclick="showContent('exam')">📝 Exam (20)</button>
+            <button class="nav-btn" onclick="showContent('results')">📊 Keputusan</button>
+        </div>
+
+        <!-- Tutorial Section -->
+        <div id="tutorial" class="content active">
+            <div class="section">
+                <h2>📏 Panjang (Length)</h2>
+                <p>Panjang menunjukkan jarak dari satu hujung ke hujung yang lain.</p>
+                <div class="measure-icon">📏</div>
+                <div class="example-box">
+                    <h3>Unit Panjang:</h3>
+                    <p><strong>Sentimeter (cm)</strong> - untuk benda kecil</p>
+                    <p><strong>Meter (m)</strong> - untuk benda besar</p>
+                    <p>100 cm = 1 m</p>
+                </div>
+                <div class="example-box">
+                    <h3>Contoh:</h3>
+                    <p>Pensel = 15 cm</p>
+                    <p>Meja = 1 m</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚖️ Jisim (Mass/Weight)</h2>
+                <p>Jisim menunjukkan berapa berat sesuatu benda.</p>
+                <div class="measure-icon">⚖️</div>
+                <div class="example-box">
+                    <h3>Unit Jisim:</h3>
+                    <p><strong>Gram (g)</strong> - untuk benda ringan</p>
+                    <p><strong>Kilogram (kg)</strong> - untuk benda berat</p>
+                    <p>1000 g = 1 kg</p>
+                </div>
+                <div class="example-box">
+                    <h3>Contoh:</h3>
+                    <p>Sebiji epal = 200 g</p>
+                    <p>Berat badan = 25 kg</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💧 Isi Padu Cecair (Volume of Liquid)</h2>
+                <p>Isi padu cecair menunjukkan banyak air atau cecair dalam sesuatu bekas.</p>
+                <div class="measure-icon">💧</div>
+                <div class="example-box">
+                    <h3>Unit Isi Padu:</h3>
+                    <p><strong>Mililiter (mL)</strong> - untuk sedikit cecair</p>
+                    <p><strong>Liter (L)</strong> - untuk banyak cecair</p>
+                    <p>1000 mL = 1 L</p>
+                </div>
+                <div class="example-box">
+                    <h3>Contoh:</h3>
+                    <p>Segelas air = 250 mL</p>
+                    <p>Sebotif milk = 1 L</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>💡 Tips Penting</h2>
+                <div class="example-box">
+                    <h3>Cara Membanding:</h2>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>Panjang</strong>: guna pembaris, ukuran lebih besar = lebih panjang</li>
+                        <li><strong>Jisim</strong>: guna penimbang, nombor lebih besar = lebih berat</li>
+                        <li><strong>Isi padu</strong>: guna silinder penyukat, nombor lebih besar = lebih banyak</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 Menukar Unit</h2>
+                <div class="example-box">
+                    <h3>Panjang:</h3>
+                    <p>1 m = 100 cm</p>
+                    <p>50 cm = 0.5 m</p>
+                </div>
+                <div class="example-box">
+                    <h3>Jisim:</h3>
+                    <p>1 kg = 1000 g</p>
+                    <p>500 g = 0.5 kg</p>
+                </div>
+                <div class="example-box">
+                    <h3>Isi Padu:</h3>
+                    <p>1 L = 1000 mL</p>
+                    <p>250 mL = 0.25 L</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div id="latihan" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">✏️ Latihan Interaktif (50 Soalan)</h2>
+            <div class="question-nav" id="practice-nav"></div>
+
+            <!-- Q1 -->
+            <div class="question" id="q1">
+                <h3>Soalan 1: Panjang</h3>
+                <p>Ukuran pembaris menunjukkan ___ cm?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips1')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips1">Pembaris biasanya ada nombor. Cuba tengok nombor pada hujung pensel.</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>15</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>10</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>20</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>25</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q1')">Semak</button>
+            </div>
+
+            <!-- Q2 -->
+            <div class="question" id="q2">
+                <h3>Soalan 2: Jisim</h3>
+                <p>1000 g = ___ kg</p>
+                <button class="tips-toggle" onclick="toggleTips('tips2')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips2">1000g = 1kg (klang tu非常重要的!)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q2-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q2', '1')">Semak</button>
+            </div>
+
+            <!-- Q3 -->
+            <div class="question" id="q3">
+                <h3>Soalan 3: Isi Padu</h3>
+                <p>500 mL = ___ L</p>
+                <button class="tips-toggle" onclick="toggleTips('tips3')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips3">500mL = 0.5L (sepatuh!)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q3-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q3', '0.5')">Semak</button>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question" id="q4">
+                <h3>Soalan 4: Banding Jisim</h3>
+                <p>Yang mana lebih berat?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips4')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips4">5kg > 3kg. Yang nombor besar lagi berat!</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>5 kg</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>3 kg</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q4')">Semak</button>
+            </div>
+
+            <!-- Q5 -->
+            <div class="question" id="q5">
+                <h3>Soalan 5: Panjang</h3>
+                <p>1 m = ___ cm</p>
+                <button class="tips-toggle" onclick="toggleTips('tips5')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips5">1 m = 100 cm (haupt!)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q5-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q5', '100')">Semak</button>
+            </div>
+
+            <!-- Q6 -->
+            <div class="question" id="q6">
+                <h3>Soalan 6: Jisim</h3>
+                <p>Berat epal = 250 ___.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips6')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips6">Epal ringan, guna gram (g)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>kg</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>g</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>mL</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>L</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q6')">Semak</button>
+            </div>
+
+            <!-- Q7 -->
+            <div class="question" id="q7">
+                <h3>Soalan 7: Isi Padu</h3>
+                <p>Air dalam bottle = 1 ___.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips7')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips7">Bottle air usually 1 liter</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>L</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>mL</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>kg</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>g</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q7')">Semak</button>
+            </div>
+
+            <!-- Q8 -->
+            <div class="question" id="q8">
+                <h3>Soalan 8: Masalah Panjang</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Pita Ali 50 cm. Pita Abu 30 cm. Beza?</p>
+                </div>
+                <button class="tips-toggle" onclick="toggleTips('tips8')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips8">Tolak: 50 - 30 = 20 cm</div>
+                <div class="fill-blank">
+                    <input type="text" id="q8-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q8', '20')">Semak</button>
+            </div>
+
+            <!-- Q9 -->
+            <div class="question" id="q9">
+                <h3>Soalan 9: Jisim</h3>
+                <p>2 kg = ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips9')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips9">1 kg = 1000 g. 2 kg = 2 x 1000 = 2000 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q9-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q9', '2000')">Semak</button>
+            </div>
+
+            <!-- Q10 -->
+            <div class="question" id="q10">
+                <h3>Soalan 10: Isi Padu</h3>
+                <p>2 L = ___ mL</p>
+                <button class="tips-toggle" onclick="toggleTips('tips10')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips10">1 L = 1000 mL. 2 L = 2000 mL</div>
+                <div class="fill-blank">
+                    <input type="text" id="q10-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q10', '2000')">Semak</button>
+            </div>
+
+            <!-- Q11 -->
+            <div class="question" id="q11">
+                <h3>Soalan 11: Banding Panjang</h3>
+                <p>Yang mana lebih panjang?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips11')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips11">2m > 150cm. 2m = 200cm!</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>2 m</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>150 cm</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q11')">Semak</button>
+            </div>
+
+            <!-- Q12 -->
+            <div class="question" id="q12">
+                <h3>Soalan 12: Jisim</h3>
+                <p>750 g = ___ kg ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips12')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips12">750g = 0 kg 750 g, atau 0.75 kg</div>
+                <div class="fill-blank">
+                    <input type="text" id="q12-answer" style="width:120px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="0.75">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q12', '0.75')">Semak</button>
+            </div>
+
+            <!-- Q13 -->
+            <div class="question" id="q13">
+                <h3>Soalan 13: Isi Padu</h3>
+                <p>500 mL + 500 mL = ___ L</p>
+                <button class="tips-toggle" onclick="toggleTips('tips13')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips13">500 + 500 = 1000 mL = 1 L</div>
+                <div class="fill-blank">
+                    <input type="text" id="q13-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q13', '1')">Semak</button>
+            </div>
+
+            <!-- Q14 -->
+            <div class="question" id="q14">
+                <h3>Soalan 14: Masalah Jisim</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Berat buku 500g. Berat pensel 200g. Jumlah?</p>
+                </div>
+                <button class="tips-toggle" onclick="toggleTips('tips14')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips14">Tambah: 500 + 200 = 700 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q14-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q14', '700')">Semak</button>
+            </div>
+
+            <!-- Q15 -->
+            <div class="question" id="q15">
+                <h3>Soalan 15: Panjang</h3>
+                <p>50 cm + 50 cm = ___ m</p>
+                <button class="tips-toggle" onclick="toggleTips('tips15')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips15">50 + 50 = 100 cm = 1 m</div>
+                <div class="fill-blank">
+                    <input type="text" id="q15-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q15', '1')">Semak</button>
+            </div>
+
+            <!-- Q16 -->
+            <div class="question" id="q16">
+                <h3>Soalan 16: MCQ Unit</h3>
+                <p>Berapakah berat badan kamu?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips16')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips16">Berat orang guna kg!</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>kg</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>g</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>mL</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>L</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q16')">Semak</button>
+            </div>
+
+            <!-- Q17 -->
+            <div class="question" id="q17">
+                <h3>Soalan 17: Banding Isi Padu</h3>
+                <p>Yang mana lebih banyak?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips17')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips17">500mL > 250mL. Lagi banyak nombor, lagi banyak air!</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>500 mL</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>250 mL</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q17')">Semak</button>
+            </div>
+
+            <!-- Q18 -->
+            <div class="question" id="q18">
+                <h3>Soalan 18: Jisim</h3>
+                <p>1 kg 500 g = ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips18')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips18">1 kg = 1000 g. 1000 + 500 = 1500 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q18-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q18', '1500')">Semak</button>
+            </div>
+
+            <!-- Q19 -->
+            <div class="question" id="q19">
+                <h3>Soalan 19: Panjang</h3>
+                <p>3 m = ___ cm</p>
+                <button class="tips-toggle" onclick="toggleTips('tips19')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips19">1 m = 100 cm. 3 m = 300 cm</div>
+                <div class="fill-blank">
+                    <input type="text" id="q19-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q19', '300')">Semak</button>
+            </div>
+
+            <!-- Q20 -->
+            <div class="question" id="q20">
+                <h3>Soalan 20: Masalah</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Minum 250 mL air. Tinggal 750 mL. Semua?</p>
+                </div>
+                <button class="tips-toggle" onclick="toggleTips('tips20')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips20">Tambah: 250 + 750 = 1000 mL = 1 L</div>
+                <div class="fill-blank">
+                    <input type="text" id="q20-answer" style="width:100px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="1000 mL / 1 L">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q20', '1000')">Semak</button>
+            </div>
+
+            <!-- Q21 -->
+            <div class="question" id="q21">
+                <h3>Soalan 21: MCQ</h3>
+                <p>Unit untukukur panjang?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips21')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips21">Panjang guna cm atau m</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>kg</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>cm</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>mL</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>L</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q21')">Semak</button>
+            </div>
+
+            <!-- Q22 -->
+            <div class="question" id="q22">
+                <h3>Soalan 22: Jisim</h3>
+                <p>2500 g = ___ kg ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips22')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips22">2500g = 2 kg 500 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q22-answer" style="width:150px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="2 kg 500 g">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q22', '2 kg 500 g')">Semak</button>
+            </div>
+
+            <!-- Q23 -->
+            <div class="question" id="q23">
+                <h3>Soalan 23: Panjang</h3>
+                <p>200 cm = ___ m</p>
+                <button class="tips-toggle" onclick="toggleTips('tips23')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips23">100 cm = 1 m. 200 cm = 2 m</div>
+                <div class="fill-blank">
+                    <input type="text" id="q23-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q23', '2')">Semak</button>
+            </div>
+
+            <!-- Q24 -->
+            <div class="question" id="q24">
+                <h3>Soalan 24: Banding</h3>
+                <p>1000 mL ? 1 L</p>
+                <button class="tips-toggle" onclick="toggleTips('tips24')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips24">1000 mL = 1 L. Mereka sama!</div>
+                <div class="compare-area">
+                    <div class="compare-box">1000 mL</div>
+                    <select id="q24-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #11998e;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">1 L</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q24', '=')">Semak</button>
+            </div>
+
+            <!-- Q25 -->
+            <div class="question" id="q25">
+                <h3>Soalan 25: Jisim</h3>
+                <p>3 kg = ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips25')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips25">1 kg = 1000 g. 3 kg = 3000 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q25-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q25', '3000')">Semak</button>
+            </div>
+
+            <!-- Q26 -->
+            <div class="question" id="q26">
+                <h3>Soalan 26: MCQ</h3>
+                <p>Segelas air ~= ?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips26')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips26">Segelas air ~= 250 mL</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>1 L</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>10 mL</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>250 mL</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>5000 mL</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q26')">Semak</button>
+            </div>
+
+            <!-- Q27 -->
+            <div class="question" id="q27">
+                <h3>Soalan 27: Panjang</h3>
+                <p>150 cm + 50 cm = ___ m</p>
+                <button class="tips-toggle" onclick="toggleTips('tips27')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips27">150 + 50 = 200 cm = 2 m</div>
+                <div class="fill-blank">
+                    <input type="text" id="q27-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q27', '2')">Semak</button>
+            </div>
+
+            <!-- Q28 -->
+            <div class="question" id="q28">
+                <h3>Soalan 28: Masalah</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Bapa 70 kg. Anak 30 kg. Beza?</p>
+                </div>
+                <button class="tips-toggle" onclick="toggleTips('tips28')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips28">Tolak: 70 - 40 = 30 kg (ter故意的!)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q28-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q28', '40')">Semak</button>
+            </div>
+
+            <!-- Q29 -->
+            <div class="question" id="q29">
+                <h3>Soalan 29: Isi Padu</h3>
+                <p>750 mL + 250 mL = ___ L</p>
+                <button class="tips-toggle" onclick="toggleTips('tips29')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips29">750 + 250 = 1000 mL = 1 L</div>
+                <div class="fill-blank">
+                    <input type="text" id="q29-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q29', '1')">Semak</button>
+            </div>
+
+            <!-- Q30 -->
+            <div class="question" id="q30">
+                <h3>Soalan 30: Banding Jisim</h3>
+                <p>1 kg ? 800 g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips30')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips30">1 kg = 1000 g. 1000 g > 800 g</div>
+                <div class="compare-area">
+                    <div class="compare-box">1 kg</div>
+                    <select id="q30-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #11998e;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">800 g</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q30', '>')">Semak</button>
+            </div>
+
+            <!-- Q31 -->
+            <div class="question" id="q31">
+                <h3>Soalan 31: MCQ</h3>
+                <p>Alat untuk ukur panjang?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips31')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips31">Pembaris untuk ukur panjang!</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Pembaris</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Penimbang</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Sinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Jam</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q31')">Semak</button>
+            </div>
+
+            <!-- Q32 -->
+            <div class="question" id="q32">
+                <h3>Soalan 32: Jisim</h3>
+                <p>4 kg + 2 kg = ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips32')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips32">4 kg + 2 kg = 6 kg = 6000 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q32-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q32', '6000')">Semak</button>
+            </div>
+
+            <!-- Q33 -->
+            <div class="question" id="q33">
+                <h3>Soalan 33: Panjang</h3>
+                <p>5 m = ___ cm</p>
+                <button class="tips-toggle" onclick="toggleTips('tips33')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips33">1 m = 100 cm. 5 m = 500 cm</div>
+                <div class="fill-blank">
+                    <input type="text" id="q33-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q33', '500')">Semak</button>
+            </div>
+
+            <!-- Q34 -->
+            <div class="question" id="q34">
+                <h3>Soalan 34: MCQ</h3>
+                <p>Alat untuk ukur jisim?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips34')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips34">Penimbang untuk ukur berat/jisim!</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Pembaris</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Penimbang</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Siliinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Jam</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q34')">Semak</button>
+            </div>
+
+            <!-- Q35 -->
+            <div class="question" id="q35">
+                <h3>Soalan 35: Isi Padu</h3>
+                <p>3 L = ___ mL</p>
+                <button class="tips-toggle" onclick="toggleTips('tips35')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips35">1 L = 1000 mL. 3 L = 3000 mL</div>
+                <div class="fill-blank">
+                    <input type="text" id="q35-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q35', '3000')">Semak</button>
+            </div>
+
+            <!-- Q36 -->
+            <div class="question" id="q36">
+                <h3>Soalan 36: Masalah</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Kain 2 m. Potong 50 cm. Baki?</p>
+                </div>
+                <button class="tips-toggle" onclick="toggleTips('tips36')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips36">2 m = 200 cm. 200 - 50 = 150 cm = 1.5 m</div>
+                <div class="fill-blank">
+                    <input type="text" id="q36-answer" style="width:100px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="150 cm">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q36', '150')">Semak</button>
+            </div>
+
+            <!-- Q37 -->
+            <div class="question" id="q37">
+                <h3>Soalan 37: Banding</h3>
+                <p>50 cm ? 5 m</p>
+                <button class="tips-toggle" onclick="toggleTips('tips37')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips37">5 m = 500 cm. 50 cm < 500 cm</div>
+                <div class="compare-area">
+                    <div class="compare-box">50 cm</div>
+                    <select id="q37-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #11998e;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">5 m</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q37', '<')">Semak</button>
+            </div>
+
+            <!-- Q38 -->
+            <div class="question" id="q38">
+                <h3>Soalan 38: Jisim</h3>
+                <p>500 g + 500 g = ___ kg</p>
+                <button class="tips-toggle" onclick="toggleTips('tips38')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips38">500 + 500 = 1000 g = 1 kg</div>
+                <div class="fill-blank">
+                    <input type="text" id="q38-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q38', '1')">Semak</button>
+            </div>
+
+            <!-- Q39 -->
+            <div class="question" id="q39">
+                <h3>Soalan 39: MCQ</h3>
+                <p>Alat untuk ukur cecair?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips39')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips39">Silinder penyukat untuk ukur cecair!</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Pembaris</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Penimbang</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Silinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Jam</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q39')">Semak</button>
+            </div>
+
+            <!-- Q40 -->
+            <div class="question" id="q40">
+                <h3>Soalan 40: Panjang</h3>
+                <p>75 cm + 25 cm = ___ m</p>
+                <button class="tips-toggle" onclick="toggleTips('tips40')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips40">75 + 25 = 100 cm = 1 m</div>
+                <div class="fill-blank">
+                    <input type="text" id="q40-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q40', '1')">Semak</button>
+            </div>
+
+            <!-- Q41 -->
+            <div class="question" id="q41">
+                <h3>Soalan 41: Isi Padu</h3>
+                <p>400 mL + 600 mL = ___ L</p>
+                <button class="tips-toggle" onclick="toggleTips('tips41')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips41">400 + 600 = 1000 mL = 1 L</div>
+                <div class="fill-blank">
+                    <input type="text" id="q41-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q41', '1')">Semak</button>
+            </div>
+
+            <!-- Q42 -->
+            <div class="question" id="q42">
+                <h3>Soalan 42: Jisim</h3>
+                <p>1 kg 250 g = ___ g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips42')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips42">1 kg = 1000 g. 1000 + 250 = 1250 g</div>
+                <div class="fill-blank">
+                    <input type="text" id="q42-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q42', '1250')">Semak</button>
+            </div>
+
+            <!-- Q43 -->
+            <div class="question" id="q43">
+                <h3>Soalan 43: MCQ</h3>
+                <p>Berat orang = 40 ___.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips43')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips43">Berat orang guna kg!</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>kg</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>g</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>mL</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>L</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q43')">Semak</button>
+            </div>
+
+            <!-- Q44 -->
+            <div class="question" id="q44">
+                <h3>Soalan 44: Panjang</h3>
+                <p>10 m = ___ cm</p>
+                <button class="tips-toggle" onclick="toggleTips('tips44')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips44">1 m = 100 cm. 10 m = 1000 cm</div>
+                <div class="fill-blank">
+                    <input type="text" id="q44-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q44', '1000')">Semak</button>
+            </div>
+
+            <!-- Q45 -->
+            <div class="question" id="q45">
+                <h3>Soalan 45: Banding</h3>
+                <p>2 kg ? 1500 g</p>
+                <button class="tips-toggle" onclick="toggleTips('tips45')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips45">2 kg = 2000 g. 2000 g > 1500 g</div>
+                <div class="compare-area">
+                    <div class="compare-box">2 kg</div>
+                    <select id="q45-answer" style="padding:10px;font-size:1.2em;border-radius:5px;border:2px solid #11998e;">
+                        <option value="">Pilih</option><option value=">">&gt;</option><option value="<">&lt;</option><option value="=">=</option>
+                    </select>
+                    <div class="compare-box">1500 g</div>
+                </div>
+                <button class="check-btn" onclick="checkCompare('q45', '>')">Semak</button>
+            </div>
+
+            <!-- Q46 -->
+            <div class="question" id="q46">
+                <h3>Soalan 46: Jisim</h3>
+                <p>8000 g = ___ kg</p>
+                <button class="tips-toggle" onclick="toggleTips('tips46')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips46">1000 g = 1 kg. 8000 g = 8 kg</div>
+                <div class="fill-blank">
+                    <input type="text" id="q46-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q46', '8')">Semak</button>
+            </div>
+
+            <!-- Q47 -->
+            <div class="question" id="q47">
+                <h3>Soalan 47: MCQ</h3>
+                <p>Air dalam swim pool ~= ?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips47')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips47">Swimming pool contain banyak air, guna L atau mL besar!</div>
+                <div class="options" data-answer="D">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>10 L</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>100 L</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>500 L</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>10000 L</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q47')">Semak</button>
+            </div>
+
+            <!-- Q48 -->
+            <div class="question" id="q48">
+                <h3>Soalan 48: Panjang</h3>
+                <p>1 m 50 cm = ___ cm</p>
+                <button class="tips-toggle" onclick="toggleTips('tips48')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips48">1 m = 100 cm. 100 + 50 = 150 cm</div>
+                <div class="fill-blank">
+                    <input type="text" id="q48-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q48', '150')">Semak</button>
+            </div>
+
+            <!-- Q49 -->
+            <div class="question" id="q49">
+                <h3>Soalan 49: Isi Padu</h3>
+                <p>5 L + 3 L = ___ mL</p>
+                <button class="tips-toggle" onclick="toggleTips('tips49')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips49">5 + 3 = 8 L = 8000 mL</div>
+                <div class="fill-blank">
+                    <input type="text" id="q49-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q49', '8000')">Semak</button>
+            </div>
+
+            <!-- Q50 -->
+            <div class="question" id="q50">
+                <h3>Soalan 50: Masalah</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Botol 1 L. Minum 400 mL. Tinggal?</p>
+                </div>
+                <button class="tips-toggle" onclick="toggleTips('tips50')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips50">1 L = 1000 mL. 1000 - 400 = 600 mL</div>
+                <div class="fill-blank">
+                    <input type="text" id="q50-answer" style="width:100px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="600 mL">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q50', '600')">Semak</button>
+            </div>
+
+            <div class="score-display" id="practice-score">
+                <h2>Markah Latihan:</h2>
+                <div class="score-number"><span id="practice-current">0</span>/50</div>
+                <div class="progress-bar"><div class="progress-fill" id="practice-progress" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <!-- Exam Section -->
+        <div id="exam" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">📝 Soalan Peperiksaan (20 Soalan)</h2>
+            <p style="margin-bottom: 20px;">Jawab semua soalan. Setiap soalan 5 markah.</p>
+            <div class="question-nav" id="exam-nav"></div>
+
+            <!-- EQ1 -->
+            <div class="question" id="eq1">
+                <h3>Soalan 1 (5 markah)</h3>
+                <p>100 cm = ___ m</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq1-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq1', '1')">Semak</button>
+            </div>
+
+            <!-- EQ2 -->
+            <div class="question" id="eq2">
+                <h3>Soalan 2 (5 markah)</h3>
+                <p>1 kg = ___ g</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq2-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq2', '1000')">Semak</button>
+            </div>
+
+            <!-- EQ3 -->
+            <div class="question" id="eq3">
+                <h3>Soalan 3 (5 markah)</h3>
+                <p>1 L = ___ mL</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq3-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq3', '1000')">Semak</button>
+            </div>
+
+            <!-- EQ4 -->
+            <div class="question" id="eq4">
+                <h3>Soalan 4 (5 markah)</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Pita 80 cm. Potong 30 cm. Baki?</p>
+                </div>
+                <div class="fill-blank">
+                    <input type="text" id="eq4-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq4', '50')">Semak</button>
+            </div>
+
+            <!-- EQ5 -->
+            <div class="question" id="eq5">
+                <h3>Soalan 5 (5 markah)</h3>
+                <p>3 kg = ___ g</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq5-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq5', '3000')">Semak</button>
+            </div>
+
+            <!-- EQ6 -->
+            <div class="question" id="eq6">
+                <h3>Soalan 6 (5 markah)</h3>
+                <p>5 m = ___ cm</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq6-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq6', '500')">Semak</button>
+            </div>
+
+            <!-- EQ7 -->
+            <div class="question" id="eq7">
+                <h3>Soalan 7 (5 markah)</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Air 500 mL + 500 mL = ?</p>
+                </div>
+                <div class="fill-blank">
+                    <input type="text" id="eq7-answer" style="width:100px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="1 L">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq7', '1')">Semak</button>
+            </div>
+
+            <!-- EQ8 -->
+            <div class="question" id="eq8">
+                <h3>Soalan 8 (5 markah)</h3>
+                <p>Yang mana lebih panjang?</p>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>100 cm</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>2 m</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq8')">Semak</button>
+            </div>
+
+            <!-- EQ9 -->
+            <div class="question" id="eq9">
+                <h3>Soalan 9 (5 markah)</h3>
+                <p>2 L = ___ mL</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq9-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq9', '2000')">Semak</button>
+            </div>
+
+            <!-- EQ10 -->
+            <div class="question" id="eq10">
+                <h3>Soalan 10 (5 markah)</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Berat 2 kg + 500 g = ?</p>
+                </div>
+                <div class="fill-blank">
+                    <input type="text" id="eq10-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="g">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq10', '2500')">Semak</button>
+            </div>
+
+            <!-- EQ11 -->
+            <div class="question" id="eq11">
+                <h3>Soalan 11 (5 markah)</h3>
+                <p>500 cm = ___ m</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq11-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq11', '5')">Semak</button>
+            </div>
+
+            <!-- EQ12 -->
+            <div class="question" id="eq12">
+                <h3>Soalan 12 (5 markah)</h3>
+                <p>2500 g = ___ kg ___ g</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq12-answer" style="width:150px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;" placeholder="2 kg 500 g">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq12', '2 kg 500 g')">Semak</button>
+            </div>
+
+            <!-- EQ13 -->
+            <div class="question" id="eq13">
+                <h3>Soalan 13 (5 markah)</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Alat untuk ukur panjang?</p>
+                </div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Pembaris</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Penimbang</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Silinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Jam</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq13')">Semak</button>
+            </div>
+
+            <!-- EQ14 -->
+            <div class="question" id="eq14">
+                <h3>Soalan 14 (5 markah)</h3>
+                <p>750 mL + 250 mL = ___ L</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq14-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq14', '1')">Semak</button>
+            </div>
+
+            <!-- EQ15 -->
+            <div class="question" id="eq15">
+                <h3>Soalan 15 (5 markah)</h3>
+                <p>1 kg 500 g = ___ g</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq15-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq15', '1500')">Semak</button>
+            </div>
+
+            <!-- EQ16 -->
+            <div class="question" id="eq16">
+                <h3>Soalan 16 (5 markah)</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Minum 300 mL. Tinggal 700 mL. Semua?</p>
+                </div>
+                <div class="fill-blank">
+                    <input type="text" id="eq16-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq16', '1000')">Semak</button>
+            </div>
+
+            <!-- EQ17 -->
+            <div class="question" id="eq17">
+                <h3>Soalan 17 (5 markah)</h3>
+                <p>4 m = ___ cm</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq17-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq17', '400')">Semak</button>
+            </div>
+
+            <!-- EQ18 -->
+            <div class="question" id="eq18">
+                <h3>Soalan 18 (5 markah)</h3>
+                <p>6000 g = ___ kg</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq18-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq18', '6')">Semak</button>
+            </div>
+
+            <!-- EQ19 -->
+            <div class="question" id="eq19">
+                <h3>Soalan 19 (5 markah)</h3>
+                <div class="word-problem">
+                    <h4>📝 Masalah:</h4>
+                    <p>Alat untuk ukur jisim?</p>
+                </div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Pembaris</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Penimbang</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Silinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Jam</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq19')">Semak</button>
+            </div>
+
+            <!-- EQ20 -->
+            <div class="question" id="eq20">
+                <h3>Soalan 20 (5 markah)</h3>
+                <p>3 L = ___ mL</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq20-answer" style="width:80px;padding:10px;border:2px solid #11998e;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq20', '3000')">Semak</button>
+            </div>
+
+            <div class="score-display" id="exam-score">
+                <h2>Markah Peperiksaan:</h2>
+                <div class="score-number"><span id="exam-current">0</span>/20</div>
+                <div class="progress-bar"><div class="progress-fill" id="exam-progress" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">📊 Keputusan Anda</h2>
+            <div class="score-display"><h2>Latihan</h2><div class="score-number"><span id="final-practice">0</span>/50</div><div class="star-rating" id="practice-stars"></div><div class="progress-bar"><div class="progress-fill" id="final-practice-progress" style="width: 0%"></div></div></div>
+            <div class="score-display" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><h2>Peperiksaan</h2><div class="score-number"><span id="final-exam">0</span>/20</div><div class="star-rating" id="exam-stars"></div><div class="progress-bar"><div class="progress-fill" id="final-exam-progress" style="width: 0%"></div></div></div>
+            <div id="overall-message" class="result-message"></div>
+            <button class="check-btn" onclick="resetAll()" style="display:block;margin:20px auto;">🔄 Cuba Lagi</button>
+        </div>
+
+        <footer><p>📚 Matematik Tahun 1 - Bab 3: Ukuran dan Sukatan</p><p>Berdasarkan Buku Teks KSSR</p></footer>
+    </div>
+
+    <script>
+        let practiceScore = 0;
+        let examScore = 0;
+        let practiceAnswered = new Set();
+        let examAnswered = new Set();
+
+        function generateNav() {
+            const practiceNav = document.getElementById('practice-nav');
+            const examNav = document.getElementById('exam-nav');
+            for(let i = 1; i <= 50; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i;
+                btn.onclick = () => scrollToQuestion('q' + i);
+                practiceNav.appendChild(btn);
+            }
+            for(let i = 1; i <= 20; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i;
+                btn.onclick = () => scrollToQuestion('eq' + i);
+                examNav.appendChild(btn);
+            }
+        }
+        generateNav();
+
+        function scrollToQuestion(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showContent(contentId) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(contentId).classList.add('active');
+            const btnMap = {'tutorial':0, 'latihan':1, 'exam':2, 'results':3};
+            document.querySelectorAll('.nav-btn')[btnMap[contentId]].classList.add('active');
+            if(contentId === 'results') updateResults();
+        }
+
+        function toggleTips(id) {
+            document.getElementById(id).classList.toggle('show');
+        }
+
+        document.querySelectorAll('.options').forEach(optionsDiv => {
+            optionsDiv.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = this.closest('.question').id;
+                    const optionsContainer = this.closest('.options');
+                    if(optionsContainer.classList.contains('checked')) return;
+                    optionsContainer.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+
+        function checkAnswer(questionId) {
+            const question = document.getElementById(questionId);
+            const options = question.querySelector('.options');
+            const correctAnswer = options.dataset.answer;
+            const selectedOption = options.querySelector('.option.selected');
+            if(!selectedOption) { alert('Sila pilih satu jawapan!'); return; }
+            options.classList.add('checked');
+            options.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if(opt.dataset.value === correctAnswer) opt.classList.add('correct');
+                else if(opt.classList.contains('selected') && opt.dataset.value !== correctAnswer) opt.classList.add('wrong');
+            });
+            const isCorrect = selectedOption.dataset.value === correctAnswer;
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function checkFillBlank(questionId, correctAnswer) {
+            const question = document.getElementById(questionId);
+            const input = document.getElementById(questionId + '-answer');
+            const userAnswer = input.value.trim();
+            if(userAnswer === '') { alert('Sila masukkan jawapan!'); return; }
+            input.disabled = true;
+            const isCorrect = userAnswer === correctAnswer;
+            if(isCorrect) input.classList.add('correct');
+            else { input.classList.add('wrong'); input.value = correctAnswer + ' (Betul)'; }
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function checkCompare(questionId, correctAnswer) {
+            const select = document.getElementById(questionId + '-answer');
+            const userAnswer = select.value;
+            if(userAnswer === '') { alert('Sila pilih simbol!'); return; }
+            select.disabled = true;
+            const isCorrect = userAnswer === correctAnswer;
+            if(isCorrect) { select.style.borderColor = '#4caf50'; select.style.backgroundColor = '#e8f5e9'; }
+            else { select.style.borderColor = '#f44336'; select.style.backgroundColor = '#ffebee'; select.value = correctAnswer + ' (Betul)'; }
+            const question = document.getElementById(questionId);
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function updateNavButton(questionId, isCorrect) {
+            let navId, btns;
+            if(questionId.startsWith('eq')) { navId = 'exam-nav'; btns = document.getElementById(navId).querySelectorAll('.question-nav-btn'); btns[parseInt(questionId.replace('eq',''))-1].classList.add(isCorrect ? 'correct' : 'wrong'); }
+            else { navId = 'practice-nav'; btns = document.getElementById(navId).querySelectorAll('.question-nav-btn'); btns[parseInt(questionId.replace('q',''))-1].classList.add(isCorrect ? 'correct' : 'wrong'); }
+        }
+
+        function updateScore(type) {
+            if(type === 'practice') {
+                document.getElementById('practice-current').textContent = practiceScore;
+                document.getElementById('practice-progress').style.width = (practiceScore / 50 * 100) + '%';
+            } else {
+                document.getElementById('exam-current').textContent = examScore;
+                document.getElementById('exam-progress').style.width = (examScore / 20 * 100) + '%';
+            }
+        }
+
+        function updateResults() {
+            document.getElementById('final-practice').textContent = practiceScore;
+            document.getElementById('final-exam').textContent = examScore;
+            document.getElementById('final-practice-progress').style.width = (practiceScore / 50 * 100) + '%';
+            document.getElementById('final-exam-progress').style.width = (examScore / 20 * 100) + '%';
+            document.getElementById('practice-stars').innerHTML = getStars(practiceScore, 50);
+            document.getElementById('exam-stars').innerHTML = getStars(examScore, 20);
+            const totalScore = practiceScore + examScore;
+            const totalMax = 70;
+            const percentage = (totalScore / totalMax * 100);
+            const messageDiv = document.getElementById('overall-message');
+            if(percentage >= 90) { messageDiv.className = 'result-message success'; messageDiv.innerHTML = '🎉 Tahniah! Cemerlang! ❤️'; }
+            else if(percentage >= 70) { messageDiv.className = 'result-message partial'; messageDiv.innerHTML = '👍 Bagus! Cuba lagi! 💪'; }
+            else { messageDiv.className = 'result-message fail'; messageDiv.innerHTML = '📚 Jangan Give Up! Cuba lagi! 🌟'; }
+        }
+
+        function getStars(score, max) {
+            const percentage = score / max;
+            let stars = '';
+            if(percentage >= 0.9) stars = '⭐⭐⭐⭐⭐';
+            else if(percentage >= 0.7) stars = '⭐⭐⭐⭐';
+            else if(percentage >= 0.5) stars = '⭐⭐⭐';
+            else if(percentage >= 0.3) stars = '⭐⭐';
+            else stars = '⭐';
+            return stars;
+        }
+
+        function resetAll() {
+            practiceScore = 0; examScore = 0; practiceAnswered.clear(); examAnswered.clear();
+            document.getElementById('practice-current').textContent = '0';
+            document.getElementById('exam-current').textContent = '0';
+            document.getElementById('practice-progress').style.width = '0%';
+            document.getElementById('exam-progress').style.width = '0%';
+            document.querySelectorAll('.question-nav-btn').forEach(btn => btn.className = 'question-nav-btn');
+            document.querySelectorAll('.question').forEach(q => {
+                const options = q.querySelector('.options');
+                if(options) { options.classList.remove('checked'); options.querySelectorAll('.option').forEach(opt => { opt.classList.remove('selected', 'correct', 'wrong'); opt.style.pointerEvents = 'auto'; }); }
+                q.querySelectorAll('input').forEach(input => { input.value = ''; input.disabled = false; input.classList.remove('correct', 'wrong'); });
+                q.querySelectorAll('select').forEach(select => { select.value = ''; select.disabled = false; select.style.borderColor = '#11998e'; select.style.backgroundColor = ''; });
+                const btn = q.querySelector('.check-btn');
+                if(btn) btn.disabled = false;
+            });
+            showContent('tutorial');
+        }
+    </script>
+</body>
+</html>

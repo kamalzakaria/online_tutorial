@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematik Tahun 1 - Bab 4: Bentuk</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+        header { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); color: white; padding: 30px; text-align: center; }
+        header h1 { font-size: 2em; margin-bottom: 10px; }
+        header p { opacity: 0.9; }
+        .nav-buttons { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #f8f9fa; flex-wrap: wrap; }
+        .nav-btn { padding: 12px 24px; border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s ease; background: #e9ecef; color: #495057; }
+        .nav-btn.active { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); color: white; transform: scale(1.05); }
+        .nav-btn:hover:not(.active) { background: #dee2e6; transform: scale(1.02); }
+        .content { padding: 30px; display: none; }
+        .content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .section { background: #fdf4ff; border-radius: 15px; padding: 25px; margin-bottom: 25px; border-left: 5px solid #a855f7; }
+        .section h2 { color: #333; margin-bottom: 15px; font-size: 1.5em; }
+        .section p { color: #666; line-height: 1.8; margin-bottom: 15px; }
+        .shape-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin: 20px 0; }
+        .shape-card { background: white; border: 2px solid #a855f7; border-radius: 15px; padding: 15px; text-align: center; }
+        .shape-icon { font-size: 3em; margin-bottom: 10px; }
+        .shape-name { font-weight: bold; color: #a855f7; }
+        .example-box { background: #f3e8ff; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .example-box h3 { color: #7c3aed; margin-bottom: 10px; }
+        .question { background: #fdf4ff; border-radius: 15px; padding: 25px; margin-bottom: 20px; border: 2px solid #f0abfc; }
+        .question h3 { color: #be185d; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 15px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        .option:hover { border-color: #a855f7; transform: translateX(5px); }
+        .option.selected { background: #a855f7; color: white; border-color: #a855f7; }
+        .option.correct { background: #4caf50; color: white; border-color: #4caf50; }
+        .option.wrong { background: #f44336; color: white; border-color: #f44336; }
+        .option-letter { background: #a855f7; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .option.selected .option-letter { background: white; color: #a855f7; }
+        .option.correct .option-letter { background: white; color: #4caf50; }
+        .option.wrong .option-letter { background: white; color: #f44336; }
+        .fill-blank input { width: 80px; padding: 10px; border: 2px solid #a855f7; border-radius: 8px; font-size: 1.2em; text-align: center; }
+        .fill-blank input:focus { outline: none; border-color: #ec4899; box-shadow: 0 0 10px rgba(168, 85, 247, 0.3); }
+        .fill-blank input.correct { border-color: #4caf50; background: #e8f5e9; }
+        .fill-blank input.wrong { border-color: #f44336; background: #ffebee; }
+        .check-btn { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; margin-top: 15px; transition: transform 0.3s ease; }
+        .check-btn:hover { transform: scale(1.05); }
+        .check-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .score-display { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+        .score-display h2 { font-size: 1.8em; }
+        .score-display .score-number { font-size: 3em; font-weight: bold; }
+        .progress-bar { width: 100%; height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin: 15px 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #a855f7, #ec4899); transition: width 0.5s ease; }
+        .result-message { padding: 20px; border-radius: 15px; text-align: center; font-size: 1.2em; font-weight: bold; margin-top: 15px; }
+        .result-message.success { background: #e8f5e9; color: #2e7d32; }
+        .result-message.partial { background: #fff3e0; color: #e65100; }
+        .result-message.fail { background: #ffebee; color: #c62828; }
+        .tips-toggle { background: #f3e8ff; border: 2px solid #a855f7; color: #7c3aed; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-bottom: 15px; transition: all 0.3s ease; }
+        .tips-toggle:hover { background: #a855f7; color: white; }
+        .tips-content { display: none; background: #f3e8ff; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .tips-content.show { display: block; }
+        .word-problem { background: #fce7f3; border-left: 4px solid #ec4899; padding: 15px; border-radius: 0 10px 10px 0; margin: 15px 0; }
+        .word-problem h4 { color: #be185d; margin-bottom: 10px; }
+        footer { text-align: center; padding: 20px; background: #f8f9fa; color: #666; }
+        .star-rating { font-size: 2em; margin: 10px 0; }
+        .question-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .question-nav-btn { width: 40px; height: 40px; border: none; border-radius: 50%; cursor: pointer; font-weight: bold; background: #e0e0e0; color: #333; transition: all 0.3s ease; }
+        .question-nav-btn.active { background: #a855f7; color: white; }
+        .question-nav-btn.correct { background: #4caf50; color: white; }
+        .question-nav-btn.wrong { background: #f44336; color: white; }
+        .question-nav-btn:hover { transform: scale(1.1); }
+        .property-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .property-table th, .property-table td { border: 2px solid #a855f7; padding: 10px; text-align: center; }
+        .property-table th { background: #a855f7; color: white; }
+        @media (max-width: 600px) { header h1 { font-size: 1.5em; } .nav-buttons { gap: 5px; } .nav-btn { padding: 8px 16px; font-size: 0.9em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Matematik Tahun 1</h1>
+            <h2>Bab 4: Bentuk</h2>
+            <p>Pembelajaran Interaktif KSSR</p>
+        </header>
+
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showContent('tutorial')">📖 Tutorial</button>
+            <button class="nav-btn" onclick="showContent('latihan')">✏️ Latihan (50)</button>
+            <button class="nav-btn" onclick="showContent('exam')">📝 Exam (20)</button>
+            <button class="nav-btn" onclick="showContent('results')">📊 Keputusan</button>
+        </div>
+
+        <!-- Tutorial Section -->
+        <div id="tutorial" class="content active">
+            <div class="section">
+                <h2>📦 Bentuk 3D (Tiga Dimensi)</h2>
+                <p>Bentuk 3D ada panjang, lebar, dan tinggi. Boleh pegang!</p>
+                <div class="shape-grid">
+                    <div class="shape-card"><div class="shape-icon">📦</div><div class="shape-name">Kubus</div></div>
+                    <div class="shape-card"><div class="shape-icon">🧊</div><div class="shape-name">Kuboid</div></div>
+                    <div class="shape-card"><div class="shape-icon">🥫</div><div class="shape-name">Silinder</div></div>
+                    <div class="shape-card"><div class="shape-icon">🍦</div><div class="shape-name">Kon</div></div>
+                    <div class="shape-card"><div class="shape-icon">⚽</div><div class="shape-name">Sfera</div></div>
+                    <div class="shape-card"><div class="shape-icon">🔺</div><div class="shape-name">Piramid</div></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⬜ Bentuk 2D (Dua Dimensi)</h2>
+                <p>Bentuk 2D ada panjang dan lebar je. Takde tinggi!</p>
+                <div class="shape-grid">
+                    <div class="shape-card"><div class="shape-icon">⭕</div><div class="shape-name">Bulatan</div></div>
+                    <div class="shape-card"><div class="shape-icon">⬜</div><div class="shape-name">Segiempat Sama</div></div>
+                    <div class="shape-card"><div class="shape-icon">▬</div><div class="shape-name">Segiempat Tepat</div></div>
+                    <div class="shape-card"><div class="shape-icon">🔺</div><div class="shape-name">Segitiga</div></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Ciri-ciri Bentuk 3D</h2>
+                <table class="property-table">
+                    <tr><th>Bentuk</th><th>Permukaan</th><th>Sisi</th><th>Bucu</th></tr>
+                    <tr><td>Kubus</td><td>6</td><td>12</td><td>8</td></tr>
+                    <tr><td>Kuboid</td><td>6</td><td>12</td><td>8</td></tr>
+                    <tr><td>Silinder</td><td>3</td><td>2</td><td>0</td></tr>
+                    <tr><td>Kon</td><td>2</td><td>1</td><td>1</td></tr>
+                    <tr><td>Sfera</td><td>1</td><td>0</td><td>0</td></tr>
+                    <tr><td>Piramid</td><td>5</td><td>8</td><td>5</td></tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>Ciri-ciri Bentuk 2D</h2>
+                <table class="property-table">
+                    <tr><th>Bentuk</th><th>Sisi Lurus</th><th>Bucu</th><th>Sisi Lengkung</th></tr>
+                    <tr><td>Segitiga</td><td>3</td><td>3</td><td>0</td></tr>
+                    <tr><td>Segiempat Sama</td><td>4</td><td>4</td><td>0</td></tr>
+                    <tr><td>Segiempat Tepat</td><td>4</td><td>4</td><td>0</td></tr>
+                    <tr><td>Bulatan</td><td>0</td><td>0</td><td>1</td></tr>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>💡 Tips Penting</h2>
+                <div class="example-box">
+                    <h3>Bentuk 3D:</h3>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>Kubus</strong> - semua sisi sama</li>
+                        <li><strong>Kuboid</strong> - seperti kotak</li>
+                        <li><strong>Silinder</strong> - like tin</li>
+                        <li><strong>Kon</strong> - like ice cream cone</li>
+                        <li><strong>Sfera</strong> - like bola</li>
+                        <li><strong>Piramid</strong> - ada tapak empat</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div id="latihan" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">✏️ Latihan Interaktif (50 Soalan)</h2>
+            <div class="question-nav" id="practice-nav"></div>
+
+            <!-- Q1 -->
+            <div class="question" id="q1">
+                <h3>Soalan 1: Bentuk 3D</h3>
+                <p>Bentuk apakah ini ⚽?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips1')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips1">Bola = Sfera (bulat, boleh golek)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Sfera</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kon</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Kubus</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q1')">Semak</button>
+            </div>
+
+            <!-- Q2 -->
+            <div class="question" id="q2">
+                <h3>Soalan 2: Bentuk 3D</h3>
+                <p>🧊 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips2')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips2">Kotak ais = Kuboid (seperti kotak)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kuboid</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Silinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Piramid</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q2')">Semak</button>
+            </div>
+
+            <!-- Q3 -->
+            <div class="question" id="q3">
+                <h3>Soalan 3: Bentuk 2D</h3>
+                <p>⭕ adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips3')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips3">Bulat = Bulatan (ada sisi lengkung)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bulatan</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segitiga</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segiempat</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q3')">Semak</button>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question" id="q4">
+                <h3>Soalan 4: Bucu Segitiga</h3>
+                <p>Segitiga ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips4')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips4">Segitiga ada 3 bucu!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q4-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q4', '3')">Semak</button>
+            </div>
+
+            <!-- Q5 -->
+            <div class="question" id="q5">
+                <h3>Soalan 5: Kubus</h3>
+                <p>Kubus ada ___ permukaan.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips5')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips5">Kubus ada 6 permukaan (semua sama)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q5-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q5', '6')">Semak</button>
+            </div>
+
+            <!-- Q6 -->
+            <div class="question" id="q6">
+                <h3>Soalan 6: Bentuk 2D</h3>
+                <p>Segiempat sama ada ___ sisi.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips6')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips6">Segiempat ada 4 sisi!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q6-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q6', '4')">Semak</button>
+            </div>
+
+            <!-- Q7 -->
+            <div class="question" id="q7">
+                <h3>Soalan 7: Silinder</h3>
+                <p>🥫 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips7')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips7">Tin = Silinder (ada 2 permukaan rata & 1 permukaan lengkung)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Silinder</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kon</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Sfera</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Kuboid</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q7')">Semak</button>
+            </div>
+
+            <!-- Q8 -->
+            <div class="question" id="q8">
+                <h3>Soalan 8: Bentuk 2D</h3>
+                <p>🔺 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips8')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips8">Bentuk panah atas = Segitiga</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bulatan</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segitiga</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segiempat</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q8')">Semak</button>
+            </div>
+
+            <!-- Q9 -->
+            <div class="question" id="q9">
+                <h3>Soalan 9: Kuboid</h3>
+                <p>Kuboid ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips9')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips9">Kuboid ada 8 bucu (macam kubus)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q9-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q9', '8')">Semak</button>
+            </div>
+
+            <!-- Q10 -->
+            <div class="question" id="q10">
+                <h3>Soalan 10: Bentuk 2D</h3>
+                <p>Bulatan ada ___ sisi lengkung.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips10')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips10">Bulatan ada 1 sisi lengkung (satu bulatan penuh)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q10-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q10', '1')">Semak</button>
+            </div>
+
+            <!-- Q11 -->
+            <div class="question" id="q11">
+                <h3>Soalan 11: Kon</h3>
+                <p>🍦 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips11')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips11">Aiskrim = Kon (ada 1 bucu di atas)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kon</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Piramid</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Sfera</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q11')">Semak</button>
+            </div>
+
+            <!-- Q12 -->
+            <div class="question" id="q12">
+                <h3>Soalan 12: Sfera</h3>
+                <p>Sfera ada ___ permukaan rata.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips12')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips12">Sfera semua permukaan lengkung, takde permukaan rata!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q12-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q12', '0')">Semak</button>
+            </div>
+
+            <!-- Q13 -->
+            <div class="question" id="q13">
+                <h3>Soalan 13: Piramid</h3>
+                <p>🔺 dengan tapak empat adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips13')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips13">Piramid ada tapak empat + 4 permukaan</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kon</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Piramid</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Kubus</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q13')">Semak</button>
+            </div>
+
+            <!-- Q14 -->
+            <div class="question" id="q14">
+                <h3>Soalan 14: Bentuk 2D</h3>
+                <p>⬜ adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips14')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips14">Kotak kecil = Segiempat sama (sisi sama panjang)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segiempat Sama</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat Tepat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segitiga</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Bulatan</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q14')">Semak</button>
+            </div>
+
+            <!-- Q15 -->
+            <div class="question" id="q15">
+                <h3>Soalan 15: Kubus</h3>
+                <p>Kubus ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips15')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips15">Kubus ada 8 bucu!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q15-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q15', '8')">Semak</button>
+            </div>
+
+            <!-- Q16 -->
+            <div class="question" id="q16">
+                <h3>Soalan 16: Bentuk 2D</h3>
+                <p>📺 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips16')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips16">TV = Segiempat Tepat (panjang & lebar bezza)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segiempat Sama</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat Tepat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segitiga</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Bulatan</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q16')">Semak</button>
+            </div>
+
+            <!-- Q17 -->
+            <div class="question" id="q17">
+                <h3>Soalan 17: Silinder</h3>
+                <p>Silinder ada ___ permukaan rata.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips17')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips17">Silinder ada 2 permukaan rata (atas & bawah)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q17-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q17', '2')">Semak</button>
+            </div>
+
+            <!-- Q18 -->
+            <div class="question" id="q18">
+                <h3>Soalan 18: Bentuk 2D</h3>
+                <p>Segitiga ada ___ sisi lurus.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips18')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips18">Segitiga ada 3 sisi lurus!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q18-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q18', '3')">Semak</button>
+            </div>
+
+            <!-- Q19 -->
+            <div class="question" id="q19">
+                <h3>Soalan 19: MCQ</h3>
+                <p>Yang mana bukan bentuk 3D?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips19')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips19">Bulatan adalah 2D, takde tinggi!</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Sfera</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Bulatan</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Silinder</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q19')">Semak</button>
+            </div>
+
+            <!-- Q20 -->
+            <div class="question" id="q20">
+                <h3>Soalan 20: Kon</h3>
+                <p>Kon ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips20')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips20">Kon ada 1 bucu di puncak!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q20-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q20', '1')">Semak</button>
+            </div>
+
+            <!-- Q21 -->
+            <div class="question" id="q21">
+                <h3>Soalan 21: MCQ</h3>
+                <p>Yang mana bentuk 3D?</p>
+                <button class="tips-toggle" onclick="toggleTips('tips21')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips21">Kuboid adalah 3D (ada panjang, lebar, tinggi)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kuboid</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segitiga</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Bulatan</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q21')">Semak</button>
+            </div>
+
+            <!-- Q22 -->
+            <div class="question" id="q22">
+                <h3>Soalan 22: Piramid</h3>
+                <p>Piramid ada ___ permukaan.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips22')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips22">Piramid ada 5 permukaan (1 tapak + 4 sisi)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q22-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q22', '5')">Semak</button>
+            </div>
+
+            <!-- Q23 -->
+            <div class="question" id="q23">
+                <h3>Soalan 23: Bentuk 2D</h3>
+                <p>Segiempat Tepat ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips23')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips23">Segiempat ada 4 bucu!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q23-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q23', '4')">Semak</button>
+            </div>
+
+            <!-- Q24 -->
+            <div class="question" id="q24">
+                <h3>Soalan 24: MCQ</h3>
+                <p>🔷 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips24')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips24">Diamond shape = Rombus (jenis segiempat)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segitiga</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Bulatan</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q24')">Semak</button>
+            </div>
+
+            <!-- Q25 -->
+            <div class="question" id="q25">
+                <h3>Soalan 25: Kuboid</h3>
+                <p>Kuboid ada ___ sisi.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips25')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips25">Kuboid ada 12 sisi!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q25-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q25', '12')">Semak</button>
+            </div>
+
+            <!-- Q26 -->
+            <div class="question" id="q26">
+                <h3>Soalan 26: MCQ</h3>
+                <p>📦 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips26')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips26">Kotak = Kubus atau Kuboid (ter取决于)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kon</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Sfera</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q26')">Semak</button>
+            </div>
+
+            <!-- Q27 -->
+            <div class="question" id="q27">
+                <h3>Soalan 27: Sfera</h3>
+                <p>Sfera ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips27')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips27">Sfera takde bucu! (0)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q27-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q27', '0')">Semak</button>
+            </div>
+
+            <!-- Q28 -->
+            <div class="question" id="q28">
+                <h3>Soalan 28: Bentuk 2D</h3>
+                <p>🪟 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips28')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips28">Window = Segiempat (bukan sama)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segiempat Sama</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segitiga</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Bulatan</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q28')">Semak</button>
+            </div>
+
+            <!-- Q29 -->
+            <div class="question" id="q29">
+                <h3>Soalan 29: Kubus</h3>
+                <p>Kubus ada ___ sisi.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips29')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips29">Kubus ada 12 sisi!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q29-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q29', '12')">Semak</button>
+            </div>
+
+            <!-- Q30 -->
+            <div class="question" id="q30">
+                <h3>Soalan 30: MCQ</h3>
+                <p>🧁 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips30')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips30">Kue = Kon + Silinder (bahnanya)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Silinder</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kon</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Piramid</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Kuboid</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q30')">Semak</button>
+            </div>
+
+            <!-- Q31 -->
+            <div class="question" id="q31">
+                <h3>Soalan 31: Bentuk 2D</h3>
+                <p>Bulatan ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips31')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips31">Bulatan takde bucu! (0)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q31-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q31', '0')">Semak</button>
+            </div>
+
+            <!-- Q32 -->
+            <div class="question" id="q32">
+                <h3>Soalan 32: MCQ</h3>
+                <p>🎲 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips32')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips32">Dice = Kubus (semua sisi sama)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kuboid</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Piramid</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Silinder</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q32')">Semak</button>
+            </div>
+
+            <!-- Q33 -->
+            <div class="question" id="q33">
+                <h3>Soalan 33: Silinder</h3>
+                <p>Silinder ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips33')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips33">Silinder takde bucu! (0)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q33-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q33', '0')">Semak</button>
+            </div>
+
+            <!-- Q34 -->
+            <div class="question" id="q34">
+                <h3>Soalan 34: MCQ</h3>
+                <p>🛢️ adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips34')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips34">Tong oil = Silinder</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Silinder</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kon</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kuboid</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Sfera</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q34')">Semak</button>
+            </div>
+
+            <!-- Q35 -->
+            <div class="question" id="q35">
+                <h3>Soalan 35: Piramid</h3>
+                <p>Piramid ada ___ bucu.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips35')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips35">Piramid ada 5 bucu (1 atas + 4 tapak)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q35-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q35', '5')">Semak</button>
+            </div>
+
+            <!-- Q36 -->
+            <div class="question" id="q36">
+                <h3>Soalan 36: MCQ</h3>
+                <p>⏰ adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips36')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips36">Jam = Bulatan (2D)</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bulatan</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segitiga</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q36')">Semak</button>
+            </div>
+
+            <!-- Q37 -->
+            <div class="question" id="q37">
+                <h3>Soalan 37: Kon</h3>
+                <p>Kon ada ___ permukaan.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips37')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips37">Kon ada 2 permukaan (1 tapak + 1 lengkung)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q37-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q37', '2')">Semak</button>
+            </div>
+
+            <!-- Q38 -->
+            <div class="question" id="q38">
+                <h3>Soalan 38: MCQ</h3>
+                <p>🎪 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips38')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips38">Khemah = Piramid (ada tapak)</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kon</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Piramid</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Sfera</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q38')">Semak</button>
+            </div>
+
+            <!-- Q39 -->
+            <div class="question" id="q39">
+                <h3>Soalan 39: Bentuk 2D</h3>
+                <p>Segiempat Sama ada ___ sisi sama.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips39')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips39">Segiempat Sama ada 4 sisi sama panjang!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q39-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q39', '4')">Semak</button>
+            </div>
+
+            <!-- Q40 -->
+            <div class="question" id="q40">
+                <h3>Soalan 40: MCQ</h3>
+                <p>🎀 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips40')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips40">Bentuk pita yang biasa = Segitiga (bahagian atas)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bulatan</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segitiga</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segiempat</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q40')">Semak</button>
+            </div>
+
+            <!-- Q41 -->
+            <div class="question" id="q41">
+                <h3>Soalan 41: Sfera</h3>
+                <p>Sfera ada ___ permukaan lengkung.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips41')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips41">Sfera ada 1 permukaan lengkung (semua)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q41-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q41', '1')">Semak</button>
+            </div>
+
+            <!-- Q42 -->
+            <div class="question" id="q42">
+                <h3>Soalan 42: MCQ</h3>
+                <p>📐 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips42')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips42">Set Square = Segitiga</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segitiga</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Bulatan</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q42')">Semak</button>
+            </div>
+
+            <!-- Q43 -->
+            <div class="question" id="q43">
+                <h3>Soalan 43: Kuboid</h3>
+                <p>Kuboid ada ___ permukaan.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips43')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips43">Kuboid ada 6 permukaan!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q43-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q43', '6')">Semak</button>
+            </div>
+
+            <!-- Q44 -->
+            <div class="question" id="q44">
+                <h3>Soalan 44: MCQ</h3>
+                <p>🎨 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips44')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips44">Palet = Segiempat (biasanya)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segitiga</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Bulatan</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q44')">Semak</button>
+            </div>
+
+            <!-- Q45 -->
+            <div class="question" id="q45">
+                <h3>Soalan 45: Silinder</h3>
+                <p>Silinder ada ___ sisi.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips45')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips45">Silinder ada 2 sisi (atas & bawah)</div>
+                <div class="fill-blank">
+                    <input type="text" id="q45-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q45', '2')">Semak</button>
+            </div>
+
+            <!-- Q46 -->
+            <div class="question" id="q46">
+                <h3>Soalan 46: MCQ</h3>
+                <p>🎯 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips46')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips46">Target = Bulatan</div>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bulatan</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segiempat</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Segitiga</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Pentagon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q46')">Semak</button>
+            </div>
+
+            <!-- Q47 -->
+            <div class="question" id="q47">
+                <h3>Soalan 47: Piramid</h3>
+                <p>Piramid ada ___ sisi.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips47')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips47">Piramid ada 8 sisi!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q47-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q47', '8')">Semak</button>
+            </div>
+
+            <!-- Q48 -->
+            <div class="question" id="q48">
+                <h3>Soalan 48: MCQ</h3>
+                <p>🚗 adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips48')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips48">Kereta = Kuboid (badan kereta)</div>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kuboid</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Silinder</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Sfera</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q48')">Semak</button>
+            </div>
+
+            <!-- Q49 -->
+            <div class="question" id="q49">
+                <h3>Soalan 49: Bentuk 2D</h3>
+                <p>Segitiga ada ___ sisi.</p>
+                <button class="tips-toggle" onclick="toggleTips('tips49')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips49">Segitiga ada 3 sisi!</div>
+                <div class="fill-blank">
+                    <input type="text" id="q49-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('q49', '3')">Semak</button>
+            </div>
+
+            <!-- Q50 -->
+            <div class="question" id="q50">
+                <h3>Soalan 50: MCQ</h3>
+                <p>🎪 dengan tapak bulat adalah ___</p>
+                <button class="tips-toggle" onclick="toggleTips('tips50')">💡 Tunjuk Cara</button>
+                <div class="tips-content" id="tips50">Khemah dengan tapak bulat = Kon!</div>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Piramid</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kon</span></div>
+                    <div class="option" data-value="D"><span class="option-letter">D</span><span>Kuboid</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('q50')">Semak</button>
+            </div>
+
+            <div class="score-display" id="practice-score">
+                <h2>Markah Latihan:</h2>
+                <div class="score-number"><span id="practice-current">0</span>/50</div>
+                <div class="progress-bar"><div class="progress-fill" id="practice-progress" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <!-- Exam Section -->
+        <div id="exam" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">📝 Soalan Peperiksaan (20 Soalan)</h2>
+            <p style="margin-bottom: 20px;">Jawab semua soalan. Setiap soalan 5 markah.</p>
+            <div class="question-nav" id="exam-nav"></div>
+
+            <!-- EQ1 -->
+            <div class="question" id="eq1">
+                <h3>Soalan 1 (5 markah)</h3>
+                <p>Kubus ada ___ permukaan.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq1-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq1', '6')">Semak</button>
+            </div>
+
+            <!-- EQ2 -->
+            <div class="question" id="eq2">
+                <h3>Soalan 2 (5 markah)</h3>
+                <p>Segitiga ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq2-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq2', '3')">Semak</button>
+            </div>
+
+            <!-- EQ3 -->
+            <div class="question" id="eq3">
+                <h3>Soalan 3 (5 markah)</h3>
+                <p>Sfera adalah ___</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bentuk 3D</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Bentuk 2D</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq3')">Semak</button>
+            </div>
+
+            <!-- EQ4 -->
+            <div class="question" id="eq4">
+                <h3>Soalan 4 (5 markah)</h3>
+                <p>Bulatan ada ___ sisi lengkung.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq4-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq4', '1')">Semak</button>
+            </div>
+
+            <!-- EQ5 -->
+            <div class="question" id="eq5">
+                <h3>Soalan 5 (5 markah)</h3>
+                <p>Silinder ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq5-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq5', '0')">Semak</button>
+            </div>
+
+            <!-- EQ6 -->
+            <div class="question" id="eq6">
+                <h3>Soalan 6 (5 markah)</h3>
+                <p>📦 adalah ___</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Sfera</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kon</span></div>
+                <button class="check-btn" onclick="checkAnswer('eq6')">Semak</button>
+            </div>
+
+            <!-- EQ7 -->
+            <div class="question" id="eq7">
+                <h3>Soalan 7 (5 markah)</h3>
+                <p>Kuboid ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq7-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq7', '8')">Semak</button>
+            </div>
+
+            <!-- EQ8 -->
+            <div class="question" id="eq8">
+                <h3>Soalan 8 (5 markah)</h3>
+                <p>Segiempat Tepat ada ___ sisi.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq8-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq8', '4')">Semak</button>
+            </div>
+
+            <!-- EQ9 -->
+            <div class="question" id="eq9">
+                <h3>Soalan 9 (5 markah)</h3>
+                <p>⭕ adalah ___</p>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bentuk 3D</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Bentuk 2D</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq9')">Semak</button>
+            </div>
+
+            <!-- EQ10 -->
+            <div class="question" id="eq10">
+                <h3>Soalan 10 (5 markah)</h3>
+                <p>Piramid ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq10-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq10', '5')">Semak</button>
+            </div>
+
+            <!-- EQ11 -->
+            <div class="question" id="eq11">
+                <h3>Soalan 11 (5 markah)</h3>
+                <p>Kon adalah ___</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Bentuk 3D</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Bentuk 2D</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq11')">Semak</button>
+            </div>
+
+            <!-- EQ12 -->
+            <div class="question" id="eq12">
+                <h3>Soalan 12 (5 markah)</h3>
+                <p>Kubus ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq12-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq12', '8')">Semak</button>
+            </div>
+
+            <!-- EQ13 -->
+            <div class="question" id="eq13">
+                <h3>Soalan 13 (5 markah)</h3>
+                <p>⚽ adalah ___</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Sfera</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Silinder</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq13')">Semak</button>
+            </div>
+
+            <!-- EQ14 -->
+            <div class="question" id="eq14">
+                <h3>Soalan 14 (5 markah)</h3>
+                <p>Silinder ada ___ permukaan rata.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq14-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq14', '2')">Semak</button>
+            </div>
+
+            <!-- EQ15 -->
+            <div class="question" id="eq15">
+                <h3>Soalan 15 (5 markah)</h3>
+                <p>🔺 adalah ___</p>
+                <div class="options" data-answer="B">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Segiempat</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Segitiga</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Bulatan</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq15')">Semak</button>
+            </div>
+
+            <!-- EQ16 -->
+            <div class="question" id="eq16">
+                <h3>Soalan 16 (5 markah)</h3>
+                <p>Piramid ada ___ permukaan.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq16-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq16', '5')">Semak</button>
+            </div>
+
+            <!-- EQ17 -->
+            <div class="question" id="eq17">
+                <h3>Soalan 17 (5 markah)</h3>
+                <p>🎲 adalah ___</p>
+                <div class="options" data-answer="A">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Kubus</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Kuboid</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Silinder</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq17')">Semak</button>
+            </div>
+
+            <!-- EQ18 -->
+            <div class="question" id="eq18">
+                <h3>Soalan 18 (5 markah)</h3>
+                <p>Bulatan ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq18-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq18', '0')">Semak</button>
+            </div>
+
+            <!-- EQ19 -->
+            <div class="question" id="eq19">
+                <h3>Soalan 19 (5 markah)</h3>
+                <p>🍦 adalah ___</p>
+                <div class="options" data-answer="C">
+                    <div class="option" data-value="A"><span class="option-letter">A</span><span>Silinder</span></div>
+                    <div class="option" data-value="B"><span class="option-letter">B</span><span>Piramid</span></div>
+                    <div class="option" data-value="C"><span class="option-letter">C</span><span>Kon</span></div>
+                </div>
+                <button class="check-btn" onclick="checkAnswer('eq19')">Semak</button>
+            </div>
+
+            <!-- EQ20 -->
+            <div class="question" id="eq20">
+                <h3>Soalan 20 (5 markah)</h3>
+                <p>Segiempat Sama ada ___ bucu.</p>
+                <div class="fill-blank">
+                    <input type="text" id="eq20-answer" style="width:80px;padding:10px;border:2px solid #a855f7;border-radius:8px;font-size:1.2em;">
+                </div>
+                <button class="check-btn" onclick="checkFillBlank('eq20', '4')">Semak</button>
+            </div>
+
+            <div class="score-display" id="exam-score">
+                <h2>Markah Peperiksaan:</h2>
+                <div class="score-number"><span id="exam-current">0</span>/20</div>
+                <div class="progress-bar"><div class="progress-fill" id="exam-progress" style="width: 0%"></div></div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="content">
+            <h2 style="color: #333; margin-bottom: 20px;">📊 Keputusan Anda</h2>
+            <div class="score-display"><h2>Latihan</h2><div class="score-number"><span id="final-practice">0</span>/50</div><div class="star-rating" id="practice-stars"></div><div class="progress-bar"><div class="progress-fill" id="final-practice-progress" style="width: 0%"></div></div></div>
+            <div class="score-display" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"><h2>Peperiksaan</h2><div class="score-number"><span id="final-exam">0</span>/20</div><div class="star-rating" id="exam-stars"></div><div class="progress-bar"><div class="progress-fill" id="final-exam-progress" style="width: 0%"></div></div></div>
+            <div id="overall-message" class="result-message"></div>
+            <button class="check-btn" onclick="resetAll()" style="display:block;margin:20px auto;">🔄 Cuba Lagi</button>
+        </div>
+
+        <footer><p>📚 Matematik Tahun 1 - Bab 4: Bentuk</p><p>Berdasarkan Buku Teks KSSR</p></footer>
+    </div>
+
+    <script>
+        let practiceScore = 0;
+        let examScore = 0;
+        let practiceAnswered = new Set();
+        let examAnswered = new Set();
+
+        function generateNav() {
+            const practiceNav = document.getElementById('practice-nav');
+            const examNav = document.getElementById('exam-nav');
+            for(let i = 1; i <= 50; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i;
+                btn.onclick = () => scrollToQuestion('q' + i);
+                practiceNav.appendChild(btn);
+            }
+            for(let i = 1; i <= 20; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i;
+                btn.onclick = () => scrollToQuestion('eq' + i);
+                examNav.appendChild(btn);
+            }
+        }
+        generateNav();
+
+        function scrollToQuestion(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showContent(contentId) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(contentId).classList.add('active');
+            const btnMap = {'tutorial':0, 'latihan':1, 'exam':2, 'results':3};
+            document.querySelectorAll('.nav-btn')[btnMap[contentId]].classList.add('active');
+            if(contentId === 'results') updateResults();
+        }
+
+        function toggleTips(id) {
+            document.getElementById(id).classList.toggle('show');
+        }
+
+        document.querySelectorAll('.options').forEach(optionsDiv => {
+            optionsDiv.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = this.closest('.question').id;
+                    const optionsContainer = this.closest('.options');
+                    if(optionsContainer.classList.contains('checked')) return;
+                    optionsContainer.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+
+        function checkAnswer(questionId) {
+            const question = document.getElementById(questionId);
+            const options = question.querySelector('.options');
+            const correctAnswer = options.dataset.answer;
+            const selectedOption = options.querySelector('.option.selected');
+            if(!selectedOption) { alert('Sila pilih satu jawapan!'); return; }
+            options.classList.add('checked');
+            options.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if(opt.dataset.value === correctAnswer) opt.classList.add('correct');
+                else if(opt.classList.contains('selected') && opt.dataset.value !== correctAnswer) opt.classList.add('wrong');
+            });
+            const isCorrect = selectedOption.dataset.value === correctAnswer;
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function checkFillBlank(questionId, correctAnswer) {
+            const question = document.getElementById(questionId);
+            const input = document.getElementById(questionId + '-answer');
+            const userAnswer = input.value.trim();
+            if(userAnswer === '') { alert('Sila masukkan jawapan!'); return; }
+            input.disabled = true;
+            const isCorrect = userAnswer === correctAnswer;
+            if(isCorrect) input.classList.add('correct');
+            else { input.classList.add('wrong'); input.value = correctAnswer + ' (Betul)'; }
+            if(questionId.startsWith('eq')) {
+                if(!examAnswered.has(questionId)) { examAnswered.add(questionId); if(isCorrect) examScore++; updateScore('exam'); }
+            } else {
+                if(!practiceAnswered.has(questionId)) { practiceAnswered.add(questionId); if(isCorrect) practiceScore++; updateScore('practice'); }
+            }
+            question.querySelector('.check-btn').disabled = true;
+            updateNavButton(questionId, isCorrect);
+        }
+
+        function updateNavButton(questionId, isCorrect) {
+            let navId, btns;
+            if(questionId.startsWith('eq')) { navId = 'exam-nav'; btns = document.getElementById(navId).querySelectorAll('.question-nav-btn'); btns[parseInt(questionId.replace('eq',''))-1].classList.add(isCorrect ? 'correct' : 'wrong'); }
+            else { navId = 'practice-nav'; btns = document.getElementById(navId).querySelectorAll('.question-nav-btn'); btns[parseInt(questionId.replace('q',''))-1].classList.add(isCorrect ? 'correct' : 'wrong'); }
+        }
+
+        function updateScore(type) {
+            if(type === 'practice') {
+                document.getElementById('practice-current').textContent = practiceScore;
+                document.getElementById('practice-progress').style.width = (practiceScore / 50 * 100) + '%';
+            } else {
+                document.getElementById('exam-current').textContent = examScore;
+                document.getElementById('exam-progress').style.width = (examScore / 20 * 100) + '%';
+            }
+        }
+
+        function updateResults() {
+            document.getElementById('final-practice').textContent = practiceScore;
+            document.getElementById('final-exam').textContent = examScore;
+            document.getElementById('final-practice-progress').style.width = (practiceScore / 50 * 100) + '%';
+            document.getElementById('final-exam-progress').style.width = (examScore / 20 * 100) + '%';
+            document.getElementById('practice-stars').innerHTML = getStars(practiceScore, 50);
+            document.getElementById('exam-stars').innerHTML = getStars(examScore, 20);
+            const totalScore = practiceScore + examScore;
+            const totalMax = 70;
+            const percentage = (totalScore / totalMax * 100);
+            const messageDiv = document.getElementById('overall-message');
+            if(percentage >= 90) { messageDiv.className = 'result-message success'; messageDiv.innerHTML = '🎉 Tahniah! Cemerlang! ❤️'; }
+            else if(percentage >= 70) { messageDiv.className = 'result-message partial'; messageDiv.innerHTML = '👍 Bagus! Cuba lagi! 💪'; }
+            else { messageDiv.className = 'result-message fail'; messageDiv.innerHTML = '📚 Jangan Give Up! Cuba lagi! 🌟'; }
+        }
+
+        function getStars(score, max) {
+            const percentage = score / max;
+            let stars = '';
+            if(percentage >= 0.9) stars = '⭐⭐⭐⭐⭐';
+            else if(percentage >= 0.7) stars = '⭐⭐⭐⭐';
+            else if(percentage >= 0.5) stars = '⭐⭐⭐';
+            else if(percentage >= 0.3) stars = '⭐⭐';
+            else stars = '⭐';
+            return stars;
+        }
+
+        function resetAll() {
+            practiceScore = 0; examScore = 0; practiceAnswered.clear(); examAnswered.clear();
+            document.getElementById('practice-current').textContent = '0';
+            document.getElementById('exam-current').textContent = '0';
+            document.getElementById('practice-progress').style.width = '0%';
+            document.getElementById('exam-progress').style.width = '0%';
+            document.querySelectorAll('.question-nav-btn').forEach(btn => btn.className = 'question-nav-btn');
+            document.querySelectorAll('.question').forEach(q => {
+                const options = q.querySelector('.options');
+                if(options) { options.classList.remove('checked'); options.querySelectorAll('.option').forEach(opt => { opt.classList.remove('selected', 'correct', 'wrong'); opt.style.pointerEvents = 'auto'; }); }
+                q.querySelectorAll('input').forEach(input => { input.value = ''; input.disabled = false; input.classList.remove('correct', 'wrong'); });
+                const btn = q.querySelector('.check-btn');
+                if(btn) btn.disabled = false;
+            });
+            showContent('tutorial');
+        }
+    </script>
+</body>
+</html>
