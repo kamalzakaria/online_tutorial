@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 8: Penyajian Data - Matematik Tahun 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ec407a, #d81b60);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.95;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .nav-btn.tutorial { background: #ec407a; color: white; }
+        .nav-btn.practice { background: #2196f3; color: white; }
+        .nav-btn.exam { background: #ff9800; color: white; }
+        .nav-btn.results { background: #9c27b0; color: white; }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #d81b60;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #ec407a;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #c2185b;
+            margin: 20px 0 15px;
+            font-size: 1.3em;
+        }
+        
+        .tutorial-content {
+            line-height: 1.8;
+        }
+        
+        .tutorial-content p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .example-box {
+            background: #fce4ec;
+            border-left: 5px solid #ec407a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .example-box h4 {
+            color: #d81b60;
+            margin-bottom: 10px;
+        }
+        
+        .chart-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .pictogram {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 15px;
+            height: 200px;
+            padding: 20px;
+            border-bottom: 3px solid #333;
+        }
+        
+        .pictogram-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .pictogram-bars {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 2px;
+        }
+        
+        .pictogram-bar {
+            width: 40px;
+            height: 20px;
+            background:;
+            border-radius #ec407a: 3px;
+        }
+        
+        .pictogram-label {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .pictogram-count {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .tally-chart {
+            display: table;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        
+        .tally-chart th, .tally-chart td {
+            border: 2px solid #ec407a;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .tally-chart th {
+            background: #fce4ec;
+            color: #d81b60;
+        }
+        
+        .tally-marks {
+            font-size: 1.2em;
+            letter-spacing: 3px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 20px;
+            height: 200px;
+            padding: 20px;
+            border-bottom: 3px solid #333;
+        }
+        
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .bar {
+            width: 50px;
+            background: linear-gradient(to top, #ec407a, #f48fb1);
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+        
+        .bar-label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .tip-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .tip-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+        
+        .question-card {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .question-number {
+            background: #ec407a;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #333;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            padding: 12px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .option:hover {
+            border-color: #ec407a;
+            background: #fce4ec;
+        }
+        
+        .option.selected {
+            border-color: #2196f3;
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #c8e6c9;
+        }
+        
+        .option.wrong {
+            border-color: #f44336;
+            background: #ffcdd2;
+        }
+        
+        .show-tip-btn {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        
+        .show-tip-btn:hover {
+            background: #f57c00;
+        }
+        
+        .tip-content {
+            display: none;
+            background: #fff8e1;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .tip-content.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .submit-btn {
+            background: #ec407a;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #d81b60;
+        }
+        
+        .score-display {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ec407a, #d81b60);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 1em;
+        }
+        
+        .result-message {
+            font-size: 1.5em;
+            color: #d81b60;
+            margin: 20px 0;
+        }
+        
+        .back-home {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        
+        .back-home:hover {
+            background: #1976d2;
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ec407a, #f48fb1);
+            transition: width 0.3s ease;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .data-table th, .data-table td {
+            border: 2px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .data-table th {
+            background: #fce4ec;
+            color: #d81b60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Bab 8: Penyajian Data</h1>
+            <div class="subtitle">Matematik Tahun 1 KSSR</div>
+        </header>
+        
+        <nav>
+            <button class="nav-btn tutorial active" onclick="showSection('tutorial')">📖 Tutorial</button>
+            <button class="nav-btn practice" onclick="showSection('practice')">✏️ Latihan (50)</button>
+            <button class="nav-btn exam" onclick="showSection('exam')">📝 Exam (20)</button>
+            <button class="nav-btn results" onclick="showSection('results')">🏆 Keputusan</button>
+        </nav>
+
+        <!-- Tutorial Section -->
+        <section id="tutorial" class="section active">
+            <h2>📖 Tutorial: Penyajian Data</h2>
+            
+            <div class="tutorial-content">
+                <h3>Apa itu Penyajian Data?</h3>
+                <p>Penyajian data adalah cara untuk mengutip dan menunjukkan maklumat dengan cara yang mudah difahami. Kita akan belajar 3 cara:</p>
+                
+                <h3>1. Carta Tally (Tanda)</h3>
+                <div class="example-box">
+                    <h4>📝 Cara Menulis Tanda Tally:</h4>
+                    <p>• 1 = |</p>
+                    <p>• 2 = ||</p>
+                    <p>• 3 = |||</p>
+                    <p>• 4 = ||||</p>
+                    <p>• 5 = |||| (sila memalang)</p>
+                </div>
+                
+                <div class="example-box">
+                    <h4>🍎Contoh:</h4>
+                    <p>Berikut adalah bilangan buah yang dijual di kedai:</p>
+                    <table class="tally-chart">
+                        <tr>
+                            <th>Buah</th>
+                            <th>Tanda</th>
+                            <th>Bilangan</th>
+                        </tr>
+                        <tr>
+                            <td>Epal</td>
+                            <td class="tally-marks">||</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Pisang</td>
+                            <td class="tally-marks">||||</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>Limau</td>
+                            <td class="tally-marks">||||</td>
+                            <td>5</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <h3>2. Pictogram (Gambar)</h3>
+                <div class="example-box">
+                    <h4>🍊Contoh:</h4>
+                    <p>Bilangan haiwan kesayangan:</p>
+                    <div class="chart-container">
+                        <div class="pictogram">
+                            <div class="pictogram-item">
+                                <div class="pictogram-count">3</div>
+                                <div class="pictogram-bars">
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                </div>
+                                <div class="pictogram-label">🐱</div>
+                            </div>
+                            <div class="pictogram-item">
+                                <div class="pictogram-count">5</div>
+                                <div class="pictogram-bars">
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                </div>
+                                <div class="pictogram-label">🐕</div>
+                            </div>
+                            <div class="pictogram-item">
+                                <div class="pictogram-count">2</div>
+                                <div class="pictogram-bars">
+                                    <div class="pictogram-bar"></div>
+                                    <div class="pictogram-bar"></div>
+                                </div>
+                                <div class="pictogram-label">🐰</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>🐱 = 3 ekor kucing</p>
+                    <p>🐕 = 5 ekor anjing</p>
+                    <p>🐰 = 2 ekor arnab</p>
+                </div>
+                
+                <h3>3. Carta Bar</h3>
+                <div class="example-box">
+                    <h4>📊Contoh:</h4>
+                    <p>Bilangan murid yang menggunakan pengangkutan:</p>
+                    <div class="chart-container">
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <div class="bar" style="height: 80px;">4</div>
+                                <div class="bar-label">🚗</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 120px;">6</div>
+                                <div class="bar-label">🚌</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 60px;">3</div>
+                                <div class="bar-label">🚶</div>
+                            </div>
+                            <div class="bar-item">
+                                <div class="bar" style="height: 100px;">5</div>
+                                <div class="bar-label">🚲</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Membaca dan Mentafsir Data</h3>
+                <div class="example-box">
+                    <h4>🔍Contoh Soalan:</h4>
+                    <p><strong>Berdasarkan carta di atas:</strong></p>
+                    <p>1. Pengangkutan yang paling popular = 🚌 (6 orang)</p>
+                    <p>2. Pengantages paling sedikit = 🚶 (3 orang)</p>
+                    <p>3. Beza antara paling banyak dan paling sedikit = 6 - 3 = 3</p>
+                </div>
+                
+                <div class="tip-box">
+                    <h4>💡 Tips Penting!</h4>
+                    <p>• Tanda tally 5 = |||| (sila memalang)</p>
+                    <p>• Setiap gambar = 1-unit data</p>
+                    <p>• Tinggi bar = bilangan</p>
+                    <p>• Sentiasa baca tajuk carta dulu!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice" class="section">
+            <h2>✏️ Latihan (50 Soalan)</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="practiceProgress" style="width: 0%"></div>
+            </div>
+            <div id="practiceQuestions"></div>
+            <button class="submit-btn" onclick="submitPractice()">Hantar Jawapan</button>
+        </section>
+
+        <!-- Exam Section -->
+        <section id="exam" class="section">
+            <h2>📝 Exam (20 Soalan)</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="examProgress" style="width: 0%"></div>
+            </div>
+            <div id="examQuestions"></div>
+            <button class="submit-btn" onclick="submitExam()">Hantar Jawapan</button>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <h2>🏆 Keputusan</h2>
+            <div class="score-display">
+                <div class="score-circle">
+                    <div class="score-number" id="totalScore">0</div>
+                    <div class="score-label">/ 70</div>
+                </div>
+                <div class="result-message" id="resultMessage">Sila buat latihan atau exam untuk melihat keputusan!</div>
+                <div style="margin-top: 30px;">
+                    <h3>Latihan: <span id="practiceScore">-</span></h3>
+                    <h3>Exam: <span id="examScore">-</span></h3>
+                </div>
+                <a href="index.html" class="back-home">🏠 Kembali ke Menu Utama</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const practiceQuestions = [
+            { q: "1. Tanda tally untuk 3 adalah?", options: ["|||", "||", "||||", "||||/"], answer: 0 },
+            { q: "2. Tanda tally untuk 5 adalah?", options: ["|||||", "||||", "||/||", "|||/"], answer: 2 },
+            { q: "3. Tanda tally untuk 7 adalah?", options: ["|||||||", "|||||/", "||||//", "||/|||"], answer: 1 },
+            { q: "4. Tanda tally untuk 9 adalah?", options: ["|||||||||", "|||||////", "||||//|/", "||||||||/"], answer: 1 },
+            { q: "5. ||/|| mewakili nombor?", options: ["4", "5", "6", "10"], answer: 2 },
+            { q: "6. |||| mewakili nombor?", options: ["3", "4", "5", "6"], answer: 1 },
+            { q: "7. ||/ mewakili nombor?", options: ["3", "4", "5", "6"], answer: 0 },
+            { q: "8. Nilai ||/||| adalah?", options: ["7", "8", "9", "10"], answer: 1 },
+            { q: "9. ||||/|| mewakili nombor?", options: ["6", "7", "8", "9"], answer: 2 },
+            { q: "10. Nilai ||||/|||| adalah?", options: ["8", "9", "10", "11"], answer: 2 },
+            { q: "11. Dalam pictogram, jika 🐱 = 3, maka 🐱🐱🐱 = ?", options: ["3", "6", "9", "12"], answer: 2 },
+            { q: "12. Data: 2, 4, 6, 3. Apakah nombor paling besar?", options: ["2", "3", "4", "6"], answer: 3 },
+            { q: "13. Data: 5, 2, 7, 1. Apakah nombor paling kecil?", options: ["1", "2", "5", "7"], answer: 0 },
+            { q: "14. Data: 3, 5, 2, 4. Jumlah semua nombor?", options: ["12", "14", "16", "18"], answer: 1 },
+            { q: "15. Data: 4, 4, 4, 4. Jumlah?", options: ["8", "12", "16", "20"], answer: 2 },
+            { q: "16. Data: 2, 3, 5, 3. Berapa kali 3 muncul?", options: ["1", "2", "3", "4"], answer: 1 },
+            { q: "17. Dalam carta bar, bar yang lebih tinggi bermakna?", options: ["Nilai lebih kecil", "Nilai lebih besar", "Sama sahaja", "Tiada kaitan"], answer: 1 },
+            { q: "18. Dalam pictogram, setiap gambar mewakili?", options: ["2 unit", "3 unit", "1 unit", "5 unit"], answer: 2 },
+            { q: "19. Data: 1, 2, 3, 4, 5. Apakah mod?", options: ["1", "2", "3", "Tiada mod"], answer: 3 },
+            { q: "20. Data: 5, 5, 5, 3. Mod?", options: ["3", "5", "5 dan 3", "Tiada mod"], answer: 1 },
+            { q: "21. Cari perimeter: 4 + 4 + 4 + 4 = ?", options: ["8", "12", "16", "20"], answer: 2 },
+            { q: "22. Data: 10, 20, 30. Jumlah?", options: ["30", "50", "60", "70"], answer: 2 },
+            { q: "23. || + ||| = ? (dalam nombor)", options: ["2", "3", "5", "6"], answer: 2 },
+            { q: "24. ||/ + |||| = ?", options: ["5", "6", "7", "8"], answer: 2 },
+            { q: "25. Dalam carta bar, apa yang diwakili oleh ketinggian bar?", options: ["Warna", "Bilangan", "Nama", "Tarikh"], answer: 1 },
+            { q: "26. Data: 8, 7, 9, 6. Paling besar?", options: ["6", "7", "8", "9"], answer: 3 },
+            { q: "27. Data: 3 + 3 + 3 + 3 = ?", options: ["6", "9", "12", "15"], answer: 2 },
+            { q: "28. Tanda tally yang menunjukkan 4:", options: ["||||", "||/||", "|||/", "||||/"], answer: 0 },
+            { q: "29. 5 + 4 = ? (tally)", options: ["||||/ + ||||", "||||/ + |||/", "|||| + ||||", "|||/ + ||||"], answer: 0 },
+            { q: "30. Data: 1, 1, 2, 2, 3. Mod?", options: ["1", "2", "3", "1 dan 2"], answer: 3 },
+            { q: "31. ||||/|| mewakili nombor?", options: ["6", "7", "8", "9"], answer: 1 },
+            { q: "32. 8 - 3 = ?", options: ["3", "4", "5", "6"], answer: 2 },
+            { q: "33. Data: 12, 15, 18. Beza antara 18 dan 12?", options: ["3", "5", "6", "8"], answer: 2 },
+            { q: "34. ||/||| mewakili?", options: ["7", "8", "9", "10"], answer: 1 },
+            { q: "35. Manakah lebih besar: 8 @ 12?", options: ["8", "12", "Sama", "Tidak tahu"], answer: 1 },
+            { q: "36. Manakah lebih kecil: 5 @ 3?", options: ["5", "3", "Sama", "Tidak tahu"], answer: 1 },
+            { q: "37. 6 + 6 + 6 = ?", options: ["12", "16", "18", "24"], answer: 2 },
+            { q: "38. Data: 4, 5, 5, 6. Mod?", options: ["4", "5", "6", "4 dan 6"], answer: 1 },
+            { q: "39. ||||/ + |||| = ?", options: ["7", "8", "9", "10"], answer: 2 },
+            { q: "40. 10 - 5 - 3 = ?", options: ["1", "2", "3", "4"], answer: 1 },
+            { q: "41. ||/|| + ||/ = ?", options: ["6", "7", "8", "9"], answer: 1 },
+            { q: "42. Data: 20, 30, 40. Jumlah?", options: ["70", "80", "90", "100"], answer: 2 },
+            { q: "43. Cari beza: 15 - 8 = ?", options: ["5", "6", "7", "8"], answer: 2 },
+            { q: "44. |||| + ||||/ = ?", options: ["8", "9", "10", "11"], answer: 1 },
+            { q: "45. Manakah yang paling kecil: 2, 4, 1, 3?", options: ["1", "2", "3", "4"], answer: 0 },
+            { q: "46. 3 × 4 = ?", options: ["7", "10", "12", "16"], answer: 2 },
+            { q: "47. Data: 9, 9, 8, 8, 7. Mod?", options: ["7", "8", "9", "7 dan 8"], answer: 2 },
+            { q: "48. ||||/|||| mewakili?", options: ["8", "9", "10", "11"], answer: 2 },
+            { q: "49. 7 + 5 + 3 = ?", options: ["12", "13", "14", "15"], answer: 3 },
+            { q: "50. 20 ÷ 4 = ?", options: ["4", "5", "6", "8"], answer: 1 }
+        ];
+
+        const examQuestions = [
+            { q: "1. Tanda tally untuk 6 adalah?", options: ["||||||", "|||||/", "||||//", "|||||/"], answer: 1 },
+            { q: "2. ||||/|| mewakili nombor?", options: ["6", "7", "8", "9"], answer: 1 },
+            { q: "3. Data: Epal=5, Pisang=3, Limau=4. Mana paling banyak?", options: ["Epal", "Pisang", "Limau", "Sama"], answer: 0 },
+            { q: "4. Data: 3, 5, 7, 2. Paling kecil?", options: ["2", "3", "5", "7"], answer: 0 },
+            { q: "5. ||/ + |||| = ?", options: ["5", "6", "7", "8"], answer: 2 },
+            { q: "6. Data: 4, 4, 4, 2. Mod?", options: ["2", "4", "4 dan 2", "Tiada mod"], answer: 1 },
+            { q: "7. 8 + 7 + 5 = ?", options: ["15", "18", "20", "22"], answer: 2 },
+            { q: "8. Pictogram: 🐱=2. Berapakah 4 kucing?", options: ["4", "6", "8", "10"], answer: 2 },
+            { q: "9. Data: 10, 20, 30, 40. Jumlah?", options: ["80", "90", "100", "120"], answer: 2 },
+            { q: "10. ||||/ mewakili nombor?", options: ["4", "5", "6", "7"], answer: 1 },
+            { q: "11. Beza antara 15 dan 8?", options: ["5", "6", "7", "8"], answer: 2 },
+            { q: "12. 9 - 4 - 2 = ?", options: ["1", "2", "3", "4"], answer: 2 },
+            { q: "13. Manakah lebih besar: 25 @ 30?", options: ["25", "30", "Sama", "Tidak tahu"], answer: 1 },
+            { q: "14. Data: 6, 6, 5, 5, 4. Mod?", options: ["4", "5", "6", "5 dan 6"], answer: 3 },
+            { q: "15. 5 × 3 = ?", options: ["10", "12", "15", "18"], answer: 2 },
+            { q: "16. ||/||| mewakili?", options: ["7", "8", "9", "10"], answer: 1 },
+            { q: "17. 30 ÷ 5 = ?", options: ["4", "5", "6", "7"], answer: 1 },
+            { q: "18. Data: 12, 15, 18, 21. Paling besar?", options: ["12", "15", "18", "21"], answer: 3 },
+            { q: "19. |||| + ||||/|| = ?", options: ["8", "9", "10", "11"], answer: 2 },
+            { q: "20. 14 + 16 - 10 = ?", options: ["18", "20", "22", "24"], answer: 1 }
+        ];
+
+        let practiceAnswers = {};
+        let examAnswers = {};
+        let practiceScore = 0;
+        let examScore = 0;
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelector(`.nav-btn.${sectionId}`).classList.add('active');
+        }
+
+        function renderQuestions(questions, containerId, answersObj) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="question-number">${index + 1}</div>
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" onclick="selectOption('${containerId}', ${index}, ${i}, this)">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <button class="show-tip-btn" onclick="showTip(${index}, '${containerId}')">💡 Tunjuk Cara</button>
+                    <div class="tip-content" id="tip_${containerId}_${index}">
+                        ${getTip(index, containerId)}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getTip(index, section) {
+            const tips = {
+                practice: [
+                    "TIPS: 1=|, 2=||, 3=|||, 4=||||, 5=||||/ (sila)",
+                    "TIPS: 5 = ||||/ (sila memalang)",
+                    "TIPS: 7 = |||||/ (5 + 2)",
+                    "TIPS: 9 = ||||||/ (5 + 4)",
+                    "TIPS: ||/|| = 5 (5 memalang + 1)",
+                    "TIPS: |||| = 4",
+                    "TIPS: ||/ = 3 (2 + 1)",
+                    "TIPS: ||/||| = 8 (3 + 5)",
+                    "TIPS: ||||/|| = 8 (5 + 3)",
+                    "TIPS: ||||/|||| = 10 (5 + 5)",
+                    "TIPS: 3 + 3 + 3 = 9 (atau 3 × 3)",
+                    "TIPS: 6 adalah nombor terbesar",
+                    "TIPS: 1 adalah nombor terkecil",
+                    "TIPS: 3 + 5 + 2 + 4 = 14",
+                    "TIPS: 4 + 4 + 4 + 4 = 16",
+                    "TIPS: 3 dan 5 masing-masing muncul 2 kali",
+                    "TIPS: Bar lebih tinggi = nilai lebih besar",
+                    "TIPS: Setiap gambar mewakili 1 unit",
+                    "TIPS: Tiada nombor yang ulang",
+                    "TIPS: 5 muncul 3 kali, jadi mod=5",
+                    "TIPS: 4 + 4 + 4 + 4 = 16",
+                    "TIPS: 10 + 20 + 30 = 60",
+                    "TIPS: 2 + 3 = 5",
+                    "TIPS: 3 + 4 = 7",
+                    "TIPS: Ketinggian bar menunjukkan bilangan",
+                    "TIPS: 9 adalah nombor terbesar",
+                    "TIPS: 3 + 3 + 3 + 3 = 12",
+                    "TIPS: |||| = 4",
+                    "TIPS: |||||/ = 5",
+                    "TIPS: |||||/ + |||| = 9",
+                    "TIPS: 1 dan 2 masing-masing 2 kali",
+                    "TIPS: ||||/|| = 7 (5 + 2)",
+                    "TIPS: 8 - 3 = 5",
+                    "TIPS: 18 - 12 = 6",
+                    "TIPS: ||/||| = 8 (3 + 5)",
+                    "TIPS: Bandingkan nombor",
+                    "TIPS: 3 lebih kecil dari 5",
+                    "TIPS: 6 + 6 + 6 = 18",
+                    "TIPS: 5 muncul 2 kali",
+                    "TIPS: ||||/ + |||| = 9 (5 + 4)",
+                    "TIPS: 10 - 5 - 3 = 2",
+                    "TIPS: ||/|| + ||/ = 7 (5 + 2)",
+                    "TIPS: 20 + 30 + 40 = 90",
+                    "TIPS: 15 - 8 = 7",
+                    "TIPS: |||| + ||||/ = 9",
+                    "TIPS: 1 adalah nombor terkecil",
+                    "TIPS: 3 × 4 = 12",
+                    "TIPS: 9 muncul 2 kali",
+                    "TIPS: ||||/|||| = 10",
+                    "TIPS: 7 + 5 + 3 = 15",
+                    "TIPS: 20 ÷ 4 = 5"
+                ],
+                exam: [
+                    "TIPS: 6 = |||||/ (5 + 1)",
+                    "TIPS: ||||/|| = 7 (5 + 2)",
+                    "TIPS: Epal=5 paling banyak",
+                    "TIPS: 2 adalah nombor terkecil",
+                    "TIPS: ||/ + |||| = 7",
+                    "TIPS: 4 muncul 3 kali",
+                    "TIPS: 8 + 7 + 5 = 20",
+                    "TIPS: 2 × 4 = 8",
+                    "TIPS: 10 + 20 + 30 + 40 = 100",
+                    "TIPS: ||||/ = 5 (4 + 1)",
+                    "TIPS: 15 - 8 = 7",
+                    "TIPS: 9 - 4 - 2 = 3",
+                    "TIPS: 30 lebih besar dari 25",
+                    "TIPS: 5 dan 6 masing-masing 2 kali",
+                    "TIPS: 5 × 3 = 15",
+                    "TIPS: ||/||| = 8",
+                    "TIPS: 30 ÷ 5 = 6",
+                    "TIPS: 21 adalah nombor terbesar",
+                    "TIPS: |||| + ||||/|| = 10",
+                    "TIPS: 14 + 16 - 10 = 20"
+                ]
+            };
+            return tips[section][index] || "TIPS: Baca soalan dengan teliti!";
+        }
+
+        function selectOption(section, questionIndex, optionIndex, element) {
+            const container = section === 'practiceQuestions' ? 'practice' : 'exam';
+            const answersObj = section === 'practiceQuestions' ? practiceAnswers : examAnswers;
+            
+            const options = element.parentElement.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            answersObj[questionIndex] = optionIndex;
+            
+            updateProgress(section);
+        }
+
+        function updateProgress(section) {
+            const questions = section === 'practiceQuestions' ? practiceQuestions : examQuestions;
+            const answersObj = section === 'practiceQuestions' ? practiceAnswers : examAnswers;
+            const progressBar = document.getElementById(section === 'practiceQuestions' ? 'practiceProgress' : 'examProgress');
+            
+            const answered = Object.keys(answersObj).length;
+            const percentage = (answered / questions.length) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+
+        function submitPractice() {
+            practiceScore = 0;
+            practiceQuestions.forEach((q, index) => {
+                if (practiceAnswers[index] === q.answer) {
+                    practiceScore++;
+                }
+            });
+            updateResults();
+            alert(`Latihan completed! Your score: ${practiceScore}/50`);
+        }
+
+        function submitExam() {
+            examScore = 0;
+            examQuestions.forEach((q, index) => {
+                if (examAnswers[index] === q.answer) {
+                    examScore++;
+                }
+            });
+            updateResults();
+            alert(`Exam completed! Your score: ${examScore}/20`);
+        }
+
+        function updateResults() {
+            const total = practiceScore + examScore;
+            document.getElementById('totalScore').textContent = total;
+            document.getElementById('practiceScore').textContent = practiceScore + '/50';
+            document.getElementById('examScore').textContent = examScore + '/20';
+            
+            let message = '';
+            if (total >= 60) {
+                message = '🌟 Excellent! Anda sangat baik!';
+            } else if (total >= 40) {
+                message = '👍 Bagus! Teruskan belajar!';
+            } else {
+                message = '💪 Cuba lagi! Anda boleh buat ini!';
+            }
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function showTip(index, section) {
+            const tipElement = document.getElementById(`tip_${section}_${index}`);
+            tipElement.classList.toggle('visible');
+        }
+
+        // Initialize
+        renderQuestions(practiceQuestions, 'practiceQuestions', practiceAnswers);
+        renderQuestions(examQuestions, 'examQuestions', examAnswers);
+    </script>
+</body>
+</html>

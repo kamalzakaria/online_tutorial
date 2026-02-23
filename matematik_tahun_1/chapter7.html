@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 7: Pecahan - Matematik Tahun 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 10px;
+            opacity: 0.95;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .nav-btn.tutorial { background: #4caf50; color: white; }
+        .nav-btn.practice { background: #2196f3; color: white; }
+        .nav-btn.exam { background: #ff9800; color: white; }
+        .nav-btn.results { background: #9c27b0; color: white; }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #4caf50;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #388e3c;
+            margin: 20px 0 15px;
+            font-size: 1.3em;
+        }
+        
+        .tutorial-content {
+            line-height: 1.8;
+        }
+        
+        .tutorial-content p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .example-box {
+            background: #f1f8e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .example-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .fraction-visual {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .fraction {
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .fraction-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #c8e6c9;
+            margin: 0 auto 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fraction-circle.half .shaded {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: #4caf50;
+            left: 0;
+        }
+        
+        .fraction-circle.quarter .shaded {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: #4caf50;
+            top: 0;
+            left: 0;
+        }
+        
+        .fraction-circle.third .shaded {
+            position: absolute;
+            width: 33.33%;
+            height: 100%;
+            background: #4caf50;
+            left: 0;
+        }
+        
+        .fraction-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .fraction-name {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .tip-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .tip-box h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+        
+        .question-card {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .question-number {
+            background: #4caf50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #333;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            padding: 12px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .option:hover {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+        
+        .option.selected {
+            border-color: #2196f3;
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: #4caf50;
+            background: #c8e6c9;
+        }
+        
+        .option.wrong {
+            border-color: #f44336;
+            background: #ffcdd2;
+        }
+        
+        .show-tip-btn {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        
+        .show-tip-btn:hover {
+            background: #f57c00;
+        }
+        
+        .tip-content {
+            display: none;
+            background: #fff8e1;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .tip-content.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .submit-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px 0;
+            display: block;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #388e3c;
+        }
+        
+        .score-display {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 1em;
+        }
+        
+        .result-message {
+            font-size: 1.5em;
+            color: #2e7d32;
+            margin: 20px 0;
+        }
+        
+        .back-home {
+            display: inline-block;
+            background: #2196f3;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        
+        .back-home:hover {
+            background: #1976d2;
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            height: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transition: width 0.3s ease;
+        }
+
+        .fraction-input {
+            font-size: 1.3em;
+            padding: 8px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 80px;
+            text-align: center;
+        }
+
+        .answer-input {
+            font-size: 1.2em;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 150px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧩 Bab 7: Pecahan</h1>
+            <div class="subtitle">Matematik Tahun 1 KSSR</div>
+        </header>
+        
+        <nav>
+            <button class="nav-btn tutorial active" onclick="showSection('tutorial')">📖 Tutorial</button>
+            <button class="nav-btn practice" onclick="showSection('practice')">✏️ Latihan (50)</button>
+            <button class="nav-btn exam" onclick="showSection('exam')">📝 Exam (20)</button>
+            <button class="nav-btn results" onclick="showSection('results')">🏆 Keputusan</button>
+        </nav>
+
+        <!-- Tutorial Section -->
+        <section id="tutorial" class="section active">
+            <h2>📖 Tutorial: Pecahan</h2>
+            
+            <div class="tutorial-content">
+                <h3>Apa itu Pecahan?</h3>
+                <p>Pecahan adalah cara untuk menunjukkan sebahagian daripada keseluruhan. Pecahan terdiri daripada <strong>Pengangka</strong> (nombor di atas) dan <strong>Penyebut</strong> (nombor di bawah).</p>
+                
+                <div class="fraction-visual">
+                    <div class="fraction">
+                        <div class="fraction-circle half"><div class="shaded"></div></div>
+                        <div class="fraction-number">1/2</div>
+                        <div class="fraction-name">Setengah</div>
+                    </div>
+                    <div class="fraction">
+                        <div class="fraction-circle quarter"><div class="shaded"></div></div>
+                        <div class="fraction-number">1/4</div>
+                        <div class="fraction-name">Suku</div>
+                    </div>
+                    <div class="fraction">
+                        <div class="fraction-circle third"><div class="shaded"></div></div>
+                        <div class="fraction-number">1/3</div>
+                        <div class="fraction-name">Per tiga</div>
+                    </div>
+                </div>
+                
+                <h3>1. Setengah (1/2)</h3>
+                <div class="example-box">
+                    <h4>🍕Contoh:</h4>
+                    <p>Ali ada 2 biji epal. Dia makan 1 biji epal. Berapa bahagian epal yang dia makan?</p>
+                    <p><strong>Jawapan:</strong> 1/2 (setengah) daripada epal</p>
+                </div>
+                
+                <h3>2. Suku (1/4)</h3>
+                <div class="example-box">
+                    <h4>🍕Contoh:</h4>
+                    <p>Satah pizza dipotong kepada 4 bahagian yang sama. kamu makan 1 bahagian. Berapa pecahan pizza yang kamu makan?</p>
+                    <p><strong>Jawapan:</strong> 1/4 (suku) daripada pizza</p>
+                </div>
+                
+                <h3>3. Per Tiga (1/3)</h3>
+                <div class="example-box">
+                    <h4>🍕Contoh:</h4>
+                    <p>Sebuah kek dipotong kepada 3 bahagian yang sama. Ayah mengambil 1 bahagian. Berapa pecahan kek yang diambil oleh ayah?</p>
+                    <p><strong>Jawapan:</strong> 1/3 (per tiga) daripada kek</p>
+                </div>
+                
+                <h3>Membandingkan Pecahan</h3>
+                <div class="example-box">
+                    <h4>💡 Ingat!</h4>
+                    <p>• 1/2 > 1/4 (setengah lebih besar daripada suku)</p>
+                    <p>• 1/3 > 1/4 (per tiga lebih besar daripada suku)</p>
+                    <p>• 1/2 > 1/3 (setengah lebih besar daripada per tiga)</p>
+                </div>
+                
+                <h3>Pecahan Same (Serupa)</h3>
+                <div class="example-box">
+                    <h4>🍕Contoh:</h4>
+                    <p>2/4 = 1/2 (dua per empat sama dengan satu per dua)</p>
+                    <p>2/2 = 1 (dua per dua sama dengan satu keseluruhan)</p>
+                </div>
+                
+                <div class="tip-box">
+                    <h4>💡 Tips Penting!</h4>
+                    <p>• Pengangka menunjukkan bilangan bahagian yang diambil</p>
+                    <p>• Penyebut menunjukkan jumlah bilangan bahagian yang sama</p>
+                    <p>• Jika pengangka = penyebut, nilainya = 1</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice" class="section">
+            <h2>✏️ Latihan (50 Soalan)</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="practiceProgress" style="width: 0%"></div>
+            </div>
+            <div id="practiceQuestions"></div>
+            <button class="submit-btn" onclick="submitPractice()">Hantar Jawapan</button>
+        </section>
+
+        <!-- Exam Section -->
+        <section id="exam" class="section">
+            <h2>📝 Exam (20 Soalan)</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="examProgress" style="width: 0%"></div>
+            </div>
+            <div id="examQuestions"></div>
+            <button class="submit-btn" onclick="submitExam()">Hantar Jawapan</button>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="section">
+            <h2>🏆 Keputusan</h2>
+            <div class="score-display">
+                <div class="score-circle">
+                    <div class="score-number" id="totalScore">0</div>
+                    <div class="score-label">/ 70</div>
+                </div>
+                <div class="result-message" id="resultMessage">Sila buat latihan atau exam untuk melihat keputusan!</div>
+                <div style="margin-top: 30px;">
+                    <h3>Latihan: <span id="practiceScore">-</span></h3>
+                    <h3>Exam: <span id="examScore">-</span></h3>
+                </div>
+                <a href="index.html" class="back-home">🏠 Kembali ke Menu Utama</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const practiceQuestions = [
+            { q: "1. Bundarkan kepada pictures: Jika sebiji pizza dipotong kepada 2 bahagian yang sama, setiap bahagian adalah ___ pizza.", options: ["1/2", "1/4", "1/3", "1"], answer: 0 },
+            { q: "2. Bundarkan kepada pictures: Jika sebiji kek dipotong kepada 4 bahagian yang sama, setiap bahagian adalah ___ kek.", options: ["1/2", "1/4", "1/3", "1"], answer: 1 },
+            { q: "3. Bundarkan kepada pictures: Jika sebiji kek dipotong kepada 3 bahagian yang sama, setiap bahagian adalah ___ kek.", options: ["1/2", "1/4", "1/3", "1"], answer: 2 },
+            { q: "4. 1/2 + ___ = 1 (setengah tambah apa sama dengan 1?)", options: ["1/2", "1/4", "1/3", "2"], answer: 0 },
+            { q: "5. 1/4 + ___ = 1/2 (suku tambah apa sama dengan setengah?)", options: ["1/4", "1/2", "1/8", "2"], answer: 0 },
+            { q: "6. 2/4 = ___ (dua per empat sama dengan?)", options: ["1/2", "1/4", "1/3", "2/2"], answer: 0 },
+            { q: "7. 2/2 = ___ (dua per dua sama dengan?)", options: ["1", "1/2", "2", "1/4"], answer: 0 },
+            { q: "8. 3/4 > ___ ? (tanda kurang atau lebih?)", options: ["1/2", "1/4", "1/3", "1"], answer: 1 },
+            { q: "9. 1/2 > ___ ? (setengah lebih besar dari?)", options: ["1/2", "1/4", "1/3", "1"], answer: 1 },
+            { q: "10. 1/3 > ___ ? (per tiga lebih besar dari?)", options: ["1/2", "1/4", "1/3", "1"], answer: 1 },
+            { q: "11. Mana lebih besar: 1/2 @ 1/4?", options: ["1/2", "1/4", ["Sama"], "Tidak tahu"], answer: 0 },
+            { q: "12. Mana lebih besar: 1/3 @ 1/4?", options: ["1/3", "1/4", ["Sama"], "Tidak tahu"], answer: 0 },
+            { q: "13. Mana lebih kecil: 1/2 @ 1/3?", options: ["1/2", "1/3", ["Sama"], "Tidak tahu"], answer: 1 },
+            { q: "14. 1 - 1/2 = ___", options: ["1/2", "1/4", "1/3", "0"], answer: 0 },
+            { q: "15. 1 - 1/4 = ___", options: ["1/2", "3/4", "1/4", "0"], answer: 1 },
+            { q: "16. 1 - 1/3 = ___", options: ["1/2", "1/4", "2/3", "0"], answer: 2 },
+            { q: "17. Setengah daripada 8 = ___", options: ["2", "4", "6", "8"], answer: 1 },
+            { q: "18. Suku daripada 8 = ___", options: ["2", "4", "6", "8"], answer: 0 },
+            { q: "19. Per tiga daripada 9 = ___", options: ["3", "6", "9", "1"], answer: 0 },
+            { q: "20. Setengah daripada 10 = ___", options: ["2", "4", "5", "10"], answer: 2 },
+            { q: "21. Suku daripada 12 = ___", options: ["3", "4", "6", "12"], answer: 0 },
+            { q: "22. Per tiga daripada 6 = ___", options: ["2", "3", "6", "1"], answer: 0 },
+            { q: "23. 1/4 + 1/4 = ___", options: ["1/2", "1/4", "2/4", "1"], answer: 2 },
+            { q: "24. 1/3 + 1/3 = ___", options: ["1/2", "2/3", "1/3", "1"], answer: 1 },
+            { q: "25. 1/2 + 1/2 = ___", options: ["1/2", "1/4", "1", "2"], answer: 2 },
+            { q: "26. 4/4 = ___", options: ["1", "1/4", "2", "4"], answer: 0 },
+            { q: "27. 3/3 = ___", options: ["1", "1/3", "3", "0"], answer: 0 },
+            { q: "28. Apakah pecahan yang diwarnakan? ⬜⬜⬜⬜ ■□□□", options: ["1/4", "1/2", "1/3", "3/4"], answer: 0 },
+            { q: "29. Apakah pecahan yang diwarnakan? ■■■□ □□□□", options: ["1/4", "1/2", "3/4", "1"], answer: 2 },
+            { q: "30. Apakah pecahan yang diwarnakan? ■■■□□□□", options: ["1/3", "2/3", "1/6", "3/6"], answer: 1 },
+            { q: "31. Bundarkan: ■■■□ - ■□ = ? ⬜⬜□", options: ["1/4", "1/2", "1/3", "2/4"], answer: 0 },
+            { q: "32. 2/4 + 1/4 = ___", options: ["3/4", "1/4", "1/2", "1"], answer: 0 },
+            { q: "33. 1/3 + 2/3 = ___", options: ["1", "2/3", "3/3", "1/3"], answer: 0 },
+            { q: "34. Per tiga + Per tiga + Per tiga = ___", options: ["1/3", "2/3", "1", "3/3"], answer: 2 },
+            { q: "35. 1/4 + 1/4 + 1/4 + 1/4 = ___", options: ["1/4", "1/2", "1", "4/4"], answer: 2 },
+            { q: "36. Separuh dari 4 biji epal = ___ biji epal", options: ["1", "2", "3", "4"], answer: 1 },
+            { q: "37. Suku dari 16 = ___", options: ["2", "4", "8", "16"], answer: 1 },
+            { q: "38. Per tiga dari 12 = ___", options: ["3", "4", "6", "12"], answer: 1 },
+            { q: "39. 1/2 = 2/___", options: ["2", "3", "4", "6"], answer: 2 },
+            { q: "40. 1/4 = 2/___", options: ["4", "6", "8", "2"], answer: 2 },
+            { q: "41. 2/4 + 1/4 + 1/4 = ___", options: ["1/4", "1/2", ["1", "4/4"], "3/4"], answer: 2 },
+            { q: "42. Bundarkan: ■■■ + □ = ? ⬜⬜⬜□", options: ["1", "1/2", "3/4", "1/4"], answer: 0 },
+            { q: "43. Yang manakah sama dengan 1/2?", options: ["2/4", "1/4", "3/4", "4/4"], answer: 0 },
+            { q: "44. Yang manakah sama dengan 2/4?", options: ["1/2", "1/4", "3/4", "1"], answer: 0 },
+            { q: "45. 1 - 2/4 = ___", options: ["1/4", "1/2", "2/4", "0"], answer: 1 },
+            { q: "46. 1 - 2/3 = ___", options: ["1/3", "2/3", "1", "0"], answer: 0 },
+            { q: "47. Suku dari 20 = ___", options: ["4", "5", "10", "20"], answer: 1 },
+            { q: "48. Setengah dari 14 = ___", options: ["6", "7", "8", "14"], answer: 1 },
+            { q: "49. 1/4 + 2/4 = ___", options: ["3/4", "1/4", "1/2", "1"], answer: 0 },
+            { q: "50. 1/3 + 1/3 + 1/3 = ___", options: ["1/3", "2/3", "1", "3/3"], answer: 2 }
+        ];
+
+        const examQuestions = [
+            { q: "1. Sebuah pizza dipotong kepada 4 bahagian yang sama. Amy makan 1 bahagian. Pecahan pizza yang Amy makan adalah ___", options: ["1/4", "1/2", "1/3", "3/4"], answer: 0 },
+            { q: "2. Bundarkan: ■■■□ - ■□ = ? ⬜⬜□", options: ["1/4", "1/2", "1/3", "2/4"], answer: 0 },
+            { q: "3. 2/4 + 1/4 = ___", options: ["3/4", "1/4", "1/2", "1"], answer: 0 },
+            { q: "4. 1 - 1/2 = ___", options: ["1/2", "1/4", "1/3", "0"], answer: 0 },
+            { q: "5. Setengah daripada 10 = ___", options: ["2", "4", "5", "10"], answer: 2 },
+            { q: "6. Suku daripada 8 = ___", options: ["2", "4", "6", "8"], answer: 0 },
+            { q: "7. 2/4 = ___", options: ["1/2", "1/4", "1/3", "2/2"], answer: 0 },
+            { q: "8. 1/4 + 1/4 = ___", options: ["1/2", "1/4", "2/4", "1"], answer: 2 },
+            { q: "9. Yang manakah lebih besar? 1/2 @ 1/3", options: ["1/2", "1/3", ["Sama"], "Tidak tahu"], answer: 0 },
+            { q: "10. 1 - 1/4 = ___", options: ["1/2", "3/4", "1/4", "0"], answer: 1 },
+            { q: "11. Per tiga daripada 9 = ___", options: ["3", "6", "9", "1"], answer: 0 },
+            { q: "12. 1/3 + 2/3 = ___", options: ["1", "2/3", "3/3", "1/3"], answer: 0 },
+            { q: "13. Bundarkan: ■■■ + □ = ? ⬜⬜⬜□", options: ["1", "1/2", "3/4", "1/4"], answer: 0 },
+            { q: "14. Pecahan yang diwarnakan: ■■■□□□□", options: ["1/3", "2/3", "1/6", "3/6"], answer: 1 },
+            { q: "15. 4/4 = ___", options: ["1", "1/4", "2", "4"], answer: 0 },
+            { q: "16. Setengah dari 4 biji epal = ___ biji epal", options: ["1", "2", "3", "4"], answer: 1 },
+            { q: "17. 1 - 2/3 = ___", options: ["1/3", "2/3", "1", "0"], answer: 0 },
+            { q: "18. Yang manakah sama dengan 1/2?", options: ["2/4", "1/4", "3/4", "4/4"], answer: 0 },
+            { q: "19. 1/4 + 1/4 + 1/4 + 1/4 = ___", options: ["1/4", "1/2", "1", "4/4"], answer: 2 },
+            { q: "20. Suku dari 20 = ___", options: ["4", "5", "10", "20"], answer: 1 }
+        ];
+
+        let practiceAnswers = {};
+        let examAnswers = {};
+        let practiceScore = 0;
+        let examScore = 0;
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelector(`.nav-btn.${sectionId}`).classList.add('active');
+        }
+
+        function renderQuestions(questions, containerId, answersObj) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="question-number">${index + 1}</div>
+                    <div class="question-text">${q.q}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" onclick="selectOption('${containerId}', ${index}, ${i}, this)">${opt}</div>
+                        `).join('')}
+                    </div>
+                    <button class="show-tip-btn" onclick="showTip(${index}, '${containerId}')">💡 Tunjuk Cara</button>
+                    <div class="tip-content" id="tip_${containerId}_${index}">
+                        ${getTip(index, containerId)}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getTip(index, section) {
+            const tips = {
+                practice: [
+                    "TIPS: Potong pizza kepada 2 bahagian yang sama = 1/2",
+                    "TIPS: Potong kek kepada 4 bahagian yang sama = 1/4",
+                    "TIPS: Potong kek kepada 3 bahagian yang sama = 1/3",
+                    "TIPS: Setengah + Setengah = 1 keseluruhan",
+                    "TIPS: Suku + Suku = Setengah (1/4 + 1/4 = 1/2)",
+                    "TIPS: 2/4 = 1/2 (bahagi kedua nombor dengan 2)",
+                    "TIPS: 2/2 = 1 (2 bahagian daripada 2 bahagian = 1 keseluruhan)",
+                    "TIPS: 3/4 > 1/4 (semakin besar penyebut, semakin kecil nilainya)",
+                    "TIPS: 1/2 > 1/4 (setengah lebih besar daripada suku)",
+                    "TIPS: 1/3 > 1/4 (per tiga lebih besar daripada suku)",
+                    "TIPS: Bandingkan penyebut - lebih kecil = lebih besar",
+                    "TIPS: Bandingkan - 1/3 > 1/4",
+                    "TIPS: Bandingkan - 1/2 > 1/3",
+                    "TIPS: 1 - 1/2 = 1/2",
+                    "TIPS: 1 - 1/4 = 3/4",
+                    "TIPS: 1 - 1/3 = 2/3",
+                    "TIPS: Setengah daripada 8 = 8 ÷ 2 = 4",
+                    "TIPS: Suku daripada 8 = 8 ÷ 4 = 2",
+                    "TIPS: Per tiga daripada 9 = 9 ÷ 3 = 3",
+                    "TIPS: Setengah daripada 10 = 10 ÷ 2 = 5",
+                    "TIPS: Suku daripada 12 = 12 ÷ 4 = 3",
+                    "TIPS: Per tiga daripada 6 = 6 ÷ 3 = 2",
+                    "TIPS: 1/4 + 1/4 = 2/4",
+                    "TIPS: 1/3 + 1/3 = 2/3",
+                    "TIPS: 1/2 + 1/2 = 1",
+                    "TIPS: 4/4 = 1 (keseluruhan)",
+                    "TIPS: 3/3 = 1 (keseluruhan)",
+                    "TIPS: 1 daripada 4 bahagian = 1/4",
+                    "TIPS: 3 daripada 4 bahagian = 3/4",
+                    "TIPS: 2 daripada 3 bahagian = 2/3",
+                    "TIPS: 3 - 1 = 2, 2/4 - 1/4 = 1/4",
+                    "TIPS: 2/4 + 1/4 = 3/4",
+                    "TIPS: 1/3 + 2/3 = 3/3 = 1",
+                    "TIPS: 1/3 + 1/3 + 1/3 = 3/3 = 1",
+                    "TIPS: 1/4 + 1/4 + 1/4 + 1/4 = 4/4 = 1",
+                    "TIPS: Separuh = bahagi 2, 4 ÷ 2 = 2",
+                    "TIPS: Suku = bahagi 4, 16 ÷ 4 = 4",
+                    "TIPS: Per tiga = bahagi 3, 12 ÷ 3 = 4",
+                    "TIPS: 1/2 = 2/4 (darab 2)",
+                    "TIPS: 1/4 = 2/8 (darab 2)",
+                    "TIPS: 2/4 + 1/4 + 1/4 = 4/4 = 1",
+                    "TIPS: 3/4 + 1/4 = 4/4 = 1",
+                    "TIPS: 2/4 = 1/2 (sama)",
+                    "TIPS: 2/4 = 1/2 (sama)",
+                    "TIPS: 1 - 2/4 = 2/4 = 1/2",
+                    "TIPS: 1 - 2/3 = 1/3",
+                    "TIPS: Suku = bahagi 4, 20 ÷ 4 = 5",
+                    "TIPS: Setengah = bahagi 2, 14 ÷ 2 = 7",
+                    "TIPS: 1/4 + 2/4 = 3/4",
+                    "TIPS: 1/3 + 1/3 + 1/3 = 3/3 = 1"
+                ],
+                exam: [
+                    "TIPS: 4 bahagian, ambil 1 = 1/4",
+                    "TIPS: 4 - 1 = 3, 3/4 - 1/4 = 2/4 = 1/2",
+                    "TIPS: 2/4 + 1/4 = 3/4",
+                    "TIPS: 1 - 1/2 = 1/2",
+                    "TIPS: 10 ÷ 2 = 5",
+                    "TIPS: 8 ÷ 4 = 2",
+                    "TIPS: 2/4 = 1/2 (bahagi 2)",
+                    "TIPS: 1/4 + 1/4 = 2/4",
+                    "TIPS: 1/2 > 1/3 (setengah lebih besar)",
+                    "TIPS: 1 - 1/4 = 3/4",
+                    "TIPS: 9 ÷ 3 = 3",
+                    "TIPS: 1/3 + 2/3 = 3/3 = 1",
+                    "TIPS: 3/4 + 1/4 = 4/4 = 1",
+                    "TIPS: 2/3 (2 bahagian daripada 3)",
+                    "TIPS: 4/4 = 1",
+                    "TIPS: 4 ÷ 2 = 2",
+                    "TIPS: 1 - 2/3 = 1/3",
+                    "TIPS: 2/4 = 1/2",
+                    "TIPS: 4/4 = 1",
+                    "TIPS: 20 ÷ 4 = 5"
+                ]
+            };
+            return tips[section][index] || "TIPS: Baca soalan dengan teliti!";
+        }
+
+        function selectOption(section, questionIndex, optionIndex, element) {
+            const container = section === 'practiceQuestions' ? 'practice' : 'exam';
+            const answersObj = section === 'practiceQuestions' ? practiceAnswers : examAnswers;
+            
+            const options = element.parentElement.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            answersObj[questionIndex] = optionIndex;
+            
+            updateProgress(section);
+        }
+
+        function updateProgress(section) {
+            const questions = section === 'practiceQuestions' ? practiceQuestions : examQuestions;
+            const answersObj = section === 'practiceQuestions' ? practiceAnswers : examAnswers;
+            const progressBar = document.getElementById(section === 'practiceQuestions' ? 'practiceProgress' : 'examProgress');
+            
+            const answered = Object.keys(answersObj).length;
+            const percentage = (answered / questions.length) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+
+        function submitPractice() {
+            practiceScore = 0;
+            practiceQuestions.forEach((q, index) => {
+                if (practiceAnswers[index] === q.answer) {
+                    practiceScore++;
+                }
+            });
+            updateResults();
+            alert(`Latihan completed! Your score: ${practiceScore}/50`);
+        }
+
+        function submitExam() {
+            examScore = 0;
+            examQuestions.forEach((q, index) => {
+                if (examAnswers[index] === q.answer) {
+                    examScore++;
+                }
+            });
+            updateResults();
+            alert(`Exam completed! Your score: ${examScore}/20`);
+        }
+
+        function updateResults() {
+            const total = practiceScore + examScore;
+            document.getElementById('totalScore').textContent = total;
+            document.getElementById('practiceScore').textContent = practiceScore + '/50';
+            document.getElementById('examScore').textContent = examScore + '/20';
+            
+            let message = '';
+            if (total >= 60) {
+                message = '🌟 Excellent! Anda sangat baik!';
+            } else if (total >= 40) {
+                message = '👍 Bagus! Teruskan belajar!';
+            } else {
+                message = '💪 Cuba lagi! Anda boleh buat ini!';
+            }
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        function showTip(index, section) {
+            const tipElement = document.getElementById(`tip_${section}_${index}`);
+            tipElement.classList.toggle('visible');
+        }
+
+        // Initialize
+        renderQuestions(practiceQuestions, 'practiceQuestions', practiceAnswers);
+        renderQuestions(examQuestions, 'examQuestions', examAnswers);
+    </script>
+</body>
+</html>
