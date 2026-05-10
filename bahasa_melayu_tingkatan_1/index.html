@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan Harian Bahasa Melayu — Tingkatan 1</title>
+<style>
+  :root{
+    --bg:#f4f1e8; --card:#ffffff; --ink:#2b2a26; --muted:#6f6a5e;
+    --line:#e3ddcd; --accent:#1f6f54; --accent-soft:#e4f1ec;
+    --ok:#1f7a3f; --ok-bg:#e6f4ea; --bad:#b3261e; --bad-bg:#fbe9e8;
+    --gold:#b8860b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;}
+  .wrap{max-width:780px;margin:0 auto;padding:18px 16px 60px;}
+  header.top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;
+    border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:18px;}
+  header.top h1{font-size:1.25rem;margin:0;flex:1 1 auto;}
+  .badge{background:var(--accent);color:#fff;border-radius:999px;padding:4px 12px;
+    font-size:.8rem;font-weight:600;white-space:nowrap;}
+  .badge.streak{background:var(--gold);}
+  .daynav{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);}
+  .daynav button{border:1px solid var(--line);background:var(--card);border-radius:8px;
+    padding:3px 9px;cursor:pointer;font-size:.85rem;}
+  .daynav button:hover{background:var(--accent-soft);}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 16px;margin-bottom:20px;box-shadow:0 1px 2px rgba(0,0,0,.03);}
+  .card h2{margin:0 0 4px;font-size:1.05rem;display:flex;align-items:center;gap:8px;}
+  .card h2 .pill{font-size:.7rem;font-weight:600;background:var(--accent-soft);
+    color:var(--accent);border-radius:6px;padding:2px 7px;}
+  .sub{color:var(--muted);font-size:.9rem;margin:0 0 14px;}
+
+  /* exam summary */
+  .exam-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px;}
+  .exam-cell{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .exam-cell b{display:block;font-size:1.3rem;}
+  .exam-cell span{font-size:.8rem;color:var(--muted);}
+  .focus-tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;}
+  .focus-tags em{font-style:normal;background:var(--bad-bg);color:var(--bad);
+    border-radius:6px;padding:3px 9px;font-size:.78rem;font-weight:600;}
+
+  /* objective */
+  .q{border-top:1px solid var(--line);padding:16px 0 4px;}
+  .q:first-of-type{border-top:none;}
+  .q .qhead{display:flex;gap:8px;align-items:baseline;}
+  .q .qnum{font-weight:700;color:var(--accent);min-width:24px;}
+  .q .qcat{font-size:.7rem;color:var(--muted);border:1px solid var(--line);
+    border-radius:5px;padding:1px 6px;margin-left:auto;white-space:nowrap;}
+  .q .qtext{font-weight:600;margin:6px 0 10px;flex:1 1 100%;}
+  .opts{display:flex;flex-direction:column;gap:7px;}
+  .opt{display:flex;gap:9px;text-align:left;padding:9px 12px;border:1px solid var(--line);
+    border-radius:9px;background:var(--card);cursor:pointer;font:inherit;color:inherit;
+    transition:background .12s,border-color .12s;}
+  .opt:hover:not(:disabled){background:var(--accent-soft);}
+  .opt:disabled{cursor:default;}
+  .opt .lbl{font-weight:700;color:var(--muted);}
+  .opt.correct{background:var(--ok-bg);border-color:var(--ok);}
+  .opt.correct .lbl{color:var(--ok);}
+  .opt.wrong{background:var(--bad-bg);border-color:var(--bad);}
+  .opt.wrong .lbl{color:var(--bad);}
+  .feedback{margin:10px 0 2px;font-size:.92rem;padding:10px 12px;border-radius:9px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--ok-bg);color:#14532d;}
+  .feedback.bad{background:var(--bad-bg);color:#7f1d1d;}
+  .feedback b{font-weight:700;}
+
+  .scorebar{position:sticky;bottom:0;background:var(--accent);color:#fff;border-radius:12px;
+    padding:10px 16px;display:flex;justify-content:space-between;align-items:center;
+    font-weight:600;margin-top:8px;}
+  .scorebar small{font-weight:400;opacity:.85;}
+
+  /* essay */
+  .essay-prompt{background:var(--accent-soft);border-left:4px solid var(--accent);
+    border-radius:8px;padding:12px 14px;margin-bottom:12px;}
+  .essay-prompt .jenis{font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.03em;}
+  .essay-prompt .tajuk{font-weight:600;margin:4px 0 6px;}
+  .essay-prompt .bahan{font-size:.88rem;color:var(--muted);}
+  details{border:1px solid var(--line);border-radius:9px;padding:0 14px;margin-bottom:12px;background:var(--bg);}
+  details>summary{cursor:pointer;font-weight:600;padding:11px 0;list-style:none;}
+  details>summary::-webkit-details-marker{display:none;}
+  details>summary::before{content:"▸ ";color:var(--accent);}
+  details[open]>summary::before{content:"▾ ";}
+  details ul,details ol{margin:0 0 12px;padding-left:20px;}
+  details li{margin-bottom:4px;font-size:.92rem;}
+  .model-box{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:9px;
+    background:#fffdf6;padding:12px 16px 4px;margin:0 0 16px;}
+  .model-head{font-weight:700;color:var(--gold);font-size:.95rem;margin-bottom:6px;}
+  .model-essay p{margin:0 0 9px;font-size:.95rem;}
+  .own-head{font-weight:700;color:var(--accent);margin:0 0 8px;}
+  textarea{width:100%;min-height:230px;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;font:inherit;line-height:1.6;resize:vertical;background:#fffdf7;}
+  .essay-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px;font-size:.88rem;color:var(--muted);}
+  .essay-tools button{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit;}
+  .essay-tools button:hover{background:var(--accent-soft);}
+  .saved-note{color:var(--ok);font-weight:600;}
+
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:10px;}
+  footer a{color:var(--accent);}
+  .reset-link{background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;}
+  @media(max-width:520px){header.top h1{font-size:1.1rem;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>📚 Latihan Harian — Bahasa Melayu T1</h1>
+    <span class="badge streak" id="streakBadge">🔥 0 hari</span>
+    <span class="badge" id="dateBadge">—</span>
+    <div class="daynav">
+      <button id="prevDay" title="Hari sebelum">◀</button>
+      <button id="todayBtn">Hari ini</button>
+      <button id="nextDay" title="Hari seterusnya">▶</button>
+    </div>
+  </header>
+
+  <!-- Exam result reminder -->
+  <section class="card">
+    <h2>🎯 Sasaran latihan ini <span class="pill">Pentaksiran Pertengahan Tahun 2026</span></h2>
+    <p class="sub">Berdasarkan keputusan sebenar — fokus pada bahagian yang lemah.</p>
+    <div class="exam-grid">
+      <div class="exam-cell"><b>54%</b><span>Markah keseluruhan BM</span></div>
+      <div class="exam-cell"><b>36 / 60</b><span>Kertas 1 (objektif & struktur)</span></div>
+      <div class="exam-cell"><b>18 / 40</b><span>Kertas 2 (karangan) — paling lemah</span></div>
+    </div>
+    <div class="focus-tags">
+      <strong style="font-size:.85rem;color:var(--muted);align-self:center;">Fokus harian:</strong>
+      <em>Karangan</em><em>Ejaan</em><em>Tatabahasa</em><em>Peribahasa &amp; Simile</em><em>Kefahaman</em>
+    </div>
+  </section>
+
+  <!-- Essay of the day -->
+  <section class="card">
+    <h2>✍️ Karangan hari ini <span class="pill" id="essayJenisPill">—</span></h2>
+    <p class="sub">Baca contoh karangan yang baik di bawah, kemudian tulis karangan kamu sendiri pada tajuk yang sama.</p>
+    <div class="essay-prompt">
+      <div class="jenis" id="essayJenis">—</div>
+      <div class="tajuk" id="essayTajuk">—</div>
+      <div class="bahan" id="essayBahan">—</div>
+    </div>
+
+    <details>
+      <summary>💡 Rangka / tip karangan</summary>
+      <ul id="essayTips"></ul>
+    </details>
+
+    <div class="model-box">
+      <div class="model-head">📖 Contoh karangan yang baik</div>
+      <div class="model-essay" id="modelEssay"></div>
+    </div>
+
+    <div class="own-head">📝 Sekarang giliran kamu — tulis karangan sendiri:</div>
+    <textarea id="essayText" placeholder="Tulis karangan kamu di sini..."></textarea>
+    <div class="essay-tools">
+      <button id="saveEssay">💾 Simpan draf</button>
+      <span id="wordCount">0 patah perkataan</span>
+      <span id="essaySaved" class="saved-note" style="display:none">✓ Disimpan</span>
+    </div>
+  </section>
+
+  <!-- Objective questions -->
+  <section class="card">
+    <h2>📝 10 Soalan Objektif</h2>
+    <p class="sub">Klik jawapan kamu — semakan dan penjelasan keluar serta-merta.</p>
+    <div id="quiz"></div>
+    <div class="scorebar">
+      <span>Skor: <span id="score">0</span> / 10</span>
+      <small id="scoreMsg">Dijawab: 0 / 10</small>
+    </div>
+  </section>
+
+  <footer>
+    <span id="completeNote"></span><br>
+    Latihan dimodelkan pada topik Pentaksiran Pertengahan Tahun 2026 (BM Tingkatan 1).<br>
+    Kemajuan disimpan dalam pelayar ini sahaja. <button class="reset-link" id="resetAll">Set semula semua data</button>
+  </footer>
+
+</div>
+
+<script>
+/* === data/questions.js (inlined) === */
+/* ============================================================
+   BANK SOALAN OBJEKTIF — Latihan Harian Bahasa Melayu Tingkatan 1
+   Dimodelkan pada topik yang keluar dalam Pentaksiran Pertengahan
+   Tahun 2026 (Kertas 1 & Kertas 2) supaya lebih dekat dengan
+   gaya soalan sebenar sekolah.
+   Kategori: "Ejaan", "Tatabahasa", "Peribahasa & Simile", "Kefahaman"
+   ============================================================ */
+window.QUESTION_BANK = [
+
+  /* ---------------------- EJAAN ---------------------- */
+  { id:"ej01", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["bulan Mac", "bulan March", "bulan Mach", "bulan Marc"],
+    answer:0,
+    explain:"Nama bulan ketiga dalam bahasa Melayu dieja \"Mac\" — \"March\" itu bahasa Inggeris." },
+
+  { id:"ej02", cat:"Ejaan",
+    q:"Ayat manakah yang ejaannya BETUL?",
+    options:["Ibu sedang memasak di dapur.", "Ibu sedang memasak didapur.", "Ibu sedang memasak di-dapur.", "Ibu sedang memasak ddapur."],
+    answer:0,
+    explain:"\"di\" yang menunjukkan TEMPAT ditulis terpisah daripada kata nama: di dapur, di sekolah, di sini." },
+
+  { id:"ej03", cat:"Ejaan",
+    q:"Pilih ayat yang ejaannya BETUL.",
+    options:["Pintu itu diperbuat daripada kayu.", "Pintu itu di perbuat daripada kayu.", "Pintu itu di-perbuat daripada kayu.", "Pintu itu dperbuat daripada kayu."],
+    answer:0,
+    explain:"\"di\" sebagai IMBUHAN (di + kata kerja) ditulis bercantum: dibuat, dimakan, dibaca, diperbuat." },
+
+  { id:"ej04", cat:"Ejaan",
+    q:"Antara yang berikut, perkataan manakah yang dieja dengan BETUL?",
+    options:["jawatankuasa", "jawatan kuasa", "jawatan-kuasa", "jawat kuasa"],
+    answer:0,
+    explain:"\"jawatankuasa\" ialah satu perkataan. Begitu juga: kerjasama, setiausaha, warganegara, antarabangsa." },
+
+  { id:"ej05", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["antarabangsa", "antara bangsa", "antara-bangsa", "antarbangsa"],
+    answer:0,
+    explain:"\"antarabangsa\" ditulis sebagai satu perkataan." },
+
+  { id:"ej06", cat:"Ejaan",
+    q:"Ayat manakah yang ejaannya BETUL?",
+    options:["Murid itu berjalan ke sekolah setiap pagi.", "Murid itu berjalan kesekolah setiap pagi.", "Murid itu berjalan ke-sekolah setiap pagi.", "Murid itu berjalan kesekola setiap pagi."],
+    answer:0,
+    explain:"\"ke\" yang menunjukkan arah/tempat ditulis terpisah: ke sekolah, ke pasar, ke sana." },
+
+  { id:"ej07", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["aktiviti", "aktivity", "aktivati", "aktiviiti"],
+    answer:0,
+    explain:"Ejaan pinjaman yang betul ialah \"aktiviti\"." },
+
+  { id:"ej08", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["teknologi", "teknoloji", "tekhnologi", "teknology"],
+    answer:0,
+    explain:"\"teknologi\" — guna huruf \"g\" (bukan \"j\") dan tiada \"h\"." },
+
+  { id:"ej09", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["definisi", "defenisi", "difinisi", "definasi"],
+    answer:0,
+    explain:"\"definisi\" — suku kata pertama \"de\", kedua \"fi\"." },
+
+  { id:"ej10", cat:"Ejaan",
+    q:"Ayat manakah yang ejaannya BETUL?",
+    options:["Dia menandatangani surat perjanjian itu.", "Dia menanda tangani surat perjanjian itu.", "Dia menanda-tangani surat perjanjian itu.", "Dia menandatangan i surat perjanjian itu."],
+    answer:0,
+    explain:"Tanpa imbuhan: \"tanda tangan\" (dua perkataan). Dengan imbuhan: \"menandatangani\" (satu perkataan)." },
+
+  { id:"ej11", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["sukacita", "suka cita", "suka-cita", "sukachita"],
+    answer:0,
+    explain:"\"sukacita\" dan \"dukacita\" ditulis sebagai satu perkataan." },
+
+  { id:"ej12", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL bagi \"orang yang ditugaskan menjaga keselamatan\".",
+    options:["pengawal keselamatan", "penggawal keselamatan", "pengawal kesalamatan", "pengawal keselamattan"],
+    answer:0,
+    explain:"\"pengawal\" (peN + kawal) dan \"keselamatan\" (ke + selamat + an)." },
+
+  { id:"ej13", cat:"Ejaan",
+    q:"Pilih kumpulan perkataan yang SEMUANYA dieja dengan betul.",
+    options:["ibu bapa, suri rumah, anak kapal", "ibubapa, surirumah, anakkapal", "ibu-bapa, suri-rumah, anak-kapal", "ibu bapa, surirumah, anak kapal"],
+    answer:0,
+    explain:"Ketiga-tiga ini ditulis sebagai DUA perkataan: ibu bapa, suri rumah, anak kapal." },
+
+  { id:"ej14", cat:"Ejaan",
+    q:"Pilih ejaan yang BETUL.",
+    options:["matahari", "mata hari", "mata-hari", "matahary"],
+    answer:0,
+    explain:"\"matahari\" ditulis sebagai satu perkataan." },
+
+  /* ---------------------- TATABAHASA ---------------------- */
+  { id:"tb01", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Ali membeli ___ buku di kedai itu.\"",
+    options:["sebuah", "sebatang", "sehelai", "seekor"],
+    answer:0,
+    explain:"Penjodoh bilangan bagi buku ialah \"buah\": sebuah buku, sebuah rumah, sebuah kereta." },
+
+  { id:"tb02", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Datuk menanam ___ pokok mangga di belakang rumah.\"",
+    options:["sebatang", "sebuah", "sebiji", "sekuntum"],
+    answer:0,
+    explain:"Penjodoh bilangan bagi pokok/benda panjang ialah \"batang\": sebatang pokok, sebatang pen, sebatang sungai." },
+
+  { id:"tb03", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Emak membeli ___ kertas warna untuk kraf tangan.\"",
+    options:["sehelai", "sebuah", "sebatang", "sekeping"],
+    answer:0,
+    explain:"Penjodoh bilangan bagi kertas, kain dan baju ialah \"helai\": sehelai kertas, sehelai baju." },
+
+  { id:"tb04", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Adik memelihara ___ kucing yang comel.\"",
+    options:["seekor", "sebuah", "sebatang", "sebentuk"],
+    answer:0,
+    explain:"Penjodoh bilangan bagi haiwan ialah \"ekor\": seekor kucing, seekor ayam, seekor gajah." },
+
+  { id:"tb05", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Abang menerima ___ surat daripada sahabat penanya.\"",
+    options:["sepucuk", "sehelai", "sebuah", "sekeping"],
+    answer:0,
+    explain:"Penjodoh bilangan bagi surat ialah \"pucuk\": sepucuk surat, sepucuk senapang." },
+
+  { id:"tb06", cat:"Tatabahasa",
+    q:"Apakah bentuk yang BETUL apabila \"meN-\" + \"sapu\"?",
+    options:["menyapu", "mensapu", "menyapukan", "memsapu"],
+    answer:0,
+    explain:"Huruf \"s\" luluh menjadi \"ny\" apabila menerima awalan \"meN-\": sapu → menyapu, sambut → menyambut." },
+
+  { id:"tb07", cat:"Tatabahasa",
+    q:"Apakah bentuk yang BETUL apabila \"meN-\" + \"kira\"?",
+    options:["mengira", "mengkira", "menkira", "mengirakan"],
+    answer:0,
+    explain:"Huruf \"k\" luluh menjadi \"ng\" apabila menerima awalan \"meN-\": kira → mengira, kupas → mengupas." },
+
+  { id:"tb08", cat:"Tatabahasa",
+    q:"Apakah bentuk yang BETUL apabila \"meN-\" + \"pukul\"?",
+    options:["memukul", "mempukul", "menpukul", "memukulkan"],
+    answer:0,
+    explain:"Huruf \"p\" luluh menjadi \"m\": pukul → memukul, pakai → memakai, potong → memotong." },
+
+  { id:"tb09", cat:"Tatabahasa",
+    q:"Apakah bentuk yang BETUL apabila \"ber-\" + \"kerja\"?",
+    options:["bekerja", "berkerja", "bberkerja", "berkeja"],
+    answer:0,
+    explain:"\"ber-\" + kata yang bermula dengan \"ker-\" → \"r\" digugurkan: kerja → bekerja, ajar → belajar." },
+
+  { id:"tb10", cat:"Tatabahasa",
+    q:"Lengkapkan ayat dengan kata sendi nama yang BETUL: \"Buku itu terletak ___ atas meja.\"",
+    options:["di", "ke", "dari", "pada"],
+    answer:0,
+    explain:"\"di\" digunakan untuk menunjukkan tempat sesuatu benda berada: di atas meja, di dalam bilik." },
+
+  { id:"tb11", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Cincin itu diperbuat ___ emas tulen.\"",
+    options:["daripada", "dari", "pada", "kepada"],
+    answer:0,
+    explain:"\"daripada\" digunakan untuk menunjukkan bahan/asal sesuatu: diperbuat daripada emas, daripada kayu." },
+
+  { id:"tb12", cat:"Tatabahasa",
+    q:"Lengkapkan ayat dengan kata hubung yang SESUAI: \"Saya tidak hadir ke sekolah ___ demam.\"",
+    options:["kerana", "tetapi", "atau", "sambil"],
+    answer:0,
+    explain:"\"kerana\" menunjukkan sebab/alasan sesuatu perkara berlaku." },
+
+  { id:"tb13", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"___ hujan lebat, dia tetap pergi ke perpustakaan.\"",
+    options:["Walaupun", "Kerana", "Supaya", "Manakala"],
+    answer:0,
+    explain:"\"Walaupun\" menunjukkan pertentangan — sesuatu berlaku biarpun ada halangan." },
+
+  { id:"tb14", cat:"Tatabahasa",
+    q:"Lengkapkan ayat: \"Mereka berlatih bersungguh-sungguh ___ dapat memenangi pertandingan itu.\"",
+    options:["supaya", "kerana", "walaupun", "kemudian"],
+    answer:0,
+    explain:"\"supaya\" menunjukkan tujuan/maksud sesuatu perbuatan." },
+
+  { id:"tb15", cat:"Tatabahasa",
+    q:"Ayat manakah yang BETUL?",
+    options:["Ramai murid menyertai pertandingan itu.", "Murid-murid yang ramai menyertai pertandingan itu.", "Ramai murid-murid menyertai pertandingan itu.", "Murid ramai-ramai menyertai pertandingan itu."],
+    answer:0,
+    explain:"\"Ramai\" sudah membawa maksud banyak orang, jadi kata nama selepasnya tidak perlu digandakan." },
+
+  { id:"tb16", cat:"Tatabahasa",
+    q:"Pilih ayat pasif yang BETUL.",
+    options:["Surat itu ditulis oleh Ali.", "Surat itu Ali tulis oleh dia.", "Surat itu menulis oleh Ali.", "Surat itu ditulis Ali oleh."],
+    answer:0,
+    explain:"Ayat pasif diri ketiga: objek + di- + kata kerja + oleh + pelaku. Contoh: Surat itu ditulis oleh Ali." },
+
+  { id:"tb17", cat:"Tatabahasa",
+    q:"Pilih ayat pasif diri pertama yang BETUL.",
+    options:["Tugasan itu saya siapkan semalam.", "Tugasan itu disiapkan oleh saya semalam.", "Tugasan itu saya disiapkan semalam.", "Tugasan itu saya menyiapkan semalam."],
+    answer:0,
+    explain:"Bagi pelaku \"saya/aku/kamu\", kata ganti diletakkan terus di hadapan kata kerja tanpa \"di-\" dan tanpa \"oleh\": Tugasan itu saya siapkan." },
+
+  /* ---------------------- PERIBAHASA & SIMILE ---------------------- */
+  { id:"pb01", cat:"Peribahasa & Simile",
+    q:"Lengkapkan simile: \"Beg sekolahnya berat macam ___.\"",
+    options:["gajah", "kapas", "rama-rama", "daun"],
+    answer:0,
+    explain:"Simile lazim: \"berat macam gajah\" untuk menggambarkan sesuatu yang sangat berat." },
+
+  { id:"pb02", cat:"Peribahasa & Simile",
+    q:"Lengkapkan simile: \"Pelari itu cepat macam ___.\"",
+    options:["kilat", "siput", "kura-kura", "lembu"],
+    answer:0,
+    explain:"\"Cepat macam kilat\" — menggambarkan kelajuan yang luar biasa." },
+
+  { id:"pb03", cat:"Peribahasa & Simile",
+    q:"Lengkapkan simile: \"Jalannya lambat macam ___.\"",
+    options:["siput", "kilat", "kijang", "angin"],
+    answer:0,
+    explain:"\"Lambat macam siput\" (atau \"macam kura-kura\") — menggambarkan pergerakan yang sangat perlahan." },
+
+  { id:"pb04", cat:"Peribahasa & Simile",
+    q:"Lengkapkan simile: \"Kulit bayi itu putih macam ___.\"",
+    options:["kapas", "arang", "saga", "tinta"],
+    answer:0,
+    explain:"\"Putih macam kapas\" — menggambarkan warna yang sangat putih dan bersih." },
+
+  { id:"pb05", cat:"Peribahasa & Simile",
+    q:"Apakah maksud peribahasa \"melentur buluh biarlah dari rebungnya\"?",
+    options:["Mendidik anak biarlah sejak kecil.", "Bekerja perlu bersungguh-sungguh.", "Jangan mempercayai orang yang baru dikenali.", "Bersabar menghadapi cabaran hidup."],
+    answer:0,
+    explain:"Sesuatu (terutama didikan anak) lebih mudah dibentuk semasa masih muda/kecil." },
+
+  { id:"pb06", cat:"Peribahasa & Simile",
+    q:"Apakah maksud peribahasa \"bagai aur dengan tebing\"?",
+    options:["Saling bantu-membantu dan rapat hubungannya.", "Sentiasa berselisih faham.", "Membuat kerja tanpa berfikir.", "Orang yang sombong dan angkuh."],
+    answer:0,
+    explain:"\"Bagai aur dengan tebing\" menggambarkan dua pihak yang saling memerlukan dan tolong-menolong." },
+
+  { id:"pb07", cat:"Peribahasa & Simile",
+    q:"Apakah maksud peribahasa \"harapkan pagar, pagar makan padi\"?",
+    options:["Orang yang dipercayai mengkhianati kita.", "Bekerja keras tetapi tidak mendapat hasil.", "Berusaha tanpa mengenal penat.", "Bersedia sebelum sesuatu berlaku."],
+    answer:0,
+    explain:"Orang yang sepatutnya menjaga atau melindungi kita sebaliknya merosakkan kepentingan kita." },
+
+  { id:"pb08", cat:"Peribahasa & Simile",
+    q:"Apakah maksud peribahasa \"sediakan payung sebelum hujan\"?",
+    options:["Bersiap sedia sebelum sesuatu yang buruk berlaku.", "Bekerjasama dalam melakukan sesuatu.", "Mengulang kaji pada saat akhir.", "Mementingkan diri sendiri."],
+    answer:0,
+    explain:"Berjaga-jaga dan membuat persediaan awal sebelum menghadapi sesuatu kesulitan." },
+
+  { id:"pb09", cat:"Peribahasa & Simile",
+    q:"Apakah maksud ungkapan \"ringan tulang\"?",
+    options:["Rajin bekerja.", "Malas bekerja.", "Sangat penat.", "Suka menolong wang."],
+    answer:0,
+    explain:"\"Ringan tulang\" bermaksud rajin dan suka membuat kerja. Lawannya \"berat tulang\" (malas)." },
+
+  { id:"pb10", cat:"Peribahasa & Simile",
+    q:"Apakah maksud peribahasa \"bagai pinang dibelah dua\"?",
+    options:["Dua orang yang serupa benar.", "Dua orang yang sering bergaduh.", "Pekerjaan yang dibahagi sama rata.", "Sesuatu yang mudah dilakukan."],
+    answer:0,
+    explain:"Menggambarkan dua orang (selalunya pasangan atau adik-beradik) yang amat mirip antara satu sama lain." },
+
+  /* ---------------------- KEFAHAMAN ---------------------- */
+  { id:"kf01", cat:"Kefahaman",
+    q:"Pantun dua kerat mempunyai berapa baris dalam setiap rangkap?",
+    options:["Dua baris", "Empat baris", "Enam baris", "Lapan baris"],
+    answer:0,
+    explain:"Pantun dua kerat ada DUA baris: baris pertama pembayang maksud, baris kedua maksud." },
+
+  { id:"kf02", cat:"Kefahaman",
+    q:"Berapakah bilangan suku kata yang sesuai bagi setiap baris pantun?",
+    options:["Lapan hingga dua belas suku kata", "Dua hingga empat suku kata", "Lima hingga enam suku kata", "Lima belas hingga dua puluh suku kata"],
+    answer:0,
+    explain:"Setiap baris pantun lazimnya mengandungi 8 hingga 12 suku kata." },
+
+  { id:"kf03", cat:"Kefahaman",
+    q:"Apakah maksud ungkapan \"Malas bergerak tidak merasa\"?",
+    options:["Orang yang malas berusaha tidak akan menikmati kejayaan.", "Orang yang banyak bergerak akan cepat letih.", "Orang yang rajin akan sentiasa lapar.", "Orang yang pendiam jarang berasa gembira."],
+    answer:0,
+    explain:"Sesiapa yang tidak berusaha (malas) tidak akan menerima hasil atau kejayaan." },
+
+  { id:"kf04", cat:"Kefahaman",
+    q:"\"Encik Zainal memerlukan beberapa orang pekerja baharu untuk kilangnya.\" Ayat ini bermaksud Encik Zainal...",
+    options:["mahu mengambil pekerja baharu.", "mahu memberhentikan pekerjanya.", "mahu menutup kilangnya.", "mahu menjual kilangnya."],
+    answer:0,
+    explain:"\"Memerlukan pekerja baharu\" bermaksud beliau hendak menggaji atau mengambil pekerja baharu." },
+
+  { id:"kf05", cat:"Kefahaman",
+    q:"Apakah maksud perkataan \"menatap\" dalam ayat \"Zarina menatap gambar itu lama-lama\"?",
+    options:["Memandang sesuatu dengan lama dan teliti.", "Melihat sekilas lalu berlalu.", "Menyembunyikan sesuatu.", "Mengelap sesuatu sehingga bersih."],
+    answer:0,
+    explain:"\"Menatap\" bermaksud memandang sesuatu dalam tempoh yang lama dengan penuh perhatian." },
+
+  { id:"kf06", cat:"Kefahaman",
+    q:"Apakah maksud perkataan \"terjunam\" dalam ayat \"Kereta itu terbabas lalu terjunam ke dalam sungai\"?",
+    options:["Jatuh meluncur ke bawah dengan laju.", "Berhenti secara tiba-tiba.", "Terbalik di tepi jalan.", "Bergerak perlahan-lahan."],
+    answer:0,
+    explain:"\"Terjunam\" bermaksud jatuh menjunam atau meluncur turun ke bawah dengan cepat." },
+
+  { id:"kf07", cat:"Kefahaman",
+    q:"Sebuah pantun nasihat yang menyuruh kita rajin berusaha menyampaikan nilai...",
+    options:["kerajinan dan kegigihan.", "kasih sayang terhadap haiwan.", "kebersihan alam sekitar.", "kesederhanaan dalam berbelanja."],
+    answer:0,
+    explain:"Pantun yang menggalakkan kita berusaha bersungguh-sungguh membawa nilai kerajinan/kegigihan." },
+
+  { id:"kf08", cat:"Kefahaman",
+    q:"\"Buah-buahan tempatan dijual dengan harga yang berpatutan di pasar itu.\" Perkataan \"berpatutan\" bermaksud...",
+    options:["munasabah dan tidak mahal.", "sangat mahal.", "percuma.", "tidak diketahui."],
+    answer:0,
+    explain:"\"Harga yang berpatutan\" bermaksud harga yang munasabah, sesuai dan tidak membebankan." },
+
+  { id:"kf09", cat:"Kefahaman",
+    q:"Apakah maksud perkataan \"prihatin\"?",
+    options:["Mengambil berat dan peka terhadap sesuatu.", "Cepat marah.", "Suka bersendirian.", "Tidak suka bercakap."],
+    answer:0,
+    explain:"\"Prihatin\" bermaksud menaruh perhatian dan mengambil berat tentang keadaan atau orang lain." },
+
+  { id:"kf10", cat:"Kefahaman",
+    q:"\"Pengadil yang berat sebelah itu tidak disukai oleh penonton.\" Rangkai kata \"berat sebelah\" bermaksud...",
+    options:["tidak adil / memihak kepada satu pihak.", "membawa beban yang berat.", "berjalan dengan perlahan.", "berfikir secara mendalam."],
+    answer:0,
+    explain:"\"Berat sebelah\" bermaksud bersikap tidak adil kerana memihak kepada satu pihak sahaja." },
+
+  /* ================ TAMBAHAN — EJAAN ================ */
+  { id:"ej15", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["tanggungjawab", "tanggung jawab", "tanggung-jawab", "tangungjawab"], answer:0,
+    explain:"\"tanggungjawab\" ditulis sebagai satu perkataan." },
+  { id:"ej16", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["kakitangan", "kaki tangan", "kaki-tangan", "kakitangang"], answer:0,
+    explain:"\"kakitangan\" (bermaksud pekerja/anggota) ditulis sebagai satu perkataan." },
+  { id:"ej17", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["setiausaha", "setia usaha", "setia-usaha", "setiawusaha"], answer:0,
+    explain:"\"setiausaha\" ditulis sebagai satu perkataan." },
+  { id:"ej18", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["warganegara", "warga negara", "warga-negara", "warganegera"], answer:0,
+    explain:"\"warganegara\" ditulis sebagai satu perkataan." },
+  { id:"ej19", cat:"Ejaan", q:"Pilih kumpulan perkataan yang SEMUANYA dieja dengan betul.",
+    options:["alat tulis, kapal terbang, kereta api", "alattulis, kapalterbang, keretaapi",
+             "alat-tulis, kapal-terbang, kereta-api", "alat tulis, kapalterbang, kereta api"], answer:0,
+    explain:"Ketiga-tiganya ditulis sebagai DUA perkataan: alat tulis, kapal terbang, kereta api." },
+  { id:"ej20", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["Februari", "Febuari", "Pebruari", "Februuari"], answer:0,
+    explain:"Nama bulan kedua dieja \"Februari\" — ada huruf \"r\" selepas \"Feb\"." },
+  { id:"ej21", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["objektif", "objektive", "obyektif", "objektip"], answer:0,
+    explain:"Ejaan pinjaman yang betul ialah \"objektif\"." },
+  { id:"ej22", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["stesen", "station", "stesyen", "setesen"], answer:0,
+    explain:"Ejaan rasmi dalam bahasa Melayu ialah \"stesen\" (stesen bas, stesen kereta api)." },
+  { id:"ej23", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["komputer", "komputar", "kompiuter", "komputter"], answer:0,
+    explain:"\"komputer\" — guna \"e\" pada suku kata akhir." },
+  { id:"ej24", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["ambulans", "ambulan", "ambullan", "ambulance"], answer:0,
+    explain:"Ejaan yang betul ialah \"ambulans\" — ada huruf \"s\" di hujung." },
+  { id:"ej25", cat:"Ejaan", q:"Ayat manakah yang ejaannya BETUL?",
+    options:["Saya tidak tahu di mana dia tinggal.", "Saya tidak tahu dimana dia tinggal.",
+             "Saya tidak tahu di-mana dia tinggal.", "Saya tidak tahu dmana dia tinggal."], answer:0,
+    explain:"\"di mana\", \"ke mana\", \"di sana\", \"di sini\" ditulis sebagai dua perkataan." },
+  { id:"ej26", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["daripada", "dari pada", "dari-pada", "daripda"], answer:0,
+    explain:"\"daripada\" dan \"kepada\" ditulis sebagai satu perkataan." },
+  { id:"ej27", cat:"Ejaan", q:"Pilih perkataan yang dieja dengan BETUL.",
+    options:["bagaimanapun", "bagaimana pun", "bagaimana-pun", "bagaimanapon"], answer:0,
+    explain:"\"bagaimanapun\", \"walaupun\", \"sungguhpun\" ditulis sebagai satu perkataan (\"pun\" bercantum)." },
+  { id:"ej28", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["sukarela", "suka rela", "suka-rela", "sukarila"], answer:0,
+    explain:"\"sukarela\" ditulis sebagai satu perkataan." },
+  { id:"ej29", cat:"Ejaan", q:"Pilih ejaan yang BETUL bagi perbuatan \"meN- + cat\".",
+    options:["mengecat", "mencat", "menyecat", "mengcat"], answer:0,
+    explain:"Kata dasar satu suku kata seperti \"cat\" menerima bentuk \"menge-\": cat→mengecat, lap→mengelap, bom→mengebom." },
+  { id:"ej30", cat:"Ejaan", q:"Pilih ejaan yang BETUL.",
+    options:["bumiputera", "bumi putera", "bumi-putera", "bumiputra"], answer:0,
+    explain:"Dalam ejaan rasmi, \"bumiputera\" ditulis sebagai satu perkataan." },
+
+  /* ================ TAMBAHAN — TATABAHASA ================ */
+  { id:"tb18", cat:"Tatabahasa", q:"Lengkapkan: \"Ibu membeli ___ kasut untuk adik di pasar raya.\"",
+    options:["sepasang", "sebatang", "sebiji", "sehelai"], answer:0,
+    explain:"Penjodoh bilangan bagi kasut, sarung tangan dan stoking ialah \"pasang\": sepasang kasut." },
+  { id:"tb19", cat:"Tatabahasa", q:"Lengkapkan: \"Datuk memberi ___ cincin emas kepada nenek.\"",
+    options:["sebentuk", "sebatang", "sebuah", "seutas"], answer:0,
+    explain:"Penjodoh bilangan bagi cincin ialah \"bentuk\": sebentuk cincin." },
+  { id:"tb20", cat:"Tatabahasa", q:"Lengkapkan: \"Abang membeli ___ rantai untuk hadiah hari jadi kakak.\"",
+    options:["seutas", "sebentuk", "sebatang", "sebiji"], answer:0,
+    explain:"Penjodoh bilangan bagi rantai dan tali ialah \"utas\": seutas rantai, seutas tali." },
+  { id:"tb21", cat:"Tatabahasa", q:"Lengkapkan: \"Pelajar itu menghafaz ___ pantun untuk pertandingan.\"",
+    options:["serangkap", "sebaris", "sebuah", "sehelai"], answer:0,
+    explain:"Penjodoh bilangan bagi pantun atau sajak ialah \"rangkap\": serangkap pantun." },
+  { id:"tb22", cat:"Tatabahasa", q:"Lengkapkan: \"Adik makan ___ telur rebus pada waktu pagi.\"",
+    options:["sebiji", "sebatang", "sehelai", "sekeping"], answer:0,
+    explain:"Penjodoh bilangan bagi telur, bola dan buah-buahan kecil ialah \"biji\": sebiji telur." },
+  { id:"tb23", cat:"Tatabahasa", q:"Lengkapkan ayat dengan kata sendi nama: \"Surat itu ditujukan ___ pengetua sekolah.\"",
+    options:["kepada", "ke", "di", "dari"], answer:0,
+    explain:"\"kepada\" digunakan untuk arah/sasaran yang melibatkan manusia: ditujukan kepada pengetua." },
+  { id:"tb24", cat:"Tatabahasa", q:"Lengkapkan: \"Dia berasal ___ negeri Kelantan.\"",
+    options:["dari", "daripada", "kepada", "pada"], answer:0,
+    explain:"\"dari\" digunakan untuk menunjukkan arah atau tempat asal: berasal dari Kelantan." },
+  { id:"tb25", cat:"Tatabahasa", q:"Lengkapkan: \"Buku cerita ini sesuai ___ kanak-kanak berumur enam tahun.\"",
+    options:["untuk", "kepada", "dari", "di"], answer:0,
+    explain:"\"untuk\" (atau \"bagi\") menunjukkan tujuan atau sasaran sesuatu." },
+  { id:"tb26", cat:"Tatabahasa", q:"Lengkapkan: \"Mereka berbincang ___ masalah pencemaran sungai.\"",
+    options:["tentang", "kepada", "di", "dari"], answer:0,
+    explain:"\"tentang\" (atau \"mengenai\") digunakan untuk menyatakan perkara/hal yang dibincangkan." },
+  { id:"tb27", cat:"Tatabahasa", q:"Lengkapkan: \"Murid menulis karangan ___ pen biru.\"",
+    options:["dengan", "daripada", "untuk", "di"], answer:0,
+    explain:"\"dengan\" digunakan untuk menunjukkan alat yang digunakan: menulis dengan pen." },
+  { id:"tb28", cat:"Tatabahasa", q:"Apakah bentuk yang BETUL apabila \"meN-\" + \"tukar\"?",
+    options:["menukar", "mentukar", "menukarkan", "mengtukar"], answer:0,
+    explain:"Huruf \"t\" luluh apabila menerima \"meN-\": tukar→menukar, tulis→menulis, tanam→menanam." },
+  { id:"tb29", cat:"Tatabahasa", q:"Apakah bentuk yang BETUL apabila \"meN-\" + \"ambil\"?",
+    options:["mengambil", "menambil", "mengeambil", "mengambilkan"], answer:0,
+    explain:"Kata dasar yang bermula dengan huruf vokal menerima \"meng-\": ambil→mengambil, ajar→mengajar." },
+  { id:"tb30", cat:"Tatabahasa", q:"Antara yang berikut, yang manakah kata nama KHAS?",
+    options:["Kuala Lumpur", "bandar", "sungai", "gunung"], answer:0,
+    explain:"Kata nama khas merujuk nama tertentu (orang/tempat) dan dimulakan huruf besar: Kuala Lumpur. Yang lain ialah kata nama am." },
+  { id:"tb31", cat:"Tatabahasa", q:"Ayat manakah yang merupakan ayat PERINTAH (suruhan)?",
+    options:["Tutup pintu itu sekarang.", "Pintu itu sudah ditutup.", "Adakah pintu itu ditutup?", "Aduhai, pintu itu rosak!"], answer:0,
+    explain:"Ayat perintah memberikan arahan/suruhan: \"Tutup pintu itu sekarang.\"" },
+  { id:"tb32", cat:"Tatabahasa", q:"Pilih darjah perbandingan yang BETUL: \"Gajah lebih besar ___ kerbau.\"",
+    options:["daripada", "dari", "kepada", "antara"], answer:0,
+    explain:"Darjah perbandingan menggunakan \"lebih ... daripada ...\": lebih besar daripada kerbau." },
+  { id:"tb33", cat:"Tatabahasa", q:"Pilih penanda wacana yang sesuai untuk MENUTUP karangan.",
+    options:["Kesimpulannya", "Pertama sekali", "Selain itu", "Sebagai contoh"], answer:0,
+    explain:"\"Kesimpulannya\" atau \"Sebagai penutup\" digunakan pada perenggan akhir karangan." },
+  { id:"tb34", cat:"Tatabahasa", q:"Ayat manakah yang merupakan ayat MAJMUK?",
+    options:["Saya membaca buku dan adik menonton televisyen.", "Adik tidur di bilik.",
+             "Burung itu terbang tinggi.", "Ibu memasak nasi."], answer:0,
+    explain:"Ayat majmuk terbentuk daripada dua ayat tunggal yang digabungkan dengan kata hubung seperti \"dan\"." },
+  { id:"tb35", cat:"Tatabahasa", q:"Lengkapkan dengan kata hubung yang sesuai: \"Tunggu di sini ___ saya kembali.\"",
+    options:["sehingga", "kerana", "supaya", "tetapi"], answer:0,
+    explain:"\"sehingga\" (atau \"hingga\") menunjukkan had masa sesuatu perbuatan." },
+
+  /* ================ TAMBAHAN — PERIBAHASA & SIMILE ================ */
+  { id:"pb11", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Wajahnya pucat, badannya kurus macam ___.\"",
+    options:["lidi", "gajah", "kapas", "bola"], answer:0,
+    explain:"\"Kurus macam lidi\" menggambarkan tubuh yang sangat kurus." },
+  { id:"pb12", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Air mata terjun lalu dia berlari pantas; pisaunya tajam macam ___.\"",
+    options:["sembilu", "kapas", "lidi", "batu"], answer:0,
+    explain:"\"Tajam macam sembilu\" menggambarkan sesuatu yang amat tajam." },
+  { id:"pb13", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Wajahnya merah macam ___ kerana marah.\"",
+    options:["saga", "kapas", "arang", "gula"], answer:0,
+    explain:"\"Merah macam saga\" — saga ialah biji kecil berwarna merah menyala." },
+  { id:"pb14", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Hatinya hitam macam ___.\"",
+    options:["arang", "kapas", "saga", "gula"], answer:0,
+    explain:"\"Hitam macam arang\" menggambarkan warna yang amat hitam." },
+  { id:"pb15", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Kuih ini manis macam ___.\"",
+    options:["gula", "garam", "hempedu", "cuka"], answer:0,
+    explain:"\"Manis macam gula\" (atau \"macam madu\") menggambarkan rasa yang amat manis." },
+  { id:"pb16", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Ubat itu pahit macam ___.\"",
+    options:["hempedu", "gula", "garam", "madu"], answer:0,
+    explain:"\"Pahit macam hempedu\" menggambarkan rasa yang amat pahit." },
+  { id:"pb17", cat:"Peribahasa & Simile", q:"Lengkapkan simile: \"Hujan turun, lantai sejuk macam ___.\"",
+    options:["ais", "api", "bara", "batu"], answer:0,
+    explain:"\"Sejuk macam ais\" menggambarkan keadaan yang amat sejuk." },
+  { id:"pb18", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"bagai isi dengan kuku\"?",
+    options:["Hubungan yang sangat rapat dan akrab.", "Dua pihak yang sentiasa berbalah.",
+             "Bekerja tanpa hasil.", "Orang yang malas berusaha."], answer:0,
+    explain:"\"Bagai isi dengan kuku\" menggambarkan persahabatan/hubungan yang amat rapat dan tidak dapat dipisahkan." },
+  { id:"pb19", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"berakit-rakit ke hulu, berenang-renang ke tepian\"?",
+    options:["Bersusah-payah dahulu, bersenang-senang kemudian.", "Bekerjasama dalam menyelesaikan masalah.",
+             "Mementingkan diri sendiri.", "Menyesal setelah sesuatu berlaku."], answer:0,
+    explain:"Sanggup berusaha dan bersusah payah dahulu untuk menikmati kejayaan dan kesenangan di kemudian hari." },
+  { id:"pb20", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"sikit-sikit lama-lama jadi bukit\"?",
+    options:["Sesuatu yang sedikit, jika dikumpulkan, akhirnya menjadi banyak.", "Kerja yang dibuat tergesa-gesa.",
+             "Orang yang sombong akan jatuh.", "Berbohong untuk menutup kesalahan."], answer:0,
+    explain:"Menggalakkan kita menyimpan/berusaha sedikit demi sedikit kerana lama-kelamaan akan menjadi banyak." },
+  { id:"pb21", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"rajin pangkal pandai\"?",
+    options:["Kerajinan ialah punca seseorang menjadi pandai.", "Orang pandai sentiasa malas.",
+             "Orang rajin selalu penat.", "Kepandaian datang dengan sendirinya."], answer:0,
+    explain:"Sesiapa yang rajin berusaha dan belajar akhirnya akan menjadi pandai/berjaya." },
+  { id:"pb22", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"ringan sama dijinjing, berat sama dipikul\"?",
+    options:["Bekerjasama menanggung susah dan senang bersama.", "Berebut tugas yang mudah sahaja.",
+             "Orang malas tidak mahu membantu.", "Memilih kerja mengikut suka hati."], answer:0,
+    explain:"Menggambarkan semangat kerjasama — susah dan senang ditanggung bersama-sama." },
+  { id:"pb23", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"bagai kacang lupakan kulit\"?",
+    options:["Orang yang melupakan asal usul atau jasa orang lain.", "Orang yang sangat berjimat cermat.",
+             "Orang yang tekun bekerja.", "Orang yang suka menolong."], answer:0,
+    explain:"Menggambarkan orang yang sudah senang lalu lupa akan asal usul atau orang yang pernah berjasa kepadanya." },
+  { id:"pb24", cat:"Peribahasa & Simile", q:"Apakah maksud ungkapan \"buah tangan\"?",
+    options:["Hadiah atau oleh-oleh.", "Hasil pertanian.", "Pekerjaan yang berat.", "Idea yang bernas."], answer:0,
+    explain:"\"Buah tangan\" bermaksud hadiah atau bingkisan yang dibawa pulang untuk seseorang." },
+  { id:"pb25", cat:"Peribahasa & Simile", q:"Apakah maksud ungkapan \"kepala batu\"?",
+    options:["Degil dan tidak mahu mendengar nasihat.", "Sangat pandai.", "Pelupa.", "Berani menghadapi cabaran."], answer:0,
+    explain:"Orang yang \"kepala batu\" ialah orang yang keras hati dan enggan menurut nasihat orang lain." },
+  { id:"pb26", cat:"Peribahasa & Simile", q:"Apakah maksud ungkapan \"kambing hitam\"?",
+    options:["Orang yang dipersalahkan atas kesalahan orang lain.", "Orang yang berkulit gelap.",
+             "Haiwan peliharaan yang jinak.", "Orang yang pendiam."], answer:0,
+    explain:"\"Kambing hitam\" merujuk orang yang dijadikan tempat menyalahkan walaupun bukan dia yang bersalah." },
+  { id:"pb27", cat:"Peribahasa & Simile", q:"Apakah maksud ungkapan \"cakar ayam\"?",
+    options:["Tulisan yang buruk dan sukar dibaca.", "Makanan kegemaran kanak-kanak.",
+             "Kerja yang cepat siap.", "Permainan tradisional."], answer:0,
+    explain:"\"Tulisan cakar ayam\" bermaksud tulisan yang tidak kemas dan sukar dibaca." },
+  { id:"pb28", cat:"Peribahasa & Simile", q:"Apakah maksud ungkapan \"tangan kanan\"?",
+    options:["Orang kepercayaan atau pembantu utama.", "Orang yang kidal.",
+             "Pekerja yang malas.", "Ketua sesebuah keluarga."], answer:0,
+    explain:"\"Tangan kanan\" ialah orang yang paling dipercayai untuk membantu sesuatu tugas." },
+  { id:"pb29", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"bagai melepaskan batuk di tangga\"?",
+    options:["Membuat kerja secara sambil lewa, tidak bersungguh-sungguh.", "Bekerja dengan amat teliti.",
+             "Menyelesaikan kerja dengan cepat.", "Membantu orang yang dalam kesusahan."], answer:0,
+    explain:"Menggambarkan orang yang membuat sesuatu kerja dengan tidak bersungguh-sungguh, asal sudah dibuat." },
+  { id:"pb30", cat:"Peribahasa & Simile", q:"Apakah maksud peribahasa \"sudah terhantuk baru terngadah\"?",
+    options:["Menyesal setelah sesuatu yang buruk berlaku.", "Berhati-hati sebelum bertindak.",
+             "Cepat belajar daripada kesilapan.", "Tidak pernah membuat kesilapan."], answer:0,
+    explain:"Insaf atau sedar hanya setelah terkena sesuatu masalah/kesusahan." },
+
+  /* ================ TAMBAHAN — KEFAHAMAN ================ */
+  { id:"kf11", cat:"Kefahaman", q:"Apakah maksud perkataan \"tekun\"?",
+    options:["Rajin dan bersungguh-sungguh.", "Cepat berputus asa.", "Suka bermain.", "Mudah lupa."], answer:0,
+    explain:"\"Tekun\" bermaksud melakukan sesuatu dengan rajin, sabar dan bersungguh-sungguh." },
+  { id:"kf12", cat:"Kefahaman", q:"Apakah maksud perkataan \"gigih\"?",
+    options:["Berusaha bersungguh-sungguh tanpa putus asa.", "Sangat malas.", "Cepat marah.", "Suka berbohong."], answer:0,
+    explain:"\"Gigih\" bermaksud kuat berusaha dan tidak mudah mengalah." },
+  { id:"kf13", cat:"Kefahaman", q:"Apakah maksud perkataan \"amanah\"?",
+    options:["Boleh dipercayai dan jujur memegang tanggungjawab.", "Suka memberi hadiah.",
+             "Pandai bercakap.", "Cepat menyiapkan kerja."], answer:0,
+    explain:"\"Amanah\" bermaksud sifat boleh dipercayai dan bertanggungjawab terhadap sesuatu yang diberikan." },
+  { id:"kf14", cat:"Kefahaman", q:"Apakah maksud perkataan \"berdikari\"?",
+    options:["Berusaha sendiri tanpa bergantung pada orang lain.", "Suka menolong orang.",
+             "Sentiasa meminta bantuan.", "Bekerja dalam kumpulan."], answer:0,
+    explain:"\"Berdikari\" bermaksud berdiri di atas kaki sendiri — tidak bergantung kepada orang lain." },
+  { id:"kf15", cat:"Kefahaman", q:"Apakah maksud perkataan \"berbudi bahasa\"?",
+    options:["Bersopan santun dalam pertuturan dan perbuatan.", "Pandai berbahasa asing.",
+             "Suka bercakap banyak.", "Tegas dalam membuat keputusan."], answer:0,
+    explain:"Orang yang \"berbudi bahasa\" ialah orang yang halus tutur kata dan sopan tingkah lakunya." },
+  { id:"kf16", cat:"Kefahaman", q:"Apakah maksud perkataan \"menjejaskan\"?",
+    options:["Merosakkan atau memberi kesan buruk kepada.", "Memperbaiki sesuatu.",
+             "Menyiapkan dengan cepat.", "Menambah jumlah sesuatu."], answer:0,
+    explain:"\"Menjejaskan\" bermaksud mengganggu atau merosakkan keadaan sesuatu." },
+  { id:"kf17", cat:"Kefahaman", q:"Apakah maksud perkataan \"lestari\"?",
+    options:["Kekal dan berterusan (terutama alam sekitar).", "Cepat rosak.", "Kosong.", "Sementara sahaja."], answer:0,
+    explain:"\"Lestari\" bermaksud kekal terpelihara dan berterusan, misalnya \"alam sekitar yang lestari\"." },
+  { id:"kf18", cat:"Kefahaman", q:"Apakah maksud perkataan \"iktibar\"?",
+    options:["Pengajaran atau teladan daripada sesuatu peristiwa.", "Hukuman yang berat.",
+             "Hadiah istimewa.", "Cerita yang lucu."], answer:0,
+    explain:"\"Iktibar\" bermaksud pengajaran yang boleh diambil daripada sesuatu kejadian." },
+  { id:"kf19", cat:"Kefahaman", q:"Apakah maksud perkataan \"ikhlas\"?",
+    options:["Tulus hati tanpa mengharapkan balasan.", "Bekerja kerana terpaksa.",
+             "Suka memuji diri sendiri.", "Cepat berputus asa."], answer:0,
+    explain:"\"Ikhlas\" bermaksud melakukan sesuatu dengan hati yang bersih, bukan kerana habuan." },
+  { id:"kf20", cat:"Kefahaman", q:"Apakah maksud perkataan \"memartabatkan\"?",
+    options:["Meningkatkan kedudukan atau kemuliaan sesuatu.", "Menjatuhkan maruah seseorang.",
+             "Menyembunyikan sesuatu.", "Membatalkan sesuatu rancangan."], answer:0,
+    explain:"\"Memartabatkan\" bermaksud mengangkat darjat atau kedudukan sesuatu, contohnya memartabatkan bahasa Melayu." },
+  { id:"kf21", cat:"Kefahaman", q:"\"Projek pembinaan itu terbengkalai selepas dua tahun.\" Perkataan \"terbengkalai\" bermaksud...",
+    options:["terhenti dan tidak disiapkan.", "siap lebih awal.", "berjalan dengan lancar.", "dirobohkan semula."], answer:0,
+    explain:"\"Terbengkalai\" bermaksud sesuatu kerja/projek yang terhenti separuh jalan dan tidak diteruskan." },
+  { id:"kf22", cat:"Kefahaman", q:"\"Harga barang keperluan melambung tinggi pada bulan ini.\" Ungkapan \"melambung tinggi\" bermaksud...",
+    options:["naik dengan banyak.", "turun sedikit.", "kekal sama.", "hilang dari pasaran."], answer:0,
+    explain:"\"Melambung tinggi\" bermaksud meningkat atau naik dengan mendadak." },
+  { id:"kf23", cat:"Kefahaman", q:"\"Dia sentiasa berlapang dada menerima teguran daripada gurunya.\" Ungkapan \"berlapang dada\" bermaksud...",
+    options:["bersikap terbuka dan tidak berkecil hati.", "berasa marah dan kecewa.",
+             "berbangga dengan diri sendiri.", "tidak mempedulikan nasihat."], answer:0,
+    explain:"\"Berlapang dada\" bermaksud reda dan boleh menerima sesuatu (teguran/cabaran) dengan hati yang terbuka." },
+  { id:"kf24", cat:"Kefahaman", q:"\"Bilangan pelancong asing semakin merosot tahun ini.\" Perkataan \"merosot\" bermaksud...",
+    options:["semakin berkurang.", "semakin bertambah.", "tidak berubah.", "menjadi dua kali ganda."], answer:0,
+    explain:"\"Merosot\" bermaksud menurun atau berkurangan." },
+  { id:"kf25", cat:"Kefahaman", q:"Pantun empat kerat mempunyai berapa baris dalam setiap rangkap?",
+    options:["Empat baris", "Dua baris", "Enam baris", "Lapan baris"], answer:0,
+    explain:"Pantun empat kerat ada empat baris: dua baris pembayang dan dua baris maksud." },
+  { id:"kf26", cat:"Kefahaman", q:"Dalam pantun empat kerat, baris yang manakah membawa MAKSUD pantun?",
+    options:["Baris ketiga dan keempat", "Baris pertama dan kedua", "Baris pertama dan ketiga", "Semua baris"], answer:0,
+    explain:"Baris pertama dan kedua ialah pembayang maksud; baris ketiga dan keempat ialah maksud sebenar pantun." },
+  { id:"kf27", cat:"Kefahaman", q:"Apakah unsur bunyi yang berulang pada hujung baris dalam puisi tradisional?",
+    options:["Rima", "Rangkap", "Pembayang", "Tema"], answer:0,
+    explain:"\"Rima\" ialah persamaan bunyi pada hujung baris (contohnya rima akhir a-b-a-b dalam pantun)." },
+  { id:"kf28", cat:"Kefahaman", q:"Sajak ialah puisi moden yang...",
+    options:["bentuknya bebas — tidak terikat pada bilangan baris, rima dan rangkap.",
+             "mesti ada empat baris setiap rangkap.", "mesti berima a-b-a-b.", "tidak boleh ada rangkap."], answer:0,
+    explain:"Berbeza dengan pantun atau syair, sajak (puisi moden) tidak terikat pada peraturan bilangan baris, rima atau rangkap." },
+  { id:"kf29", cat:"Kefahaman", q:"\"Murid yang berdisiplin akan menjadi kebanggaan sekolah.\" Perkataan \"berdisiplin\" bermaksud...",
+    options:["mematuhi peraturan.", "melanggar peraturan.", "suka bersendirian.", "pandai bersukan."], answer:0,
+    explain:"\"Berdisiplin\" bermaksud sentiasa mematuhi peraturan dan menjaga tatatertib." },
+  { id:"kf30", cat:"Kefahaman", q:"Apakah maksud perkataan \"wawasan\"?",
+    options:["Pandangan atau matlamat jauh ke hadapan.", "Kenangan masa lalu.",
+             "Perasaan takut.", "Kerja harian yang biasa."], answer:0,
+    explain:"\"Wawasan\" bermaksud gambaran atau cita-cita tentang sesuatu yang ingin dicapai pada masa depan." },
+];
+
+</script>
+<script>
+/* === data/essays.js (inlined) === */
+/* ============================================================
+   BANK KARANGAN — Latihan Harian Bahasa Melayu Tingkatan 1
+   Setiap hari satu tajuk dipaparkan untuk ditulis sendiri,
+   diikuti contoh karangan yang baik (boleh dibuka selepas
+   selesai menulis).
+   Format mengikut Kertas 2: respons terhad, berita, rencana,
+   cerita, dialog, surat tidak rasmi, keperihalan, karangan
+   berdasarkan bahan, dll.
+   ============================================================ */
+window.ESSAY_BANK = [
+
+  {
+    id:"e01",
+    jenis:"Karangan respons terhad (± 80 patah perkataan)",
+    tajuk:"Penggunaan telefon pintar secara berleluasa membawa kesan buruk kepada murid sekolah. Nyatakan kesan-kesan tersebut.",
+    bahan:"Berdasarkan pengalaman dan pemerhatian anda sendiri. Tulis sekitar 80 patah perkataan.",
+    tips:[
+      "Pendahuluan ringkas (1 ayat): nyatakan telefon pintar banyak digunakan murid hari ini.",
+      "Isi 1: ketagihan / membuang masa — kurang masa untuk ulang kaji.",
+      "Isi 2: kesihatan — mata letih, kurang tidur, kurang bersenam.",
+      "Isi 3: hubungan sosial — kurang berinteraksi dengan keluarga dan rakan.",
+      "Penutup ringkas: gunakan telefon secara berhemah dan berhad."
+    ],
+    contoh:[
+      "Pada masa ini, hampir semua murid sekolah memiliki telefon pintar. Namun begitu, penggunaannya secara berleluasa membawa banyak kesan buruk.",
+      "Pertama, murid mudah ketagih melayari media sosial dan bermain permainan video sehingga membuang masa belajar. Akibatnya, prestasi pelajaran mereka semakin merosot.",
+      "Selain itu, terlalu lama menatap skrin telefon menjejaskan kesihatan. Mata menjadi letih, waktu tidur terganggu, dan murid menjadi malas bersenam.",
+      "Akhir sekali, murid yang asyik dengan telefon kurang berinteraksi dengan ahli keluarga dan rakan. Hubungan kekeluargaan menjadi renggang.",
+      "Kesimpulannya, telefon pintar perlu digunakan secara berhemah dan terhad supaya tidak merosakkan diri sendiri."
+    ]
+  },
+
+  {
+    id:"e02",
+    jenis:"Berita (berdasarkan gambar bersiri)",
+    tajuk:"Tulis sebuah berita tentang satu kemalangan jalan raya yang mengakibatkan seorang mangsa cedera parah.",
+    bahan:"Antara butiran yang boleh digunakan: tempat dan masa kejadian, punca, keadaan mangsa, tindakan pasukan kecemasan, dan kenyataan pihak polis. Berikan tajuk berita.",
+    tips:[
+      "Mulakan dengan TAJUK berita (huruf besar / tebal).",
+      "Perenggan 1: jawab soalan 'apa, di mana, bila' — kemalangan berlaku, lokasi, waktu.",
+      "Perenggan 2: jelaskan keadaan mangsa dan kerosakan kenderaan.",
+      "Perenggan 3: tindakan pasukan bomba, ambulans, hospital.",
+      "Perenggan 4: kenyataan polis tentang punca dan nasihat kepada orang ramai.",
+      "Gaya bahasa berita: padat, lampau, melaporkan fakta (bukan pendapat peribadi)."
+    ],
+    contoh:[
+      "PEMANDU CEDERA PARAH, KERETA TERJUNAM KE DALAM PARIT",
+      "CHERAS — Seorang pemandu kereta cedera parah selepas kenderaannya terbabas lalu terjunam ke dalam sebatang parit di Lebuhraya Cheras–Kajang dekat sini, kira-kira pukul 7.30 pagi semalam.",
+      "Dalam kejadian itu, kereta jenis sederhana yang dipandu mangsa dipercayai hilang kawalan sebelum melanggar pembahagi jalan dan terjunam ke dalam parit sedalam dua meter. Bahagian hadapan kereta itu remuk teruk.",
+      "Pasukan Bomba dan Penyelamat yang tiba di lokasi mengambil masa kira-kira 20 minit untuk mengeluarkan mangsa yang tersepit di tempat duduk pemandu. Mangsa kemudian dikejarkan ke hospital berdekatan dengan menggunakan ambulans.",
+      "Ketua Balai Polis Trafik daerah berkenaan memberitahu bahawa siasatan awal mendapati kejadian itu mungkin disebabkan jalan licin akibat hujan. Beliau menasihati orang ramai supaya memandu dengan berhati-hati dan tidak memandu dalam keadaan mengantuk, terutama pada waktu pagi."
+    ]
+  },
+
+  {
+    id:"e03",
+    jenis:"Karangan fakta",
+    tajuk:"Langkah-langkah memupuk semangat cinta akan Bahasa Melayu dalam kalangan remaja.",
+    bahan:"Tulis sebuah karangan yang lengkap dengan pendahuluan, isi dan penutup.",
+    tips:[
+      "Pendahuluan: Bahasa Melayu ialah bahasa kebangsaan dan jati diri kita; perlu dipelihara.",
+      "Isi 1: peranan keluarga — bertutur dalam Bahasa Melayu yang betul di rumah.",
+      "Isi 2: peranan sekolah — Minggu Bahasa, pertandingan pantun, syarahan, kuiz.",
+      "Isi 3: peranan media — filem, lagu, buku dan media sosial dalam Bahasa Melayu yang baik.",
+      "Isi 4: sikap individu — berbangga menggunakan bahasa sendiri, banyak membaca.",
+      "Penutup: tanggungjawab bersama; bahasa jiwa bangsa."
+    ],
+    contoh:[
+      "Bahasa Melayu ialah bahasa kebangsaan negara kita dan menjadi lambang jati diri rakyat Malaysia. Oleh itu, semangat mencintai bahasa ini perlu dipupuk dalam kalangan remaja sebelum ia semakin terpinggir.",
+      "Langkah pertama ialah bermula daripada institusi keluarga. Ibu bapa hendaklah bertutur dalam Bahasa Melayu yang betul di rumah dan menggalakkan anak-anak membaca buku berbahasa Melayu. Didikan sejak kecil ini akan membentuk kecintaan yang berkekalan.",
+      "Selain itu, pihak sekolah perlu memainkan peranan dengan menganjurkan pelbagai aktiviti seperti Minggu Bahasa Kebangsaan, pertandingan pantun, syarahan dan kuiz bahasa. Aktiviti sebegini bukan sahaja menyeronokkan, malah meningkatkan kemahiran berbahasa murid.",
+      "Di samping itu, media massa juga boleh membantu. Filem, lagu, rancangan televisyen dan kandungan media sosial yang menggunakan Bahasa Melayu yang baik akan menjadikan bahasa ini lebih dekat dengan remaja.",
+      "Akhir sekali, setiap individu perlu berbangga menggunakan bahasa sendiri dan rajin membaca bahan berbahasa Melayu. Sikap positif ini sangat penting kerana bahasa hanya akan kekal jika penuturnya menghargainya.",
+      "Kesimpulannya, memupuk semangat cinta akan Bahasa Melayu ialah tanggungjawab bersama. Seperti kata pepatah, bahasa jiwa bangsa — jika bahasa hilang, hilanglah bangsa."
+    ]
+  },
+
+  {
+    id:"e04",
+    jenis:"Cerita / cerpen pendek",
+    tajuk:"Tulis sebuah cerita yang berakhir dengan ayat: \"...sejak hari itu, aku berjanji akan menjadi murid yang berdisiplin.\"",
+    bahan:"Pastikan cerita anda mempunyai watak, latar, peristiwa dan pengajaran. Ayat penutup mesti seperti yang diberikan.",
+    tips:[
+      "Pendahuluan: perkenalkan watak 'aku', latar tempat dan masa.",
+      "Perkembangan: timbulkan masalah — contohnya datang lewat, tidak menyiapkan kerja sekolah.",
+      "Klimaks: akibat perbuatan itu — dimarahi guru, malu, menyesal.",
+      "Peleraian: insiden yang menyedarkan watak (nasihat guru/ibu bapa).",
+      "Akhiri TEPAT dengan ayat yang diberikan.",
+      "Guna kata kerja lampau dan dialog ringkas supaya hidup."
+    ],
+    contoh:[
+      "Loceng sekolah sudah berbunyi nyaring ketika aku tiba di pintu pagar. Sekali lagi aku lewat. Cikgu Hamid yang bertugas memandangku dengan kecewa, lalu mencatat namaku dalam buku merah.",
+      "\"Ini kali ketiga minggu ini, Amir,\" katanya perlahan tetapi tegas. Aku hanya mampu menunduk. Sebenarnya, malam tadi aku terlalu lama bermain telefon sehingga terlewat bangun.",
+      "Di dalam kelas, keadaan bertambah buruk. Aku tidak menyiapkan kerja rumah Matematik kerana masa habis dengan permainan video. Cikgu Salmah menyuruh aku berdiri di hadapan kelas. Wajahku terasa panas menahan malu sementara kawan-kawan memerhatikan.",
+      "Sepulang sekolah, Cikgu Hamid memanggilku ke biliknya. Beliau tidak memarahi, sebaliknya bercerita tentang dirinya yang dahulu juga pernah malas, namun berubah kerana sayangkan masa depan. \"Disiplin itu bukan untuk cikgu, tetapi untuk dirimu sendiri,\" katanya.",
+      "Malam itu, aku susun jadual belajar dan letakkan telefon jauh daripada katil. Aku tidur awal supaya dapat bangun lebih pagi.",
+      "Keesokan harinya, aku tiba di sekolah sepuluh minit lebih awal dengan kerja rumah yang lengkap. Hatiku terasa lapang. Sejak hari itu, aku berjanji akan menjadi murid yang berdisiplin."
+    ]
+  },
+
+  {
+    id:"e05",
+    jenis:"Dialog",
+    tajuk:"Tulis perbualan antara seorang bapa dengan anaknya tentang kepentingan menguasai Bahasa Melayu.",
+    bahan:"Tulis dalam bentuk dialog yang lengkap. Setiap pertukaran cakap dimulakan dengan nama watak.",
+    tips:[
+      "Mulakan dengan latar ringkas (1–2 ayat) sebelum dialog bermula — bila dan di mana.",
+      "Guna format: Nama : \"...ayat...\"",
+      "Selitkan beberapa hujah: bahasa kebangsaan, peluang pekerjaan, jati diri, peperiksaan.",
+      "Jadikan watak anak ada soalan/keraguan supaya perbualan bergerak secara semula jadi.",
+      "Tutup dengan kesimpulan ringkas — anak faham dan berazam memperbaiki bahasanya."
+    ],
+    contoh:[
+      "Pada suatu petang, Hakim sedang menyiapkan kerja sekolahnya di ruang tamu apabila ayahnya datang menghampiri.",
+      "Ayah  : \"Hakim, kenapa muram benar? Kerja sekolah susah?\"",
+      "Hakim : \"Karangan Bahasa Melayu, ayah. Hakim rasa belajar bahasa Inggeris lebih berguna. Untuk apa kuasai Bahasa Melayu sangat-sangat?\"",
+      "Ayah  : \"Eh, jangan cakap begitu. Bahasa Melayu ialah bahasa kebangsaan kita. Itu jati diri kita sebagai rakyat Malaysia.\"",
+      "Hakim : \"Tapi banyak pekerjaan minta bahasa Inggeris...\"",
+      "Ayah  : \"Betul, bahasa Inggeris penting. Tetapi Bahasa Melayu juga digunakan dalam urusan rasmi, mesyuarat, dan banyak pekerjaan kerajaan. Lagipun, kalau bahasa sendiri pun tak mahir, orang akan pandang rendah.\"",
+      "Hakim : \"Hmm, betul juga, ayah. Lagipun markah Bahasa Melayu Hakim pun kurang baik.\"",
+      "Ayah  : \"Itulah. Mulai sekarang, baca buku cerita Melayu, banyakkan latihan karangan, dan jangan campur bahasa rojak. Lama-kelamaan Hakim akan mahir.\"",
+      "Hakim : \"Baiklah, ayah. Hakim akan cuba bersungguh-sungguh mulai hari ini.\"",
+      "Ayah  : \"Bagus. Ayah yakin Hakim boleh.\"",
+      "Hakim mengangguk dan kembali menulis dengan semangat yang baharu."
+    ]
+  },
+
+  {
+    id:"e06",
+    jenis:"Karangan fakta",
+    tajuk:"Kepentingan menuntut ilmu dalam kehidupan.",
+    bahan:"Tulis sebuah karangan yang lengkap dengan pendahuluan, sekurang-kurangnya tiga isi, dan penutup.",
+    tips:[
+      "Pendahuluan: ilmu itu cahaya hidup; semua orang perlu menuntutnya sepanjang hayat.",
+      "Isi 1: ilmu membuka peluang pekerjaan dan menjamin masa depan.",
+      "Isi 2: ilmu membentuk peribadi mulia dan membezakan baik dengan buruk.",
+      "Isi 3: ilmu memajukan masyarakat dan negara (sains, teknologi, ekonomi).",
+      "Isi 4: ilmu menjadikan seseorang dihormati dan berkeyakinan.",
+      "Penutup: tuntut ilmu dengan tekun; ilmu tidak akan habis dibelanjakan."
+    ],
+    contoh:[
+      "Ilmu pengetahuan ibarat cahaya yang menerangi kehidupan manusia. Tanpa ilmu, seseorang akan hidup dalam kegelapan dan kejahilan. Oleh sebab itu, menuntut ilmu sangat penting kepada setiap individu.",
+      "Pertama, ilmu membuka peluang pekerjaan yang lebih baik. Orang yang berilmu lebih mudah memperoleh kerjaya yang stabil dan pendapatan yang lumayan. Dengan itu, kehidupan masa depan mereka lebih terjamin.",
+      "Selain itu, ilmu membentuk peribadi yang mulia. Melalui ilmu, seseorang dapat membezakan perkara yang baik dengan yang buruk serta menjauhi perbuatan yang salah. Mereka juga lebih bertimbang rasa terhadap orang lain.",
+      "Di samping itu, ilmu memajukan masyarakat dan negara. Kemajuan dalam bidang sains, teknologi dan ekonomi yang kita nikmati hari ini lahir daripada usaha golongan yang berilmu. Negara yang rakyatnya berilmu pasti maju dan dihormati.",
+      "Akhir sekali, orang yang berilmu lebih dihormati dan berkeyakinan. Mereka mampu menyumbangkan pendapat yang bernas dan menjadi tempat rujukan masyarakat.",
+      "Kesimpulannya, kita hendaklah menuntut ilmu dengan tekun dan bersungguh-sungguh. Tidak seperti harta, ilmu tidak akan habis walaupun dikongsi dan digunakan."
+    ]
+  },
+
+  {
+    id:"e07",
+    jenis:"Karangan keperihalan / penggambaran",
+    tajuk:"Gambarkan suasana di sebuah pasar raya pada hujung minggu.",
+    bahan:"Hidupkan suasana melalui penggunaan deria — apa yang dilihat, didengar dan dirasai.",
+    tips:[
+      "Pendahuluan: nyatakan bila dan di mana — pasar raya pada pagi/petang Sabtu.",
+      "Isi 1: keadaan di luar — tempat letak kereta penuh sesak.",
+      "Isi 2: di dalam — rak penuh barang, pelbagai bunyi, bau roti panas.",
+      "Isi 3: gelagat pengunjung — keluarga, kanak-kanak, juruwang sibuk.",
+      "Isi 4: di kaunter bayaran — barisan panjang, troli sarat.",
+      "Penutup: kesan suasana — meriah, penat tetapi menyeronokkan."
+    ],
+    contoh:[
+      "Hujung minggu merupakan masa yang paling sibuk bagi sebuah pasar raya. Pada pagi Sabtu itu, suasana di Pasar Raya Sentosa benar-benar meriah dengan kunjungan orang ramai.",
+      "Sebaik sahaja tiba, aku dapat melihat tempat letak kereta hampir penuh. Beberapa buah kereta berpusing-pusing mencari ruang yang kosong. Bunyi hon sesekali kedengaran kerana ada pemandu yang tidak sabar.",
+      "Di dalam pasar raya pula, rak-rak dipenuhi pelbagai jenis barang yang tersusun rapi. Bau roti yang baru dibakar dari bahagian bakeri menusuk hidung, manakala pengumuman tentang tawaran istimewa berkumandang melalui pembesar suara.",
+      "Pengunjung pula pelbagai ragam. Ada keluarga yang menolak troli sarat dengan barang dapur, ada kanak-kanak yang merengek meminta gula-gula, dan ada pula warga emas yang berjalan perlahan sambil meneliti harga. Para juruwang pula sibuk mengimbas barang tanpa henti.",
+      "Di kaunter bayaran, barisan pelanggan menjadi semakin panjang. Walaupun terpaksa menunggu agak lama, kebanyakan mereka tetap bersabar sambil berbual mesra.",
+      "Apabila keluar dari pasar raya, badanku terasa sedikit penat. Namun begitu, suasana yang meriah dan rancak itu tetap menyeronokkan dan menjadi kenangan hujung minggu yang menggembirakan."
+    ]
+  },
+
+  {
+    id:"e08",
+    jenis:"Surat kiriman tidak rasmi",
+    tajuk:"Tulis sepucuk surat kepada sahabat anda menceritakan pengalaman menyertai satu aktiviti yang dianjurkan oleh sekolah.",
+    bahan:"Gunakan format surat kiriman tidak rasmi yang betul (alamat pengirim, tarikh, kata panggilan, isi, penutup).",
+    tips:[
+      "Tulis alamat pengirim di sudut kiri atas, garis, kemudian tarikh.",
+      "Kata panggilan: 'Sahabatku, Aiman,' diikuti pembuka ayat ('Apa khabar?...').",
+      "Perenggan 1: tujuan menulis — ingin berkongsi pengalaman.",
+      "Perenggan 2–3: ceritakan aktiviti — bila, di mana, apa yang dilakukan, perasaan.",
+      "Perenggan 4: harapan bertemu / pesanan ringkas.",
+      "Penutup: 'Sekian, daripada sahabatmu,' diikuti nama. Elakkan bahasa terlalu formal."
+    ],
+    contoh:[
+      "No. 12, Jalan Melati 3,",
+      "Taman Seri Indah,",
+      "43200 Cheras, Selangor.                                              10 Mei 2026",
+      "",
+      "Sahabatku Aiman,",
+      "",
+      "  Apa khabar? Semoga kamu sentiasa sihat di sana. Aku menulis surat ini untuk berkongsi pengalaman menyertai Perkhemahan Unit Beruniform yang diadakan oleh sekolahku minggu lepas.",
+      "",
+      "  Perkhemahan itu diadakan selama tiga hari dua malam di sebuah hutan lipur berdekatan. Pada hari pertama, kami mendirikan khemah, memasak sendiri, dan bermain permainan dalam kumpulan. Walaupun penat, semuanya sangat seronok.",
+      "",
+      "  Pengalaman yang paling aku ingati ialah aktiviti merentas halangan pada waktu malam. Mula-mula aku takut, tetapi kawan-kawan memberikan semangat sehingga aku berjaya sampai ke garisan penamat. Aku belajar erti kerjasama dan keberanian daripada aktiviti itu.",
+      "",
+      "  Aku harap dapat berjumpa kamu pada cuti sekolah nanti untuk bercerita lebih lanjut. Jaga kesihatan dan jangan lupa belajar bersungguh-sungguh, ya.",
+      "",
+      "Sekian, sampai di sini dahulu.",
+      "",
+      "Daripada sahabatmu,",
+      "Amar."
+    ]
+  },
+
+  {
+    id:"e09",
+    jenis:"Karangan berdasarkan bahan / grafik",
+    tajuk:"Berdasarkan maklumat tentang faedah membaca, huraikan kebaikan tabiat membaca dalam kalangan murid.",
+    bahan:"Antara faedah yang boleh dihuraikan: menambah ilmu dan perbendaharaan kata, meningkatkan daya fikir, mengisi masa lapang dengan berfaedah, dan menghilangkan tekanan.",
+    tips:[
+      "Pendahuluan: membaca jambatan ilmu; murid digalakkan menjadikannya tabiat.",
+      "Isi 1: menambah ilmu dan memperkaya perbendaharaan kata — membantu dalam karangan.",
+      "Isi 2: mempertajam daya fikir dan tumpuan.",
+      "Isi 3: mengisi masa lapang dengan aktiviti berfaedah, mengelak gejala tidak sihat.",
+      "Isi 4: menenangkan fikiran dan menghilangkan tekanan.",
+      "Penutup: jadikan membaca amalan harian; baca jamu minda."
+    ],
+    contoh:[
+      "Membaca sering disebut sebagai jambatan ilmu. Oleh itu, tabiat membaca wajar dipupuk dalam kalangan murid kerana terlalu banyak kebaikannya.",
+      "Pertama, membaca menambahkan ilmu pengetahuan dan memperkaya perbendaharaan kata. Murid yang banyak membaca akan lebih mudah memahami pelajaran dan mampu menghasilkan karangan yang baik kerana mempunyai banyak kosa kata.",
+      "Selain itu, membaca mempertajam daya fikir dan menambah tumpuan. Semasa membaca, minda diasah untuk berfikir, menaakul dan membayangkan sesuatu. Lama-kelamaan, murid menjadi lebih bijak dan cekap menyelesaikan masalah.",
+      "Di samping itu, membaca mengisi masa lapang dengan aktiviti yang berfaedah. Murid yang gemar membaca tidak akan membuang masa dengan perkara yang sia-sia atau terjebak dalam gejala yang tidak sihat.",
+      "Akhir sekali, membaca dapat menenangkan fikiran. Membaca bahan yang menarik mampu menghilangkan tekanan dan kebosanan selepas seharian belajar.",
+      "Kesimpulannya, semua murid hendaklah menjadikan membaca sebagai amalan harian. Seperti kata orang, membaca jamu minda — semakin banyak membaca, semakin luas pemikiran kita."
+    ]
+  },
+
+  {
+    id:"e10",
+    jenis:"Cerita berdasarkan peribahasa",
+    tajuk:"Tulis sebuah cerita yang sesuai dengan peribahasa \"sediakan payung sebelum hujan\".",
+    bahan:"Cerita mesti menggambarkan maksud peribahasa itu — pentingnya membuat persediaan awal.",
+    tips:[
+      "Pendahuluan: perkenalkan watak dan situasi (peperiksaan / pertandingan / cuaca).",
+      "Bahagikan dua watak yang berbeza sikap: seorang membuat persediaan, seorang bertangguh.",
+      "Perkembangan: tunjukkan usaha watak yang rajin dan kelekaan watak yang malas.",
+      "Klimaks: 'hujan turun' — saat yang menguji, watak malas menerima padah.",
+      "Peleraian + pengajaran: watak yang bersedia berjaya; watak satu lagi insaf.",
+      "Boleh akhiri dengan ungkapan peribahasa itu sendiri."
+    ],
+    contoh:[
+      "Dua minggu sebelum peperiksaan pertengahan tahun, Cikgu Rafiq mengingatkan murid Tingkatan 1 Bestari supaya mula mengulang kaji. Farah segera menyusun jadual belajar dan menyiapkan nota ringkas setiap malam. Sebaliknya, Danish hanya ketawa. \"Lambat lagi. Aku boleh ulang kaji malam sebelum periksa,\" katanya.",
+      "Setiap petang, Farah duduk di mejanya membaca buku teks dan menjawab soalan latihan. Apabila ada yang tidak difahami, dia bertanya kepada guru. Danish pula menghabiskan masanya bermain bola dan permainan video.",
+      "Akhirnya, malam sebelum peperiksaan tiba. Danish baru hendak membuka buku, tetapi terlalu banyak yang perlu dibaca. Kepalanya pening dan matanya mengantuk. Dia tidur lewat tanpa sempat menghabiskan satu mata pelajaran pun.",
+      "Pada hari peperiksaan, Farah menjawab soalan dengan tenang dan yakin. Danish pula termenung kerana banyak soalan yang tidak dapat dijawabnya. Apabila keputusan keluar, Farah mendapat markah yang cemerlang manakala Danish gagal dalam beberapa mata pelajaran.",
+      "Danish sangat menyesal. \"Aku patut buat seperti Farah,\" bisiknya. Sejak hari itu, dia berazam tidak akan bertangguh lagi.",
+      "Daripada peristiwa itu, kita belajar bahawa kejayaan memerlukan persediaan awal. Memang benar kata orang tua-tua, sediakan payung sebelum hujan."
+    ]
+  }
+];
+
+</script>
+<script>
+(function(){
+  "use strict";
+  var Q = window.QUESTION_BANK || [];
+  var E = window.ESSAY_BANK || [];
+
+  // ---------- date / day index ----------
+  var viewDate = new Date(); viewDate.setHours(0,0,0,0);
+  function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+  function isoOf(d){ var m=("0"+(d.getMonth()+1)).slice(-2),da=("0"+d.getDate()).slice(-2); return d.getFullYear()+"-"+m+"-"+da; }
+  function isToday(d){ var t=new Date(); return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate(); }
+  var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+  var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+
+  // ---------- storage ----------
+  function get(k,def){ try{ var v=localStorage.getItem(k); return v===null?def:JSON.parse(v);}catch(e){return def;} }
+  function set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  var DONE_KEY="bm:doneDates";          // array of iso dates with all 10 answered
+  function obKey(iso){ return "bm:ob:"+iso; }   // {qid:chosenIndex}
+  function esKey(iso){ return "bm:essay:"+iso; }
+
+  // ---------- streak ----------
+  function computeStreak(){
+    var done = get(DONE_KEY,[]);
+    if(!done.length) return 0;
+    var s=new Set(done), n=0, d=new Date(); d.setHours(0,0,0,0);
+    // allow streak to count even if today not yet done (counts up to yesterday)
+    if(!s.has(isoOf(d))) d.setDate(d.getDate()-1);
+    while(s.has(isoOf(d))){ n++; d.setDate(d.getDate()-1); }
+    return n;
+  }
+  function markDoneIfComplete(iso){
+    var ob = get(obKey(iso),{});
+    if(Object.keys(ob).length>=10){
+      var done = get(DONE_KEY,[]);
+      if(done.indexOf(iso)===-1){ done.push(iso); set(DONE_KEY,done); }
+    }
+  }
+
+  // ---------- selection of the day ----------
+  function pickFromCat(catName, count, di){
+    var arr = Q.filter(function(q){return q.cat===catName;});
+    if(!arr.length) return [];
+    var out=[], n=arr.length, start=(di*count)%n;
+    for(var i=0;i<count;i++) out.push(arr[(start+i)%n]);
+    return out;
+  }
+  function questionsForDay(di){
+    // weighted to weaknesses: 3 Ejaan, 3 Tatabahasa, 2 Peribahasa & Simile, 2 Kefahaman
+    var list = []
+      .concat(pickFromCat("Ejaan",3,di))
+      .concat(pickFromCat("Tatabahasa",3,di))
+      .concat(pickFromCat("Peribahasa & Simile",2,di))
+      .concat(pickFromCat("Kefahaman",2,di));
+    // shuffle deterministically so categories aren't grouped
+    var seed = di*2654435761 % 2147483647 || 1;
+    function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+    for(var i=list.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=list[i];list[i]=list[j];list[j]=t; }
+    return list;
+  }
+  function essayForDay(di){ return E.length? E[((di%E.length)+E.length)%E.length] : null; }
+
+  // ---------- render ----------
+  var elQuiz=document.getElementById("quiz"),
+      elScore=document.getElementById("score"),
+      elScoreMsg=document.getElementById("scoreMsg"),
+      elStreak=document.getElementById("streakBadge"),
+      elDate=document.getElementById("dateBadge"),
+      elComplete=document.getElementById("completeNote");
+
+  function render(){
+    var di = dayIndexOf(viewDate), iso = isoOf(viewDate);
+    elDate.textContent = (isToday(viewDate)?"Hari ini · ":"") + DAYS[viewDate.getDay()]+", "+viewDate.getDate()+" "+MONTHS[viewDate.getMonth()]+" "+viewDate.getFullYear();
+    elStreak.textContent = "🔥 "+computeStreak()+" hari berturut";
+
+    // --- essay ---
+    var es = essayForDay(di);
+    document.getElementById("essayJenis").textContent = es? es.jenis : "—";
+    document.getElementById("essayJenisPill").textContent = es? es.jenis.split(" ")[0] : "—";
+    document.getElementById("essayTajuk").textContent = es? es.tajuk : "—";
+    document.getElementById("essayBahan").textContent = es? (es.bahan||"") : "";
+    var tipsEl=document.getElementById("essayTips"); tipsEl.innerHTML="";
+    (es&&es.tips||[]).forEach(function(t){ var li=document.createElement("li"); li.textContent=t; tipsEl.appendChild(li); });
+    var meEl=document.getElementById("modelEssay"); meEl.innerHTML="";
+    (es&&es.contoh||[]).forEach(function(p){ var d=document.createElement("p"); d.textContent=p; meEl.appendChild(d); });
+    // essay draft
+    var ta=document.getElementById("essayText");
+    ta.value = get(esKey(iso),"");
+    updateWordCount();
+    document.getElementById("essaySaved").style.display="none";
+
+    // --- quiz ---
+    var qs = questionsForDay(di);
+    var saved = get(obKey(iso),{});
+    elQuiz.innerHTML="";
+    qs.forEach(function(q,idx){
+      var wrap=document.createElement("div"); wrap.className="q";
+      var head=document.createElement("div"); head.className="qhead";
+      head.innerHTML='<span class="qnum">'+(idx+1)+'.</span><span class="qtext">'+esc(q.q)+'</span><span class="qcat">'+esc(q.cat)+'</span>';
+      // move qtext below for layout: actually keep simple
+      wrap.appendChild(head);
+      var opts=document.createElement("div"); opts.className="opts";
+      var fb=document.createElement("div"); fb.className="feedback";
+      var letters=["A","B","C","D"];
+      q.options.forEach(function(optText,oi){
+        var b=document.createElement("button"); b.className="opt"; b.type="button";
+        b.innerHTML='<span class="lbl">'+letters[oi]+'</span><span>'+esc(optText)+'</span>';
+        b.addEventListener("click",function(){ choose(q,idx,oi,opts,fb); });
+        opts.appendChild(b);
+      });
+      wrap.appendChild(opts); wrap.appendChild(fb);
+      elQuiz.appendChild(wrap);
+      // restore saved answer
+      if(saved.hasOwnProperty(q.id)) revealAnswer(q,opts,fb,saved[q.id]);
+    });
+    updateScore();
+    refreshCompleteNote(iso);
+  }
+
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+  function revealAnswer(q,optsEl,fbEl,chosen){
+    var btns=optsEl.querySelectorAll(".opt");
+    btns.forEach(function(b,i){
+      b.disabled=true;
+      if(i===q.answer) b.classList.add("correct");
+      if(i===chosen && chosen!==q.answer) b.classList.add("wrong");
+    });
+    var correct = chosen===q.answer;
+    fbEl.className="feedback show "+(correct?"ok":"bad");
+    var letters=["A","B","C","D"];
+    fbEl.innerHTML = (correct? "<b>✓ Betul!</b> " : "<b>✗ Salah.</b> Jawapan: <b>"+letters[q.answer]+"</b>. ") + esc(q.explain);
+  }
+
+  function choose(q,idx,oi,optsEl,fbEl){
+    var iso=isoOf(viewDate);
+    var saved=get(obKey(iso),{});
+    if(saved.hasOwnProperty(q.id)) return; // already answered, locked
+    saved[q.id]=oi; set(obKey(iso),saved);
+    revealAnswer(q,optsEl,fbEl,oi);
+    updateScore();
+    markDoneIfComplete(iso);
+    elStreak.textContent="🔥 "+computeStreak()+" hari berturut";
+    refreshCompleteNote(iso);
+  }
+
+  function updateScore(){
+    var iso=isoOf(viewDate), saved=get(obKey(iso),{});
+    var di=dayIndexOf(viewDate), qs=questionsForDay(di);
+    var ans=0,correct=0;
+    qs.forEach(function(q){ if(saved.hasOwnProperty(q.id)){ ans++; if(saved[q.id]===q.answer) correct++; } });
+    elScore.textContent=correct;
+    elScoreMsg.textContent="Dijawab: "+ans+" / 10";
+  }
+  function refreshCompleteNote(iso){
+    var saved=get(obKey(iso),{});
+    if(Object.keys(saved).length>=10){
+      var di=dayIndexOf(viewDate), qs=questionsForDay(di), c=0;
+      qs.forEach(function(q){ if(saved[q.id]===q.answer)c++; });
+      elComplete.textContent="✅ Latihan objektif hari ini selesai — "+c+"/10. Hebat! Jangan lupa siapkan karangan juga.";
+    } else elComplete.textContent="";
+  }
+
+  // ---------- essay tools ----------
+  function updateWordCount(){
+    var t=document.getElementById("essayText").value.trim();
+    var n = t? t.split(/\s+/).length : 0;
+    document.getElementById("wordCount").textContent = n+" patah perkataan";
+  }
+  document.getElementById("essayText").addEventListener("input",function(){
+    updateWordCount(); document.getElementById("essaySaved").style.display="none";
+  });
+  document.getElementById("saveEssay").addEventListener("click",function(){
+    set(esKey(isoOf(viewDate)), document.getElementById("essayText").value);
+    var n=document.getElementById("essaySaved"); n.style.display="inline"; n.textContent="✓ Disimpan";
+  });
+  // auto-save every 20s
+  setInterval(function(){
+    var iso=isoOf(viewDate), cur=document.getElementById("essayText").value;
+    if(cur!==get(esKey(iso),"")) set(esKey(iso),cur);
+  },20000);
+
+  // ---------- day navigation ----------
+  document.getElementById("prevDay").addEventListener("click",function(){ saveCurrentEssay(); viewDate.setDate(viewDate.getDate()-1); render(); });
+  document.getElementById("nextDay").addEventListener("click",function(){ saveCurrentEssay(); viewDate.setDate(viewDate.getDate()+1); render(); });
+  document.getElementById("todayBtn").addEventListener("click",function(){ saveCurrentEssay(); viewDate=new Date(); viewDate.setHours(0,0,0,0); render(); });
+  function saveCurrentEssay(){ set(esKey(isoOf(viewDate)), document.getElementById("essayText").value); }
+
+  document.getElementById("resetAll").addEventListener("click",function(){
+    if(confirm("Padam semua kemajuan, draf karangan dan rekod harian?")){
+      var keys=[]; for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k.indexOf("bm:")===0) keys.push(k); }
+      keys.forEach(function(k){ localStorage.removeItem(k); });
+      render();
+    }
+  });
+
+  // ---------- go ----------
+  if(!Q.length || !E.length){
+    document.querySelector(".wrap").innerHTML="<p style='color:#b3261e'>Gagal memuatkan data soalan. Pastikan fail <code>data/questions.js</code> dan <code>data/essays.js</code> berada dalam folder yang betul.</p>";
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>
