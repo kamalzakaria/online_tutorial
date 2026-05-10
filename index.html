@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bahan Belajar — Online Tutorial</title>
+<style>
+:root{
+  --blue:#2563eb;--sky:#0ea5e9;--green:#16a34a;--orange:#ea580c;
+  --purple:#7c3aed;--pink:#db2777;--red:#dc2626;--teal:#0d9488;
+  --bg:#fafbff;--card:#fff;--text:#1e293b;--muted:#64748b;
+  --border:#e2e8f0;--r:1.2rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:18px;line-height:1.7}
+
+.hero{
+  background:linear-gradient(160deg,#1e3a8a 0%,#4338ca 40%,#7c3aed 100%);
+  color:#fff;text-align:center;padding:3.5rem 1rem 4.5rem;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;
+  background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%);
+}
+.hero .badge{
+  display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);
+  border-radius:2rem;padding:.3rem 1.1rem;font-size:.8rem;letter-spacing:.06em;margin-bottom:1rem;
+}
+.hero h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:.6rem}
+.hero p{font-size:1.05rem;opacity:.88;max-width:560px;margin:0 auto}
+.hero .emoji{font-size:2.6rem;margin-bottom:.4rem}
+
+main{max-width:900px;margin:0 auto;padding:1rem 1rem 5rem}
+
+.grid{display:grid;gap:1.4rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:1rem}
+
+.subject{
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+  background:var(--card);border:2px solid var(--border);border-radius:var(--r);
+  padding:1.8rem;box-shadow:0 2px 8px rgba(0,0,0,.06);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+.subject:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.subject .ico{
+  width:3.6rem;height:3.6rem;border-radius:.9rem;display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;margin-bottom:1rem;
+}
+.subject h2{font-size:1.25rem;font-weight:800;margin-bottom:.35rem}
+.subject .lvl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.7rem}
+.subject p{font-size:.95rem;color:var(--muted);flex:1}
+.subject .go{margin-top:1rem;font-weight:700;font-size:.95rem;display:inline-flex;align-items:center;gap:.4rem}
+
+.c-blue .ico{background:#dbeafe;color:var(--blue)} .c-blue:hover{border-color:var(--blue)} .c-blue .go{color:var(--blue)}
+.c-pink .ico{background:#fce7f3;color:var(--pink)} .c-pink:hover{border-color:var(--pink)} .c-pink .go{color:var(--pink)}
+.c-green .ico{background:#dcfce7;color:var(--green)} .c-green:hover{border-color:var(--green)} .c-green .go{color:var(--green)}
+
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 1rem 3rem}
+footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="emoji">📚</div>
+  <span class="badge">BAHAN BELAJAR</span>
+  <h1>Online Tutorial</h1>
+  <p>Nota & latihan interaktif, ikut sukatan KSSR / KSSM. Pilih subjek di bawah untuk mula belajar.</p>
+</header>
+
+<main>
+  <div class="grid">
+
+    <a class="subject c-pink" href="bahasa_melayu_tingkatan_1/">
+      <div class="ico">✍️</div>
+      <h2>Bahasa Melayu</h2>
+      <div class="lvl">Tingkatan 1</div>
+      <p>Latihan harian — 1 karangan + 10 soalan objektif sehari, fokus pada ejaan, tatabahasa, peribahasa & kefahaman. Streak & auto-simpan.</p>
+      <span class="go">Mula latihan →</span>
+    </a>
+
+    <a class="subject c-blue" href="asas_komputer_sains_tingkatan_1/">
+      <div class="ico">💻</div>
+      <h2>Asas Sains Komputer</h2>
+      <div class="lvl">Tingkatan 1</div>
+      <p>Nota interaktif: Pemikiran Komputasional, Perwakilan Data, Algoritma, Pangkalan Data & lagi (Bab 1–4).</p>
+      <span class="go">Buka nota →</span>
+    </a>
+
+    <a class="subject c-green" href="matematik_tahun_1/">
+      <div class="ico">🔢</div>
+      <h2>Matematik</h2>
+      <div class="lvl">Tahun 1 · KSSR</div>
+      <p>8 bab nota & aktiviti — nombor, operasi, wang, masa, ukuran, ruang dan data.</p>
+      <span class="go">Buka bab →</span>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  Dihos di GitHub Pages · <a href="https://github.com/kamalzakaria/online_tutorial">Lihat repo di GitHub</a>
+</footer>
+
+</body>
+</html>
