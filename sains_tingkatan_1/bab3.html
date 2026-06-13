@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 3: Koordinasi dan Gerak Balas — Sains Tingkatan 1</title>
+<style>
+:root{--c:#16a34a;--c2:#15803d;--bg:#f2fbf5;--card:#fff;--text:#102a18;--muted:#5b746a;--border:#dcefe2;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(8,60,30,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.5rem,5vw,2.2rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#e6f6ec;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#e6f6ec;color:#15803d;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f1fbf4;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#2b413a;margin-bottom:.5rem}
+.tag{display:inline-block;background:#e6f6ec;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.grid2{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.mini{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.7rem;text-align:center}.mini .e{font-size:1.7rem}.mini b{display:block;margin-top:.2rem}.mini small{color:var(--muted)}
+.act{background:#f1fbf4;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.02rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.organs{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;max-width:380px;margin:0 auto}
+.organ{background:#fff;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .2rem;text-align:center;cursor:pointer;transition:.15s}
+.organ:hover{border-color:var(--c);transform:translateY(-3px)}
+.organ .e{font-size:1.7rem}.organ small{display:block;font-size:.6rem;color:var(--muted);margin-top:.2rem}
+.organ.ok{background:#e8f8ef;border-color:var(--ok)}.organ.no{background:#fdecec;border-color:var(--no)}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;max-width:380px;margin:.6rem auto 0}
+.opts4 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.6rem;font-weight:700;cursor:pointer;font-size:.85rem}
+.opts4 button:hover{border-color:var(--c)}.opts4 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts4 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f1fbf4;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#e8f7ee;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#2b413a}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#e6f6ec;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 2 · PENYENGGARAAN & KESINAMBUNGAN HIDUP</div>
+  <div class="big">🧠</div>
+  <h1>Bab 3: Koordinasi dan Gerak Balas</h1>
+</header>
+<nav class="topnav">
+  <a href="bab2.html">← Bab 2</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab4.html">Bab 4: Pembiakan →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Mengesan & Bertindak Balas</h2>
+  <div class="note">
+    <h3>Rangsangan & Gerak Balas</h3>
+    <p><b>Rangsangan</b> ialah perubahan dalam persekitaran yang dapat dikesan (cahaya, bunyi, bau, suhu). <b>Gerak balas</b> ialah tindakan badan terhadap rangsangan itu.</p>
+  </div>
+  <div class="note">
+    <h3>👀 5 Organ Deria</h3>
+    <div class="grid2">
+      <div class="mini"><div class="e">👁️</div><b>Mata</b><small>Cahaya — penglihatan</small></div>
+      <div class="mini"><div class="e">👂</div><b>Telinga</b><small>Bunyi — pendengaran</small></div>
+      <div class="mini"><div class="e">👃</div><b>Hidung</b><small>Bau — hidu</small></div>
+      <div class="mini"><div class="e">👅</div><b>Lidah</b><small>Rasa</small></div>
+      <div class="mini"><div class="e">✋</div><b>Kulit</b><small>Sentuhan, suhu, sakit</small></div>
+    </div>
+  </div>
+  <div class="note">
+    <h3>⚖️ Homeostasis</h3>
+    <p><b>Homeostasis</b> ialah pengekalan keadaan dalaman badan yang stabil — contohnya suhu badan, kandungan air & gula dalam darah. Contoh: kita <b>berpeluh</b> untuk menyejukkan badan apabila panas.</p>
+  </div>
+  <div class="note">
+    <h3>🌱 Gerak Balas Tumbuhan (Tropisme)</h3>
+    <p><span class="tag">Fototropisme — ke arah cahaya</span><span class="tag">Geotropisme — ke arah graviti</span><span class="tag">Hidrotropisme — ke arah air</span><span class="tag">Tigmotropisme — ke arah sentuhan</span></p>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> Sistem saraf (otak & saraf tunjang) menyelaras gerak balas badan. Organ deria mengesan rangsangan → otak memproses → badan bertindak balas.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bereksperimen!</h2>
+  <div class="act">
+    <h3>👀 Organ Deria Mana?</h3>
+    <p class="hint">Klik organ deria yang mengesan rangsangan ini.</p>
+    <div class="prompt">Rangsangan: <span id="stim">Cahaya terang</span></div>
+    <div class="organs" id="organs"></div>
+    <div class="feedback" id="ofb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="oscore">0</span></div>
+  </div>
+  <div class="act">
+    <h3>🌱 Gerak Balas Tumbuhan</h3>
+    <p class="hint">Situasi ini menunjukkan tropisme yang mana?</p>
+    <div class="prompt" id="trPrompt">Pucuk tumbuh membengkok ke arah cahaya matahari</div>
+    <div class="opts4" id="trOpts"></div>
+    <div class="feedback" id="trfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="trscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab2.html">← Bab 2</a>
+  <a class="next" href="bab4.html">Bab 4: Pembiakan →</a>
+</div>
+<footer>Sains Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+/* organ-stimulus */
+var ORGANS=[{e:'👁️',n:'Mata'},{e:'👂',n:'Telinga'},{e:'👃',n:'Hidung'},{e:'👅',n:'Lidah'},{e:'✋',n:'Kulit'}];
+var STIMS=[
+  {s:'Cahaya terang',o:'Mata'},{s:'Bunyi loceng',o:'Telinga'},{s:'Bau masakan',o:'Hidung'},
+  {s:'Rasa manis gula',o:'Lidah'},{s:'Suhu panas / sentuhan',o:'Kulit'},{s:'Warna bunga',o:'Mata'},
+  {s:'Muzik kuat',o:'Telinga'},{s:'Bau busuk sampah',o:'Hidung'},{s:'Rasa masin garam',o:'Lidah'}
+];
+var oScore=0, oTarget;
+function buildOrgans(){
+  var box=document.getElementById('organs'); box.innerHTML='';
+  ORGANS.forEach(function(o){var d=document.createElement('div');d.className='organ';d.innerHTML='<div class="e">'+o.e+'</div><small>'+o.n+'</small>';d.onclick=function(){pickOrgan(o,d);};box.appendChild(d);});
+  newStim();
+}
+function newStim(){
+  oTarget=STIMS[Math.floor(Math.random()*STIMS.length)];
+  document.getElementById('stim').textContent=oTarget.s;
+  document.querySelectorAll('.organ').forEach(function(x){x.classList.remove('ok','no')});
+  document.getElementById('ofb').textContent=' ';
+}
+function pickOrgan(o,el){
+  var fb=document.getElementById('ofb');
+  if(o.n===oTarget.o){el.classList.add('ok');oScore++;document.getElementById('oscore').textContent=oScore;fb.textContent='✅ Betul! '+o.e+' '+o.n;fb.className='feedback good';setTimeout(newStim,850);}
+  else{el.classList.add('no');fb.textContent='❌ Itu '+o.n+'. Cuba lagi!';fb.className='feedback bad';}
+}
+buildOrgans();
+
+/* tropism */
+var TR=[
+  {t:'Pucuk tumbuh membengkok ke arah cahaya matahari',a:'Fototropisme'},
+  {t:'Akar tumbuh ke bawah mengikut graviti',a:'Geotropisme'},
+  {t:'Akar tumbuh ke arah sumber air',a:'Hidrotropisme'},
+  {t:'Sulur kacang membelit pada kayu (sentuhan)',a:'Tigmotropisme'},
+  {t:'Bunga matahari menghadap ke arah matahari',a:'Fototropisme'}
+];
+var TALL=['Fototropisme','Geotropisme','Hidrotropisme','Tigmotropisme'];
+var trScore=0, trTarget;
+function newTr(){
+  trTarget=TR[Math.floor(Math.random()*TR.length)];
+  document.getElementById('trPrompt').textContent=trTarget.t;
+  var box=document.getElementById('trOpts'); box.innerHTML='';
+  shuffle(TALL).forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){pickTr(o,b);};box.appendChild(b);});
+  document.getElementById('trfb').textContent=' ';
+}
+function pickTr(o,btn){
+  var fb=document.getElementById('trfb');
+  document.querySelectorAll('#trOpts button').forEach(function(b){b.disabled=true;});
+  if(o===trTarget.a){btn.classList.add('ok');trScore++;document.getElementById('trscore').textContent=trScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#trOpts button').forEach(function(b){if(b.textContent===trTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+trTarget.a;fb.className='feedback bad';}
+  setTimeout(newTr,1200);
+}
+newTr();
+
+/* quiz */
+var BAB=3;
+var QUIZ=[
+  {q:"Perubahan dalam persekitaran yang dapat dikesan dipanggil…",o:["Gerak balas","Rangsangan","Homeostasis","Tropisme"],a:1,e:"Rangsangan ialah perubahan persekitaran yang dikesan oleh deria."},
+  {q:"Organ deria untuk mengesan bunyi ialah…",o:["Mata","Telinga","Lidah","Kulit"],a:1,e:"Telinga mengesan bunyi (pendengaran)."},
+  {q:"Kulit ialah organ deria yang mengesan…",o:["Cahaya","Bau","Sentuhan & suhu","Bunyi"],a:2,e:"Kulit mengesan sentuhan, suhu, tekanan & sakit."},
+  {q:"Pengekalan keadaan dalaman badan yang stabil dipanggil…",o:["Homeostasis","Fotosintesis","Respirasi","Pembiakan"],a:0,e:"Homeostasis mengekalkan suhu, air & gula badan yang stabil."},
+  {q:"Pucuk tumbuh ke arah cahaya ialah contoh…",o:["Geotropisme","Fototropisme","Hidrotropisme","Tigmotropisme"],a:1,e:"Foto = cahaya. Fototropisme = gerak balas terhadap cahaya."},
+  {q:"Akar tumbuh ke bawah mengikut tarikan graviti ialah…",o:["Fototropisme","Geotropisme","Hidrotropisme","Tigmotropisme"],a:1,e:"Geo = bumi/graviti. Geotropisme = gerak balas terhadap graviti."},
+  {q:"Sistem yang menyelaras gerak balas badan ialah sistem…",o:["Saraf","Pencernaan","Pernafasan","Perkumuhan"],a:0,e:"Sistem saraf (otak & saraf tunjang) menyelaras gerak balas."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🧠':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab4.html" style="color:#fff;font-weight:800">Teruskan ke Bab 4 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 6: Jadual Berkala — Sains Tingkatan 1</title>
+<style>
+:root{--c:#ea580c;--c2:#c2410c;--bg:#fef8f3;--card:#fff;--text:#2a1810;--muted:#7a6056;--border:#f0e2d8;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(120,50,10,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#fdece0;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#fdece0;color:#c2410c;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#fff8f3;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#42302a;margin-bottom:.5rem}
+.tag{display:inline-block;background:#fdece0;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.three{display:grid;gap:.7rem;grid-template-columns:repeat(3,1fr)}
+.col{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.7rem;text-align:center;border-top:4px solid var(--c)}
+.col b{color:var(--c2);display:block}.col small{color:var(--muted);font-size:.72rem}
+.act{background:#fff8f3;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.02rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.ptable{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;max-width:340px;margin:0 auto}
+.el{aspect-ratio:1;border-radius:.5rem;border:2px solid rgba(0,0,0,.08);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:.15s;font-weight:800}
+.el .sym{font-size:1.3rem;line-height:1}.el .nm{font-size:.5rem;opacity:.9;margin-top:2px}
+.el.logam{background:#f97316}.el.bukan{background:#3b82f6}.el.adi{background:#a855f7}
+.el:hover{transform:translateY(-3px);filter:brightness(1.08)}
+.el.ok{outline:3px solid #facc15}.el.no{outline:3px solid var(--no)}
+.legend{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;font-size:.7rem;margin-top:.6rem}
+.legend span{display:inline-flex;align-items:center;gap:.25rem}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.opts3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;max-width:420px;margin:.6rem auto 0}
+.opts3 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.55rem .3rem;font-weight:700;cursor:pointer;font-size:.8rem}
+.opts3 button:hover{border-color:var(--c)}.opts3 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts3 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#fff8f3;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#fdf0e7;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#42302a}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#fdece0;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 3 · PENEROKAAN UNSUR DALAM ALAM</div>
+  <div class="big">⚛️</div>
+  <h1>Bab 6: Jadual Berkala</h1>
+</header>
+<nav class="topnav">
+  <a href="bab5.html">← Bab 5</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab7.html">Bab 7: Udara →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Unsur & Jadual Berkala</h2>
+  <div class="note">
+    <h3>Apa itu unsur?</h3>
+    <p><b>Unsur</b> ialah bahan tulen yang tidak boleh diuraikan kepada bahan yang lebih ringkas. Setiap unsur diwakili oleh <b>simbol kimia</b> (cth O untuk oksigen). <b>Jadual berkala</b> menyusun semua unsur secara teratur.</p>
+    <p>Lajur menegak = <b>Kumpulan</b>. Baris mendatar = <b>Kala</b>.</p>
+  </div>
+  <div class="note">
+    <h3>🔣 Sebatian vs Campuran</h3>
+    <div class="three">
+      <div class="col"><b>Unsur</b><small>Satu jenis atom. Cth: O₂, Fe, Cu</small></div>
+      <div class="col"><b>Sebatian</b><small>2+ unsur bergabung secara kimia. Cth: H₂O, CO₂, NaCl</small></div>
+      <div class="col"><b>Campuran</b><small>2+ bahan bercampur secara fizikal. Cth: udara, air garam</small></div>
+    </div>
+  </div>
+  <div class="note">
+    <h3>🪙 Logam & Bukan Logam</h3>
+    <p><b>Logam</b> (cth ferum, kuprum, emas) — berkilat, mengalirkan elektrik & haba. <b>Bukan logam</b> (cth oksigen, karbon) — biasanya tidak berkilat & tidak mengalirkan elektrik.</p>
+    <p>Simbol biasa: <span class="tag">H=Hidrogen</span><span class="tag">O=Oksigen</span><span class="tag">C=Karbon</span><span class="tag">Fe=Ferum</span><span class="tag">Na=Natrium</span><span class="tag">Au=Emas</span><span class="tag">Cu=Kuprum</span></p>
+  </div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bereksperimen!</h2>
+  <div class="act">
+    <h3>⚛️ Cari Unsur dalam Jadual</h3>
+    <p class="hint">Klik petak unsur (simbol) yang sepadan dengan nama yang diberi.</p>
+    <div class="prompt">Cari: <span id="elTarget">Ferum (Besi)</span></div>
+    <div class="ptable" id="ptable"></div>
+    <div class="legend"><span><i style="background:#f97316"></i>Logam</span><span><i style="background:#3b82f6"></i>Bukan logam</span><span><i style="background:#a855f7"></i>Gas adi</span></div>
+    <div class="feedback" id="elfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="elscore">0</span> / 12</div>
+  </div>
+  <div class="act">
+    <h3>🧪 Unsur, Sebatian atau Campuran?</h3>
+    <p class="hint">Kelaskan bahan ini dengan betul.</p>
+    <div class="prompt" id="clPrompt">Air (H₂O)</div>
+    <div class="opts3" id="clOpts"></div>
+    <div class="feedback" id="clfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="clscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab5.html">← Bab 5</a>
+  <a class="next" href="bab7.html">Bab 7: Udara →</a>
+</div>
+<footer>Sains Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+/* element finder */
+var ELS=[
+  {s:'H',n:'Hidrogen',hint:'Hidrogen',cls:'bukan'},{s:'O',n:'Oksigen',hint:'Oksigen',cls:'bukan'},
+  {s:'C',n:'Karbon',hint:'Karbon',cls:'bukan'},{s:'N',n:'Nitrogen',hint:'Nitrogen',cls:'bukan'},
+  {s:'Fe',n:'Ferum',hint:'Ferum (Besi)',cls:'logam'},{s:'Na',n:'Natrium',hint:'Natrium',cls:'logam'},
+  {s:'Au',n:'Emas',hint:'Emas (Aurum)',cls:'logam'},{s:'Cu',n:'Kuprum',hint:'Kuprum (Tembaga)',cls:'logam'},
+  {s:'Ag',n:'Argentum',hint:'Argentum (Perak)',cls:'logam'},{s:'Al',n:'Aluminium',hint:'Aluminium',cls:'logam'},
+  {s:'Ca',n:'Kalsium',hint:'Kalsium',cls:'logam'},{s:'He',n:'Helium',hint:'Helium',cls:'adi'}
+];
+var elScore=0, elTarget, elDone={};
+function buildPT(){
+  var box=document.getElementById('ptable'); box.innerHTML='';
+  shuffle(ELS).forEach(function(e){
+    var d=document.createElement('div'); d.className='el '+e.cls; d.dataset.s=e.s;
+    d.innerHTML='<span class="sym">'+e.s+'</span><span class="nm">'+e.n+'</span>';
+    d.onclick=function(){ pickEl(e,d); }; box.appendChild(d);
+  });
+  newEl();
+}
+function newEl(){
+  var pool=ELS.filter(function(e){return !elDone[e.s];});
+  if(pool.length===0){ document.getElementById('elTarget').textContent='Semua dijumpai! 🎉'; return; }
+  elTarget=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('elTarget').textContent=elTarget.hint;
+  document.querySelectorAll('.el').forEach(function(x){x.classList.remove('no')});
+  document.getElementById('elfb').textContent=' ';
+}
+function pickEl(e,el){
+  var fb=document.getElementById('elfb');
+  if(e.s===elTarget.s){ el.classList.add('ok'); if(!elDone[e.s]){elDone[e.s]=true;elScore++;document.getElementById('elscore').textContent=elScore;} fb.textContent='✅ Betul! '+e.s+' = '+e.n; fb.className='feedback good'; setTimeout(newEl,850); }
+  else{ el.classList.add('no'); fb.textContent='❌ Itu '+e.n+' ('+e.s+'). Cuba lagi!'; fb.className='feedback bad'; setTimeout(function(){el.classList.remove('no');},700); }
+}
+buildPT();
+
+/* classify */
+var CL=[
+  {t:'Air (H₂O)',a:'Sebatian'},{t:'Oksigen (O₂)',a:'Unsur'},{t:'Udara',a:'Campuran'},
+  {t:'Garam dapur (NaCl)',a:'Sebatian'},{t:'Air garam',a:'Campuran'},{t:'Emas (Au)',a:'Unsur'},
+  {t:'Karbon dioksida (CO₂)',a:'Sebatian'},{t:'Air bercampur pasir',a:'Campuran'},{t:'Ferum (Fe)',a:'Unsur'}
+];
+var CLALL=['Unsur','Sebatian','Campuran'];
+var clScore=0, clTarget;
+function newCl(){
+  clTarget=CL[Math.floor(Math.random()*CL.length)];
+  document.getElementById('clPrompt').textContent=clTarget.t;
+  var box=document.getElementById('clOpts'); box.innerHTML='';
+  shuffle(CLALL).forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){pickCl(o,b);};box.appendChild(b);});
+  document.getElementById('clfb').textContent=' ';
+}
+function pickCl(o,btn){
+  var fb=document.getElementById('clfb');
+  document.querySelectorAll('#clOpts button').forEach(function(b){b.disabled=true;});
+  if(o===clTarget.a){btn.classList.add('ok');clScore++;document.getElementById('clscore').textContent=clScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#clOpts button').forEach(function(b){if(b.textContent===clTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+clTarget.a;fb.className='feedback bad';}
+  setTimeout(newCl,1200);
+}
+newCl();
+
+/* quiz */
+var BAB=6;
+var QUIZ=[
+  {q:"Bahan tulen yang tidak boleh diuraikan kepada bahan lebih ringkas ialah…",o:["Sebatian","Unsur","Campuran","Larutan"],a:1,e:"Unsur ialah bahan tulen paling asas — tidak boleh diuraikan secara kimia."},
+  {q:"Simbol kimia bagi Ferum (besi) ialah…",o:["F","Fe","Fr","Ir"],a:1,e:"Simbol Ferum ialah Fe."},
+  {q:"Simbol kimia bagi Oksigen ialah…",o:["O","Ox","Og","On"],a:0,e:"Simbol Oksigen ialah O."},
+  {q:"Air (H₂O) ialah contoh…",o:["Unsur","Sebatian","Campuran","Logam"],a:1,e:"Air ialah sebatian (hidrogen + oksigen bergabung secara kimia)."},
+  {q:"Udara ialah contoh…",o:["Unsur","Sebatian","Campuran","Atom"],a:2,e:"Udara ialah campuran beberapa gas."},
+  {q:"Dalam jadual berkala, lajur menegak dipanggil…",o:["Kala","Kumpulan","Baris","Blok"],a:1,e:"Lajur menegak = Kumpulan; baris mendatar = Kala."},
+  {q:"Antara berikut yang merupakan logam ialah…",o:["Oksigen","Karbon","Kuprum","Hidrogen"],a:2,e:"Kuprum (Cu) ialah logam; yang lain bukan logam."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! ⚛️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab7.html" style="color:#fff;font-weight:800">Teruskan ke Bab 7 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

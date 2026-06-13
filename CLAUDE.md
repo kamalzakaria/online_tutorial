@@ -27,6 +27,7 @@ Because nothing is shared, the three subjects each evolved their own styling and
 - `asas_komputer_sains_tingkatan_1/` — interactive notes, multi-page.
 - `matematik_tahun_1/` — chapter hub + per-chapter pages.
 - `geografi_tingkatan_1/` — chapter hub + 14 per-chapter pages with `localStorage` progress (see below).
+- `sains_tingkatan_1/` — chapter hub + 9 per-chapter pages; same shell as geografi (see below).
 
 ## Per-subject architecture
 
@@ -52,6 +53,10 @@ A daily Bahasa Melayu drilling tool. Three `<script>` blocks: two define data, o
 - Every chapter shares the **same self-contained shell**: a sticky tab bar switching three `.panel`s (Nota / Aktiviti / Kuiz) via `tab(id, el)`, plus an identical quiz engine. The quiz is a `QUIZ = [{q, o:[…], a, e}]` array rendered by `pick(qi, oi)` and graded by `submitQuiz()`. The CSS is duplicated per file with only the `--c`/`--c2` theme colour changing per tema — when restyling, edit the file you're in, don't try to share a stylesheet.
 - **Progress** persists in `localStorage` under the **`geo:`** prefix: `saveProgress(bab, pct)` writes `geo:bab<N>` = `{done, best, last}`; the hub reads these and "Set semula kemajuan" clears all `geo:` keys. Keep this contract if you add chapters.
 - Each chapter's **signature interactive** is bespoke (compass, clickable states map, SVG landform/river scenes with `.hot` hotspots, recycling-bin sorter, step-ordering, etc.). Its data lives in a named array right above the `QUIZ` (e.g. `STATES`, `RV`, `ITEMS`, `STEPS`). Interactions are **click/tap-based, not HTML5 drag-and-drop**, so they work on touch devices — follow that pattern for new games.
+
+### sains_tingkatan_1/ (same shell, science topics)
+- Built as a **copy of the geografi pattern**: same tab/quiz shell and `.hot` hotspot labelling games, 9 chapters (`bab1.html`–`bab9.html`) across 5 tema. The only structural differences: progress is stored under the **`sains:`** prefix (`sains:bab<N>`), and the hub counts out of 9.
+- Signature interactives lean on small simulations (density float/sink lab, particle-state simulator, reflection-law SVG, label-the-cell with an animal/plant toggle, mini periodic table). The reusable label-on-SVG game (`.hot` dots + a `*Done` map + `new*/pick*` functions) is the same idiom as geografi's landform/river scenes — reuse it for new diagram-labelling chapters.
 
 ## Notes
 

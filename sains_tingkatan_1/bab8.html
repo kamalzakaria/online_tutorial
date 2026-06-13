@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 8: Cahaya dan Optik — Sains Tingkatan 1</title>
+<style>
+:root{--c:#4f46e5;--c2:#4338ca;--bg:#f4f4fd;--card:#fff;--text:#161433;--muted:#5e5b80;--border:#e4e3f5;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(40,30,120,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#ecebfb;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#ecebfb;color:#4338ca;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f6f6fe;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#312f54;margin-bottom:.5rem}
+.tag{display:inline-block;background:#ecebfb;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.spectrum{height:22px;border-radius:6px;margin:.5rem 0;background:linear-gradient(90deg,#e11d48,#f97316,#facc15,#22c55e,#3b82f6,#6366f1,#a855f7)}
+.act{background:#f6f6fe;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.02rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.optic{width:100%;max-width:320px;margin:.4rem auto;display:block;background:#fbfbff;border:1px solid var(--border);border-radius:.6rem}
+.angles{display:flex;gap:.6rem;justify-content:center;margin:.4rem 0}
+.angles .b{background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:.4rem .8rem;font-weight:800}
+.angles .b small{display:block;color:var(--muted);font-size:.66rem;font-weight:600}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;max-width:400px;margin:.6rem auto 0}
+.opts4 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.6rem;font-weight:700;cursor:pointer;font-size:.82rem}
+.opts4 button:hover{border-color:var(--c)}.opts4 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts4 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f6f6fe;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#eeedfb;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#312f54}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#ecebfb;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 4 · TENAGA DALAM KEHIDUPAN</div>
+  <div class="big">💡</div>
+  <h1>Bab 8: Cahaya dan Optik</h1>
+</header>
+<nav class="topnav">
+  <a href="bab7.html">← Bab 7</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab9.html">Bab 9: Bumi →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Cahaya & Sifatnya</h2>
+  <div class="note">
+    <h3>Cahaya bergerak lurus</h3>
+    <p>Cahaya bergerak dalam <b>garis lurus</b>. Inilah sebabnya <b>bayang-bayang</b> terbentuk apabila cahaya dihalang.</p>
+  </div>
+  <div class="note">
+    <h3>🪞 Pantulan & Pembiasan</h3>
+    <p><b>Pantulan</b>: cahaya melantun apabila terkena permukaan licin (cermin). <b>Hukum pantulan:</b> sudut tuju = sudut pantulan.</p>
+    <p><b>Pembiasan</b>: cahaya <b>membengkok</b> apabila melalui medium berbeza. Contoh: straw kelihatan bengkok dalam air; kolam kelihatan lebih cetek.</p>
+  </div>
+  <div class="note">
+    <h3>🌈 Penyerakan Cahaya</h3>
+    <p>Cahaya putih boleh diserakkan oleh <b>prisma</b> kepada <b>spektrum 7 warna</b> (merah, jingga, kuning, hijau, biru, indigo, ungu) — seperti <b>pelangi</b>.</p>
+    <div class="spectrum"></div>
+  </div>
+  <div class="note">
+    <h3>🔎 Kanta & Alat Optik</h3>
+    <p><b>Kanta cembung</b> menumpukan cahaya (kanta pembesar, kamera). <b>Kanta cekung</b> mencapahkan cahaya. Alat optik: kanta pembesar, periskop, kamera & mata.</p>
+  </div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bereksperimen!</h2>
+  <div class="act">
+    <h3>🪞 Hukum Pantulan Cahaya</h3>
+    <p class="hint">Gerakkan slider untuk mengubah sudut tuju. Perhatikan sudut pantulan sentiasa SAMA!</p>
+    <svg class="optic" id="optic" viewBox="0 0 300 200">
+      <rect x="20" y="150" width="260" height="14" fill="#94a3b8"/>
+      <line x1="20" y1="150" x2="280" y2="150" stroke="#475569" stroke-width="3"/>
+      <line id="normal" x1="150" y1="150" x2="150" y2="40" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4"/>
+      <line id="incident" x1="60" y1="60" x2="150" y2="150" stroke="#ef4444" stroke-width="3"/>
+      <line id="reflected" x1="150" y1="150" x2="240" y2="60" stroke="#3b82f6" stroke-width="3"/>
+      <circle cx="150" cy="150" r="4" fill="#1e293b"/>
+      <text id="tIn" x="70" y="120" font-size="11" fill="#ef4444" font-weight="700">i</text>
+      <text id="tRf" x="215" y="120" font-size="11" fill="#3b82f6" font-weight="700">r</text>
+    </svg>
+    <div class="angles">
+      <div class="b" style="color:#ef4444"><span id="aIn">45</span>°<small>Sudut Tuju (i)</small></div>
+      <div class="b" style="color:#3b82f6"><span id="aRf">45</span>°<small>Sudut Pantulan (r)</small></div>
+    </div>
+    <div style="text-align:center"><input type="range" id="ang" min="10" max="80" value="45" oninput="drawRay()" style="width:80%"/></div>
+  </div>
+  <div class="act">
+    <h3>🌈 Fenomena Cahaya Apa?</h3>
+    <p class="hint">Situasi ini menunjukkan fenomena cahaya yang mana?</p>
+    <div class="prompt" id="phPrompt">Straw kelihatan bengkok di dalam segelas air</div>
+    <div class="opts4" id="phOpts"></div>
+    <div class="feedback" id="phfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="phscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab7.html">← Bab 7</a>
+  <a class="next" href="bab9.html">Bab 9: Bumi →</a>
+</div>
+<footer>Sains Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+/* reflection law */
+function drawRay(){
+  var i=+document.getElementById('ang').value, rad=i*Math.PI/180, L=110, P={x:150,y:150};
+  var ax=P.x - L*Math.sin(rad), ay=P.y - L*Math.cos(rad);
+  var bx=P.x + L*Math.sin(rad), by=P.y - L*Math.cos(rad);
+  var inc=document.getElementById('incident'); inc.setAttribute('x1',ax); inc.setAttribute('y1',ay); inc.setAttribute('x2',P.x); inc.setAttribute('y2',P.y);
+  var ref=document.getElementById('reflected'); ref.setAttribute('x1',P.x); ref.setAttribute('y1',P.y); ref.setAttribute('x2',bx); ref.setAttribute('y2',by);
+  document.getElementById('aIn').textContent=i; document.getElementById('aRf').textContent=i;
+  document.getElementById('tIn').setAttribute('x', P.x - (L*0.4)*Math.sin(rad) - 14);
+  document.getElementById('tIn').setAttribute('y', P.y - (L*0.4)*Math.cos(rad));
+  document.getElementById('tRf').setAttribute('x', P.x + (L*0.4)*Math.sin(rad) + 6);
+  document.getElementById('tRf').setAttribute('y', P.y - (L*0.4)*Math.cos(rad));
+}
+drawRay();
+
+/* phenomenon match */
+var PH=[
+  {t:'Straw kelihatan bengkok di dalam segelas air',a:'Pembiasan'},
+  {t:'Melihat wajah sendiri di dalam cermin',a:'Pantulan'},
+  {t:'Pelangi terbentuk selepas hujan',a:'Penyerakan'},
+  {t:'Bayang-bayang terbentuk di belakang objek',a:'Bergerak lurus'},
+  {t:'Dasar kolam kelihatan lebih cetek',a:'Pembiasan'},
+  {t:'Cahaya putih melalui prisma menjadi 7 warna',a:'Penyerakan'}
+];
+var PHALL=['Pantulan','Pembiasan','Penyerakan','Bergerak lurus'];
+var phScore=0, phTarget;
+function newPh(){
+  phTarget=PH[Math.floor(Math.random()*PH.length)];
+  document.getElementById('phPrompt').textContent=phTarget.t;
+  var box=document.getElementById('phOpts'); box.innerHTML='';
+  shuffle(PHALL).forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){pickPh(o,b);};box.appendChild(b);});
+  document.getElementById('phfb').textContent=' ';
+}
+function pickPh(o,btn){
+  var fb=document.getElementById('phfb');
+  document.querySelectorAll('#phOpts button').forEach(function(b){b.disabled=true;});
+  if(o===phTarget.a){btn.classList.add('ok');phScore++;document.getElementById('phscore').textContent=phScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#phOpts button').forEach(function(b){if(b.textContent===phTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+phTarget.a;fb.className='feedback bad';}
+  setTimeout(newPh,1200);
+}
+newPh();
+
+/* quiz */
+var BAB=8;
+var QUIZ=[
+  {q:"Cahaya bergerak dalam…",o:["Garis lengkung","Garis lurus","Bulatan","Zigzag"],a:1,e:"Cahaya bergerak dalam garis lurus — sebab itu bayang-bayang terbentuk."},
+  {q:"Menurut hukum pantulan, sudut tuju adalah…",o:["Lebih besar daripada sudut pantulan","Sama dengan sudut pantulan","Lebih kecil daripada sudut pantulan","Sentiasa 90°"],a:1,e:"Sudut tuju = sudut pantulan."},
+  {q:"Straw kelihatan bengkok dalam air disebabkan oleh…",o:["Pantulan","Pembiasan","Penyerakan","Bayang-bayang"],a:1,e:"Pembiasan — cahaya membengkok apabila melalui air & udara."},
+  {q:"Cahaya putih yang melalui prisma akan…",o:["Hilang","Diserakkan kepada spektrum warna","Menjadi gelap","Memantul balik"],a:1,e:"Penyerakan menghasilkan spektrum 7 warna seperti pelangi."},
+  {q:"Kanta yang menumpukan cahaya ialah kanta…",o:["Cekung","Cembung","Rata","Buram"],a:1,e:"Kanta cembung menumpukan cahaya (cth kanta pembesar)."},
+  {q:"Bayang-bayang terbentuk kerana cahaya…",o:["Boleh membengkok","Tidak dapat menembusi objek legap","Berwarna","Bergerak perlahan"],a:1,e:"Cahaya bergerak lurus & tidak dapat menembusi objek legap → bayang-bayang."},
+  {q:"Antara alat optik berikut ialah…",o:["Periskop","Termometer","Ammeter","Neraca"],a:0,e:"Periskop (juga kanta pembesar & kamera) ialah alat optik."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 💡':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab9.html" style="color:#fff;font-weight:800">Teruskan ke Bab 9 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>
