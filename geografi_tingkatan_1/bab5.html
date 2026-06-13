@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 5: Bumi — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#0d9488;--c2:#0f766e;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#e6f5f3;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#e6f5f3;color:#3d6360;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f3fbfa;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#e6f5f3;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.grid2{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.mini{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.8rem;text-align:center}.mini .e{font-size:1.7rem}.mini b{display:block;margin-top:.2rem}.mini small{color:var(--muted)}
+.act{background:#f3fbfa;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+/* rotation sim */
+.solar{position:relative;height:230px;background:radial-gradient(circle at 12% 50%,#fff6d5 0%,#0b1437 38%);border-radius:1rem;overflow:hidden;margin-bottom:.6rem}
+.sun{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:2.6rem;filter:drop-shadow(0 0 14px #fde68a)}
+.earth-r{position:absolute;left:58%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:linear-gradient(90deg,#2e8b57 0%,#2e8b57 50%,#16324f 50%,#16324f 100%);box-shadow:inset -8px 0 20px rgba(0,0,0,.4);overflow:hidden}
+.earth-r .axis{position:absolute;left:50%;top:-12px;bottom:-12px;width:3px;background:rgba(255,255,255,.6);transform:translateX(-50%) rotate(23.5deg);transform-origin:center}
+.marker{position:absolute;left:50%;top:50%;width:130px;height:130px;transform:translate(-50%,-50%) rotate(0deg);transition:transform .25s linear}
+.marker .home{position:absolute;left:50%;top:-2px;transform:translateX(-50%);font-size:1.2rem}
+.timewrap{text-align:center}
+.timewrap input{width:80%}
+.bignote{font-size:1.1rem;font-weight:900;text-align:center;margin:.4rem}
+/* earth latitude lines */
+.earth-l{position:relative;width:230px;height:230px;border-radius:50%;margin:.4rem auto;background:radial-gradient(circle at 35% 30%,#7ec8f0,#1e6fa8);overflow:hidden;border:3px solid var(--c2)}
+.latline{position:absolute;left:0;right:0;height:5px;background:rgba(255,255,255,.6);cursor:pointer}
+.latline:hover{background:#fff}
+.latline.eq{background:#ef4444;height:6px}.latline.trop{background:#fde047}.latline.pol{background:#c4b5fd}
+.latline.sel{background:#22c55e}
+.llabel{position:absolute;right:4px;font-size:.55rem;font-weight:800;color:#fff;background:rgba(0,0,0,.35);padding:0 3px;border-radius:3px;pointer-events:none}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f3fbfa;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#e9f7f5;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#e6f5f3;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 2 · GEOGRAFI FIZIKAL</div>
+  <div class="big">🌏</div>
+  <h1>Bab 5: Bumi</h1>
+</header>
+<nav class="topnav">
+  <a href="bab4.html">← Bab 4</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab6.html">Bab 6: Bentuk Muka Bumi →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Bumi Kita</h2>
+  <div class="note">
+    <h3>Dua pergerakan Bumi</h3>
+    <div class="grid2">
+      <div class="mini"><div class="e">🔄</div><b>Putaran (Rotasi)</b><small>Berpusing pada paksi · 24 jam · menyebabkan siang & malam</small></div>
+      <div class="mini"><div class="e">☀️</div><b>Peredaran (Revolusi)</b><small>Mengelilingi Matahari · 365¼ hari · menyebabkan musim</small></div>
+    </div>
+    <p style="margin-top:.6rem">Paksi Bumi condong sebanyak <b>23.5°</b>. Bumi berputar dari <b>Barat ke Timur</b> — sebab itu Matahari kelihatan terbit di Timur.</p>
+  </div>
+  <div class="note">
+    <h3>📏 5 Garisan Latitud Penting</h3>
+    <p><span class="tag">Garisan Artik · 66.5°U</span><span class="tag">Garisan Sartan · 23.5°U</span><span class="tag">Garisan Khatulistiwa · 0°</span><span class="tag">Garisan Jadi · 23.5°S</span><span class="tag">Garisan Antartik · 66.5°S</span></p>
+  </div>
+  <div class="note">
+    <h3>🌡️ 3 Zon Iklim Dunia</h3>
+    <div class="grid2">
+      <div class="mini"><div class="e">🌴</div><b>Tropika (Panas)</b><small>Berhampiran Khatulistiwa</small></div>
+      <div class="mini"><div class="e">🍂</div><b>Sederhana</b><small>Antara tropika & kutub</small></div>
+      <div class="mini"><div class="e">❄️</div><b>Kutub (Sejuk)</b><small>Berhampiran kutub Utara/Selatan</small></div>
+    </div>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> Puta<b>R</b>an = <b>R</b>otasi = siang & malam. Pe<b>R</b>edaran mengelilingi matahari = musim. Malaysia terletak di zon <b>Tropika</b> kerana hampir Khatulistiwa.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>🔄 Simulasi Siang & Malam</h3>
+    <p class="hint">Gerakkan slider untuk memutar Bumi. Lihat bila rumah 🏠 berada di siang atau malam!</p>
+    <div class="solar">
+      <div class="sun">☀️</div>
+      <div class="earth-r"><div class="axis"></div><div class="marker" id="marker"><div class="home">🏠</div></div></div>
+    </div>
+    <div class="bignote" id="todstate">🏠 Sekarang: Siang ☀️</div>
+    <div class="timewrap">Masa: <b id="todhour">12:00</b><br/><input type="range" id="hour" min="0" max="23" value="12" oninput="spin()"/></div>
+  </div>
+  <div class="act">
+    <h3>🌐 Klik Garisan Latitud</h3>
+    <p class="hint">Klik garisan latitud penting yang diminta pada Bumi.</p>
+    <div class="prompt">Klik: <span id="latTarget">Garisan Khatulistiwa</span></div>
+    <div class="earth-l" id="earthL"></div>
+    <div class="feedback" id="latfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="latscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab4.html">← Bab 4</a>
+  <a class="next" href="bab6.html">Bab 6: Bentuk Muka Bumi →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+/* rotation sim: sun at left. Offset so 12:00 faces sun (day), 00:00 away (night).
+   Day when marker is on the left half (sin(angle)<0). */
+function spin(){
+  var h=+document.getElementById('hour').value;
+  var ang=h/24*360+90;
+  document.getElementById('marker').style.transform='translate(-50%,-50%) rotate('+ang+'deg)';
+  var hh=(""+h).padStart(2,'0');
+  document.getElementById('todhour').textContent=hh+':00';
+  var lit=Math.sin(ang*Math.PI/180)<0; // left side faces sun → siang ~ 6 pagi–6 petang
+  document.getElementById('todstate').textContent = lit?'🏠 Sekarang: Siang ☀️':'🏠 Sekarang: Malam 🌙';
+  document.getElementById('todstate').style.color = lit?'#b45309':'#1d4ed8';
+}
+spin();
+
+/* latitude lines on circular earth */
+var LATS=[
+  {id:'artik',cls:'pol',top:'16%',name:'Garisan Artik',lbl:'Artik 66.5°U'},
+  {id:'sartan',cls:'trop',top:'33%',name:'Garisan Sartan',lbl:'Sartan 23.5°U'},
+  {id:'eq',cls:'eq',top:'50%',name:'Garisan Khatulistiwa',lbl:'Khatulistiwa 0°'},
+  {id:'jadi',cls:'trop',top:'67%',name:'Garisan Jadi',lbl:'Jadi 23.5°S'},
+  {id:'antartik',cls:'pol',top:'84%',name:'Garisan Antartik',lbl:'Antartik 66.5°S'}
+];
+var latScore=0, latTarget;
+function buildLat(){
+  var e=document.getElementById('earthL');
+  LATS.forEach(function(L){
+    var d=document.createElement('div'); d.className='latline '+L.cls; d.id='LL_'+L.id; d.style.top=L.top;
+    d.onclick=function(){ pickLat(L,d); }; e.appendChild(d);
+    var lb=document.createElement('div'); lb.className='llabel'; lb.textContent=L.lbl; lb.style.top='calc('+L.top+' - 6px)'; e.appendChild(lb);
+  });
+  newLat();
+}
+function newLat(){
+  latTarget=LATS[Math.floor(Math.random()*LATS.length)];
+  document.getElementById('latTarget').textContent=latTarget.name;
+  document.querySelectorAll('.latline').forEach(function(x){x.classList.remove('sel')});
+  document.getElementById('latfb').textContent=' ';
+}
+function pickLat(L,el){
+  var fb=document.getElementById('latfb');
+  if(L.id===latTarget.id){ el.classList.add('sel'); latScore++; document.getElementById('latscore').textContent=latScore; fb.textContent='✅ Betul! '+L.lbl; fb.className='feedback good'; setTimeout(newLat,1000); }
+  else{ fb.textContent='❌ Itu '+L.name+'. Cuba lagi!'; fb.className='feedback bad'; }
+}
+buildLat();
+
+/* quiz */
+var BAB=5;
+var QUIZ=[
+  {q:"Putaran Bumi pada paksinya mengambil masa kira-kira…",o:["1 jam","24 jam","30 hari","365 hari"],a:1,e:"Satu putaran lengkap = 24 jam, menyebabkan siang & malam."},
+  {q:"Apakah kesan utama putaran (rotasi) Bumi?",o:["Musim","Siang dan malam","Hujan","Gerhana"],a:1,e:"Putaran menyebabkan kejadian siang dan malam."},
+  {q:"Peredaran Bumi mengelilingi Matahari mengambil masa…",o:["24 jam","7 hari","1 bulan","365¼ hari"],a:3,e:"Satu peredaran = 365¼ hari (1 tahun), menyebabkan musim."},
+  {q:"Paksi Bumi condong sebanyak…",o:["0°","23.5°","45°","90°"],a:1,e:"Paksi Bumi condong 23.5° dari garis tegak."},
+  {q:"Garisan latitud 0° dikenali sebagai…",o:["Garisan Sartan","Garisan Khatulistiwa","Garisan Artik","Garisan Jadi"],a:1,e:"Latitud 0° = Garisan Khatulistiwa."},
+  {q:"Malaysia terletak dalam zon iklim…",o:["Kutub","Sederhana","Tropika","Gurun"],a:2,e:"Malaysia berhampiran Khatulistiwa, jadi zon Tropika (panas & lembap)."},
+  {q:"Bumi berputar ke arah…",o:["Timur ke Barat","Barat ke Timur","Utara ke Selatan","Selatan ke Utara"],a:1,e:"Bumi berputar dari Barat ke Timur, jadi Matahari nampak terbit di Timur."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu faham Bumi! 🌏':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab6.html" style="color:#fff;font-weight:800">Teruskan ke Bab 6 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

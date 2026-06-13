@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 3: Peta Lakar — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#2563eb;--c2:#1d4ed8;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#eef3f9;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#eef3f9;color:#46586f;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f7faff;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#eef3f9;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.legend{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.legend .li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--border);border-radius:.6rem;padding:.5rem .7rem}
+.legend .li .e{font-size:1.5rem}
+.act{background:#f7faff;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.symgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;max-width:360px;margin:0 auto}
+.symtile{background:#fff;border:2px solid var(--border);border-radius:.7rem;padding:.8rem .3rem;text-align:center;cursor:pointer;transition:.15s}
+.symtile:hover{border-color:var(--c);transform:translateY(-3px)}
+.symtile .e{font-size:1.9rem}.symtile small{display:block;font-size:.62rem;color:var(--muted);margin-top:.2rem}
+.symtile.ok{background:#e8f8ef;border-color:var(--ok)}.symtile.no{background:#fdecec;border-color:var(--no)}
+.sketch{position:relative;width:330px;height:230px;margin:.4rem auto;background:linear-gradient(#eef7ee,#e3f0fb);border:2px solid var(--c);border-radius:.6rem;overflow:hidden}
+.sketch .road{position:absolute;background:#c7a16b;height:10px;left:0;right:0;top:110px}
+.sketch .river{position:absolute;background:#5aa9e6;width:12px;top:0;bottom:0;left:60px;border-radius:6px}
+.sfeat{position:absolute;font-size:1.7rem;cursor:pointer;transform:translate(-50%,-50%);transition:.15s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+.sfeat:hover{transform:translate(-50%,-50%) scale(1.25)}
+.sfeat.ok{outline:3px solid var(--ok);border-radius:50%}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f7faff;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#eef6ff;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#eef3f9;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 1 · KEMAHIRAN GEOGRAFI</div>
+  <div class="big">🗺️</div>
+  <h1>Bab 3: Peta Lakar</h1>
+</header>
+<nav class="topnav">
+  <a href="bab2.html">← Bab 2: Kedudukan</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab4.html">Bab 4: Peta Malaysia →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Peta Lakar & Simbol</h2>
+  <div class="note">
+    <h3>Apa itu peta lakar?</h3>
+    <p><b>Peta lakar</b> ialah lukisan ringkas sesuatu kawasan yang menunjukkan ciri-ciri penting menggunakan <b>simbol</b>. Ia tidak semestinya mengikut skala tepat.</p>
+    <p>Sebuah peta lakar yang baik mesti ada: <span class="tag">Tajuk</span><span class="tag">Arah (anak panah Utara)</span><span class="tag">Petunjuk / simbol</span><span class="tag">Bingkai</span></p>
+  </div>
+  <div class="note">
+    <h3>🔣 Petunjuk Peta (Legenda)</h3>
+    <p>Simbol mewakili ciri sebenar supaya peta kemas & mudah dibaca:</p>
+    <div class="legend">
+      <div class="li"><span class="e">🏘️</span> Petempatan / Bandar</div>
+      <div class="li"><span class="e">🏫</span> Sekolah</div>
+      <div class="li"><span class="e">🕌</span> Masjid</div>
+      <div class="li"><span class="e">🏥</span> Hospital / Klinik</div>
+      <div class="li"><span class="e">🌊</span> Sungai</div>
+      <div class="li"><span class="e">🌳</span> Hutan</div>
+      <div class="li"><span class="e">🌾</span> Sawah Padi</div>
+      <div class="li"><span class="e">🌉</span> Jambatan</div>
+      <div class="li"><span class="e">🚉</span> Stesen Keretapi</div>
+      <div class="li"><span class="e">⛰️</span> Bukit / Gunung</div>
+    </div>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> Simbol garisan biasanya untuk jalan & sungai; simbol kawasan (warna) untuk hutan & sawah; simbol titik untuk bangunan.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>🔣 Cari Simbol yang Betul</h3>
+    <p class="hint">Klik simbol peta yang sepadan dengan ciri yang diminta.</p>
+    <div class="prompt">Klik simbol bagi: <span id="symTarget">Sungai</span></div>
+    <div class="symgrid" id="symgrid"></div>
+    <div class="feedback" id="sfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="sscore">0</span></div>
+  </div>
+  <div class="act">
+    <h3>🗺️ Baca Peta Lakar</h3>
+    <p class="hint">Klik ciri yang betul pada peta lakar di bawah.</p>
+    <div class="prompt">Klik: <span id="mapTarget">Sekolah</span></div>
+    <div class="sketch" id="sketch">
+      <div class="road"></div><div class="river"></div>
+    </div>
+    <div class="feedback" id="mfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="mscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab2.html">← Bab 2</a>
+  <a class="next" href="bab4.html">Bab 4: Peta Malaysia →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  document.getElementById(id).classList.add('on'); el.classList.add('on'); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* symbol game */
+var SYMS=[
+  {e:'🏘️',n:'Petempatan'},{e:'🏫',n:'Sekolah'},{e:'🕌',n:'Masjid'},{e:'🏥',n:'Hospital'},
+  {e:'🌊',n:'Sungai'},{e:'🌳',n:'Hutan'},{e:'🌾',n:'Sawah Padi'},{e:'🌉',n:'Jambatan'}
+];
+var sScore=0, sTarget;
+function buildSyms(){
+  var g=document.getElementById('symgrid'); g.innerHTML='';
+  SYMS.forEach(function(s){
+    var t=document.createElement('div'); t.className='symtile';
+    t.innerHTML='<div class="e">'+s.e+'</div><small>?</small>';
+    t.onclick=function(){ pickSym(s,t); }; g.appendChild(t);
+  });
+  newSym();
+}
+function newSym(){
+  sTarget=SYMS[Math.floor(Math.random()*SYMS.length)];
+  document.getElementById('symTarget').textContent=sTarget.n;
+  document.querySelectorAll('.symtile').forEach(function(t){t.classList.remove('ok','no')});
+  document.getElementById('sfb').textContent=' ';
+}
+function pickSym(s,tile){
+  var fb=document.getElementById('sfb');
+  if(s.n===sTarget.n){ tile.classList.add('ok'); sScore++; document.getElementById('sscore').textContent=sScore; fb.textContent='✅ Betul! '+s.e+' = '+s.n; fb.className='feedback good'; setTimeout(newSym,900); }
+  else{ tile.classList.add('no'); fb.textContent='❌ Itu simbol '+s.n+'. Cuba lagi!'; fb.className='feedback bad'; }
+}
+buildSyms();
+
+/* sketch map reading */
+var FEATS=[
+  {e:'🏫',n:'Sekolah',x:'25%',y:'30%'},{e:'🕌',n:'Masjid',x:'78%',y:'28%'},
+  {e:'🏥',n:'Hospital',x:'82%',y:'72%'},{e:'🌳',n:'Hutan',x:'22%',y:'75%'},
+  {e:'🌉',n:'Jambatan',x:'18%',y:'48%'},{e:'🏘️',n:'Petempatan',x:'55%',y:'78%'},
+  {e:'🌾',n:'Sawah Padi',x:'52%',y:'20%'}
+];
+var mScore=0, mTarget;
+function buildSketch(){
+  var s=document.getElementById('sketch');
+  FEATS.forEach(function(f){
+    var el=document.createElement('div'); el.className='sfeat'; el.textContent=f.e; el.style.left=f.x; el.style.top=f.y; el.title=f.n;
+    el.onclick=function(){ pickFeat(f,el); }; s.appendChild(el);
+  });
+  newFeat();
+}
+function newFeat(){
+  mTarget=FEATS[Math.floor(Math.random()*FEATS.length)];
+  document.getElementById('mapTarget').textContent=mTarget.n;
+  document.querySelectorAll('.sfeat').forEach(function(x){x.classList.remove('ok')});
+  document.getElementById('mfb').textContent=' ';
+}
+function pickFeat(f,el){
+  var fb=document.getElementById('mfb');
+  if(f.n===mTarget.n){ el.classList.add('ok'); mScore++; document.getElementById('mscore').textContent=mScore; fb.textContent='✅ Tepat! '+f.e+' '+f.n; fb.className='feedback good'; setTimeout(newFeat,900); }
+  else{ fb.textContent='❌ Itu '+f.n+'. Cuba cari yang betul!'; fb.className='feedback bad'; }
+}
+buildSketch();
+
+/* quiz */
+var BAB=3;
+var QUIZ=[
+  {q:"Ciri yang WAJIB ada pada peta lakar yang lengkap ialah…",o:["Gambar berwarna","Tajuk, arah, petunjuk & bingkai","Nama pelukis","Tarikh lahir"],a:1,e:"Peta lakar mesti ada tajuk, arah (U), petunjuk dan bingkai."},
+  {q:"'Petunjuk' pada peta digunakan untuk…",o:["Hiasan","Menerangkan maksud simbol","Menulis nama","Mengira jarak"],a:1,e:"Petunjuk (legenda) menerangkan maksud setiap simbol."},
+  {q:"Simbol 🌊 biasanya mewakili…",o:["Jalan raya","Sungai","Sekolah","Hutan"],a:1,e:"🌊 mewakili sungai/badan air."},
+  {q:"Peta lakar berbeza daripada peta sebenar kerana ia…",o:["Sangat tepat skalanya","Ringkas & tidak semestinya mengikut skala","Hanya guna nombor","Tiada simbol"],a:1,e:"Peta lakar adalah lukisan ringkas, tidak semestinya mengikut skala tepat."},
+  {q:"Anak panah menunjuk ke atas pada peta biasanya bermaksud…",o:["Selatan","Utara","Timur","Tempat tinggi"],a:1,e:"Anak panah arah menunjukkan Utara, biasanya ke atas."},
+  {q:"Simbol kawasan berwarna (contoh hijau) selalunya untuk…",o:["Bangunan","Hutan / kawasan tumbuhan","Jalan","Sempadan"],a:1,e:"Warna kawasan mewakili guna tanah seperti hutan atau sawah."},
+  {q:"Tujuan utama membuat peta lakar ialah…",o:["Melukis cantik","Menunjukkan kedudukan ciri sesuatu kawasan dengan mudah","Mengira penduduk","Menulis cerita"],a:1,e:"Peta lakar memudahkan kita gambarkan kedudukan ciri sesuatu kawasan."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu pandai baca peta! 🗺️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab4.html" style="color:#fff;font-weight:800">Teruskan ke Bab 4 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

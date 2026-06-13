@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 10: Muka Bumi & Saliran Asia Tenggara — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#7c3aed;--c2:#6d28d9;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.5rem,5vw,2.1rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#f1eafe;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#f1eafe;color:#5b21b6;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f8f5ff;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#f1eafe;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.act{background:#f8f5ff;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.scene{position:relative;width:100%;max-width:420px;margin:.4rem auto;border-radius:.6rem;overflow:hidden;border:2px solid var(--c2)}
+.scene svg{display:block;width:100%;height:auto}
+.hot{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid var(--c2);transform:translate(-50%,-50%);cursor:pointer;font-size:.8rem;font-weight:900;color:var(--c2);display:flex;align-items:center;justify-content:center;animation:pulse 1.8s infinite}
+.hot:hover{background:var(--c);color:#fff}.hot.ok{background:var(--ok);color:#fff;border-color:var(--ok);animation:none}.hot.no{background:var(--no);color:#fff;border-color:var(--no);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,.4)}50%{box-shadow:0 0 0 7px rgba(124,58,237,0)}}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;max-width:380px;margin:.6rem auto 0}
+.opts4 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.6rem;font-weight:700;cursor:pointer;font-size:.85rem}
+.opts4 button:hover{border-color:var(--c)}.opts4 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts4 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f8f5ff;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#f3edff;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#f1eafe;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 4 · GEOGRAFI KAWASAN</div>
+  <div class="big">🗻</div>
+  <h1>Bab 10: Muka Bumi & Saliran Asia Tenggara</h1>
+</header>
+<nav class="topnav">
+  <a href="bab9.html">← Bab 9</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab11.html">Bab 11: Penduduk AT →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Asia Tenggara</h2>
+  <div class="note">
+    <h3>11 buah negara</h3>
+    <p>Asia Tenggara terbahagi kepada <b>Tanah Besar</b> (Myanmar, Thailand, Laos, Kemboja, Vietnam) dan <b>Kepulauan</b> (Malaysia, Indonesia, Filipina, Brunei, Singapura, Timor Leste).</p>
+  </div>
+  <div class="note">
+    <h3>⛰️ Bentuk Muka Bumi</h3>
+    <p><b>Banjaran:</b> <span class="tag">Banjaran Titiwangsa (Malaysia)</span><span class="tag">Banjaran Crocker (Sabah)</span><span class="tag">Banjaran Arakan Yoma (Myanmar)</span><span class="tag">Banjaran Annam (Vietnam/Laos)</span></p>
+    <p><b>Gunung berapi:</b> Banyak di <b>Indonesia</b> & <b>Filipina</b> kerana terletak di <b>Lingkaran Api Pasifik</b>. Gunung Kinabalu (Sabah) ialah antara puncak tertinggi.</p>
+  </div>
+  <div class="note">
+    <h3>🌊 Sistem Saliran</h3>
+    <p><b>Sungai Mekong</b> — sungai terpanjang di Asia Tenggara, mengalir melalui China, Myanmar, Laos, Thailand, Kemboja & Vietnam.</p>
+    <p>Sungai lain: <span class="tag">Irrawaddy (Myanmar)</span><span class="tag">Chao Phraya (Thailand)</span><span class="tag">Sungai Merah/Red (Vietnam)</span>. Tasik terbesar: <span class="tag">Tasik Tonle Sap (Kemboja)</span></p>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> <b>M</b>ekong = sungai paling panjang. Gunung berapi banyak di Indonesia & Filipina (Lingkaran Api). Tanih gunung berapi sangat <b>subur</b> untuk pertanian.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>🗺️ Cari Ciri Fizikal</h3>
+    <p class="hint">Klik titik (●) yang betul pada peta Asia Tenggara.</p>
+    <div class="prompt">Klik: <span id="feTarget">Sungai Mekong</span></div>
+    <div class="scene" id="scene">
+      <svg viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="420" height="300" fill="#bfe3f5"/>
+        <!-- mainland SEA -->
+        <path d="M70,20 C120,10 200,20 235,55 C255,90 230,120 240,150 C220,175 175,170 150,150 C120,130 95,120 80,90 C70,60 55,35 70,20 Z" fill="#8fbf6f"/>
+        <!-- malay peninsula strip -->
+        <path d="M150,150 C160,180 175,215 200,235 C215,222 205,190 185,160 Z" fill="#8fbf6f"/>
+        <!-- sumatra -->
+        <path d="M120,235 C160,255 215,285 245,295 C235,275 190,250 150,228 Z" fill="#7fb061"/>
+        <!-- borneo -->
+        <ellipse cx="320" cy="210" rx="62" ry="48" fill="#86b766"/>
+        <!-- java strip -->
+        <path d="M250,288 C300,295 360,292 395,285 L395,300 L250,300 Z" fill="#7fb061"/>
+        <!-- philippines -->
+        <ellipse cx="375" cy="90" rx="20" ry="30" fill="#86b766"/>
+        <ellipse cx="388" cy="140" rx="14" ry="20" fill="#86b766"/>
+        <!-- mekong river through mainland -->
+        <path d="M150,40 C165,75 150,110 165,140 C175,165 190,200 205,230" stroke="#2b7fc4" stroke-width="4" fill="none"/>
+        <!-- irrawaddy west -->
+        <path d="M95,40 C92,70 100,100 105,125" stroke="#2b7fc4" stroke-width="3.5" fill="none"/>
+        <!-- tonle sap lake -->
+        <ellipse cx="190" cy="165" rx="13" ry="8" fill="#2b7fc4"/>
+        <!-- volcano marks on sumatra/java -->
+        <text x="175" y="262" font-size="14">🌋</text>
+        <text x="300" y="296" font-size="13">🌋</text>
+      </svg>
+    </div>
+    <div class="feedback" id="fefb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="fescore">0</span> / 6</div>
+  </div>
+  <div class="act">
+    <h3>🧩 Padan Ciri dengan Negara</h3>
+    <p class="hint">Ciri fizikal ini terdapat di negara mana?</p>
+    <div class="prompt" id="cnPrompt">Sungai Irrawaddy</div>
+    <div class="opts4" id="cnOpts"></div>
+    <div class="feedback" id="cnfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="cnscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab9.html">← Bab 9</a>
+  <a class="next" href="bab11.html">Bab 11: Penduduk AT →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+var FE=[
+  {id:'mekong',name:'Sungai Mekong',x:'40%',y:'55%'},
+  {id:'irra',name:'Sungai Irrawaddy',x:'24%',y:'30%'},
+  {id:'tonle',name:'Tasik Tonle Sap',x:'45%',y:'55%'},
+  {id:'titiwangsa',name:'Banjaran Titiwangsa',x:'43%',y:'66%'},
+  {id:'borneo',name:'Pulau Borneo',x:'76%',y:'70%'},
+  {id:'volcano',name:'Gunung Berapi (Indonesia)',x:'42%',y:'87%'}
+];
+var feScore=0, feTarget, feDone={};
+function buildScene(){
+  var s=document.getElementById('scene');
+  FE.forEach(function(f,i){var h=document.createElement('div');h.className='hot';h.id='F'+i;h.textContent='●';h.style.left=f.x;h.style.top=f.y;h.title=f.name;h.onclick=function(){pickFE(f,h);};s.appendChild(h);});
+  newFE();
+}
+function newFE(){
+  var pool=FE.filter(function(f){return !feDone[f.id];});
+  if(pool.length===0){document.getElementById('feTarget').textContent='Semua dijumpai! 🎉';return;}
+  feTarget=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('feTarget').textContent=feTarget.name;
+  document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('no')});
+  document.getElementById('fefb').textContent=' ';
+}
+function pickFE(f,el){
+  var fb=document.getElementById('fefb');
+  if(f.id===feTarget.id){el.classList.add('ok');el.textContent='✓';if(!feDone[f.id]){feDone[f.id]=true;feScore++;document.getElementById('fescore').textContent=feScore;}fb.textContent='✅ Betul! '+f.name;fb.className='feedback good';setTimeout(newFE,950);}
+  else{el.classList.add('no');fb.textContent='❌ Itu bukan '+feTarget.name+'. Cuba lagi!';fb.className='feedback bad';setTimeout(function(){el.classList.remove('no');},700);}
+}
+buildScene();
+
+/* country match */
+var CN=[
+  {t:'Sungai Irrawaddy',a:'Myanmar'},
+  {t:'Sungai Chao Phraya',a:'Thailand'},
+  {t:'Tasik Tonle Sap',a:'Kemboja'},
+  {t:'Banjaran Titiwangsa',a:'Malaysia'},
+  {t:'Delta Sungai Mekong',a:'Vietnam'},
+  {t:'Banjaran Crocker & G. Kinabalu',a:'Malaysia'}
+];
+var CALL=['Myanmar','Thailand','Kemboja','Malaysia','Vietnam','Indonesia'];
+var cnScore=0, cnTarget;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function newCN(){
+  cnTarget=CN[Math.floor(Math.random()*CN.length)];
+  document.getElementById('cnPrompt').textContent=cnTarget.t;
+  var wrong=shuffle(CALL.filter(function(x){return x!==cnTarget.a;})).slice(0,3);
+  var opts=shuffle([cnTarget.a].concat(wrong));
+  var box=document.getElementById('cnOpts'); box.innerHTML='';
+  opts.forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){pickCN(o,b);};box.appendChild(b);});
+  document.getElementById('cnfb').textContent=' ';
+}
+function pickCN(o,btn){
+  var fb=document.getElementById('cnfb');
+  document.querySelectorAll('#cnOpts button').forEach(function(b){b.disabled=true;});
+  if(o===cnTarget.a){btn.classList.add('ok');cnScore++;document.getElementById('cnscore').textContent=cnScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#cnOpts button').forEach(function(b){if(b.textContent===cnTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+cnTarget.a;fb.className='feedback bad';}
+  setTimeout(newCN,1200);
+}
+newCN();
+
+/* quiz */
+var BAB=10;
+var QUIZ=[
+  {q:"Sungai terpanjang di Asia Tenggara ialah…",o:["Sungai Rajang","Sungai Mekong","Sungai Pahang","Sungai Chao Phraya"],a:1,e:"Sungai Mekong ialah yang terpanjang, mengalir melalui banyak negara."},
+  {q:"Negara yang TERKENAL dengan banyak gunung berapi ialah…",o:["Singapura","Laos","Indonesia","Brunei"],a:2,e:"Indonesia (dan Filipina) banyak gunung berapi kerana Lingkaran Api Pasifik."},
+  {q:"Tasik terbesar di Asia Tenggara ialah…",o:["Tasik Kenyir","Tasik Tonle Sap","Tasik Bera","Tasik Toba"],a:1,e:"Tasik Tonle Sap di Kemboja ialah tasik air tawar terbesar di rantau ini."},
+  {q:"Sungai Irrawaddy mengalir di negara…",o:["Vietnam","Thailand","Myanmar","Filipina"],a:2,e:"Sungai Irrawaddy ialah sungai utama Myanmar."},
+  {q:"Asia Tenggara mempunyai berapa buah negara?",o:["7","9","11","13"],a:2,e:"Terdapat 11 negara di Asia Tenggara."},
+  {q:"Tanih di kawasan gunung berapi biasanya…",o:["Sangat subur","Tandus","Berbatu sahaja","Berpasir kering"],a:0,e:"Tanih gunung berapi subur, sesuai untuk pertanian."},
+  {q:"Negara Asia Tenggara Tanah Besar termasuk…",o:["Indonesia & Filipina","Thailand & Vietnam","Malaysia & Brunei","Singapura & Timor Leste"],a:1,e:"Tanah Besar: Myanmar, Thailand, Laos, Kemboja, Vietnam."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🗻':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab11.html" style="color:#fff;font-weight:800">Teruskan ke Bab 11 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

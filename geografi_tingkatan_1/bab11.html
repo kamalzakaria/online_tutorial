@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 11: Penduduk & Petempatan Asia Tenggara — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#7c3aed;--c2:#6d28d9;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.5rem,5vw,2.1rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#f1eafe;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#f1eafe;color:#5b21b6;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f8f5ff;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#f1eafe;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.act{background:#f8f5ff;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.02rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.chart{max-width:430px;margin:.4rem auto}
+.brow{display:flex;align-items:center;gap:.5rem;margin-bottom:.45rem;cursor:pointer}
+.blabel{width:78px;font-size:.78rem;font-weight:700;text-align:right;flex-shrink:0}
+.btrack{flex:1;background:#eee;border-radius:6px;overflow:hidden;height:22px}
+.bfill{height:100%;background:linear-gradient(90deg,#a78bfa,#7c3aed);width:0;border-radius:6px;transition:width 1s cubic-bezier(.2,.9,.3,1);display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:.66rem;font-weight:800;padding-right:5px}
+.brow:hover .btrack{outline:2px solid var(--c)}
+.brow.ok .bfill{background:linear-gradient(90deg,#34d399,#16a34a)}
+.brow.no .bfill{background:linear-gradient(90deg,#fca5a5,#dc2626)}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;max-width:380px;margin:.6rem auto 0}
+.opts4 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.6rem;font-weight:700;cursor:pointer;font-size:.85rem}
+.opts4 button:hover{border-color:var(--c)}.opts4 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts4 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f8f5ff;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#f3edff;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#f1eafe;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 4 · GEOGRAFI KAWASAN</div>
+  <div class="big">🌆</div>
+  <h1>Bab 11: Penduduk & Petempatan Asia Tenggara</h1>
+</header>
+<nav class="topnav">
+  <a href="bab10.html">← Bab 10</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab12.html">Bab 12: Sumber Air →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Penduduk Asia Tenggara</h2>
+  <div class="note">
+    <h3>Negara paling ramai & paling sedikit</h3>
+    <p><b>Indonesia</b> mempunyai penduduk paling ramai di Asia Tenggara (lebih 270 juta). <b>Brunei</b> & <b>Timor Leste</b> antara yang paling sedikit.</p>
+    <p><b>Singapura</b> mempunyai <b>ketumpatan paling tinggi</b> — negara kecil tetapi sangat padat.</p>
+  </div>
+  <div class="note">
+    <h3>🏙️ Tumpuan Penduduk & Petempatan</h3>
+    <p>Penduduk bertumpu di <b>dataran & delta sungai</b> yang subur (cth Delta Mekong, Delta Irrawaddy) dan di <b>bandar besar</b>.</p>
+    <p>Bandar utama: <span class="tag">Jakarta</span><span class="tag">Bangkok</span><span class="tag">Manila</span><span class="tag">Kuala Lumpur</span><span class="tag">Ho Chi Minh</span></p>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> <b>I</b>ndonesia = paling <b>I</b>ramai 😉. Singapura = paling padat. Penduduk tumpu di delta subur & bandar.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>📊 Carta Bar Penduduk (juta)</h3>
+    <p class="hint">Klik bar negara yang betul mengikut soalan!</p>
+    <div class="prompt" id="popPrompt">Klik negara dengan penduduk PALING RAMAI</div>
+    <div class="chart" id="chart"></div>
+    <div class="feedback" id="popfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="popscore">0</span></div>
+  </div>
+  <div class="act">
+    <h3>🏙️ Padan Bandar dengan Negara</h3>
+    <p class="hint">Bandar besar ini terletak di negara mana?</p>
+    <div class="prompt" id="cyPrompt">Jakarta</div>
+    <div class="opts4" id="cyOpts"></div>
+    <div class="feedback" id="cyfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="cyscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab10.html">← Bab 10</a>
+  <a class="next" href="bab12.html">Bab 12: Sumber Air →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — angka penduduk anggaran untuk pembelajaran sahaja.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+/* population bar chart (illustrative, juta) */
+var POP=[
+  {n:'Indonesia',v:273},{n:'Filipina',v:110},{n:'Vietnam',v:97},{n:'Thailand',v:70},
+  {n:'Myanmar',v:54},{n:'Malaysia',v:33},{n:'Kemboja',v:17},{n:'Laos',v:7},{n:'Singapura',v:6},{n:'Brunei',v:0.5}
+];
+var maxV=273, popScore=0, popMode;
+function buildChart(){
+  var c=document.getElementById('chart'); c.innerHTML='';
+  POP.forEach(function(p,i){
+    var row=document.createElement('div'); row.className='brow'; row.id='B'+i;
+    row.innerHTML='<div class="blabel">'+p.n+'</div><div class="btrack"><div class="bfill" id="bf'+i+'">'+p.v+'</div></div>';
+    row.onclick=function(){ pickPop(p,row); };
+    c.appendChild(row);
+  });
+  setTimeout(function(){ POP.forEach(function(p,i){ document.getElementById('bf'+i).style.width=(p.v/maxV*100)+'%'; }); },80);
+  newPop();
+}
+function newPop(){
+  popMode = Math.random()<0.5 ? 'ramai' : 'sedikit';
+  document.getElementById('popPrompt').textContent = popMode==='ramai'?'Klik negara dengan penduduk PALING RAMAI':'Klik negara dengan penduduk PALING SEDIKIT';
+  document.querySelectorAll('.brow').forEach(function(r){r.classList.remove('ok','no')});
+  document.getElementById('popfb').textContent=' ';
+}
+function pickPop(p,row){
+  var fb=document.getElementById('popfb');
+  var correctVal = popMode==='ramai'?Math.max.apply(null,POP.map(function(x){return x.v;})):Math.min.apply(null,POP.map(function(x){return x.v;}));
+  if(p.v===correctVal){ row.classList.add('ok'); popScore++; document.getElementById('popscore').textContent=popScore; fb.textContent='✅ Betul! '+p.n+' ('+p.v+' juta)'; fb.className='feedback good'; setTimeout(newPop,1100); }
+  else{ row.classList.add('no'); fb.textContent='❌ Bukan '+p.n+'. Cuba lagi!'; fb.className='feedback bad'; }
+}
+buildChart();
+
+/* city -> country */
+var CY=[
+  {t:'Jakarta',a:'Indonesia'},{t:'Bangkok',a:'Thailand'},{t:'Manila',a:'Filipina'},
+  {t:'Ho Chi Minh',a:'Vietnam'},{t:'Kuala Lumpur',a:'Malaysia'},{t:'Phnom Penh',a:'Kemboja'},
+  {t:'Bandar Seri Begawan',a:'Brunei'}
+];
+var CALL=['Indonesia','Thailand','Filipina','Vietnam','Malaysia','Kemboja','Brunei'];
+var cyScore=0, cyTarget;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function newCY(){
+  cyTarget=CY[Math.floor(Math.random()*CY.length)];
+  document.getElementById('cyPrompt').textContent=cyTarget.t;
+  var wrong=shuffle(CALL.filter(function(x){return x!==cyTarget.a;})).slice(0,3);
+  var opts=shuffle([cyTarget.a].concat(wrong));
+  var box=document.getElementById('cyOpts'); box.innerHTML='';
+  opts.forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){pickCY(o,b);};box.appendChild(b);});
+  document.getElementById('cyfb').textContent=' ';
+}
+function pickCY(o,btn){
+  var fb=document.getElementById('cyfb');
+  document.querySelectorAll('#cyOpts button').forEach(function(b){b.disabled=true;});
+  if(o===cyTarget.a){btn.classList.add('ok');cyScore++;document.getElementById('cyscore').textContent=cyScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#cyOpts button').forEach(function(b){if(b.textContent===cyTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+cyTarget.a;fb.className='feedback bad';}
+  setTimeout(newCY,1200);
+}
+newCY();
+
+/* quiz */
+var BAB=11;
+var QUIZ=[
+  {q:"Negara dengan penduduk PALING RAMAI di Asia Tenggara ialah…",o:["Malaysia","Indonesia","Thailand","Vietnam"],a:1,e:"Indonesia mempunyai lebih 270 juta penduduk — paling ramai."},
+  {q:"Negara dengan ketumpatan penduduk PALING TINGGI ialah…",o:["Laos","Singapura","Kemboja","Myanmar"],a:1,e:"Singapura — negara kecil tetapi sangat padat."},
+  {q:"Penduduk Asia Tenggara banyak bertumpu di…",o:["Puncak gunung","Dataran & delta sungai yang subur","Padang pasir","Hutan tebal"],a:1,e:"Delta & dataran subur menarik petempatan & pertanian."},
+  {q:"Bandar Jakarta terletak di negara…",o:["Filipina","Indonesia","Thailand","Vietnam"],a:1,e:"Jakarta ialah ibu kota Indonesia."},
+  {q:"Bandar Bangkok ialah bandar utama negara…",o:["Thailand","Myanmar","Laos","Kemboja"],a:0,e:"Bangkok ialah ibu kota Thailand."},
+  {q:"Antara negara berikut yang penduduknya PALING SEDIKIT ialah…",o:["Vietnam","Brunei","Filipina","Myanmar"],a:1,e:"Brunei antara negara berpenduduk paling sedikit di rantau ini."},
+  {q:"Faktor utama yang menggalakkan tumpuan penduduk di bandar ialah…",o:["Kurang kerja","Peluang pekerjaan & kemudahan","Banjir","Tiada pengangkutan"],a:1,e:"Bandar menawarkan peluang kerja & kemudahan, menarik penduduk."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🌆':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab12.html" style="color:#fff;font-weight:800">Teruskan ke Bab 12 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

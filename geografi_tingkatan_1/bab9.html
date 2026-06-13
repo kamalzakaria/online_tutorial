@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 9: Petempatan di Malaysia — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#db2777;--c2:#be185d;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#fce7f1;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#fce7f1;color:#9d2461;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#fef5f9;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#fce7f1;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.patrow{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.patcard{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.6rem;text-align:center}
+.patmini{position:relative;height:90px;background:#eef7ea;border-radius:.5rem;overflow:hidden;margin-bottom:.4rem}
+.patcard b{color:var(--c2)}.patcard small{color:var(--muted);font-size:.72rem}
+.act{background:#fef5f9;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.patbox{position:relative;width:240px;height:170px;background:#eef7ea;border:3px solid var(--c2);border-radius:.6rem;margin:.4rem auto;overflow:hidden}
+.patbox .road{position:absolute;background:#c7a16b}
+.patbox .h{position:absolute;font-size:1.1rem;transform:translate(-50%,-50%)}
+.opts3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;max-width:400px;margin:.6rem auto 0}
+.opts3 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.55rem .3rem;font-weight:700;cursor:pointer;font-size:.8rem}
+.opts3 button:hover{border-color:var(--c)}.opts3 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts3 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;max-width:380px;margin:.6rem auto 0}
+.opts4 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.6rem;font-weight:700;cursor:pointer;font-size:.85rem}
+.opts4 button:hover{border-color:var(--c)}.opts4 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts4 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#fef5f9;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#fdeef5;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#fce7f1;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 3 · GEOGRAFI MANUSIA</div>
+  <div class="big">🏘️</div>
+  <h1>Bab 9: Petempatan di Malaysia</h1>
+</header>
+<nav class="topnav">
+  <a href="bab8.html">← Bab 8</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab10.html">Bab 10: Asia Tenggara →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Pola Petempatan</h2>
+  <div class="note">
+    <h3>Apa itu petempatan?</h3>
+    <p><b>Petempatan</b> ialah kawasan tempat tinggal manusia beserta kemudahan. Ia terbahagi kepada petempatan <b>luar bandar</b> (kampung) dan <b>bandar</b>.</p>
+  </div>
+  <div class="note">
+    <h3>🗺️ 3 Pola Utama</h3>
+    <div class="patrow">
+      <div class="patcard"><div class="patmini" id="m1"></div><b>Berpusat</b><small>Rumah berkumpul di satu pusat (cth simpang/pasar)</small></div>
+      <div class="patcard"><div class="patmini" id="m2"></div><b>Berjajar</b><small>Rumah berderet sepanjang jalan / sungai / pantai</small></div>
+      <div class="patcard"><div class="patmini" id="m3"></div><b>Berselerak</b><small>Rumah berjauhan & bertaburan</small></div>
+    </div>
+  </div>
+  <div class="note">
+    <h3>🧭 Faktor & Fungsi</h3>
+    <p><b>Faktor petempatan:</b> <span class="tag">bekalan air</span><span class="tag">tanah rata</span><span class="tag">tanih subur</span><span class="tag">pengangkutan</span><span class="tag">keselamatan</span></p>
+    <p><b>Fungsi petempatan:</b> <span class="tag">pertanian</span><span class="tag">pentadbiran</span><span class="tag">perdagangan</span><span class="tag">pelabuhan</span><span class="tag">pelancongan</span></p>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> Ber<b>jajar</b> = berderet ikut <b>garisan</b> (jalan/sungai). Ber<b>pusat</b> = berkumpul di satu <b>titik</b>. Ber<b>selerak</b> = bertaburan jauh-jauh.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>🏠 Cam Pola Petempatan</h3>
+    <p class="hint">Lihat susunan rumah. Apakah pola petempatannya?</p>
+    <div class="patbox" id="patbox"></div>
+    <div class="opts3" id="patOpts"></div>
+    <div class="feedback" id="pfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="pscore">0</span></div>
+  </div>
+  <div class="act">
+    <h3>🏛️ Padan Fungsi Petempatan</h3>
+    <p class="hint">Apakah fungsi utama petempatan ini?</p>
+    <div class="prompt" id="funcPrompt">Putrajaya</div>
+    <div class="opts4" id="funcOpts"></div>
+    <div class="feedback" id="ffb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="fscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab8.html">← Bab 8</a>
+  <a class="next" href="bab10.html">Bab 10: Asia Tenggara →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+function rnd(a,b){return a+Math.random()*(b-a);}
+
+/* render a pattern into a box element (w,h in px area %, type) */
+function renderPattern(el, type){
+  el.innerHTML=''; var W=el.clientWidth||240, H=el.clientHeight||170, n=9;
+  if(type==='berjajar'){
+    var road=document.createElement('div'); road.className='road'; road.style.height='8px'; road.style.left='0'; road.style.right='0'; road.style.top='50%'; road.style.transform='translateY(-50%)'; el.appendChild(road);
+    for(var i=0;i<n;i++){ addH(el,(8+i*(84/(n-1)))+'%', (50+rnd(-6,6))+'%'); }
+  }else if(type==='berpusat'){
+    for(var i=0;i<n;i++){ var ang=Math.random()*6.28, r=rnd(0,26); addH(el,(50+Math.cos(ang)*r)+'%',(50+Math.sin(ang)*r*1.2)+'%'); }
+  }else{ // berselerak
+    var used=[]; for(var i=0;i<n;i++){ addH(el, rnd(8,92)+'%', rnd(10,90)+'%'); }
+  }
+}
+function addH(el,x,y){ var h=document.createElement('div'); h.className='h'; h.textContent='🏠'; h.style.left=x; h.style.top=y; el.appendChild(h); }
+/* note thumbnails */
+renderPattern(document.getElementById('m1'),'berpusat');
+renderPattern(document.getElementById('m2'),'berjajar');
+renderPattern(document.getElementById('m3'),'berselerak');
+
+/* pattern game */
+var TYPES=[{k:'berpusat',n:'Berpusat'},{k:'berjajar',n:'Berjajar'},{k:'berselerak',n:'Berselerak'}];
+var pScore=0, pTarget;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function newPat(){
+  pTarget=TYPES[Math.floor(Math.random()*TYPES.length)];
+  renderPattern(document.getElementById('patbox'),pTarget.k);
+  var box=document.getElementById('patOpts'); box.innerHTML='';
+  shuffle(TYPES).forEach(function(t){var b=document.createElement('button');b.textContent=t.n;b.onclick=function(){pickPat(t,b);};box.appendChild(b);});
+  document.getElementById('pfb').textContent=' ';
+}
+function pickPat(t,btn){
+  var fb=document.getElementById('pfb');
+  document.querySelectorAll('#patOpts button').forEach(function(b){b.disabled=true;});
+  if(t.k===pTarget.k){btn.classList.add('ok');pScore++;document.getElementById('pscore').textContent=pScore;fb.textContent='✅ Betul! Pola '+pTarget.n;fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#patOpts button').forEach(function(b){if(b.textContent===pTarget.n)b.classList.add('ok');});fb.textContent='❌ Ini pola '+pTarget.n;fb.className='feedback bad';}
+  setTimeout(newPat,1200);
+}
+newPat();
+
+/* function match */
+var FUNC=[
+  {t:'Putrajaya',a:'Pentadbiran'},
+  {t:'Pelabuhan Klang',a:'Pelabuhan'},
+  {t:'Cameron Highlands',a:'Pelancongan'},
+  {t:'Felda (ladang sawit)',a:'Pertanian'},
+  {t:'Kuala Lumpur (KLCC)',a:'Perdagangan'},
+  {t:'Kundasang (sayur)',a:'Pertanian'}
+];
+var FALL=['Pentadbiran','Pelabuhan','Pelancongan','Pertanian','Perdagangan'];
+var fScore=0, fTarget;
+function newFunc(){
+  fTarget=FUNC[Math.floor(Math.random()*FUNC.length)];
+  document.getElementById('funcPrompt').textContent=fTarget.t;
+  var wrong=shuffle(FALL.filter(function(x){return x!==fTarget.a;})).slice(0,3);
+  var opts=shuffle([fTarget.a].concat(wrong));
+  var box=document.getElementById('funcOpts'); box.innerHTML='';
+  opts.forEach(function(o){var b=document.createElement('button');b.textContent=o;b.onclick=function(){pickFunc(o,b);};box.appendChild(b);});
+  document.getElementById('ffb').textContent=' ';
+}
+function pickFunc(o,btn){
+  var fb=document.getElementById('ffb');
+  document.querySelectorAll('#funcOpts button').forEach(function(b){b.disabled=true;});
+  if(o===fTarget.a){btn.classList.add('ok');fScore++;document.getElementById('fscore').textContent=fScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#funcOpts button').forEach(function(b){if(b.textContent===fTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+fTarget.a;fb.className='feedback bad';}
+  setTimeout(newFunc,1200);
+}
+newFunc();
+
+/* quiz */
+var BAB=9;
+var QUIZ=[
+  {q:"Pola petempatan di mana rumah berderet sepanjang jalan atau sungai ialah…",o:["Berpusat","Berjajar","Berselerak","Berkelompok"],a:1,e:"Berjajar = rumah berderet mengikut garisan jalan/sungai/pantai."},
+  {q:"Pola petempatan di mana rumah berkumpul di satu pusat ialah…",o:["Berpusat","Berjajar","Berselerak","Bertingkat"],a:0,e:"Berpusat = rumah berkumpul di satu titik tumpuan."},
+  {q:"Rumah yang bertaburan dan berjauhan menunjukkan pola…",o:["Berpusat","Berjajar","Berselerak","Berderet"],a:2,e:"Berselerak = petempatan bertaburan & berjauhan."},
+  {q:"Antara faktor yang menggalakkan petempatan ialah…",o:["Tanah curam","Bekalan air & tanah rata","Banjir kerap","Tiada jalan"],a:1,e:"Bekalan air, tanah rata & tanih subur menggalakkan petempatan."},
+  {q:"Putrajaya merupakan petempatan yang berfungsi sebagai pusat…",o:["Pelabuhan","Pentadbiran","Perlombongan","Pelancongan pantai"],a:1,e:"Putrajaya ialah pusat pentadbiran kerajaan."},
+  {q:"Petempatan di Cameron Highlands banyak berfungsi untuk…",o:["Pelabuhan","Pertanian hawa dingin & pelancongan","Perindustrian berat","Perlombongan bijih timah"],a:1,e:"Cameron Highlands: sayur/teh & pelancongan."},
+  {q:"Petempatan luar bandar biasanya merujuk kepada…",o:["Bandar besar","Kampung","Pelabuhan antarabangsa","Kawasan industri"],a:1,e:"Luar bandar = kampung, biasanya berasaskan pertanian."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🏘️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab10.html" style="color:#fff;font-weight:800">Teruskan ke Bab 10 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

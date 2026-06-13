@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 2: Kedudukan — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#2563eb;--c2:#1d4ed8;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#eef3f9;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#eef3f9;color:#46586f;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f7faff;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}
+.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#eef3f9;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}
+.callout b{color:#b45309}
+.grid2{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.mini{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.8rem;text-align:center}
+.mini .e{font-size:1.7rem}.mini b{display:block;margin-top:.2rem}.mini small{color:var(--muted)}
+.act{background:#f7faff;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}
+.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}
+.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}
+.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}
+.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+/* grid-reference */
+.gridref{display:inline-grid;gap:3px;margin:.4rem auto;background:#dbe6f5;padding:8px;border-radius:.6rem}
+.gcell{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:.4rem;font-weight:800;cursor:pointer;font-size:1.1rem}
+.gcell.map{background:#eaf6ec;border:2px solid #bfe3c6}
+.gcell.map:hover{background:#cdeed3}
+.gcell.lbl{background:transparent;color:var(--c2);cursor:default;font-size:.85rem}
+.gcell.ok{background:var(--ok);color:#fff}
+.gcell.no{background:var(--no);color:#fff}
+.gridhost{text-align:center;overflow-x:auto}
+/* lat-long */
+.world{position:relative;width:320px;height:200px;margin:.6rem auto;background:linear-gradient(#cdeefe,#a9dcf5);border:2px solid var(--c);border-radius:.5rem;overflow:hidden}
+.line{position:absolute;background:rgba(30,64,120,.35);cursor:pointer}
+.line.h{left:0;right:0;height:6px}.line.v{top:0;bottom:0;width:6px}
+.line:hover{background:var(--c)}
+.line.eq{background:#dc2626;height:6px}
+.line.gw{background:#16a34a;width:6px}
+.line.sel{background:#f59e0b}
+.wlabel{position:absolute;font-size:.62rem;font-weight:800;color:#1e293b;background:rgba(255,255,255,.7);padding:0 3px;border-radius:3px}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}
+.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f7faff;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#eef6ff;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}
+.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}
+.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#eef3f9;color:var(--c2)}
+.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 1 · KEMAHIRAN GEOGRAFI</div>
+  <div class="big">📍</div>
+  <h1>Bab 2: Kedudukan</h1>
+</header>
+<nav class="topnav">
+  <a href="bab1.html">← Bab 1: Arah</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab3.html">Bab 3: Peta Lakar →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Menentukan Kedudukan</h2>
+  <div class="note">
+    <h3>Dua cara menyatakan kedudukan</h3>
+    <p>Kedudukan ialah <b>tempat letaknya</b> sesuatu objek di atas peta. Ada dua kaedah:</p>
+    <p><span class="tag">1. Rujukan Grid</span> untuk peta tempatan &nbsp; <span class="tag">2. Latitud & Longitud</span> untuk peta dunia</p>
+  </div>
+
+  <div class="note">
+    <h3>🔢 Rujukan Grid (Grid Reference)</h3>
+    <p>Garisan menegak dipanggil <b>Garisan Easting</b> (nombor dibaca dari <b>kiri ke kanan</b>). Garisan mendatar dipanggil <b>Garisan Northing</b> (nombor dibaca dari <b>bawah ke atas</b>).</p>
+    <p><b>Cara baca:</b> baca <b>Easting dahulu</b>, kemudian <b>Northing</b> — <i>"masuk rumah dulu (kanan), baru naik tangga (atas)"</i>.</p>
+    <p class="tag">Contoh: Rujukan grid <b>34</b> = Easting 3, Northing 4</p>
+  </div>
+
+  <div class="note">
+    <h3>🌐 Latitud & Longitud</h3>
+    <p><b>Latitud</b> — garisan mendatar (melintang). Garisan <b>0°</b> ialah <b>Garisan Khatulistiwa</b>. Diukur ke <b>Utara</b> dan <b>Selatan</b> (0°–90°).</p>
+    <p><b>Longitud</b> — garisan menegak (membujur). Garisan <b>0°</b> ialah <b>Garisan Meridian Greenwich</b>. Diukur ke <b>Timur</b> dan <b>Barat</b> (0°–180°).</p>
+  </div>
+  <div class="callout"><b>💡 Ingat:</b> Lati<b>tud</b> = melin<b>tang</b> (mendatar). Longitud = membujur (menegak). Khatulistiwa membahagi Bumi kepada Hemisfera Utara & Selatan.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+
+  <div class="act">
+    <h3>💎 Pemburu Harta Karun (Rujukan Grid)</h3>
+    <p class="hint">Baca Easting dahulu, kemudian Northing. Klik petak grid yang betul untuk jumpa harta!</p>
+    <div class="prompt">Cari rujukan grid: <span id="gtarget">34</span></div>
+    <div class="gridhost"><div class="gridref" id="gref"></div></div>
+    <div class="feedback" id="gfb">&nbsp;</div>
+    <div class="scoreline">Harta dijumpai: <span class="s" id="gscore">0</span> 💎</div>
+  </div>
+
+  <div class="act">
+    <h3>🌐 Klik Garisan yang Betul</h3>
+    <p class="hint">Klik garisan yang diminta pada peta dunia. Garisan merah & hijau ialah garisan istimewa!</p>
+    <div class="prompt">Klik: <span id="ltarget">Garisan Khatulistiwa</span></div>
+    <div class="world" id="world"></div>
+    <div class="feedback" id="lfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="lscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab1.html">← Bab 1</a>
+  <a class="next" href="bab3.html">Bab 3: Peta Lakar →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  document.getElementById(id).classList.add('on'); el.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---- grid reference game ---- */
+var GN=6, gScore=0, gTargetE, gTargetN;
+function newGref(){
+  gTargetE=Math.floor(Math.random()*GN); gTargetN=Math.floor(Math.random()*GN);
+  document.getElementById('gtarget').textContent=''+gTargetE+gTargetN;
+  drawGref();
+  document.getElementById('gfb').textContent=' ';
+}
+function drawGref(){
+  var host=document.getElementById('gref'); host.innerHTML='';
+  host.style.gridTemplateColumns='28px repeat('+GN+',42px)';
+  for(var n=GN-1;n>=0;n--){
+    var lab=document.createElement('div'); lab.className='gcell lbl'; lab.textContent=n; host.appendChild(lab);
+    for(var e=0;e<GN;e++){
+      var c=document.createElement('div'); c.className='gcell map';
+      (function(e,n){ c.onclick=function(){ pickG(e,n,c); }; })(e,n);
+      host.appendChild(c);
+    }
+  }
+  // bottom easting labels
+  var corner=document.createElement('div'); corner.className='gcell lbl'; host.appendChild(corner);
+  for(var e=0;e<GN;e++){ var el=document.createElement('div'); el.className='gcell lbl'; el.textContent=e; host.appendChild(el); }
+}
+function pickG(e,n,cell){
+  var fb=document.getElementById('gfb');
+  if(e===gTargetE&&n===gTargetN){
+    cell.classList.add('ok'); cell.textContent='💎'; gScore++;
+    document.getElementById('gscore').textContent=gScore;
+    fb.textContent='✅ Tepat! Rujukan grid '+e+''+n; fb.className='feedback good';
+    setTimeout(newGref,1000);
+  }else{
+    cell.classList.add('no'); fb.textContent='❌ Itu '+e+''+n+'. Baca Easting dulu, kemudian Northing!'; fb.className='feedback bad';
+  }
+}
+newGref();
+
+/* ---- lat/long line clicking ---- */
+var LINES=[
+  {id:'eq', cls:'h eq', pos:{top:'97px'}, name:'Garisan Khatulistiwa', lbl:{txt:'Khatulistiwa 0°',top:'99px',left:'4px'}},
+  {id:'gw', cls:'v gw', pos:{left:'157px'}, name:'Garisan Meridian Greenwich', lbl:{txt:'Greenwich 0°',top:'2px',left:'120px'}},
+  {id:'n30', cls:'h', pos:{top:'50px'}, name:'Latitud 30° Utara'},
+  {id:'s30', cls:'h', pos:{top:'150px'}, name:'Latitud 30° Selatan'},
+  {id:'e60', cls:'v', pos:{left:'240px'}, name:'Longitud 60° Timur'},
+  {id:'w60', cls:'v', pos:{left:'80px'}, name:'Longitud 60° Barat'},
+];
+var lScore=0, lTarget;
+function buildWorld(){
+  var w=document.getElementById('world'); w.innerHTML='';
+  LINES.forEach(function(L){
+    var d=document.createElement('div'); d.className='line '+L.cls; d.id='L_'+L.id;
+    for(var k in L.pos) d.style[k]=L.pos[k];
+    d.onclick=function(){ pickLine(L,d); };
+    w.appendChild(d);
+    if(L.lbl){ var lb=document.createElement('div'); lb.className='wlabel'; lb.textContent=L.lbl.txt; lb.style.top=L.lbl.top; lb.style.left=L.lbl.left; w.appendChild(lb); }
+  });
+  newLine();
+}
+function newLine(){
+  lTarget=LINES[Math.floor(Math.random()*LINES.length)];
+  document.getElementById('ltarget').textContent=lTarget.name;
+  document.querySelectorAll('.line').forEach(function(x){x.classList.remove('sel')});
+  document.getElementById('lfb').textContent=' ';
+}
+function pickLine(L,el){
+  var fb=document.getElementById('lfb');
+  if(L.id===lTarget.id){
+    el.classList.add('sel'); lScore++; document.getElementById('lscore').textContent=lScore;
+    fb.textContent='✅ Betul! '+L.name; fb.className='feedback good'; setTimeout(newLine,1000);
+  }else{
+    fb.textContent='❌ Itu '+L.name+'. Cuba lagi!'; fb.className='feedback bad';
+  }
+}
+buildWorld();
+
+/* ---- quiz ---- */
+var BAB=2;
+var QUIZ=[
+  {q:"Garisan menegak pada sistem grid dipanggil…",o:["Northing","Easting","Latitud","Khatulistiwa"],a:1,e:"Garisan menegak = Easting (dibaca kiri ke kanan)."},
+  {q:"Apabila membaca rujukan grid, nilai manakah dibaca dahulu?",o:["Northing","Easting","Yang lebih besar","Yang lebih kecil"],a:1,e:"Baca Easting dahulu, kemudian Northing."},
+  {q:"Garisan latitud 0° dikenali sebagai…",o:["Garisan Greenwich","Garisan Khatulistiwa","Garisan Tropika","Garisan Tarikh"],a:1,e:"Latitud 0° = Garisan Khatulistiwa."},
+  {q:"Garisan longitud 0° dikenali sebagai…",o:["Garisan Khatulistiwa","Garisan Meridian Greenwich","Garisan Antartika","Garisan Sartan"],a:1,e:"Longitud 0° = Garisan Meridian Greenwich."},
+  {q:"Latitud diukur ke arah…",o:["Timur & Barat","Utara & Selatan","Timur Laut sahaja","Atas sahaja"],a:1,e:"Latitud diukur ke Utara & Selatan Khatulistiwa (0°–90°)."},
+  {q:"Garisan Khatulistiwa membahagikan Bumi kepada…",o:["Timur & Barat","Hemisfera Utara & Selatan","4 suku","Tropika & Kutub"],a:1,e:"Khatulistiwa membahagi Bumi kepada Hemisfera Utara & Selatan."},
+  {q:"Rujukan grid '52' bermaksud…",o:["Easting 5, Northing 2","Easting 2, Northing 5","Latitud 5, Longitud 2","Baris 5, lajur 2 dari atas"],a:0,e:"Angka pertama = Easting (5), kedua = Northing (2)."},
+];
+var answered={};
+(function(){
+  var box=document.getElementById('quiz');
+  QUIZ.forEach(function(item,qi){
+    var div=document.createElement('div'); div.className='q';
+    var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    box.appendChild(div);
+  });
+})();
+function pick(qi,oi){
+  if(answered[qi]!==undefined)return; answered[qi]=oi; var correct=QUIZ[qi].a;
+  for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}
+  if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+}
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}
+  var score=0; QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Kamu mahir kedudukan! 📍':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  saveProgress(BAB,pct);
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab3.html" style="color:#fff;font-weight:800">Teruskan ke Bab 3 →</a></div>';
+  r.classList.add('show'); document.getElementById('submitBtn').style.display='none'; r.scrollIntoView({behavior:'smooth'});
+}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

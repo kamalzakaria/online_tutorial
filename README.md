@@ -13,8 +13,9 @@ no dependencies, so each page works by just double-clicking the file or hosting 
 | [`bahasa_melayu_tingkatan_1/`](bahasa_melayu_tingkatan_1/) | Bahasa Melayu | Tingkatan 1 | Daily practice app — 1 essay + 10 objective questions a day (ejaan, tatabahasa, peribahasa, kefahaman), streak counter, `localStorage` auto-save. See its own [README](bahasa_melayu_tingkatan_1/README.md). |
 | [`asas_komputer_sains_tingkatan_1/`](asas_komputer_sains_tingkatan_1/) | Asas Sains Komputer | Tingkatan 1 | Interactive notes — Bab 1 Pemikiran Komputasional, plus `bab2.html`–`bab4.html`. |
 | [`matematik_tahun_1/`](matematik_tahun_1/) | Matematik | Tahun 1 (KSSR) | Notes & activities across 8 chapters (`chapter1.html`–`chapter8.html`); `index.html` is the chapter hub. |
+| [`geografi_tingkatan_1/`](geografi_tingkatan_1/) | Geografi | Tingkatan 1 (KSSM) | All 14 chapters (`bab1.html`–`bab14.html`), each with visual notes, a signature interactive exercise (spin-the-compass, clickable Malaysia map, label-the-river, recycling-bin sort…) and a scored quiz. `index.html` is the themed hub with `localStorage` progress. See its own [README](geografi_tingkatan_1/README.md). |
 
-The repo-root [`index.html`](index.html) is a landing page that links to all three.
+The repo-root [`index.html`](index.html) is a landing page that links to all four.
 
 ## Run locally
 

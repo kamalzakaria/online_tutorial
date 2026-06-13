@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 12: Sumber Air — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#16a34a;--c2:#15803d;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#e7f6ec;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#e7f6ec;color:#15803d;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f1faf3;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#e7f6ec;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.grid2{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.mini{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.8rem;text-align:center}.mini .e{font-size:1.7rem}.mini b{display:block;margin-top:.2rem}.mini small{color:var(--muted)}
+.act{background:#f1faf3;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.scene{position:relative;width:100%;max-width:420px;margin:.4rem auto;border-radius:.6rem;overflow:hidden;border:2px solid var(--c2)}
+.scene svg{display:block;width:100%;height:auto}
+.hot{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid var(--c2);transform:translate(-50%,-50%);cursor:pointer;font-size:.8rem;font-weight:900;color:var(--c2);display:flex;align-items:center;justify-content:center;animation:pulse 1.8s infinite}
+.hot:hover{background:var(--c);color:#fff}.hot.ok{background:var(--ok);color:#fff;border-color:var(--ok);animation:none}.hot.no{background:var(--no);color:#fff;border-color:var(--no);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(22,163,74,.4)}50%{box-shadow:0 0 0 7px rgba(22,163,74,0)}}
+.twobtn{display:flex;gap:.6rem;justify-content:center;margin-top:.4rem;flex-wrap:wrap}
+.twobtn button{border:2px solid var(--border);background:#fff;border-radius:.7rem;padding:.7rem 1.1rem;font-weight:800;cursor:pointer;font-size:.9rem}
+.twobtn button:hover{border-color:var(--c)}.twobtn .ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.twobtn .no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f1faf3;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#e9f7ee;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#e7f6ec;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 5 · PENGURUSAN ALAM SEKITAR</div>
+  <div class="big">💧</div>
+  <h1>Bab 12: Sumber Air</h1>
+</header>
+<nav class="topnav">
+  <a href="bab11.html">← Bab 11</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab13.html">Bab 13: Sisa Domestik →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Sumber & Kitaran Air</h2>
+  <div class="note">
+    <h3>Dari mana datangnya air?</h3>
+    <div class="grid2">
+      <div class="mini"><div class="e">🌊</div><b>Air Permukaan</b><small>Sungai, tasik, kolam, empangan/takungan</small></div>
+      <div class="mini"><div class="e">🕳️</div><b>Air Bawah Tanah</b><small>Telaga & mata air</small></div>
+    </div>
+  </div>
+  <div class="note">
+    <h3>🔄 Kitaran Air</h3>
+    <p><b>1. Sejatan</b> — air laut/sungai bertukar wap apabila dipanaskan Matahari. <b>2. Pemeluwapan</b> — wap air menyejuk membentuk awan. <b>3. Kerpasan</b> — air turun sebagai hujan. <b>4. Air larian</b> — air mengalir kembali ke sungai & laut.</p>
+  </div>
+  <div class="note">
+    <h3>⚡ Kepentingan Air</h3>
+    <p><span class="tag">Minuman & domestik</span><span class="tag">Pertanian</span><span class="tag">Industri</span><span class="tag">Kuasa hidroelektrik</span><span class="tag">Pengangkutan</span><span class="tag">Perikanan</span></p>
+  </div>
+  <div class="callout"><b>💚 Pemuliharaan air:</b> jimat penggunaan, jangan cemar sungai, kitar semula air, & jaga kawasan tadahan air (hutan). Air bersih semakin berkurang — kita mesti berjimat!</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>🏷️ Label Kitaran Air</h3>
+    <p class="hint">Klik titik (●) yang betul untuk setiap peringkat kitaran air.</p>
+    <div class="prompt">Klik: <span id="wcTarget">Sejatan</span></div>
+    <div class="scene" id="scene">
+      <svg viewBox="0 0 420 270" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe7fb"/><stop offset="1" stop-color="#eaf7fe"/></linearGradient></defs>
+        <rect width="420" height="270" fill="url(#sky)"/>
+        <text x="30" y="48" font-size="30">☀️</text>
+        <!-- sea -->
+        <rect x="0" y="210" width="420" height="60" fill="#3fa9e0"/>
+        <!-- mountain -->
+        <polygon points="300,210 360,110 420,210" fill="#8fbf6f"/>
+        <!-- cloud -->
+        <g><ellipse cx="210" cy="70" rx="45" ry="24" fill="#fff"/><ellipse cx="170" cy="80" rx="30" ry="18" fill="#fff"/><ellipse cx="250" cy="82" rx="28" ry="16" fill="#fff"/></g>
+        <!-- rain -->
+        <g stroke="#2b7fc4" stroke-width="3">
+          <line x1="185" y1="100" x2="180" y2="120"/><line x1="205" y1="100" x2="200" y2="122"/><line x1="225" y1="100" x2="220" y2="120"/><line x1="245" y1="100" x2="240" y2="122"/>
+        </g>
+        <!-- evaporation arrows -->
+        <g stroke="#16a34a" stroke-width="3" fill="none"><path d="M70,205 C68,180 78,165 75,140" marker-end=""/><path d="M100,205 C98,180 108,165 105,145"/></g>
+        <!-- runoff river -->
+        <path d="M360,150 C355,175 350,195 360,215" stroke="#2b7fc4" stroke-width="5" fill="none"/>
+      </svg>
+    </div>
+    <div class="feedback" id="wcfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="wcscore">0</span> / 4</div>
+  </div>
+  <div class="act">
+    <h3>💧 Jimat atau Bazir Air?</h3>
+    <p class="hint">Adakah tabiat ini MENJIMATKAN air atau MEMBAZIR air?</p>
+    <div class="prompt" id="habPrompt">Tutup paip semasa memberus gigi</div>
+    <div class="twobtn">
+      <button id="bJimat" onclick="pickHab(true,this)">💚 Jimat</button>
+      <button id="bBazir" onclick="pickHab(false,this)">🚱 Bazir</button>
+    </div>
+    <div class="feedback" id="hfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="hscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab11.html">← Bab 11</a>
+  <a class="next" href="bab13.html">Bab 13: Sisa Domestik →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+var WC=[
+  {id:'sejatan',name:'Sejatan',x:'21%',y:'62%'},
+  {id:'pemeluwapan',name:'Pemeluwapan',x:'50%',y:'26%'},
+  {id:'kerpasan',name:'Kerpasan (Hujan)',x:'50%',y:'42%'},
+  {id:'larian',name:'Air Larian',x:'86%',y:'68%'}
+];
+var wcScore=0, wcTarget, wcDone={};
+function buildScene(){
+  var s=document.getElementById('scene');
+  WC.forEach(function(f,i){var h=document.createElement('div');h.className='hot';h.id='W'+i;h.textContent='●';h.style.left=f.x;h.style.top=f.y;h.title=f.name;h.onclick=function(){pickWC(f,h);};s.appendChild(h);});
+  newWC();
+}
+function newWC(){
+  var pool=WC.filter(function(f){return !wcDone[f.id];});
+  if(pool.length===0){document.getElementById('wcTarget').textContent='Semua dilabel! 🎉';return;}
+  wcTarget=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('wcTarget').textContent=wcTarget.name;
+  document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('no')});
+  document.getElementById('wcfb').textContent=' ';
+}
+function pickWC(f,el){
+  var fb=document.getElementById('wcfb');
+  if(f.id===wcTarget.id){el.classList.add('ok');el.textContent='✓';if(!wcDone[f.id]){wcDone[f.id]=true;wcScore++;document.getElementById('wcscore').textContent=wcScore;}fb.textContent='✅ Betul! '+f.name;fb.className='feedback good';setTimeout(newWC,950);}
+  else{el.classList.add('no');fb.textContent='❌ Itu bukan '+wcTarget.name+'. Cuba lagi!';fb.className='feedback bad';setTimeout(function(){el.classList.remove('no');},700);}
+}
+buildScene();
+
+/* jimat/bazir */
+var HAB=[
+  {t:'Tutup paip semasa memberus gigi',j:true},
+  {t:'Guna air basuhan sayur untuk siram pokok',j:true},
+  {t:'Kutip air hujan untuk kegunaan luar',j:true},
+  {t:'Baiki paip yang bocor dengan segera',j:true},
+  {t:'Mandi menggunakan baldi, bukan pancuran lama',j:true},
+  {t:'Biar paip terbuka sepanjang masa',j:false},
+  {t:'Main air sehingga melimpah-limpah',j:false},
+  {t:'Buang sampah & minyak ke dalam sungai',j:false},
+  {t:'Basuh kereta dengan hos berjam-jam',j:false},
+  {t:'Biarkan paip bocor tidak dibaiki',j:false}
+];
+var hScore=0, hIdx=0, hOrder=[];
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function newHab(){
+  if(hIdx>=hOrder.length){hOrder=shuffle(HAB.map(function(_,i){return i;}));hIdx=0;}
+  var h=HAB[hOrder[hIdx]];
+  document.getElementById('habPrompt').textContent=h.t;
+  document.getElementById('bJimat').classList.remove('ok','no');document.getElementById('bBazir').classList.remove('ok','no');
+  document.getElementById('bJimat').disabled=false;document.getElementById('bBazir').disabled=false;
+  document.getElementById('hfb').textContent=' ';
+}
+function pickHab(choseJimat,btn){
+  var h=HAB[hOrder[hIdx]], fb=document.getElementById('hfb');
+  document.getElementById('bJimat').disabled=true;document.getElementById('bBazir').disabled=true;
+  if(choseJimat===h.j){btn.classList.add('ok');hScore++;document.getElementById('hscore').textContent=hScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');fb.textContent='❌ Sepatutnya '+(h.j?'Jimat':'Bazir');fb.className='feedback bad';}
+  hIdx++; setTimeout(newHab,1000);
+}
+hOrder=shuffle(HAB.map(function(_,i){return i;})); newHab();
+
+/* quiz */
+var BAB=12;
+var QUIZ=[
+  {q:"Contoh sumber AIR PERMUKAAN ialah…",o:["Telaga","Mata air bawah tanah","Sungai & tasik","Wap air"],a:2,e:"Air permukaan: sungai, tasik, kolam, empangan."},
+  {q:"Proses air bertukar menjadi wap apabila dipanaskan Matahari ialah…",o:["Pemeluwapan","Sejatan","Kerpasan","Air larian"],a:1,e:"Sejatan (evaporation) — air → wap."},
+  {q:"Wap air yang menyejuk dan membentuk awan ialah proses…",o:["Sejatan","Pemeluwapan","Hujan","Sejatpeluhan"],a:1,e:"Pemeluwapan (condensation) membentuk awan."},
+  {q:"Air yang turun ke bumi sebagai hujan ialah…",o:["Sejatan","Kerpasan","Air larian","Pemeluwapan"],a:1,e:"Kerpasan = hujan/salji yang turun ke bumi."},
+  {q:"Antara kepentingan air ialah…",o:["Menjana kuasa hidroelektrik","Mencemar sungai","Membakar hutan","Menambah sampah"],a:0,e:"Air menjana kuasa hidroelektrik, untuk pertanian, minuman dll."},
+  {q:"Cara MEMULIHARA air ialah…",o:["Biar paip bocor","Buang sampah ke sungai","Jimat & jangan cemarkan air","Basuh kereta berjam-jam"],a:2,e:"Berjimat & menjaga kebersihan air memulihara sumber air."},
+  {q:"Kawasan tadahan air biasanya dilindungi dengan menjaga…",o:["Hutan","Lebuh raya","Kilang","Lombong"],a:0,e:"Hutan tadahan menyerap & membekalkan air bersih."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 💧':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab13.html" style="color:#fff;font-weight:800">Teruskan ke Bab 13 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>

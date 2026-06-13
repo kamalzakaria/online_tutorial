@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bab 7: Saliran — Geografi Tingkatan 1</title>
+<style>
+:root{--c:#0d9488;--c2:#0f766e;--bg:#f3f7fb;--card:#fff;--text:#15233b;--muted:#64748b;--border:#e3eaf3;--ok:#16a34a;--no:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:880px;margin:0 auto;background:var(--card);min-height:100vh;box-shadow:0 0 40px rgba(2,32,71,.06)}
+header.hero{color:#fff;text-align:center;padding:2rem 1rem 1.4rem;background:linear-gradient(150deg,var(--c) 0%,var(--c2) 100%)}
+header .kicker{font-size:.74rem;letter-spacing:.1em;opacity:.9;font-weight:700}
+header h1{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:900;margin:.2rem 0}
+header .big{font-size:2.6rem}
+.topnav{display:flex;gap:.5rem;justify-content:space-between;align-items:center;padding:.6rem 1rem;background:#e6f5f3;flex-wrap:wrap}
+.topnav a{font-size:.8rem;font-weight:700;text-decoration:none;color:var(--c2);background:#fff;border:1px solid var(--border);padding:.35rem .8rem;border-radius:2rem}
+.topnav a:hover{background:var(--c);color:#fff}
+.tabs{display:flex;gap:.4rem;justify-content:center;padding:.8rem 1rem;flex-wrap:wrap;position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:5;border-bottom:1px solid var(--border)}
+.tab{border:none;cursor:pointer;font-size:.92rem;font-weight:800;padding:.55rem 1.2rem;border-radius:2rem;background:#e6f5f3;color:#3d6360;transition:.2s}
+.tab.on{background:var(--c);color:#fff;transform:scale(1.04)}
+.panel{display:none;padding:1.4rem 1.2rem 3rem;animation:fade .4s ease}.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+.note{background:#f3fbfa;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
+.note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}.note p{color:#33425b;margin-bottom:.5rem}
+.tag{display:inline-block;background:#e6f5f3;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
+.callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}.callout b{color:#b45309}
+.stages{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.stage{background:#fff;border:1px solid var(--border);border-radius:.7rem;padding:.8rem;border-top:4px solid var(--c)}
+.stage b{color:var(--c2)}.stage small{color:var(--muted);display:block;margin-top:.2rem}
+.act{background:#f3fbfa;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
+.act h3{font-size:1.1rem;margin-bottom:.3rem}.act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
+.prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}.prompt span{color:var(--c)}
+.scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
+.btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
+.feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.scene{position:relative;width:100%;max-width:360px;margin:.4rem auto;border-radius:.6rem;overflow:hidden;border:2px solid var(--c2)}
+.scene svg{display:block;width:100%;height:auto}
+.hot{position:absolute;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--c2);transform:translate(-50%,-50%);cursor:pointer;font-size:.8rem;font-weight:900;color:var(--c2);display:flex;align-items:center;justify-content:center;animation:pulse 1.8s infinite}
+.hot:hover{background:var(--c);color:#fff}
+.hot.ok{background:var(--ok);color:#fff;border-color:var(--ok);animation:none}.hot.no{background:var(--no);color:#fff;border-color:var(--no);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(13,148,136,.4)}50%{box-shadow:0 0 0 7px rgba(13,148,136,0)}}
+.opts4{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;max-width:380px;margin:.6rem auto 0}
+.opts4 button{border:2px solid var(--border);background:#fff;border-radius:.6rem;padding:.6rem;font-weight:700;cursor:pointer;font-size:.85rem}
+.opts4 button:hover{border-color:var(--c)}.opts4 button.ok{background:#e8f8ef;border-color:var(--ok);color:#166534}.opts4 button.no{background:#fdecec;border-color:var(--no);color:#991b1b}
+.q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
+.q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}.q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
+.opt{display:flex;align-items:center;gap:.7rem;background:#f3fbfa;border:2px solid var(--border);border-radius:.7rem;padding:.7rem .9rem;margin-bottom:.55rem;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--c);transform:translateX(4px)}
+.opt .lt{width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.opt.ok{background:#e8f8ef;border-color:var(--ok)}.opt.ok .lt{background:var(--ok)}
+.opt.no{background:#fdecec;border-color:var(--no)}.opt.no .lt{background:var(--no)}
+.opt.lock{pointer-events:none;opacity:.95}
+.exp{display:none;background:#e9f7f5;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
+.result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
+.between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
+.between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#e6f5f3;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="kicker">TEMA 2 · GEOGRAFI FIZIKAL</div>
+  <div class="big">🏞️</div>
+  <h1>Bab 7: Saliran</h1>
+</header>
+<nav class="topnav">
+  <a href="bab6.html">← Bab 6</a>
+  <a href="index.html">🏠 Senarai Bab</a>
+  <a href="bab8.html">Bab 8: Penduduk →</a>
+</nav>
+<div class="tabs">
+  <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
+  <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+</div>
+
+<section id="nota" class="panel on">
+  <h2 class="sec">📖 Sistem Saliran (Sungai)</h2>
+  <div class="note">
+    <h3>Perjalanan air sungai</h3>
+    <p>Sungai bermula dari kawasan tinggi (<b>hulu</b>) dan mengalir ke laut (<b>kuala / muara</b>). Air sungai datang dari hujan, mata air & cairan salji.</p>
+  </div>
+  <div class="note">
+    <h3>🌊 3 Peringkat Sungai</h3>
+    <div class="stages">
+      <div class="stage"><b>1. Peringkat Hulu</b><small>Aliran deras & cetek. Ciri: air terjun, jeram, lurah bentuk "V".</small></div>
+      <div class="stage"><b>2. Peringkat Tengah</b><small>Aliran sederhana. Ciri: likuan sungai (meander), tebing menghakis.</small></div>
+      <div class="stage"><b>3. Peringkat Hilir</b><small>Aliran perlahan & luas. Ciri: dataran banjir, tasik ladam, delta.</small></div>
+    </div>
+  </div>
+  <div class="note">
+    <h3>🔑 Istilah Penting</h3>
+    <p><span class="tag">Anak sungai = sungai kecil yang mengalir ke sungai utama</span><span class="tag">Muara / Kuala = tempat sungai bertemu laut</span><span class="tag">Delta = tanah mendap berbentuk kipas di muara</span><span class="tag">Lembangan saliran = kawasan dialirkan oleh sungai</span></p>
+  </div>
+  <div class="callout"><b>🇲🇾 Sungai utama:</b> Sungai <b>Rajang</b> (Sarawak) sungai terpanjang Malaysia. Sungai <b>Pahang</b> terpanjang di Semenanjung. Sungai <b>Kinabatangan</b> di Sabah.</div>
+</section>
+
+<section id="akt" class="panel">
+  <h2 class="sec">🎮 Mari Bermain!</h2>
+  <div class="act">
+    <h3>🏷️ Label Sistem Sungai</h3>
+    <p class="hint">Sungai mengalir dari atas (gunung) ke bawah (laut). Klik titik (●) yang betul!</p>
+    <div class="prompt">Klik: <span id="rvTarget">Hulu</span></div>
+    <div class="scene" id="scene">
+      <svg viewBox="0 0 360 290" xmlns="http://www.w3.org/2000/svg">
+        <rect width="360" height="290" fill="#dff0d8"/>
+        <!-- mountains top -->
+        <polygon points="60,0 110,70 160,0" fill="#7a9a72"/>
+        <polygon points="150,0 200,80 250,0" fill="#6b8f6b"/>
+        <!-- sea bottom -->
+        <rect x="0" y="250" width="360" height="40" fill="#3fa9e0"/>
+        <!-- main river -->
+        <path d="M180,18 C150,70 220,110 180,150 C150,185 210,210 185,250" stroke="#3fa9e0" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <!-- tributary -->
+        <path d="M95,95 C130,120 150,125 178,135" stroke="#3fa9e0" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <!-- lake -->
+        <ellipse cx="255" cy="170" rx="26" ry="16" fill="#3fa9e0"/>
+        <path d="M205,160 C225,165 235,168 232,170" stroke="#3fa9e0" stroke-width="5" fill="none"/>
+        <!-- delta fan -->
+        <path d="M185,235 L150,250 L165,250 Z M185,235 L185,250 M185,235 L210,250 L195,250 Z" stroke="#3fa9e0" stroke-width="4" fill="#9fd3ef"/>
+      </svg>
+    </div>
+    <div class="feedback" id="rvfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="rvscore">0</span> / 6</div>
+  </div>
+  <div class="act">
+    <h3>🧩 Padan Ciri dengan Peringkat</h3>
+    <p class="hint">Ciri ini terdapat pada peringkat sungai yang mana?</p>
+    <div class="prompt" id="stPrompt">Air terjun & jeram…</div>
+    <div class="opts4" id="stOpts"></div>
+    <div class="feedback" id="sfb">&nbsp;</div>
+    <div class="scoreline">Betul: <span class="s" id="sscore">0</span></div>
+  </div>
+</section>
+
+<section id="kuiz" class="panel">
+  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <div id="quiz"></div>
+  <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="result" id="result"></div>
+</section>
+
+<div class="between">
+  <a href="bab6.html">← Bab 6</a>
+  <a class="next" href="bab8.html">Bab 8: Penduduk →</a>
+</div>
+<footer>Geografi Tingkatan 1 · KSSM — bahan belajar, bukan kertas peperiksaan rasmi.</footer>
+</div>
+
+<script>
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+var RV=[
+  {id:'hulu',name:'Hulu',x:'50%',y:'9%'},
+  {id:'anak',name:'Anak Sungai',x:'27%',y:'33%'},
+  {id:'tasik',name:'Tasik',x:'71%',y:'59%'},
+  {id:'tengah',name:'Peringkat Tengah',x:'56%',y:'40%'},
+  {id:'hilir',name:'Peringkat Hilir',x:'53%',y:'74%'},
+  {id:'delta',name:'Delta / Muara',x:'50%',y:'88%'}
+];
+var rvScore=0, rvTarget, rvDone={};
+function buildScene(){
+  var s=document.getElementById('scene');
+  RV.forEach(function(f,i){var h=document.createElement('div');h.className='hot';h.id='R'+i;h.textContent='●';h.style.left=f.x;h.style.top=f.y;h.title=f.name;h.onclick=function(){pickRV(f,h);};s.appendChild(h);});
+  newRV();
+}
+function newRV(){
+  var pool=RV.filter(function(f){return !rvDone[f.id];});
+  if(pool.length===0){document.getElementById('rvTarget').textContent='Semua dilabel! 🎉';return;}
+  rvTarget=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('rvTarget').textContent=rvTarget.name;
+  document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('no')});
+  document.getElementById('rvfb').textContent=' ';
+}
+function pickRV(f,el){
+  var fb=document.getElementById('rvfb');
+  if(f.id===rvTarget.id){el.classList.add('ok');el.textContent='✓';if(!rvDone[f.id]){rvDone[f.id]=true;rvScore++;document.getElementById('rvscore').textContent=rvScore;}fb.textContent='✅ Betul! '+f.name;fb.className='feedback good';setTimeout(newRV,900);}
+  else{el.classList.add('no');fb.textContent='❌ Itu bukan '+rvTarget.name+'. Cuba lagi!';fb.className='feedback bad';setTimeout(function(){el.classList.remove('no');},700);}
+}
+buildScene();
+
+/* stage match */
+var STG=[
+  {d:'Air terjun & jeram…',a:'Hulu'},
+  {d:'Lurah berbentuk "V"…',a:'Hulu'},
+  {d:'Likuan sungai (meander)…',a:'Tengah'},
+  {d:'Dataran banjir & delta…',a:'Hilir'},
+  {d:'Aliran air paling deras & cetek…',a:'Hulu'},
+  {d:'Aliran perlahan, sungai melebar…',a:'Hilir'}
+];
+var STAGES=['Hulu','Tengah','Hilir'];
+var sScore=0, sTarget;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function newStg(){
+  sTarget=STG[Math.floor(Math.random()*STG.length)];
+  document.getElementById('stPrompt').textContent=sTarget.d;
+  var opts=shuffle(STAGES);
+  var box=document.getElementById('stOpts'); box.innerHTML='';
+  opts.forEach(function(o){var b=document.createElement('button');b.textContent='Peringkat '+o;b.onclick=function(){pickStg(o,b);};box.appendChild(b);});
+  document.getElementById('sfb').textContent=' ';
+}
+function pickStg(o,btn){
+  var fb=document.getElementById('sfb');
+  document.querySelectorAll('#stOpts button').forEach(function(b){b.disabled=true;});
+  if(o===sTarget.a){btn.classList.add('ok');sScore++;document.getElementById('sscore').textContent=sScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
+  else{btn.classList.add('no');document.querySelectorAll('#stOpts button').forEach(function(b){if(b.textContent==='Peringkat '+sTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: Peringkat '+sTarget.a;fb.className='feedback bad';}
+  setTimeout(newStg,1200);
+}
+newStg();
+
+/* quiz */
+var BAB=7;
+var QUIZ=[
+  {q:"Tempat sungai bermula (kawasan tinggi) dipanggil…",o:["Hilir","Muara","Hulu","Delta"],a:2,e:"Hulu ialah bahagian permulaan sungai di kawasan tinggi."},
+  {q:"Sungai kecil yang mengalir masuk ke sungai utama ialah…",o:["Anak sungai","Delta","Tasik","Kuala"],a:0,e:"Anak sungai (tributary) menyumbang air ke sungai utama."},
+  {q:"Air terjun dan jeram biasanya terdapat di peringkat…",o:["Hulu","Tengah","Hilir","Muara"],a:0,e:"Aliran deras di peringkat hulu membentuk air terjun & jeram."},
+  {q:"Tempat pertemuan sungai dengan laut dipanggil…",o:["Hulu","Lembah","Muara / Kuala","Banjaran"],a:2,e:"Muara/kuala ialah tempat sungai bertemu laut."},
+  {q:"Tanah mendap berbentuk kipas di muara sungai ialah…",o:["Delta","Tasik","Jeram","Meander"],a:0,e:"Delta terbentuk daripada pemendapan di muara."},
+  {q:"Sungai terpanjang di Malaysia ialah…",o:["Sungai Pahang","Sungai Rajang","Sungai Klang","Sungai Perak"],a:1,e:"Sungai Rajang (Sarawak) ialah sungai terpanjang di Malaysia."},
+  {q:"Likuan sungai (meander) biasanya terbentuk di peringkat…",o:["Hulu","Tengah","Atas gunung","Delta"],a:1,e:"Meander/likuan banyak di peringkat tengah sungai."},
+];
+var answered={};
+(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🏞️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab8.html" style="color:#fff;font-weight:800">Teruskan ke Bab 8 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+</script>
+</body>
+</html>
