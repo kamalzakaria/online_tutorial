@@ -152,13 +152,9 @@
       <div class="model-essay" id="modelEssay"></div>
     </div>
 
-    <div class="own-head">📝 Sekarang giliran kamu — tulis karangan sendiri:</div>
-    <textarea id="essayText" placeholder="Tulis karangan kamu di sini..."></textarea>
-    <div class="essay-tools">
-      <button id="saveEssay">💾 Simpan draf</button>
-      <span id="wordCount">0 patah perkataan</span>
-      <span id="essaySaved" class="saved-note" style="display:none">✓ Disimpan</span>
-    </div>
+    <div class="write-note">✍️ Tulis karangan ini pada kertas — tulis sekerap yang boleh (± 80 patah perkataan).</div>
+
+    <div id="essayQuiz"></div>
   </section>
 
   <!-- Objective questions -->
@@ -788,6 +784,13 @@ window.ESSAY_BANK = [
       "Selain itu, terlalu lama menatap skrin telefon menjejaskan kesihatan. Mata menjadi letih, waktu tidur terganggu, dan murid menjadi malas bersenam.",
       "Akhir sekali, murid yang asyik dengan telefon kurang berinteraksi dengan ahli keluarga dan rakan. Hubungan kekeluargaan menjadi renggang.",
       "Kesimpulannya, telefon pintar perlu digunakan secara berhemah dan terhad supaya tidak merosakkan diri sendiri."
+    ],
+    essayQs:[
+      {q:"Apakah mesej utama karangan ini tentang telefon pintar?",o:["Penggunaan telefon pintar secara berleluasa membawa kesan buruk.","Telefon pintar sangat berguna untuk pembelajaran.","Murid harus mempunyai telefon pintar baru setiap tahun.","Telefon pintar tidak mempunyai kesan buruk langsung."],a:0,e:"Karangan ini membincangkan kesan BURUK penggunaan telefon pintar secara berlebihan: ketagihan, kesihatan merosot, dan hubungan sosial renggang."},
+      {q:"Manakah BUKAN kesan buruk yang disebut dalam karangan?",o:["Mata menjadi letih dan kurang tidur.","Kurang masa untuk mengulang kaji.","Harga telefon pintar menjadi mahal.","Hubungan dengan keluarga menjadi renggang."],a:2,e:"Karangan menyebut: (1) kurang masa belajar, (2) mata letih & kurang tidur, (3) kurang berinteraksi keluarga. Harga telefon tidak disebut."},
+      {q:"Mengikut karangan, apakah kesan telefon pintar terhadap kesihatan murid?",o:["Mata letih, waktu tidur terganggu, malas bersenam.","Menjadi lebih bertenaga dan sihat.","Menambah nafsu makan.","Membuatkan murid lebih aktif bergerak."],a:0,e:"Karangan menyebut kesan kesihatan: 'Mata menjadi letih, waktu tidur terganggu, dan murid menjadi malas bersenam.'"},
+      {q:"Apakah cadangan penulis di akhir karangan?",o:["Gunakan telefon secara berhemah dan terhad.","Jangan gunakan telefon langsung.","Gunakan telefon tanpa had kerana ia penting.","Berikan telefon kepada anak-anak seawal usia."],a:0,e:"Ayat penutup: 'telpon pintar perlu digunakan secara berhemah dan terhad supaya tidak merosakkan diri sendiri.'"},
+      {q:"Dalam karangan ini, isi manakah yang dibincangkan TERAKHIR?",o:["Hubungan sosial dengan keluarga dan rakan.","Ketagihan media sosial.","Kesihatan: mata letih dan kurang tidur.","Prestasi pelajaran yang merosot."],a:0,e:"Karangan mengikut susunan: (1) ketagihan/membuang masa → (2) kesihatan → (3) hubungan sosial (terakhir, dimulai dengan 'Akhir sekali')." }
     ]
   },
 
@@ -810,6 +813,13 @@ window.ESSAY_BANK = [
       "Dalam kejadian itu, kereta jenis sederhana yang dipandu mangsa dipercayai hilang kawalan sebelum melanggar pembahagi jalan dan terjunam ke dalam parit sedalam dua meter. Bahagian hadapan kereta itu remuk teruk.",
       "Pasukan Bomba dan Penyelamat yang tiba di lokasi mengambil masa kira-kira 20 minit untuk mengeluarkan mangsa yang tersepit di tempat duduk pemandu. Mangsa kemudian dikejarkan ke hospital berdekatan dengan menggunakan ambulans.",
       "Ketua Balai Polis Trafik daerah berkenaan memberitahu bahawa siasatan awal mendapati kejadian itu mungkin disebabkan jalan licin akibat hujan. Beliau menasihati orang ramai supaya memandu dengan berhati-hati dan tidak memandu dalam keadaan mengantuk, terutama pada waktu pagi."
+    ],
+    essayQs:[
+      {q:"Di manakah tempat kemalangan itu berlaku?",o:["Lebuhraya Cheras–Kajang.","Kuala Lumpur.","Pulau Pinang.","Jalan Johor Bahru."],a:0,e:"Lokasi: 'di Lebuhraya Cheras–Kajang dekat sini.' Ini adalah butiran 'di mana' dalam laporan berita."},
+      {q:"Apakah yang berlaku kepada kereta mangsa selepas hilang kawalan?",o:["Terjunam ke dalam parit sedalam dua meter.","Tembung dengan kenderaan lain di lebuh raya.","Terbaling ke tepi jalan dan rosak kecil.","Berhenti di jalan tol dan pemandunya cedera sikit."],a:0,e:"Laporan: 'kereta ... melanggar pembahagi jalan dan terjunam ke dalam parit sedalam dua meter. Bahagian hadapan ... remuk teruk.'"},
+      {q:"Berapakah masa yang diambil pasukan bomba untuk mengeluarkan mangsa?",o:["Kira-kira 20 minit.","1 jam penuh.","5 minit sahaja.","2 jam."],a:0,e:"Pasukan bomba mengambil 'kira-kira 20 minit' untuk mengeluarkan mangsa yang tersepit."},
+      {q:"Apakah kenyataan yang dikeluarkan oleh pihak polis?",o:["Jalan licin akibat hujan, nasihat memandu berhati-hati.","Mangsa memandu dalam keadaan laju.","Kereta itu rosak kerana tua.","Tidak dapat menentu punca kemalangan."],a:0,e:"Siasatan awal: 'kejadian itu mungkin disebabkan jalan licin akibat hujan. Beliau menasihati orang ramai supaya memandu dengan berhati-hati.'"},
+      {q:"Apakah ciri gaya bahasa laporan berita ini?",o:["Padat, lampau, melaporkan fakta.","Menggunakan pendapat peribadi pengarang.","Menggunakan dialog panjang antara watak.","Menggunakan puisi dan sastera."],a:0,e:"Gaya berita: 'padat, lampau, melaporkan fakta (bukan pendapat peribadi). Butiran: apabila, di mana, siapa, apa yang berlaku.'"}
     ]
   },
 
@@ -929,6 +939,13 @@ window.ESSAY_BANK = [
       "Pengunjung pula pelbagai ragam. Ada keluarga yang menolak troli sarat dengan barang dapur, ada kanak-kanak yang merengek meminta gula-gula, dan ada pula warga emas yang berjalan perlahan sambil meneliti harga. Para juruwang pula sibuk mengimbas barang tanpa henti.",
       "Di kaunter bayaran, barisan pelanggan menjadi semakin panjang. Walaupun terpaksa menunggu agak lama, kebanyakan mereka tetap bersabar sambil berbual mesra.",
       "Apabila keluar dari pasar raya, badanku terasa sedikit penat. Namun begitu, suasana yang meriah dan rancak itu tetap menyeronokkan dan menjadi kenangan hujung minggu yang menggembirakan."
+    ],
+    essayQs:[
+      {q:"Apakah idea utama karangan ini?",o:["Suasana riuh rendah dan meriah di pasar raya pada hujung minggu.","Cara membeli-belah dengan bajet rendah.","Resipi roti dari bahagian bakeri pasar raya.","Cara menguruskan troli di pasar raya."],a:0,e:"Karangan ini menggambarkan suasana MERIAH dan sibuk di pasar raya pada pagi Sabtu."},
+      {q:"Apakah butiran yang DIGUNAKAN untuk menggambarkan suasana di luar?",o:["Tempat letak kereta hampir penuh, kereta berpusing cari ruang.","Pengunjung membeli barang dapur.","Para juruwang mengimbas barang.","Pelanggan beratur di kaunter."],a:0,e:"Butiran di LUAR: 'tempat letak kereta hampir penuh. Beberapa buah kereta berpusing-pusing mencari ruang yang kosong.'"},
+      {q:"Apakah deria yang DIGUNAKAN untuk menggambarkan bau di dalam pasar raya?",o:["Bau roti yang baru dibakar.","Bau kuih tradisional.","Bau buah-buahan segar.","Bau sabun dari bahagian kebersihan."],a:0,e:"Penulis menyebut: 'Bau roti yang baru dibakar dari bahagian bakeri menusuk hidung.' Ini menggunakan deria bau."},
+      {q:"Apakah perasaan penulis apabila keluar dari pasar raya?",o:["Penat tetapi gembira dan menyeronokkan.","Sangat marah dan kecewa.","Masa terbuang sia-sia.","Tidak berpuas hati langsung."],a:0,e:"Penulis menulis: 'badanku terasa sedikit penat. Namun begitu, suasana ... tetap menyeronokkan dan menjadi kenangan hujung minggu yang menggembirakan.'"},
+      {q:"Adakah terdapat dialog dalam karangan ini?",o:["Tidak, ini karangan keperihalan tanpa dialog.","Ya, banyak dialog antara pengunjung.","Ya, antara penulis dan juruwang.","Ya, antara kanak-kanak dan ibu bapa."],a:0,e:"Karangan keperihalan/penggambaran ini menggunakan PERIGARAN DAN PENGHURAANAN, BUKAN dialog. Tiada percakapan antara watak."}
     ]
   },
 
@@ -964,6 +981,13 @@ window.ESSAY_BANK = [
       "",
       "Daripada sahabatmu,",
       "Amar."
+    ],
+    essayQs:[
+      {q:"Apakah aktiviti utama yang diceritakan dalam surat ini?",o:["Perkemahan Unit Beruniform.","Pelumba sukan.","Misi amal komuniti.","Pekan Sains sekolah."],a:0,e:"Surat menceritakan: 'Pengalaman menyertai Perkhemahan Unit Beruniform yang diadakan oleh sekolahku minggu lepas.'"},
+      {q:"Berapa lamakah perkhemahan itu diadakan?",o:["Tiga hari dua malam.","Satu hari sahaja.","Lima hari empat malam.","Satu minggu penuh."],a:0,e:"Amar menulis: 'Perkhemahan itu diadakan selama tiga hari dua malam di sebuah hutan lipur berdekatan.'"},
+      {q:"Di manakah lokasi perkhemahan itu?",o:["Di sebuah hutan lipur.","Di padang sekolah.","Di sebuah pantai.","Di tapak perkhemahan rasmi."],a:0,e:"Lokasi: 'di sebuah hutan lipur berdekatan.'"},
+      {q:"Apakah pelajaran utama yang dipelajari Amar dari perkhemahan?",o:["Kerjasama dan keberanian.","Bermain video games.","Bermain bola sepak.","Menyanyi dalam koor."],a:0,e:"Amar menyatakan: 'Aku belajar erti kerjasama dan keberanian daripada aktiviti itu.' Ini pengalaman paling berkesan baginya."},
+      {q:"Apakah format surat yang betul seperti dalam contoh?",o:["Menggunakan bahasa santai seperti 'Apa khabar?' dan 'Daripada sahabatmu.'","Menggunakan bahasa sangat formal seperti 'Yang Mulia Dato'","Menggunakan tajuk di bahagian atas surat","Menggunakan bahasa Inggeris di bahagian isi surat."],a:0,e:"Surat tidak rasmi: 'Sahabatku Aiman,', 'Apa khabar?' (pembuka santai), dan 'Daripada sahabatmu, Amar.' (penutup santai)."}
     ]
   },
 
@@ -987,6 +1011,16 @@ window.ESSAY_BANK = [
       "Di samping itu, membaca mengisi masa lapang dengan aktiviti yang berfaedah. Murid yang gemar membaca tidak akan membuang masa dengan perkara yang sia-sia atau terjebak dalam gejala yang tidak sihat.",
       "Akhir sekali, membaca dapat menenangkan fikiran. Membaca bahan yang menarik mampu menghilangkan tekanan dan kebosanan selepas seharian belajar.",
       "Kesimpulannya, semua murid hendaklah menjadikan membaca sebagai amalan harian. Seperti kata orang, membaca jamu minda — semakin banyak membaca, semakin luas pemikiran kita."
+    ],
+    essayQs:[
+      {q:"Apakah idea utama karangan ini?",o:["Membaca ialah jambatan ilmu yang memberikan banyak faedah kepada murid.","Membaca buku komik sahaja yang bermanfaat.","Membaca hanya penting untuk murid C.","Murid tidak perlu membaca buku sains."],a:0,e:"Karangan menyatakan: 'Membaca sering disebut sebagai jambatan ilmu. Oleh itu, tabiat membaca wajar dipupuk dalam kalangan murid kerana terlalu banyak kebaikannya.'"},
+      {q:"Apakah manfaat membaca yang disebut dalam kiasan 'membaca jamu minda'?",o:["Membaca mengisi dan memperkaya minda seperti ubat yang merawat badan.","Membaca menjadikan murid sakit kepala.","Membaca membuang masa dan tenaga.","Membaca hanya untuk hiburan sahaja."],a:0,e:"'Membaca jamu minda' bermaksud membaca menyuburkan minda — seperti ubat yang merawat badan, membaca menyuburkan otak dan memberi pengetahuan baru."},
+      {q:"Apakah kesan membaca terhadap daya fikir murid?",o:["Membaca mempertajam daya fikir dan menambah tumpuan.","Membaca membuatkan murid cepat pening kepala.","Membaca mengurangkan keupayaan murid berfikir.","Membaca tidak memberi kesan kepada daya fikir."],a:0,e:"Karangan menyebut: 'membaca mempertajam daya fikir dan menambah tumpuan. Semasa membaca, minda diasah untuk berfikir, menaakul dan membayangkan sesuatu.'"},
+      {q:"Manakah BENAR tentang kesan membaca terhadap masa lapang?",o:["Mengisi masa lapang dengan aktiviti berfaedah, mengelak gejala tidak sihat.","Membaca membuang masa lapang yang berguna untuk bersukan.","Membaca membuatkan murid tidak boleh main permainan.","Membaca hanya boleh dilakukan di rumah, tidak pada waktu lapang."],a:0,e:"Membaca 'mengisi masa lapang dengan aktiviti yang berfaedah. Murid yang gemar membaca tidak akan membuang masa dengan perkara yang sia-sia.'"},
+      {q:"Apakah kata peralihan yang digunakan penulis untuk memulakan perenggan ke-4?",o:["Di samping itu.","Pertama sekali.","Sebagai contoh.","Kesimpulannya."],a:0,e:"Perenggan ke-4 bermula dengan 'Di samping itu, membaca mengisi masa lapang...' — ini kata peralihan tambahan (seperti 'selain itu', 'di samping itu')."},
+      {q:"Apakah kesan membaca pada masa lapang murid?",o:["Membaca mengisi masa lapang dengan aktiviti berfaedah dan mengelak gejala tidak sihat.","Membaca membuatkan murid bosan di masa lapang.","Membaca tidak sesuai untuk masa lapang murid.","Membaca menyebabkan murid tidak ada masa untuk bersukan."],a:0,e:"Karangan menyatakan: 'Membaca mengisi masa lapang dengan aktiviti yang berfaedah. Murid yang gemar membaca tidak akan membuang masa dengan perkara yang sia-sia atau terjebak dalam gejala yang tidak sihat.'"},
+      {q:"Apakah kesan membaca terhadap tekanan?",o:["Membaca dapat menenangkan fikiran dan menghilangkan tekanan.","Membaca menambah tekanan dan stress.","Membaca tidak ada kaitan dengan tekanan.","Membaca hanya menghilangkan kebosanan, bukan tekanan."],a:0,e:"Karangan menyebut: 'membaca dapat menenangkan fikiran. Membaca bahan yang menarik mampu menghilangkan tekanan dan kebosanan selepas seharian belajar.'"},
+      {q:"Apakah kesimpulan penulis tentang membaca?",o:["Semua murid menjadikan membaca amalan harian.","Membaca hanya untuk murid yang pandai.","Membaca tidak perlu dijadikan amalan harian.","Membaca terlalu banyak akan menjadikan murid lambat berfikir."],a:0,e:"Penulis conclude: 'semua murid hendaklah menjadikan membaca sebagai amalan harian. Seperti kata orang, membaca jamu minda — semakin banyak membaca, semakin luas pemikiran kita.'"}
     ]
   },
 
@@ -1010,6 +1044,13 @@ window.ESSAY_BANK = [
       "Pada hari peperiksaan, Farah menjawab soalan dengan tenang dan yakin. Danish pula termenung kerana banyak soalan yang tidak dapat dijawabnya. Apabila keputusan keluar, Farah mendapat markah yang cemerlang manakala Danish gagal dalam beberapa mata pelajaran.",
       "Danish sangat menyesal. \"Aku patut buat seperti Farah,\" bisiknya. Sejak hari itu, dia berazam tidak akan bertangguh lagi.",
       "Daripada peristiwa itu, kita belajar bahawa kejayaan memerlukan persediaan awal. Memang benar kata orang tua-tua, sediakan payung sebelum hujan."
+    ],
+    essayQs:[
+      {q:"Apakah maksud peribahasa 'sediakan payung sebelum hujan'?",o:["Bersedia dari awal sebelum sesuatu masalah berlaku.","Membeli payung sebelum musim hujan.","Hujan sering turun pada waktu petang.","Menunggu hujan dengan sabar di bawah bumbung."],a:0,e:"Peribahasa ini bermaksud membuat persediaan awal sebelum sesuatu yang buruk berlaku. Farah bersedia awal, Danish tidak."},
+      {q:"Apakah perbezaan sikap Farah dan Danish?",o:["Farah rajin dan bersungguh-sungguh; Danish bertangguh dan bermain permainan video.","Farah dan Danish sama-sama rajin.","Farah bermain permainan video; Danish belajar bersungguh-sungguh.","Farah dan Danish sama-sama malas."],a:0,e:"Farah: 'menyusun jadual belajar dan menyiapkan nota ringkas setiap malam.' Danish: 'hanya ketawa. Aku boleh ulang kaji malam sebelum periksa.'"},
+      {q:"Apakah akibat Danish tidak belajar awal?",o:["Dia gagal dalam beberapa mata pelajaran kerana banyak soalan tidak dapat dijawab.","Dia dapat markah cemerlang seperti Farah.","Dia tidak hadir peperiksaan.","Dia tidak ada apa-apa kesan buruk langsung."],a:0,e:"Danish: 'berhalah membuka buku, tetapi terlalu banyak yang perlu dibaca. Kepalanya pening dan matanya mengantuk.' Pada hari peperiksaan: 'banyak soalan yang tidak dapat dijawabnya.'"},
+      {q:"Apakah pesan utama karangan ini?",o:["Kejayaan memerlukan persediaan awal dan tidak boleh bertangguh.","Belajar pada malam sebelum peperiksaan adalah cukup.","Tidak perlu belajar langsung kerana peperiksaan mudah.","Bermain permainan video lebih penting daripada belajar."],a:0,e:"Karangan mengakhiri dengan: 'kejayaan memerlukan persediaan awal. Memang benar kata orang tua-tua, sediakan payung sebelum hujan.'"},
+      {q:"Apakah yang dilakukan Farah untuk persediaan peperiksaan?",o:["Menyusun jadual belajar dan menyiapkan nota ringkas setiap malam.","Tidak buat apa-apa pun, percaya diri sahaja.","Mintak kawan buat semua nota untuknya.","Hanya baca buku teks sekali sahaja sebelum peperiksaan."],a:0,e:"Farah 'segera menyusun jadual belajar dan menyiapkan nota ringkas setiap malam. Setiap petang, Farah duduk di mejanya membaca buku teks dan menjawab soalan latihan.'"}
     ]
   }
 ];
@@ -1034,7 +1075,7 @@ window.ESSAY_BANK = [
   function set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
   var DONE_KEY="bm:doneDates";          // array of iso dates with all 10 answered
   function obKey(iso){ return "bm:ob:"+iso; }   // {qid:chosenIndex}
-  function esKey(iso){ return "bm:essay:"+iso; }
+  function esKey(iso, sub){ return "bm:essay:"+iso + (sub!==undefined ? ":"+sub : ""); }
 
   // ---------- streak ----------
   function computeStreak(){
@@ -1100,11 +1141,27 @@ window.ESSAY_BANK = [
     (es&&es.tips||[]).forEach(function(t){ var li=document.createElement("li"); li.textContent=t; tipsEl.appendChild(li); });
     var meEl=document.getElementById("modelEssay"); meEl.innerHTML="";
     (es&&es.contoh||[]).forEach(function(p){ var d=document.createElement("p"); d.textContent=p; meEl.appendChild(d); });
-    // essay draft
-    var ta=document.getElementById("essayText");
-    ta.value = get(esKey(iso),"");
-    updateWordCount();
-    document.getElementById("essaySaved").style.display="none";
+    // essay quiz
+    var eqEl=document.getElementById("essayQuiz"); eqEl.innerHTML="";
+    var eqSave = get(esKey(iso,1),[]);
+    (es&&es.essayQs||[]).forEach(function(q,idx){
+      var wrap=document.createElement("div"); wrap.className="q";
+      var head=document.createElement("div"); head.className="qhead";
+      head.innerHTML='<span class="qnum">'+(idx+1)+'.</span><span class="qtext">'+esc(q.q)+'</span><span class="qcat">Soalan karangan</span>';
+      wrap.appendChild(head);
+      var opts=document.createElement("div"); opts.className="opts";
+      var fb=document.createElement("div"); fb.className="feedback";
+      var letters=["A","B","C","D"];
+      q.o.forEach(function(optText,oi){
+        var b=document.createElement("button"); b.className="opt"; b.type="button";
+        b.innerHTML='<span class="lbl">'+letters[oi]+'</span><span>'+esc(optText)+'</span>';
+        b.addEventListener("click",function(){ chooseEssayQ(q,idx,oi,opts,fb); });
+        opts.appendChild(b);
+      });
+      wrap.appendChild(opts); wrap.appendChild(fb);
+      eqEl.appendChild(wrap);
+      if(eqSave[idx]!==undefined) revealEssayQ(q,opts,fb,eqSave[idx]);
+    });
 
     // --- quiz ---
     var qs = questionsForDay(di);
@@ -1178,33 +1235,36 @@ window.ESSAY_BANK = [
     } else elComplete.textContent="";
   }
 
-  // ---------- essay tools ----------
-  function updateWordCount(){
-    var t=document.getElementById("essayText").value.trim();
-    var n = t? t.split(/\s+/).length : 0;
-    document.getElementById("wordCount").textContent = n+" patah perkataan";
+  // ---------- essay quiz helpers ----------
+  function revealEssayQ(q,optsEl,fbEl,chosen){
+    var btns=optsEl.querySelectorAll(".opt");
+    btns.forEach(function(b,i){
+      b.disabled=true;
+      if(i===q.a) b.classList.add("correct");
+      if(i===chosen && chosen!==q.a) b.classList.add("wrong");
+    });
+    var correct = chosen===q.a;
+    fbEl.className="feedback show "+(correct?"ok":"bad");
+    var letters=["A","B","C","D"];
+    fbEl.innerHTML = (correct? "<b>✓ Betul!</b> " : "<b>✗ Salah.</b> Jawapan: <b>"+letters[q.a]+"</b>. ") + esc(q.e);
   }
-  document.getElementById("essayText").addEventListener("input",function(){
-    updateWordCount(); document.getElementById("essaySaved").style.display="none";
-  });
-  document.getElementById("saveEssay").addEventListener("click",function(){
-    set(esKey(isoOf(viewDate)), document.getElementById("essayText").value);
-    var n=document.getElementById("essaySaved"); n.style.display="inline"; n.textContent="✓ Disimpan";
-  });
-  // auto-save every 20s
-  setInterval(function(){
-    var iso=isoOf(viewDate), cur=document.getElementById("essayText").value;
-    if(cur!==get(esKey(iso),"")) set(esKey(iso),cur);
-  },20000);
+
+  function chooseEssayQ(q,idx,oi,optsEl,fbEl){
+    var iso=isoOf(viewDate);
+    var key = esKey(iso,1);
+    var saved = get(key,[]);
+    if(saved[idx]!==undefined) return; // already answered, locked
+    saved[idx]=oi; set(key,saved);
+    revealEssayQ(q,optsEl,fbEl,oi);
+  }
 
   // ---------- day navigation ----------
-  document.getElementById("prevDay").addEventListener("click",function(){ saveCurrentEssay(); viewDate.setDate(viewDate.getDate()-1); render(); });
-  document.getElementById("nextDay").addEventListener("click",function(){ saveCurrentEssay(); viewDate.setDate(viewDate.getDate()+1); render(); });
-  document.getElementById("todayBtn").addEventListener("click",function(){ saveCurrentEssay(); viewDate=new Date(); viewDate.setHours(0,0,0,0); render(); });
-  function saveCurrentEssay(){ set(esKey(isoOf(viewDate)), document.getElementById("essayText").value); }
+  document.getElementById("prevDay").addEventListener("click",function(){ viewDate.setDate(viewDate.getDate()-1); render(); });
+  document.getElementById("nextDay").addEventListener("click",function(){ viewDate.setDate(viewDate.getDate()+1); render(); });
+  document.getElementById("todayBtn").addEventListener("click",function(){ viewDate=new Date(); viewDate.setHours(0,0,0,0); render(); });
 
   document.getElementById("resetAll").addEventListener("click",function(){
-    if(confirm("Padam semua kemajuan, draf karangan dan rekod harian?")){
+    if(confirm("Padam semua kemajuan dan rekod harian?")){
       var keys=[]; for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k.indexOf("bm:")===0) keys.push(k); }
       keys.forEach(function(k){ localStorage.removeItem(k); });
       render();

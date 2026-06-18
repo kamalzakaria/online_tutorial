@@ -134,6 +134,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
 </section>
 
 <div class="between">
@@ -229,22 +230,221 @@ function pickStep(idx,btn){
 }
 resetOrder();
 
-/* quiz */
-var BAB=2;
-var QUIZ=[
-  {q:"Unit terkecil bagi sesuatu hidupan ialah…",o:["Organ","Sel","Tisu","Sistem"],a:1,e:"Sel ialah unit asas (terkecil) bagi hidupan."},
-  {q:"Organel yang mengawal semua aktiviti sel ialah…",o:["Nukleus","Vakuol","Membran sel","Sitoplasma"],a:0,e:"Nukleus mengawal aktiviti sel."},
-  {q:"Organel yang HANYA terdapat pada sel tumbuhan ialah…",o:["Nukleus","Mitokondrion","Kloroplas","Sitoplasma"],a:2,e:"Kloroplas, dinding sel & vakuol besar hanya pada sel tumbuhan."},
-  {q:"Dinding sel berfungsi untuk…",o:["Fotosintesis","Memberi bentuk & sokongan","Menghasilkan tenaga","Mengawal nukleus"],a:1,e:"Dinding sel memberi bentuk tetap & sokongan kepada sel tumbuhan."},
-  {q:"Susunan organisasi sel yang betul ialah…",o:["Sel → Organ → Tisu → Organisma","Sel → Tisu → Organ → Sistem Organ → Organisma","Organisma → Sel → Tisu","Tisu → Sel → Organ"],a:1,e:"Sel → Tisu → Organ → Sistem Organ → Organisma."},
-  {q:"Alat yang digunakan untuk melihat sel ialah…",o:["Teleskop","Mikroskop","Periskop","Stetoskop"],a:1,e:"Mikroskop membesarkan imej sel yang sangat kecil."},
-  {q:"Ameba ialah contoh organisma…",o:["Multisel","Unisel","Tumbuhan","Tanpa sel"],a:1,e:"Ameba ialah organisma unisel (satu sel sahaja)."},
+/* ============================================================
+   QBank: 50 soalan Bab 2 (Sel sebagai Unit Asas Hidupan)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
+/* --- Sel sebagai Unit Asas Hidupan --- */
+{q:"Unit terkecil bagi sesuatu hidupan ialah…",o:["Organ","Sel","Tisu","Sistem"],a:1,e:"Sel ialah unit asas (terkecil) bagi hidupan."},
+{q:"Semua organisma hidup dibina daripada…",o:["Air","Angin","Sel","Tanah"],a:2,e:"Semua organisma hidup, sama ada unisel mahupun multisel, dibina daripada sel."},
+{q:"Pakar biologi yang pertama memerhati sel melalui mikroskop ialah…",o:["Louis Pasteur","Robert Hooke","Isaac Newton","Charles Darwin"],a:1,e:"Robert Hooke memerhati ruang kosong dalam gabus pada tahun 1665 dan menamakan ruang tersebut 'sel'."},
+{q:"Alat yang digunakan untuk melihat sel ialah…",o:["Teleskop","Mikroskop","Periskop","Stetoskop"],a:1,e:"Mikroskop membesarkan imej sel yang sangat kecil supaya boleh dilihat oleh mata manusia."},
+{q:"Mikroskop dengan pembesaran 10×10 menghasilkan pembesaran keseluruhan…",o:["10×","100×","20×","1000×"],a:1,e:"Pembesaran keseluruhan = pembesaran okular × pembesaran objektf → 10 × 10 = 100×."},
+{q:"Bahagian mikroskop yang mempunyai kanta pembesaran dan dilihat melalui mata ialah…",o:["Objektif","Okular","Reflektor","Diafragma"],a:1,e:"Kanta okular (okular lens) terletak di bahagian atas mikroskop dan biasa mempunyai pembesaran 10×."},
+{q:"Bahagian mikroskop yang boleh diputar untuk mendapatkan imej jelas ialah…",o:["Reflktor","Kekunci kasar & halus","Diafragma","Meja preparat"],a:1,e:"Kekunci halus (fine focus knob) memutarkan tabung untuk mendapatkan imej yang jelas."},
+{q:"Antara berikut, yang manakah BUKAN fungsi mikroskop?",o:["Memperbesarkan objek kecil","Memerhati sel dan tisu","Mengukur ketinggian gunung","Mempelajari mikroorganisma"],a:2,e:"Mikroskop digunakan untuk melihat objek kecil yang tidak dapat dilihat dengan mata kasar. Mengukur ketinggian gunung menggunakan teodolit atau altimeter."},
+{q:"Kanta okular mikroskop biasanya mempunyai pembesaran…",o:["4×","10×","40×","100×"],a:1,e:"Kanta okular standard pada mikroskop cahaya ialah 10×."},
+
+/* --- Organel Sel & Fungsinya --- */
+{q:"Organel yang mengawal semua aktiviti sel ialah…",o:["Nukleus","Vakuol","Membran sel","Sitoplasma"],a:0,e:"Nukleus mengawal semua aktiviti sel dan mengandungi bahan genetik (DNA)."},
+{q:"Nukleus mengandungi…",o:["Zat warna","Bahan genetik (DNA)","Klorofil","Makanan"],a:1,e:"Nukleus mengandungi kromosom yang menyimpan maklumat genetik (DNA) yang diwariskan kepada generasi seterusnya."},
+{q:"Organel yang menghasilkan tenaga bagi sel ialah…",o:["Nukleus","Mitokondrion","Vakuol","Ribosom"],a:1,e:"Mitokondrion merupakan 'pusat tenaga' sel. Proses pernafasan sel berlaku di sini untuk menghasilkan tenaga."},
+{q:"Sitoplasma berfungsi sebagai…",o:["Tempat tindak balas kimia","Pengawal aktiviti sel","Pembuat tenaga","Pelindung luar"],a:0,e:"Sitoplasma ialah cecair seperti jeli di mana semua organel terapung dan tindak balas kimia berlaku."},
+{q:"Organel yang mengawal bahan keluar dan masuk ke dalam sel ialah…",o:["Dinding sel","Nukleus","Membran sel","Kloroplas"],a:2,e:"Membran sel bersifat setengah telap (semi-permeable) — hanya membenarkan bahan tertentu melalui."},
+{q:"Organel yang menyimpan air dan makanan dalam sel ialah…",o:["Nukleus","Mitokondrion","Vakuol","Sitoplasma"],a:2,e:"Vakuol menyimpan air, makanan, dan bahan buangan dalam sel."},
+{q:"Organel yang menghasilkan tenaga melalui fotosintesis ialah…",o:["Nukleus","Kloroplas","Vakuol","Membran sel"],a:1,e:"Kloroplas mengandungi klorofil yang menangkap tenaga cahaya untuk proses fotosintesis."},
+{q:"Protein dihasilkan oleh organel…",o:["Mitokondrion","Nukleus","Ribosom","Vakuol"],a:2,e:"Ribosom merupakan tempat sintesis (pembuatan) protein dalam sel."},
+{q:"Bahan kimia yang捉捉 tenaga cahaya dalam fotosintesis ialah…",o:["DNA","Klorofil","Sitoplasma","Glukosa"],a:1,e:"Klorofil ialah pigmen hijau dalam kloroplas yang捉捉 tenaga cahaya untuk fotosintesis."},
+
+/* --- Sel Tumbuhan vs Sel Haiwan --- */
+{q:"Dinding sel terdapat pada…",o:["Sel haiwan sahaja","Sel tumbuhan sahaja","Keseluruhannya","Sel haiwan & tumbuhan"],a:1,e:"Dinding sel yang keras dan tegar hanya terdapat pada sel tumbuhan. Sel haiwan tiada dinding sel."},
+{q:"Organel yang HANYA terdapat pada sel tumbuhan ialah…",o:["Nukleus","Mitokondrion","Kloroplas","Sitoplasma"],a:2,e:"Kloroplas, dinding sel & vakuol besar hanya pada sel tumbuhan."},
+{q:"Apakah perbezaan utama vakuol sel tumbuhan dan haiwan?",o:["Haiwan lebih besar","Tumbuhan mempunyai vakuol besar","Tiada vakuol","Haiwan tiada vakuol"],a:1,e:"Sel tumbuhan mempunyai vakuol besar yang berisi cecair. Sel haiwan mungkin mempunyai vakuol kecil atau tiada langsung."},
+{q:"Mengapakah sel tumbuhan boleh tegar manakala sel haiwan tidak?",o:["Sel tumbuhan ada nukleus","Sel tumbuhan ada dinding sel","Sel haiwan tiada sitoplasma","Sel tumbuhan tiada membran"],a:1,e:"Dinding sel tumbuhan memberikan bentuk tetap dan sokongan. Sel haiwan hanya mempunyai membran sel yang lentur."},
+{q:"Sel darah merah haiwan mempunyai…",o:["Dinding sel","Kloroplas","Hanya membran sel","Vakuol besar"],a:2,e:"Sel darah merah hanya mempunyai membran sel sebagai lapisan luar — tiada dinding sel, kloroplas, atau vakuol besar."},
+{q:"Antara berikut, yang manakah mempunyai kloroplas?",o:["Sel kulit bawang","Sel akar","Sel daun","Sel darah"],a:2,e:"Sel daun mengandungi kloroplas kerana berfungsi untuk fotosintesis."},
+
+/* --- Pengelasan Sel: Unisel & Multisel --- */
+{q:"Ameba ialah contoh organisma…",o:["Multisel","Unisel","Tumbuhan","Tanpa sel"],a:1,e:"Ameba ialah organisma unisel (satu sel sahaja). Seluruh proses kehidupan dilakukan oleh satu sel."},
+{q:"Organisma multisel bermaksud…",o:["Terdapat satu sel","Terdapat lebih daripada satu sel","Tidak mempunyai sel","Sel tidak berfungsi"],a:1,e:"Organisma multisel mempunyai berbilion sel yang bertindak bersama. Contoh: manusia, pokok, anjing."},
+{q:"E. coli (bakteria) ialah organisma…",o:["Multisel","Unisel","Virus","Jamur"],a:1,e:"Bakteria ialah organisma unisel — seluruh badan terdiri daripada satu sel sahaja."},
+{q:"Proses kehidupan yang dilakukan oleh organisma unisel termasuk…",o:["Pemakanan sahaja","Pemakanan, pernafasan & pembiakan","Nafas sahaja","Pergerakan sahaja"],a:1,e:"Walaupun hanya satu sel, organisma unisel melakukan SEMUA proses kehidupan: pemakanan, pernafasan, peristiwa, pertumbuhan, pembiakan, pergerakan, & kepekaan."},
+
+/* --- Organisasi Sel: Sel → Organisma --- */
+{q:"Susunan organisasi sel yang betul ialah…",o:["Sel → Organ → Tisu → Organisma","Sel → Tisu → Organ → Sistem Organ → Organisma","Organisma → Sel → Tisu","Tisu → Sel → Organ"],a:1,e:"Sel → Tisu → Organ → Sistem Organ → Organisma. Sel berkumpul membentuk tisu, tisu membentuk organ, organ membentuk sistem organ, dan sistem organ membentuk organisma."},
+{q:"Kumpulan sel serupa yang melakukan fungsi tertentu dipanggil…",o:["Organ","Organisma","Tisu","Sistem organ"],a:2,e:"Tisu ialah kumpulan sel yang serupa bentuk dan fungsi. Contoh: tisu epitel, tisu otot."},
+{q:"Antara berikut, yang manakah merupakan ORGAN?",o:["Jantung","Sel darah","Sistem pernafasan","Manusia sepenuhnya"],a:0,e:"Jantung ialah organ — terdiri daripada beberapa jenis tisu yang bekerja bersama untuk mengepam darah."},
+{q:"Sistem pencernaan terdiri daripada…",o:["Hanya perut","Hanya usus","Organ seperti mulut, kerongkong, perut, usus","Hanya hati"],a:2,e:"Sistem pencernaan terdiri daripada beberapa organ yang bekerja bersama: mulut, kerongkong, perut, usus halus, usus besar, hati, dan pankreas."},
+{q:"Apakah unit organisasai paling kecil?",o:["Tisu","Sel","Organ","Sistem organ"],a:1,e:"Sel merupakan unit organisasi paling kecil. Semua bahagian lain dibina daripada sel."},
+{q:"Otot adalah contoh…",o:["Sel","Tisu","Sistem organ","Organisma"],a:1,e:"Otot ialah tisu otot — terdiri daripada sel-sel otot yang serupa."},
+
+/* --- Mikroskop & Persediaan --- */
+{q:"Persediaan mikroskop yang BETUL apabila mula digunakan ialah…",o:["Langsung pada pembesaran tinggi","Mulakan dengan pembesaran rendah","Matikan lampu","Tanggalkan preparat"],a:1,e:"Sentiasa mulakan dengan objektif kuasa rendah (misalnya 4× atau 10×) untuk mencari objek, kemudian baruk besarkan."},
+{q:"Apabila memindahkan mikroskop, cara yang betul ialah…",o:["Diangkat dengan satu tangan","Dikunci lalu dibawa","Diangkat dari bahagian tiang dengan satu tangan, dipegang tapaknya dengan satu tangan lagi","Diangkat dari meja tanpa perlu berhati-hati"],a:2,e:"Mikroskop hendaknya dibawa dengan satu tangan memegang tiang dan satu tangan memegang tapak untuk kestabilan."},
+{q:"Apakah kanta pertama yang digunakan untuk melihat objek di bawah mikroskop?",o:["Objektif 40×","Objektif 10× & okular 10×","Objektif 100×","Tiada kanta"],a:1,e:"Mulakan dengan objektif kuasa rendah (4× atau 10×) bersama kanta okular 10×. Ini memberikan padang pandangan yang luas untuk mencari objek."},
+{q:"Apabila melihat preparat, kita perlu…",o:["Meletakkan preparat di atas meja preparat","Memegang preparat","Meletakkan preparat di tangan","Mengepit preparat"],a:0,e:"Preparat (objek yang disiasat) diletakkan di atas meja preparat (stage) mikroskop, dikunci, dan disinari cahaya dari bawah."},
+
+/* --- Nilai & Sikap Saintifik dalam Penyelidikan Sel --- */
+{q:"Sikap saintifik yang paling penting semasa membuat pemerhatian sel ialah…",o:["Subjektif","Teliti dan jujur","Bergegar","Terburu-buru"],a:1,e:"Sikap teliti dan jujur penting untuk merekod pemerhatian dengan betul dan tidak memanipulasi data."},
+{q:"Apakah kepentingan menggunakan mikroskop dengan betul?",o:["Membazirkan masa","Mendapatkan pemerhatian yang tepat dan elak kerosakan alat","Tidak penting","Hanya untuk guru"],a:1,e:"Penggunaan mikroskop yang betul memberikan imej yang jelas dan tepat, serta mengekalkan ketepatan alat."},
+{q:"Mengapakah kita perlu membersihkan bahan selepas membuat preparat slaid mikroskop?",o:["Tidak perlu","Untuk elak pencemaran dan kekalkan kesihatan","Untuk membazirkan masa","Agar guru marah"],a:1,e:"Membersihkan bahan selepas eksperimen mengelakkan pencemaran silang dan memelihara kebersihan makmal."},
+{q:"Apakah langkah keselamatan TIDAK tepat apabila menggunakan mikroskop?",o:["Membersihkannya dengan betul","Meletakkannya di tepi meja supaya mudah terjatuh","Mengangkatnya dengan dua tangan","Menggunakannya pada meja yang rata"],a:1,e:"Mikroskop hendaknya diletakkan jauh dari tepi meja dan dipegang dengan dua tangan untuk mengelakkan terjatuh."},
+
+/* --- Struktur & Jenis Sel --- */
+{q:"Sel saraf (neuroni) mempunyai fungsi…",o:["Mengepam darah","Menghantar isyarat elektrik","Menyerap cahaya","Melawan jangkitan"],a:1,e:"Sel saraf (neuron) menghantar isyarat elektrik (impuls) dari otak ke seluruh badan untuk koordinasi."},
+{q:"Sel epitelium berfungsi sebagai…",o:["Penghantar oksigen","Pelapik permukaan badan dan organ","Penghasil tenaga","Pengawal suhu"],a:1,e:"Sel epitelium membentuk lapisan pelindung di permukaan badan dan organ dalaman."},
+{q:"Sel darah merah mengangkut…",o:["Nitrogen","Oksigen","Hidrogen","Karbon dioksida sahaja"],a:1,e:"Sel darah merah (eritrosit) mengandungi hemoglobin yang mengangkut oksigen dari paru-paru ke seluruh badan."},
+{q:"Apakah ciri utama sel sperma?",o:["Ada kloroplas","Ada ekor (flagela) untuk berenang","Tidak ada nukleus","Sahaja besar"],a:1,e:"Sel sperma mempunyai ekor (flagela) yang membolehkannya berenang menuju ovum (sel telur) untuk pembuahan."},
+{q:"Sel epidermis daun selalunya…",o:["Berwarna gelap","Telap supaya cahaya masuk ke sel kloroplas","Mengandungi kloroplas sangat banyak","Tidak mempunyai membran"],a:1,e:"Sel epidermis daun yang luar biasanya telap (transparan) supaya cahaya boleh menembusi ke sel mesofil yang mengandungi kloroplas."},
+
+/* --- Proses Sel --- */
+{q:"Pembahagian sel menghasilkan…",o:["Kerosakan sel","Sel-sel baru yang serupa","Sel yang berbeza jenis","Menghentikan pertumbuhan"],a:1,e:"Pembahagian sel (mitosis) menghasilkan sel-sel baru yang serupa untuk pertumbuhan dan pembaikan tisu."},
+{q:"Mengapakah sel memerlukan membran yang setengah telap?",o:["Agar semua bahan masuk","Untuk mengawal bahan masuk dan keluar","Agar tidak ada bahan keluar","Hanya untuk kelihatan cantik"],a:1,e:"Membran sel bersifat setengah telap (semi-permeable) — ia mengawal bahan apa yang boleh masuk dan keluar, menjaga keseimbangan dalam sel."},
+{q:"Apakah yang berlaku apabila sel terlalu kehilangan air?",o:["Sel menjadi lebih kuat","Sel mengecut dan boleh mati","Sel membesar","Tiada kesan"],a:1,e:"Apabila air keluar dari sel (pliolis), sel mengecut dan boleh mati. Ini berlaku dalam larutan pekat (hipertonik)."},
+{q:"Fotosintesis berlaku di organel…",o:["Nukleus","Mitokondrion","Kloroplas","Membran sel"],a:2,e:"Fotosintesis berlaku di kloroplas — organel yang hanya terdapat pada sel tumbuhan dan mengandungi klorofil."},
+{q:"Pernafasan sel (cellular respiration) untuk menghasilkan tenaga berlaku di…",o:["Kloroplas","Nukleus","Mitokondrion","Dinding sel"],a:2,e:"Mitokondrion merupakan pusat pernafasan sel — proses pembebasan tenaga dari glukosa berlaku di sini."},
 ];
-var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🦠':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab3.html" style="color:#fff;font-weight:800">Teruskan ke Bab 3 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+
+/* ---------- Daily rotation (LCG — sama pola dengan bahasa_melayu) ---------- */
+var QUIZ=[];        // hari ini: 10 soalan terpilih dari QBank
+var answered={};    // indeks QUIZ → pilihan user (disimpan di localStorage)
+
+function dayIdx(d){
+  return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5);
+}
+function lcgDay(d){
+  return (dayIdx(d)*2654435761+20260617)>>>0;
+}
+function pickDay(n,seed){
+  var sel=[],rem=[],r=seed;
+  for(var i=0;i<n;i++) rem.push(i);
+  for(var i=0;i<Math.min(n,rem.length);i++){
+    r=r*2654435761%4294967296;
+    var j=r%(rem.length);
+    sel.push(rem[j]);
+    rem.splice(j,1);
+  }
+  return sel;
+}
+
+/* Inisialisasi / ulang: semak localStorage untuk quiz hari ini */
+(function(){
+  var today=new Date(),sid="sains:day"+dayIdx(today);
+  var stored=localStorage.getItem(sid);
+  if(stored){
+    try{QUIZ=JSON.parse(stored);}catch(e){QUIZ=[];}
+  }
+  if(!QUIZ.length||QUIZ.length!==QBank.length){
+    var seed=lcgDay(today);
+    var idx=pickDay(QBank.length,seed);
+    QUIZ=idx.map(function(i){return QBank[i];});
+    localStorage.setItem(sid,JSON.stringify(QUIZ));
+  } else {
+    /* restore jawapan dari localStorage */
+    try{
+      var as=JSON.parse(localStorage.getItem("sains:a")||"{}");
+      for(var k in as) answered[parseInt(k)]=as[k];
+    }catch(e){}
+  }
+})();
+
+/* ---------- Render quiz ---------- */
+(function(){
+  var box=document.getElementById('quiz');
+  QUIZ.forEach(function(item,qi){
+    var div=document.createElement('div');
+    div.className='q';
+    var opts=item.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    box.appendChild(div);
+  });
+  /* restore answered dari localStorage */
+  for(var k in answered){
+    var qi=parseInt(k),oi=answered[k];
+    if(qi<QUIZ.length){
+      var el=document.getElementById('q'+qi+'o'+oi);
+      if(el){
+        el.classList.add('lock');
+        var correct=QUIZ[qi].a;
+        for(var c=0;c<QUIZ[qi].o.length;c++){
+          var r=document.getElementById('q'+qi+'o'+c);
+          r.classList.add('lock');
+          if(c===correct) r.classList.add('ok');
+        }
+        if(oi!==correct) el.classList.add('no');
+        document.getElementById('exp'+qi).classList.add('show');
+      }
+    }
+  }
+  /* tunjuk progress */
+  var done=Object.keys(answered).length;
+  if(done>0) document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+})();
+
+/* ---------- Jawab soalan ---------- */
+function pick(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  localStorage.setItem("sains:a",JSON.stringify(answered));
+  var correct=QUIZ[qi].a;
+  for(var k=0;k<QUIZ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k);
+    el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+  var done=Object.keys(answered).length;
+  document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+}
+
+/* ---------- Submit kuiz ---------- */
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<QUIZ.length){
+    alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');
+    return;
+  }
+  var score=0;
+  QUIZ.forEach(function(it,qi){if(answered[qi]===it.a) score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Sel kamu pun cemerlang! 🦠':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  saveProgress(BAB,pct);
+  /* simpan skor harian */
+  try{
+    var best=parseInt(localStorage.getItem("sains:best")||"0");
+    localStorage.setItem("sains:best",String(Math.max(best,pct)));
+  }catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah hari ini</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab3.html" style="color:#fff;font-weight:800">Teruskan ke Bab 3 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Reset harian (refresh untuk set semula) ---------- */
+function resetDay(){
+  if(!confirm("Set semula semua soalan & jawapan Bab 2?")) return;
+  answered={};
+  localStorage.removeItem("sains:a");
+  localStorage.removeItem("sains:day"+dayIdx(new Date()));
+  localStorage.removeItem("sains:best");
+  location.reload();
+}
+
+/* ---------- Helpers ---------- */
+var BAB=2;
+function saveProgress(bab,pct){
+  try{
+    var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};
+    var best=Math.max(prev.best||0,pct);
+    localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));
+  }catch(e){}
+}
 </script>
 </body>
 </html>

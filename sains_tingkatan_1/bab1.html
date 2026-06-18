@@ -138,6 +138,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
 </section>
 
 <div class="between">
@@ -158,7 +159,6 @@ function calc(){
   document.getElementById('rJisim').textContent=m; document.getElementById('rIsi').textContent=v;
   document.getElementById('rKet').textContent=d.toFixed(2);
   var obj=document.getElementById('obj'), verdict=document.getElementById('verdict');
-  // water surface at 26% from top (water height 74%). float -> sits at surface, sink -> bottom
   var topPct;
   if(d<0.98){ topPct=14; obj.textContent='🛟'; verdict.innerHTML='Terapung! (ketumpatan < 1.0)'; verdict.style.color='#0e7490'; }
   else if(d>1.02){ topPct=66; obj.textContent='⬇️'; verdict.innerHTML='Tenggelam! (ketumpatan > 1.0)'; verdict.style.color='#c2410c'; }
@@ -193,22 +193,237 @@ function pickU(o,btn){
 }
 newU();
 
-/* quiz */
-var BAB=1;
-var QUIZ=[
-  {q:"Unit SI bagi jisim ialah…",o:["gram","kilogram","newton","liter"],a:1,e:"Unit SI bagi jisim ialah kilogram (kg)."},
-  {q:"Unit SI bagi suhu ialah…",o:["Celsius","Kelvin","Fahrenheit","Joule"],a:1,e:"Unit SI bagi suhu ialah Kelvin (K)."},
-  {q:"Rumus ketumpatan ialah…",o:["Jisim × Isipadu","Jisim ÷ Isipadu","Isipadu ÷ Jisim","Jisim + Isipadu"],a:1,e:"Ketumpatan = Jisim ÷ Isipadu."},
-  {q:"Objek akan TERAPUNG dalam air jika ketumpatannya…",o:["Lebih daripada air","Kurang daripada air","Sama dengan besi","Sangat tinggi"],a:1,e:"Ketumpatan < ketumpatan air (1.0 g/cm³) → terapung."},
-  {q:"Alat untuk menyukat isipadu cecair dengan tepat ialah…",o:["Pembaris","Silinder penyukat","Termometer","Jam randik"],a:1,e:"Silinder penyukat digunakan untuk menyukat isipadu cecair."},
-  {q:"Pemboleh ubah yang sengaja diubah dalam eksperimen ialah pemboleh ubah…",o:["Dimalarkan","Dimanipulasi","Bergerak balas","Bersandar pada masa"],a:1,e:"Pemboleh ubah dimanipulasi ialah yang diubah oleh penyiasat."},
-  {q:"Susunan langkah penyiasatan saintifik yang betul bermula dengan…",o:["Kesimpulan","Pemerhatian","Eksperimen","Hipotesis"],a:1,e:"Bermula dengan pemerhatian, kemudian inferens, hipotesis, eksperimen…"},
+/* ============================================================
+   QBank: 50 soalan Bab 1 (Penyiasatan Saintifik)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
+/* --- Kuantiti Fizik & Unit SI --- */
+{q:"Unit SI bagi jisim ialah…",o:["gram","kilogram","newton","liter"],a:1,e:"Unit SI bagi jisim ialah kilogram (kg)."},
+{q:"Unit SI bagi suhu ialah…",o:["Celsius","Kelvin","Fahrenheit","Joule"],a:1,e:"Unit SI bagi suhu ialah Kelvin (K)."},
+{q:"Unit SI bagi panjang ialah…",o:["sentimeter","milimeter","meter","kilometer"],a:2,e:"Unit SI bagi panjang ialah meter (m)."},
+{q:"Unit SI bagi masa ialah…",o:["minit","jam","saat","hari"],a:2,e:"Unit SI bagi masa ialah saat (s)."},
+{q:"Unit SI bagi arus elektrik ialah…",o:["volt","ohm","watt","ampere"],a:3,e:"Unit SI bagi arus elektrik ialah ampere (A)."},
+{q:"Antara berikut, yang manakah kuantiti fizik ASAS?",o:["Isipadu","Kelajuan","Jisim","Ketumpatan"],a:2,e:"Jisim ialah kuantiti fizik asas. Isipadu, kelajuan dan ketumpatan ialah kuantiti terbitan."},
+{q:"2 meter = _______ sentimeter",o:["20","200","0,2","2000"],a:1,e:"1 m = 100 cm, jadi 2 m = 200 cm."},
+{q:"3000 gram = _______ kilogram",o:["30","300","3","0,3"],a:2,e:"1 kg = 1000 g, jadi 3000 g = 3 kg."},
+{q:"2 jam = _______ saat",o:["200","720","7200","120"],a:2,e:"1 jam = 3600 s, jadi 2 jam = 7200 s."},
+{q:"500 sentimeter = _______ meter",o:["5000","50","5","0,5"],a:2,e:"100 cm = 1 m, jadi 500 cm = 5 m."},
+{q:"Imbuhan 'kilo' bermaksud…",o:["10²","10³","10⁶","10⁹"],a:1,e:"Imbuhan kilo = 10³ = 1000. Contoh: 1 kg = 1000 g."},
+{q:"1 m = _______ μm (mikrometer)",o:["10³","10⁶","10⁻³","10⁻⁶"],a:1,e:"1 m = 1 000 000 μm = 10⁶ μm. Imbuhan mikro (μ) = 10⁻⁶."},
+{q:"0,5 kg = _______ g",o:["5","50","500","5000"],a:2,e:"1 kg = 1000 g, jadi 0,5 kg = 500 g."},
+
+/* --- Alat Makmal --- */
+{q:"Alat untuk mengukur suhu ialah…",o:["Termometer","Barometer","Termograf","Anemometer"],a:0,e:"Termometer digunakan untuk mengukur suhu objek."},
+{q:"Alat yang paling tepat untuk ukur panjang pensel ialah…",o:["Pembaris metrik","Pita pengukur","Jambang kejur","Pembaris patah"],a:2,e:"Jambang kejur (vernier caliper) paling tepat (0,01 cm) berbanding pembaris (0,1 cm) atau pita pengukur."},
+{q:"Alat untuk mengukur isipadu cecair dengan tepat ialah…",o:["Pembaris","Silinder penyukat","Termometer","Jam randik"],a:1,e:"Silinder penyukat digunakan untuk mengukur isipadu cecair."},
+{q:"Alat untuk mengukur masa larian 100 m ialah…",o:["Termometer","Jam randik (stopwatch)","Neraca spring","Mikroskop"],a:1,e:"Jam randik (stopwatch) digunakan untuk mengukur selang masa dengan tepat."},
+{q:"Alat untuk mengukur jisim objek ialah…",o:["Termometer","Neraca/imbang","Jam randik","Pembaris"],a:1,e:"Neraca atauimbang digunakan untuk mengukur jisim objek."},
+{q:"Kelalang kon digunakan untuk…",o:["Memanaskan cecair","Mengukur isipadu cecair dengan tepat","Mengukur jisim","Mendidihkan air"],a:1,e:"Kelalang kon (kon flask) mempunyai tanda aras yang membantu mengukur isipadu cecair dengan tepat."},
+
+/* --- Langkah Penyiasatan Saintifik --- */
+{q:"Langkah pertama dalam penyiasatan saintifik ialah…",o:["Hipotesis","Kesimpulan","Pemerhatian","Eksperimen"],a:2,e:"Semua penyiasatan bermula dengan pemerhatian terhadap sesuatu fenomena."},
+{q:"Selepas pemerhatian, langkah seterusnya ialah…",o:["Eksperimen","Mengumpulkan data","Inferens","Kesimpulan"],a:2,e:"Selepas pemerhatian, kita membuat inferens — penjelasan awal berdasarkan pemerhatian."},
+{q:"Hipotesis ialah…",o:["Fakta yang sah","Cadangan penjelasan yang boleh diuji","Kesimpulan akhir","Data eksperimen"],a:1,e:"Hipotesis ialah cadangan penjelasan awal yang boleh diuji melalui eksperimen."},
+{q:"Pernyataan yang paling tepat tentang hipotesis ialah…",o:["Ia sentiasa benar","Ia boleh diuji dengan eksperimen","Ia tidak perlu disahkan","Ia sama dengan hukum saintifik"],a:1,e:"Hipotesis perlu diuji melalui eksperimen untuk menentukan sama ada ia benar atau tidak."},
+{q:"Pemboleh ubah yang sengaja diubah ialah…",o:["Pemboleh ubah bergerak balas","Pemboleh ubah dimalarkan","Pemboleh ubah dimanipulasi","Pemboleh ubah bersandar"],a:2,e:"Pemboleh ubah dimanipulasi ialah yang diubah secara sengaja oleh penyiasat."},
+{q:"Pemboleh ubah bergerak balas ialah…",o:["Yang diubah","Yang diukur tindakannya","Yang ditetap konstan","Yang tidak relevan"],a:1,e:"Pemboleh ubah bergerak balas berubah mengikut pemboleh ubah dimanipulasi; ia diukur dan dicatat."},
+{q:"Pemboleh ubah dimalarkan bermaksud…",o:["Pemboleh ubah yang diubah","Pemboleh ubah yang diukur","Pemboleh ubah yang ditetap dan dikekalkan sama","Pemboleh ubah tanpa kesan"],a:2,e:"Pemboleh ubah dimalarkan (controlled variable) dikekalkan sama supaya eksperimen adil."},
+{q:"Inferens berdasarkan pemerhatian 'tanah lembap pada pagi hari' ialah…",o:["Hujan turun semalam","Tanah sentiasa lembap","Pukul pagi","Tanah berair"],a:0,e:"Inferens: tanah lembap pada pagi mungkin kerana hujan pada malam sebelum itu."},
+
+/* --- Keselamatan Makmal --- */
+{q:"Apabila melakukan eksperimen, anda harus…",o:["Mencuba bahan kimia dengan rasa","Memakai apron dan gogal keselamatan","Berlari di makmal","Membiarkan bahan kimia terbuka"],a:1,e:"Keselamatan makmal: memakai apron dan gogal keselamatan melindungi badan dan mata."},
+{q:"Apabila berlaku tumpahan asid di meja makmal, tindakan pertama ialah…",o:["Kemas terus dengan kain","Bilaskan dengan banyak air","Pakai dengan basa","Lapor dan bilas dengan air"],a:3,e:"Tumpahan asid: laporkan kepada guru, kemudian bilaskan dengan banyak air bersih."},
+{q:"Simbol ☠️ dalam makmal menunjukkan…",o:["Bahan mudah terbakar","Bahan beracun","Bahan korosif","Bahan radioaktif"],a:1,e:"Simbol ☠️ ialah simbol bahan beracun (toxic). Bahan beracun boleh menyebabkan kematian jika ditelan atau terhirup."},
+{q:"Jika pakaian anda terbakar, tindakan yang perlu ialah…",o:["Lari dengan pantas","Berhenti, jatuh dan guling (stop, drop & roll)","Gunakan kipas","Tanggalkan pakaian dengan tangan"],a:1,e:"Stop, drop & roll — berhenti, jatuhkan badan, dan guling untuk memadamkan api pada pakaian."},
+
+/* --- Ketumpatan --- */
+{q:"Rumus ketumpatan ialah…",o:["Jisim × Isipadu","Jisim ÷ Isipadu","Isipadu ÷ Jisim","Jisim + Isipadu"],a:1,e:"Ketumpatan = Jisim ÷ Isipadu. Unit: g/cm³ atau kg/m³."},
+{q:"Jisim 200 g, isipadu 50 cm³. Berapakah ketumpatan?",o:["0,25 g/cm³","100 g/cm³","4 g/cm³","250 g/cm³"],a:2,e:"Ketumpatan = 200 ÷ 50 = 4 g/cm³."},
+{q:"Objek dengan ketumpatan 0,8 g/cm³ akan…",o:["Tenggelam dalam air","Terapung dalam air","Melayang di tengah air","Mengapung di permukaan gas"],a:1,e:"0,8 < 1,0 (ketumpatan air), jadi objek terapung."},
+{q:"Keluli (ketumpatan 7,8 g/cm³) akan…",o:["Terapung dalam air","Tenggelam dalam air","Melayang di tengah air","Mencair dalam air"],a:1,e:"7,8 > 1,0, jadi keluli tenggelam dalam air."},
+{q:"Antara bahan berikut, yang manakah mempunyai ketumpatan paling tinggi?",o:["Minyak","Alkohol","Emas","Kayu"],a:2,e:"Emas mempunyai ketumpatan sangat tinggi (~19,3 g/cm³), lebih tinggi daripada air, minyak, alkohol atau kayu."},
+{q:"Jika satu objek terapung di air, ketumpatan objek tersebut…",o:["Lebih besar daripada air","Kurang daripada air","Sama dengan air","Tiada hubung kait dengan air"],a:1,e:"Objek terapung jika ketumpatannya kurang daripada ketumpatan air (1,0 g/cm³)."},
+
+/* --- Alat Ukur & Ralat --- */
+{q:"Bacaan parallax berlaku apabila…",o:["Mata di atas paras bacaan","Mata tidak berada pada paras bacaan","Alat rosak","Bacaan terlalu besar"],a:1,e:"Ralat parallax berlaku apabila mata pemerhati tidak berada pada paras yang sama dengan skala bacaan."},
+{q:"Untuk mengurangkan ralat parallax, mata mesti…",o:["Ditutup semasa bacaan","Berada pada paras bacaan","Diletakkan di atas alat","Dihapuskan dari bacaan"],a:1,e:"Letakkan mata pada paras yang sama dengan paras bacaan untuk elak ralat parallax."},
+{q:"Neraca digital berbeza daripada neraca spring kerana…",o:["Neraca digital lebih murah","Neraca digital menunjukkan bacaan digital terus","Neraca digital lebih besar","Neraca digital tidak perlu ditimbang"],a:1,e:"Neraca digital memberi bacaan langsung dalam bentuk digital dan lebih mudah dibaca tanpa ralat parallax."},
+{q:"Alat yang paling sesuai untuk mengukur masa 100 m larian ialah…",o:["Jam dinding","Jam randik (stopwatch)","Jam loceng","Kalender"],a:1,e:"Jam randik (stopwatch) sangat tepat dan sesuai untuk mengukur selang masa yang pendek."},
+{q:"Pita pengukur sesuai untuk mengukur…",o:["Panjang badan","Jisim manusia","Suhu badan","Masa berlari"],a:0,e:"Pita pengukur sesuai untuk mengukur panjang seperti panjang badan, panjang meja, dll."},
+
+/* --- Nilai & Sikap Saintifik --- */
+{q:"Antara berikut, yang manakah BUKAN sikap saintifik?",o:["Kefahaman","Rasional","Subjektif","Komensial"],a:2,e:"Sikap saintifik: jujur, obyektif, rasa ingin tahu, bertanggungjawab. Subjektif bukan sikap saintifik."},
+{q:"Ilmuan yang teliti dalam merekod data menunjukkan sikap…",o:["Rahsia","Jujur dan bertanggungjawab","Subjektif","Bimbang"],a:1,e:"Ilmuan yang jujur merekod data sebenar tanpa mengubahsuai, menunjukkan sikap bertanggungjawab."},
+
+/* --- Pengelasan & Jenis Sains --- */
+{q:"Sains dibahagikan kepada bidang berikut, KECUALI…",o:["Sains Fizik","Sains Biologi","Sains Kemanusiaan","Sains Kemasyarakatan"],a:2,e:"Sains Fizik dan Sains Biologi ialah cabang sains. Sains Kemanusiaan bukan pengelasan sains."},
+{q:"Kerjaya berikut yang kurang berkaitan dengan sains fizik ialah…",o:["Jururawat","Fizik","Ahli geologi","Astronot"],a:0,e:"Jururawat lebih ke arah sains perubatan/biologi, bukan sains fizik secara langsung."},
+{q:"Pemerhatian yang tepat dan teliti penting kerana…",o:["Ia membuatkan eksperimen lebih lama","Ia menghasilkan data yang boleh dipercayai","Ia tidak memberi kesan","Ia hanya untuk guru"],a:1,e:"Pemerhatian tepat menghasilkan data boleh dipercayai dan kesimpulan yang sah."},
+{q:"Mengapakah ahli sains perlu membuat pemerhatian awal?",o:["Untuk mengisi masa","Untuk mengenal pasti masalah dan membuat hipotesis","Untuk mengelakkan eksperimen","Untuk mengumpul alat"],a:1,e:"Pemerhatian awal membantu ahli sains mengenal pasti masalah, membuat inferens dan merangka hipotesis."},
+
+/* --- Kualitatif vs Kuantitatif --- */
+{q:"Antara berikut, yang manakah KUALITATIF?",o:["Panjang meja ialah 120 cm","Berat buah ialah 500 g","Warna bunga merah","Suhu air 80 °C"],a:2,e:"Pernyataan kualitatif menerangkan sifat (warna, bau, rasa) tanpa nombor."},
+{q:"Antara berikut, yang manakah Kuantitatif?",o:["Bunyi loceng indah","Bilangan murid 30 orang","Kertas licin","Hujan lebat"],a:1,e:"Pernyataan kuantitatif mengandungi nombor dan unit. '30 orang' ialah data kuantitatif."},
+{q:"Jika eksperimen menunjukkan 'semakin besar jisim, semakin lama masa', ini ialah…",o:["Data","Hipotesis/Kesimpulan","Pemerhatian awal","Alat"],a:1,e:"Pernyataan hubungan antara dua pemboleh ubah ialah hipotesis atau kesimpulan daripada data eksperimen."},
+
+/* --- Kuantiti Terbitan & Imbuhan --- */
+{q:"Antara berikut, yang manakah KUANITI TERBITAN?",o:["Panjang","Jisim","Kelajuan","Masa"],a:2,e:"Kelajuan ialah kuantiti terbitan (kelajuan = jarak ÷ masa). Panjang, jisim dan masa ialah kuantiti asas."},
+
+/* --- Eksperimen & Hipotesis --- */
+{q:"Hipotesis yang betul untuk eksperimen 'pengaruh jisim terhadap masa luncuran' ialah…",o:["Jisim tidak mempengaruhi masa","Semakin besar jisim, semakin lama masa luncuran","Masa luncuran tidak penting","Luncuran hanya bergantung pada bentuk"],a:1,e:"Hipotesis yang baik menyatakan hubungan antara pemboleh ubah dimanipulasi (jisim) dan bergerak balas (masa)."},
+{q:"Dalam eksperimen yang sah, berapakah pemboleh ubah dimanipulasi yang boleh diubah pada satu masa?",o:["Semua","Satu sahaja","Tiada","Dua"],a:1,e:"Hanya satu pemboleh ubah dimanipulasi boleh diubah pada satu masa supaya kesan terhadap pemboleh ubah bergerak balas dapat dikenal pasti."},
+{q:"Data eksperimen perlu direkodkan dalam…",o:["Kata-kata sahaja","Jadual data dengan lajur yang sesuai","Gambar sahaja","Teka-teki"],a:1,e:"Data eksperimen direkodkan dalam jadual dengan lajur yang menunjukkan pemboleh ubah dan unit."},
 ];
-var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Saintis muda! 🔬':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab2.html" style="color:#fff;font-weight:800">Teruskan ke Bab 2 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+
+/* ---------- Daily rotation (LCG — sama pola dengan bahasa_melayu) ---------- */
+var QUIZ=[];        // hari ini: 10 soalan terpilih dari QBank
+var answered={};    // indeks QUIZ → pilihan user (disimpan di localStorage)
+
+function dayIdx(d){
+  return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5);
+}
+function lcgDay(d){
+  return (dayIdx(d)*2654435761+20260617)>>>0;
+}
+function pickDay(n,seed){
+  var sel=[],rem=[],r=seed;
+  for(var i=0;i<n;i++) rem.push(i);
+  for(var i=0;i<Math.min(n,rem.length);i++){
+    r=r*2654435761%4294967296;
+    var j=r%(rem.length);
+    sel.push(rem[j]);
+    rem.splice(j,1);
+  }
+  return sel;
+}
+
+/* Inisialisasi / ulang: semak localStorage untuk quiz hari ini */
+(function(){
+  var today=new Date(),sid="sains:day"+dayIdx(today);
+  var stored=localStorage.getItem(sid);
+  if(stored){
+    try{QUIZ=JSON.parse(stored);}catch(e){QUIZ=[];}
+  }
+  if(!QUIZ.length||QUIZ.length!==QBank.length){
+    var seed=lcgDay(today);
+    var idx=pickDay(QBank.length,seed);
+    QUIZ=idx.map(function(i){return QBank[i];});
+    localStorage.setItem(sid,JSON.stringify(QUIZ));
+  } else {
+    /* restore jawapan dari localStorage */
+    try{
+      var as=JSON.parse(localStorage.getItem("sains:a")||"{}");
+      for(var k in as) answered[parseInt(k)]=as[k];
+    }catch(e){}
+  }
+})();
+
+/* ---------- Render quiz ---------- */
+(function(){
+  var box=document.getElementById('quiz');
+  QUIZ.forEach(function(item,qi){
+    var div=document.createElement('div');
+    div.className='q';
+    var opts=item.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    box.appendChild(div);
+  });
+  /* restore answered dari localStorage */
+  for(var k in answered){
+    var qi=parseInt(k),oi=answered[k];
+    if(qi<QUIZ.length){
+      var el=document.getElementById('q'+qi+'o'+oi);
+      if(el){
+        el.classList.add('lock');
+        var correct=QUIZ[qi].a;
+        for(var c=0;c<QUIZ[qi].o.length;c++){
+          var r=document.getElementById('q'+qi+'o'+c);
+          r.classList.add('lock');
+          if(c===correct) r.classList.add('ok');
+        }
+        if(oi!==correct) el.classList.add('no');
+        document.getElementById('exp'+qi).classList.add('show');
+      }
+    }
+  }
+  /* tunjuk progress */
+  var done=Object.keys(answered).length;
+  if(done>0) document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+})();
+
+/* ---------- Jawab soalan ---------- */
+function pick(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  localStorage.setItem("sains:a",JSON.stringify(answered));
+  var correct=QUIZ[qi].a;
+  for(var k=0;k<QUIZ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k);
+    el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+  var done=Object.keys(answered).length;
+  document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+}
+
+/* ---------- Submit kuiz ---------- */
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<QUIZ.length){
+    alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');
+    return;
+  }
+  var score=0;
+  QUIZ.forEach(function(it,qi){if(answered[qi]===it.a) score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Saintis muda! 🔬':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  saveProgress(1,pct);
+  /* simpan skor harian */
+  try{
+    var best=parseInt(localStorage.getItem("sains:best")||"0");
+    localStorage.setItem("sains:best",String(Math.max(best,pct)));
+  }catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah hari ini</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab2.html" style="color:#fff;font-weight:800">Teruskan ke Bab 2 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Helpers ---------- */
+function saveProgress(bab,pct){
+  try{
+    var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};
+    var best=Math.max(prev.best||0,pct);
+    localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));
+  }catch(e){}
+}
+function resetAll(){
+  if(!confirm("Set semula semua soalan & jawapan Bab 1?")) return;
+  answered={};
+  localStorage.removeItem("sains:a");
+  localStorage.removeItem("sains:day"+dayIdx(new Date()));
+  localStorage.removeItem("sains:best");
+  (function(){
+    var today=new Date(),seed=lcgDay(today);
+    var rem=[],sel=[],r=seed;
+    for(var i=0;i<QBank.length;i++) rem.push(i);
+    for(var i=0;i<QBank.length;i++){
+      r=r*2654435761%4294967296;
+      var j=r%(rem.length);sel.push(rem[j]);rem.splice(j,1);
+    }
+    QUIZ=[];
+    for(var k=0;k<sel.length;k++) QUIZ.push(QBank[sel[k]]);
+    localStorage.setItem("sains:day"+dayIdx(today),JSON.stringify(QUIZ));
+  })();
+  location.reload();
+}
 </script>
 </body>
 </html>

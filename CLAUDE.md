@@ -62,3 +62,12 @@ A daily Bahasa Melayu drilling tool. Three `<script>` blocks: two define data, o
 
 - `.gitignore` excludes `asas_komputer_sains_tingkatan_1/dhng.pdf` (source PDF) and `asas_komputer_sains_tingkatan_1/.claude`.
 - Practice items are *modelled on* syllabus topics — study material, not official exam papers; keep that framing in content and READMEs.
+
+## Adding content
+
+- **New subject** → create a folder with an `index.html` hub, then add a `.subject` card to every root `index.html` (define a matching `.c-<colour>` in `<style>`) and a row to the README table.
+- **More questions for a subject** → append to the relevant bank array (`QUESTION_BANK`, `QUIZ`, etc.) inside the subject's HTML file. Never create shared `.js` files — each page owns its data.
+- **New chapter** (geografi/sains) → copy an existing `bab<N>.html`, update the content, increment hub counts, and save progress under the subject's `localStorage` prefix (`geo:` or `sains:`).
+- **New bab** (asas komputer) → copy an existing `bab<N>.html`, add the nav link in every existing page.
+- **New chapter** (matematik) → copy an existing `chapter<N>.html`, add a `.chapter-btn` in the hub.
+- Subject-specific guides live in each folder's `README.md` (especially `bahasa_melayu_tingkatan_1/README.md` for adding essaybank content).
