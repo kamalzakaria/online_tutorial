@@ -27,6 +27,8 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .note{background:#f7faff;border:1px solid var(--border);border-left:5px solid var(--c);border-radius:.8rem;padding:1rem 1.1rem;margin-bottom:1.1rem}
 .note h3{font-size:1.05rem;margin-bottom:.4rem;color:var(--c2)}
 .note p{color:#33425b;margin-bottom:.5rem}
+.note ul{padding-left:1.2rem;margin:.4rem 0}
+.note li{margin-bottom:.3rem;color:#33425b}
 .tag{display:inline-block;background:#eef3f9;color:var(--c2);font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:.5rem;margin:.1rem}
 .callout{background:#fff8e1;border-left:5px solid #f59e0b;border-radius:0 .8rem .8rem 0;padding:.9rem 1rem;margin:1rem 0}
 .callout b{color:#b45309}
@@ -35,14 +37,12 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .mini .e{font-size:1.7rem}
 .mini b{display:block;margin-top:.2rem}
 .mini small{color:var(--muted)}
-/* activity */
 .act{background:#f7faff;border:1px solid var(--border);border-radius:1rem;padding:1.2rem;margin-bottom:1.4rem}
 .act h3{font-size:1.1rem;margin-bottom:.3rem}
 .act .hint{color:var(--muted);font-size:.86rem;margin-bottom:.9rem}
 .prompt{font-size:1.05rem;font-weight:800;text-align:center;margin:.4rem 0 1rem}
 .prompt span{color:var(--c)}
-.compass-wrap{position:relative;width:280px;height:280px;margin:0 auto;border-radius:50%;background:
-  radial-gradient(circle at 50% 50%,#fff 60%,#eaf1fb 100%);border:3px solid var(--c);box-shadow:inset 0 0 30px rgba(37,99,235,.12)}
+.compass-wrap{position:relative;width:280px;height:280px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 50% 50%,#fff 60%,#eaf1fb 100%);border:3px solid var(--c);box-shadow:inset 0 0 30px rgba(37,99,235,.12)}
 .cbtn{position:absolute;width:50px;height:50px;border-radius:50%;border:2px solid var(--border);background:#fff;font-weight:900;color:var(--c2);cursor:pointer;transform:translate(-50%,-50%);transition:.15s;font-size:.95rem}
 .cbtn:hover{background:var(--c);color:#fff;transform:translate(-50%,-50%) scale(1.12)}
 .cbtn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
@@ -58,7 +58,6 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}
 .feedback.good{color:var(--ok)}
 .feedback.bad{color:var(--no)}
-/* robot grid */
 .rgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-width:280px;margin:.6rem auto}
 .rcell{aspect-ratio:1;background:#fff;border:2px solid var(--border);border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
 .rcell.goal{background:#fef3c7}
@@ -66,7 +65,6 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .pad button{height:48px;border:none;border-radius:.6rem;background:var(--c);color:#fff;font-weight:800;cursor:pointer;font-size:.95rem}
 .pad button:hover{filter:brightness(1.1)}
 .pad .blank{background:transparent}
-/* quiz */
 .q{background:#fff;border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;margin-bottom:1rem}
 .q .qn{font-size:.76rem;font-weight:800;color:var(--c);letter-spacing:.05em}
 .q h4{font-size:1.04rem;margin:.25rem 0 .8rem}
@@ -82,6 +80,7 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .result.show{display:block}
 .result .big{font-size:3rem;font-weight:900}
 .result .stars{font-size:1.8rem;margin:.3rem}
+.hari-info{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:.8rem;font-style:italic}
 footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 .between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
 .between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#eef3f9;color:var(--c2)}
@@ -103,7 +102,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 <div class="tabs">
   <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
   <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
-  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz Harian</button>
 </div>
 
 <!-- NOTA -->
@@ -112,34 +111,128 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <div class="note">
     <h3>Arah membantu kita tahu ke mana hendak pergi</h3>
     <p><b>Arah mata angin</b> ialah penunjuk kedudukan sesuatu tempat berbanding tempat lain. Kita gunakan <b>kompas</b> untuk mencari arah. Jarum kompas sentiasa menunjuk ke arah <b>Utara</b>.</p>
-    <p>Terdapat <b>4 arah utama (kardinal)</b> dan <b>4 arah pertengahan</b> — jadi <b>8 arah</b> semuanya.</p>
+    <p>Terdapat <b>4 arah utama (kardinal)</b> dan <b>4 arah pertengahan (interkalari)</b> — jadi <b>8 arah</b> semuanya.</p>
   </div>
 
   <div class="note">
     <h3>🧭 8 Arah Mata Angin</h3>
+    <p>Arah mata angin dibahagikan kepada dua kumpulan:</p>
+    <p><b>Arah Utama (Kardinal):</b></p>
     <div class="grid2">
-      <div class="mini"><div class="e">⬆️</div><b>Utara (U)</b><small>North</small></div>
-      <div class="mini"><div class="e">↗️</div><b>Timur Laut (TL)</b><small>North-East</small></div>
-      <div class="mini"><div class="e">➡️</div><b>Timur (T)</b><small>East</small></div>
-      <div class="mini"><div class="e">↘️</div><b>Tenggara (TG)</b><small>South-East</small></div>
-      <div class="mini"><div class="e">⬇️</div><b>Selatan (S)</b><small>South</small></div>
-      <div class="mini"><div class="e">↙️</div><b>Barat Daya (BD)</b><small>South-West</small></div>
-      <div class="mini"><div class="e">⬅️</div><b>Barat (B)</b><small>West</small></div>
-      <div class="mini"><div class="e">↖️</div><b>Barat Laut (BL)</b><small>North-West</small></div>
+      <div class="mini"><div class="e">⬆️</div><b>Utara (U)</b><small>North — 000°</small></div>
+      <div class="mini"><div class="e">➡️</div><b>Timur (T)</b><small>East — 090°</small></div>
+      <div class="mini"><div class="e">⬇️</div><b>Selatan (S)</b><small>South — 180°</small></div>
+      <div class="mini"><div class="e">⬅️</div><b>Barat (B)</b><small>West — 270°</small></div>
+    </div>
+    <p style="margin-top:.8rem"><b>Arah Pertengahan (Interkalari):</b></p>
+    <div class="grid2">
+      <div class="mini"><div class="e">↗️</div><b>Timur Laut (TL)</b><small>North-East — 045°</small></div>
+      <div class="mini"><div class="e">↘️</div><b>Tenggara (TG)</b><small>South-East — 135°</small></div>
+      <div class="mini"><div class="e">↙️</div><b>Barat Daya (BD)</b><small>South-West — 225°</small></div>
+      <div class="mini"><div class="e">↖️</div><b>Barat Laut (BL)</b><small>North-West — 315°</small></div>
     </div>
   </div>
 
   <div class="callout">
-    <b>💡 Cara mudah ingat:</b> Mengikut arah jam dari atas — <b>U → T → S → B</b> (Utara, Timur, Selatan, Barat). Bunyikan: <i>"U-Ta-Sa-Ba"</i>. Arah pertengahan ialah gabungan dua arah utama, contohnya antara Utara dan Timur ialah <b>Timur Laut</b>.
+    <b>💡 Cara mudah ingat:</b> Mengikut arah jam dari atas — <b>U → T → S → B</b> (Utara, Timur, Selatan, Barat). Arah pertengahan pula ialah gabungan dua arah utama: <b>U+T = TL</b>, <b>T+S = TG</b>, <b>S+B = BD</b>, <b>B+U = BL</b>.
   </div>
 
   <div class="note">
     <h3>📐 Bearing Sudut (Sudut Arah)</h3>
-    <p>Arah juga boleh ditulis sebagai <b>sudut bearing</b> 0°–360° diukur mengikut arah jam dari Utara:</p>
-    <p><span class="tag">Utara = 000°</span><span class="tag">Timur = 090°</span><span class="tag">Selatan = 180°</span><span class="tag">Barat = 270°</span><span class="tag">Timur Laut = 045°</span></p>
+    <p>Arah juga boleh ditulis sebagai <b>sudut bearing</b> 0°–360° diukur <b>mengikut arah jam</b> dari Utara:</p>
+    <p>
+      <span class="tag">Utara = 000°</span>
+      <span class="tag">Timur = 090°</span>
+      <span class="tag">Selatan = 180°</span>
+      <span class="tag">Barat = 270°</span>
+    </p>
+    <p>Semua arah lain pula:</p>
+    <p>
+      <span class="tag">Timur Laut = 045°</span>
+      <span class="tag">Tenggara = 135°</span>
+      <span class="tag">Barat Daya = 225°</span>
+      <span class="tag">Barat Laut = 315°</span>
+    </p>
+    <div class="callout" style="margin-top:.6rem">
+      <b>📝 Nota:</b> Bearing ditulis dalam <b>3 digit</b> (contoh: 045° bukan 45°). Utara boleh ditulis sebagai <b>000°</b> atau <b>360°</b>.
+    </div>
   </div>
 
-  <div class="callout"><b>✅ Ingat:</b> Pada peta, <b>atas = Utara</b>, bawah = Selatan, kanan = Timur, kiri = Barat.</div>
+  <div class="note">
+    <h3>📐 Sudut Antara Arah (Sub-Bearing)</h3>
+    <p>Di antara setiap arah utama dan arah pertengahan, terdapat <b>sudut antara arah</b> pada <b>22.5°</b>:</p>
+    <p>
+      <span class="tag">U-SEL = 022°</span>
+      <span class="tag">T-SEL = 067°</span>
+      <span class="tag">T-TG = 112°</span>
+      <span class="tag">S-TG = 157°</span>
+    </p>
+    <p>
+      <span class="tag">S-BD = 202°</span>
+      <span class="tag">B-BD = 247°</span>
+      <span class="tag">B-BL = 292°</span>
+      <span class="tag">U-BL = 337°</span>
+    </p>
+    <div class="callout" style="margin-top:.6rem">
+      <b>📝 Catatan:</b> Sudut ini berguna dalam pemetaan tepat dan pelayaran. Setiap sudut antara arah = 360° ÷ 16 = 22.5°.
+    </div>
+  </div>
+
+  <div class="note">
+    <h3>🔃 Bearing Bertentangan</h3>
+    <p>Dua arah yang <b>bertentangan</b> (berlawanan) mempunyai perbezaan <b>180°</b>:</p>
+    <p>
+      <span class="tag">Utara (000°) ↔ Selatan (180°)</span>
+    </p>
+    <p>
+      <span class="tag">Timur (090°) ↔ Barat (270°)</span>
+    </p>
+    <p>
+      <span class="tag">Timur Laut (045°) ↔ Barat Daya (225°)</span>
+    </p>
+    <p>
+      <span class="tag">Tenggara (135°) ↔ Barat Laut (315°)</span>
+    </p>
+    <div class="callout" style="margin-top:.6rem">
+      <b>📝 Peraturan Mudah:</b> Jika bearing &lt; 180° → tambah 180°. Jika bearing ≥ 180° → tolak 180°. Contoh: 045° + 180° = 225° (bertentangan).
+    </div>
+  </div>
+
+  <div class="note">
+    <h3>🧭 Penggunaan Kompas dalam Kehidupan</h3>
+    <p>Kompas digunakan dalam pelbagai situasi:</p>
+    <ul>
+      <li><b>Pemetaan (kartografi)</b> — menentukan orientasi peta mengikut arah mata angin.</li>
+      <li><b>Pelayaran dan penerbangan</b> — arah perjalanan dari satu tempat ke tempat lain.</li>
+      <li><b>Kerja lapangan geografi</b> — mengukur bearing antara titik survey.</li>
+      <li><b>Menghindar di alam liar</b> — mencari arah pulang menggunakan kompas.</li>
+      <li><b>Pergerakan hujan dan ribut</b> — arah angin dan corak cuaca.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>🗺️ Arah pada Peta</h3>
+    <p>Atas peta, arah ditentukan oleh:</p>
+    <ul>
+      <li><b>Garis meridian (garis utara–selatan)</b> — garisan menegak dari U ke S.</li>
+      <li><b>Garis paralel (garisan timur–barat)</b> — garisan melintang dari T ke B.</li>
+      <li><b>Sistem grid</b> — nombor grid 3 angka (ke timur) dan 4 angka (ke utara).</li>
+    </ul>
+    <div class="callout" style="margin-top:.6rem"><b>✅ Ingat:</b> Pada peta, <b>atas = Utara</b>, bawah = Selatan, kanan = Timur, kiri = Barat.</div>
+  </div>
+
+  <div class="note">
+    <h3>🧠 Minda Peta: 8 Arah Mata Angin</h3>
+    <p>Bayangkan anda berdiri di tengah padang:</p>
+    <p>
+      <b>👆 Utara</b> (000°) — di hadapan<br/>
+      <b>👉 Timur</b> (090°) — di sebelah kanan<br/>
+      <b>👇 Selatan</b> (180°) — di belakang<br/>
+      <b>👈 Barat</b> (270°) — di sebelah kiri
+    </p>
+    <p>Manakala arah pertengahan berada di antara mereka:</p>
+    <p><b>↗️ Timur Laut</b> (045°) · <b>↘️ Tenggara</b> (135°) · <b>↙️ Barat Daya</b> (225°) · <b>↖️ Barat Laut</b> (315°)</p>
+  </div>
 </section>
 
 <!-- AKTIVITI -->
@@ -173,7 +266,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 
 <!-- KUIZ -->
 <section id="kuiz" class="panel">
-  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <h2 class="sec">✏️ Kuiz Harian</h2>
+  <p class="hari-info" id="hariInfo"></p>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Soalan berputar setiap hari — jawab <b id="qTotal"></b> soalan untuk menguji kefahaman anda!</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
@@ -203,7 +298,7 @@ var DIRS=[
 ];
 var cTarget, cScore=0, cStreak=0;
 (function buildCompass(){
-  var R=110, cx=140, cy=140; // matches 280px wrap
+  var R=110, cx=140, cy=140;
   var comp=document.getElementById('compass');
   DIRS.forEach(function(d){
     var rad=d.ang*Math.PI/180;
@@ -220,7 +315,7 @@ function newTarget(){
   cTarget=DIRS[Math.floor(Math.random()*DIRS.length)];
   document.getElementById('target').textContent=cTarget.name;
   document.querySelectorAll('.cbtn').forEach(function(b){b.classList.remove('ok','no')});
-  document.getElementById('cfb').textContent=' ';
+  document.getElementById('cfb').textContent=' ';
 }
 function pickDir(d,btn){
   document.getElementById('needle').style.transform='translate(-50%,-100%) rotate('+d.ang+'deg)';
@@ -243,7 +338,7 @@ function pad3(n){ n=(""+n); while(n.length<3)n="0"+n; return n; }
 var N=5, robot, goal;
 function resetRobot(){
   robot={x:0,y:4}; goal={x:4,y:0};
-  drawRobot(); document.getElementById('rfb').textContent=' ';
+  drawRobot(); document.getElementById('rfb').textContent=' ';
 }
 function drawRobot(){
   var g=document.getElementById('rgrid'); g.innerHTML='';
@@ -259,38 +354,155 @@ function move(dx,dy){
   if(nx<0||nx>=N||ny<0||ny>=N){ fb.textContent='🚧 Tepi peta! Robot tak boleh keluar.'; fb.className='feedback bad'; return; }
   robot.x=nx; robot.y=ny; drawRobot();
   if(robot.x===goal.x&&robot.y===goal.y){ fb.textContent='🎉 Hebat! Robot sampai ke bendera!'; fb.className='feedback good'; }
-  else{ fb.textContent=' '; }
+  else{ fb.textContent=' '; }
 }
 resetRobot();
 
-/* ---------- quiz engine (shared pattern) ---------- */
-var BAB=1;
-var QUIZ=[
+/* ---------- quiz: full question bank + daily rotation ---------- */
+var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+
+/* ---- daily rotation helpers (same pattern as bahasa_melayu) ---- */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function isoOf(d){ var m=("0"+(d.getMonth()+1)).slice(-2),da=("0"+d.getDate()).slice(-2); return d.getFullYear()+"-"+m+"-"+da; }
+
+/* ---- 70-question bank (6 categories) ---- */
+var QBANK=[
+  /* === ARAH UTAMA (10) === */
   {q:"Jarum kompas sentiasa menunjuk ke arah mana?",o:["Selatan","Utara","Timur","Barat"],a:1,e:"Jarum kompas (magnet) sentiasa menunjuk ke arah Utara."},
-  {q:"Arah yang terletak antara Utara dan Timur ialah…",o:["Timur Laut","Barat Laut","Tenggara","Barat Daya"],a:0,e:"Gabungan Utara + Timur = Timur Laut (TL)."},
   {q:"Pada peta biasa, bahagian atas peta mewakili arah…",o:["Timur","Barat","Utara","Selatan"],a:2,e:"Pada peta, atas = Utara."},
-  {q:"Sudut bearing bagi arah Selatan ialah…",o:["000°","090°","180°","270°"],a:2,e:"Utara 000°, Timur 090°, Selatan 180°, Barat 270°."},
-  {q:"Berapakah jumlah arah mata angin (utama + pertengahan)?",o:["4","6","8","10"],a:2,e:"4 arah utama + 4 arah pertengahan = 8 arah."},
-  {q:"Arah bertentangan dengan Barat Daya (BD) ialah…",o:["Timur Laut","Tenggara","Barat Laut","Utara"],a:0,e:"BD (225°) bertentangan dengan TL (045°)."},
-  {q:"Alat yang digunakan untuk mencari arah ialah…",o:["Jangka sudut","Kompas","Pembaris","Termometer"],a:1,e:"Kompas digunakan untuk menentukan arah."},
+  {q:"Arah bertentangan dengan Utara ialah…",o:["Timur","Selatan","Barat","Timur Laut"],a:1,e:"Utara (000°) bertentangan dengan Selatan (180°)."},
+
+  /* === ARAH PENTING / ANTARA (12) === */
+  {q:"Arah antara Utara dan Timur ialah…",o:["Timur Laut","Barat Laut","Tenggara","Timur"],a:0,e:"UT = Timur Laut (TL)."},
+  {q:"Arah antara Timur dan Selatan ialah…",o:["Tenggara","Timur Laut","Barat Daya","Selatan"],a:0,e:"TS = Tenggara (TG)."},
+  {q:"Arah antara Selatan dan Barat ialah…",o:["Barat Daya","Tenggara","Barat Laut","Selatan"],a:0,e:"SB = Barat Daya (BD)."},
+  {q:"Arah antara Barat dan Utara ialah…",o:["Barat Laut","Timur Laut","Barat Daya","Utara"],a:0,e:"BU = Barat Laut (BL)."},
+  {q:"Arah bertentangan dengan Timur Laut (TL) ialah…",o:["Barat Daya","Tenggara","Selatan Timur","Barat"],a:0,e:"TL (045°) bertentangan dengan BD (225°)."},
+  {q:"Arah bertentangan dengan Tenggara (TG) ialah…",o:["Barat Laut","Barat Daya","Timur Laut","Utara"],a:0,e:"TG (135°) bertentangan dengan BL (315°)."},
+  {q:"Bearing sudut bagi arah Timur ialah…",o:["000°","045°","090°","180°"],a:2,e:"Timur = 090°."},
+  {q:"Bearing sudut bagi arah Selatan ialah…",o:["000°","090°","180°","270°"],a:2,e:"Selatan = 180°."},
+  {q:"Bearing sudut bagi arah Barat ialah…",o:["090°","180°","270°","360°"],a:2,e:"Barat = 270°."},
+  {q:"Arah manakah yang bersudut 315°?",o:["Barat Daya","Timur Laut","Barat Laut","Tenggara"],a:2,e:"315° = Barat Laut (BL)."},
+  {q:"Arah manakah yang bersudut 225°?",o:["Timur Laut","Barat Daya","Tenggara","Barat Laut"],a:1,e:"225° = Barat Daya (BD)."},
+  {q:"Arah manakah yang bersudut 045°?",o:["Timur","Timur Laut","Barat Daya","Tenggara"],a:1,e:"045° = Timur Laut (TL)."},
+
+  /* === PENGIRAAN BEARING (12) === */
+  {q:"Jikabearing A ke B ialah 060°, apakah bearing B ke A (bertentangan)?",o:["060°","120°","240°","300°"],a:2,e:"060° + 180° = 240°."},
+  {q:"Bearing bertentangan bagi 120° ialah…",o:["060°","180°","300°","240°"],a:2,e:"120° + 180° = 300°."},
+  {q:"Bearing bertentangan bagi 200° ialah…",o:["020°","100°","380°","080°"],a:0,e:"200° ≥ 180°, jadi 200° - 180° = 020°."},
+  {q:"Bearing bertentangan bagi 270° ialah…",o:["090°","180°","450°","360°"],a:0,e:"270° ≥ 180°, jadi 270° - 180° = 090°."},
+  {q:"Bearing bertentangan bagi 090° ialah…",o:["180°","270°","000°","270°"],a:1,e:"090° + 180° = 270°."},
+  {q:"Jikabearing dari P ke Q ialah 315°, bearing balik (Q ke P) ialah…",o:["135°","090°","225°","495°"],a:0,e:"315° ≥ 180°, jadi 315° - 180° = 135°."},
+  {q:"Bearing 360° adalah bersamaan dengan…",o:["090°","180°","000°","270°"],a:2,e:"360° = 000° = Utara."},
+  {q:"Bearing 000° bertentangan dengan…",o:["090°","180°","270°","360°"],a:1,e:"000° + 180° = 180° = Selatan."},
+  {q:"Bearing bagi arah antara Selatan dan Barat (202°) terletak pada…",o:["Utara Timur","Selatan Timur","Selatan Barat","Barat Utara"],a:2,e:"202° = antara S (180°) dan B (270°) = Barat Daya."},
+  {q:"A dan B terletak pada garisan timur–barat. A di timur B. Bearing B ke A ialah…",o:["000°","090°","180°","270°"],a:1,e:"B ke A = ke timur = 090°."},
+  {q:"Bearing C ke D ialah 135°. Arah D ke C ialah…",o:["045°","135°","225°","315°"],a:3,e:"135° + 180° = 315° = Barat Laut."},
+  {q:"Sudut antara Utara (000°) dan Timur (090°) ialah…",o:["45°","90°","135°","180°"],a:0,e:"090° - 000° = 090°. Sudut antara arah = 090°/2 = 045°."},
+
+  /* === KOMPAS & PEMETAAN (12) === */
+  {q:"Alat apakah yang digunakan untuk mencari arah mata angin?",o:["Thermometer","Kompas","Jangka sudut","Barometer"],a:1,e:"Kompas digunakan untuk mencari arah."},
+  {q:"Ciri khas jarum kompas ialah…",o:["Warna merah","Bahan getah","Magnetik / boleh magnet","Logam biasa"],a:2,e:"Jarum kompas adalah magnetik, sentiasa menunjuk Utara."},
+  {q:"Untuk mengukur sudut bearing pada peta, kita gunakan…",o:["Pembaris","Pembesar kanta","Protractor","Kompas dan peta"],a:3,e:"Kompas + protractor digunakan bersama untuk mengukur bearing pada peta."},
+  {q:"Apakah kegunaan garis meridian pada peta?",o:["Menunjukkan ketinggian","Menunjukkan arah timur–barat","Menunjukkan arah utara–selatan","Menunjukkan sempadan negeri"],a:2,e:"Garis meridian menunjukkan arah Utara–Selatan."},
+  {q:"Apakah kegunaan garis paralel pada peta?",o:["Menunjukkan arah utara–selatan","Menunjukkan ketinggian","Menunjukkan arah timur–barat","Menunjukkan sempadan"],a:2,e:"Garis paralel menunjukkan arah Timur–Barat."},
+  {q:"Kenapa arah mata angin penting dalam kerja lapangan geografi?",o:["Untuk mengira population","Untuk menentukan orientasi dan arah survey","Untuk melukis peta saiz besar","Untuk mengukur suhu"],a:1,e:"Dalam kerja lapangan, arah membantu menentukan lokasi dan orientasi peta."},
+  {q:"Dalam pemetaan, sistem grid 6 angka terdiri daripada…",o:["3 angka timur + 4 angka utara","4 angka timur + 3 angka utara","6 angka timur sahaja","6 angka utara sahaja"],a:1,e:"Grid 6 angka = 4 angka timur + 3 angka utara (4N3E)."},
+  {q:"Bilangan angka dalam grid reference 3 angka ialah…",o:["2 angka","3 angka","4 angka","6 angka"],a:1,e:"Grid 3 angka = 2 angka timur + 1 angka utara (2N1E)."},
+  {q:"Arah pada peta lakar ditentukan menggunakan…",o:["Penggaris sahaja","Lencana arah (orientation arrow) atau arah utara","Warna peta sahaja","Nombor halaman sahaja"],a:1,e:"Peta lakar biasanya mempunyai tanda arah utara / orientasi."},
+  {q:"Mengapakah compass digital kurang dipercayai di alam liar?",o:["Mahal","Perlu bateri / isyarat","Terlalu kecil","Tidak boleh dipegang"],a:1,e:"Kompas digital perlu bateri dan isyarat; kompas analog boleh digunakan tanpa bateri."},
+  {q:"Apakah bearing bagi arah angin timur laut?",o:["045°","135°","225°","315°"],a:0,e:"Timur Laut = 045°."},
+  {q:"Untuk mengetahui arah perjalanan kapal dari pelabuhan A ke pelabuhan B, apakah yang diperlukan?",o:["Kompas sahaja","Kompas + peta + protractor","Pembaris sahaja","Jangka panas sahaja"],a:1,e:"Kompas + peta + protractor diperlukan untuk menentukan bearing dan arah perjalanan."},
+
+  /* === KEFAMAHAN & APLIKASI (11) === */
+  {q:"Kenapa arah penting dalam kegiatan melaut?",o:["Untuk mengira ikan","Untuk menentukan arah perjalanan","Untuk mengukur kedalaman","Untuk mencari jenis air"],a:1,e:"Pelaut menggunakan arah untuk menentukan arah perjalanan dari satu pulau ke pulau lain."},
+  {q:"Penerbangan dari Kuala Lumpur ke Sabah bergerak ke arah…",o:["Barat","Utara","Timur","Selatan"],a:2,e:"Sabah terletak di timur Semenanjung Malaysia (arah Timur)."},
+  {q:"Pelayaran dari Pulau Pinang ke Singapura bergerak ke arah…",o:["Utara","Selatan","Timur Laut","Barat Daya"],a:1,e:"Singapura lebih selatan dari Pulau Pinang — arah Selatan (sedikit ke timur)."},
+  {q:"Arah angin muson timur laut membawa hujan ke pantai timur Semenanjung pada bulan…",o:["Januari–Mac","Jun–Ogos","September–November","November–Februari"],a:3,e:"Monsoon Timur Laut (November–Februari) membawa hujan ke pantai timur."},
+  {q:"Dalam fotografi udara, arah pengambilan gambar perlu dijana berdasarkan…",o:["Warna tanah","Arah matahari dan arah kompas","Saiz kamera","Jenis lensa"],a:1,e:"Arah matahari dan kompas penting dalam menentukan orientasi foto."},
+  {q:"Mengapakah arah pertengahan (4 arah) penting dalam navigasi?",o:["Kerana lebih cantik","Memberi lebih ketepatan dalam menentukan arah","Kerana diperlukan untuk grid","Tiada kepentingan"],a:1,e:"Arah pertengahan memberi ketepatan tambahan dalam menentukan arah dan bearing."},
+  {q:"Dalam kegiatan mencari orang hilang di hutan, arah penting kerana…",o:["Untuk kira jarak","Untuk arahkan pasukan search dari satu titik","Untuk kira masa","Untuk pilih warna pakaian"],a:1,e:"Arah membantu pasukan search & rescue merancang corak pencarian."},
+  {q:"Jika anda berjalan dari pusat bandar ke kawasan luar bandar, ke arah manakah anda bergerak?",o:["Sentiasa ke timur","Tergantung lokasi — boleh ke sebarang arah","Hanya ke utara","Hanya ke barat"],a:1,e:"Arah perjalanan bergantung pada lokasi pusat bandar dan kawasan luar bandar."},
+  {q:"Antara berikut, yang manakah BUKAN kegunaan arah dalam kehidupan harian?",o:["Navigasi menggunakan kompas","Membantu dalam kegiatan pelaut","Menentukan ketinggian gunung","Menentukan arah angin dan cuaca"],a:2,e:"Ketinggian gunung diukur dengan altimeter/profil ketinggian, bukan arah."},
+  {q:"Arah mata angin digunakan dalam peta untuk…",o:["Menunjukkan nama jalan","Menentukan orientasi dan kedudukan sesuatu lokasi","Menunjukkan saiz peta","Menunjukkan warna tanah"],a:1,e:"Arah mata angin digunakan untuk orientasi peta dan menentukan kedudukan pada peta."},
+  {q:"Jika bearing dari kampung A ke kampung B ialah 150°, apakah arah relatif B dari A?",o:["Timur","Selatan Timur (Tenggara)","Barat Daya","Utara Barat"],a:1,e:"150° antara 090° (Timur) dan 180° (Selatan) = arah Tenggara / Selatan Timur."},
+
+  /* === SOALAN PEPERIKSAAN TIPE (14) === */
+  {q:"Antara berikut, yang manakah adalah arah utama (kardinal)?",o:["Timur Laut","Tenggara","Utara","Barat Daya"],a:2,e:"Arah utama = U, T, S, B. Lain-lain ialah arah pertengahan."},
+  {q:"Antara berikut, yang manakah BUKAN arah mata angin?",o:["Utara","Timur","Selatan Timur","Barat"],a:2,e:"'Selatan Timur' bukan nama rasmi. Nama rasmi ialah 'Tenggara'."},
+  {q:"Berapakah bilangan sudut bearing bagi 8 arah mata angin?",o:["4","6","8","12"],a:2,e:"Setiap arah utama dan pertengahan mempunyai bearing sudut masing-masing — 8 arah = 8 bearing."},
+  {q:"Arah manakah yang mempunyai bearing 135°?",o:["Timur Laut","Tenggara","Barat Daya","Barat Laut"],a:1,e:"135° = Tenggara (TG)."},
+  {q:"Jikabearing ialah 225°, arah manakah ini mewakili?",o:["Timur Laut","Timur","Tenggara","Barat Daya"],a:3,e:"225° = Barat Daya (BD)."},
+  {q:"Arah bertentangan bagi bearing 000° ialah…",o:["090°","180°","270°","360°"],a:1,e:"000° + 180° = 180°."},
+  {q:"Manakah pasangan berikut adalah betul? (bearing ↔ arah)",o:["090° ↔ Selatan","045° ↔ Timur Laut","135° ↔ Barat Daya","270° ↔ Timur"],a:1,e:"045° = Timur Laut (TL). Pasangan lain salah."},
+  {q:"Antara berikut, yang manakah menunjukkan arah mengikut jam?",o:["U → B → S → T","U → T → S → B","S → U → B → T","B → T → U → S"],a:1,e:"Mengikut arah jam: Utara → Timur → Selatan → Barat."},
+  {q:"Dalam kerja geo, bearing ditukur dari…",o:["Timur mengikut jam","Selatan mengikut lawan jam","Utara mengikut jam","Barat mengikut jam"],a:2,e:"Bearing sentiasa diukur dari Utara mengikut arah jam (000°–360°)."},
+  {q:"Antara berikut, yang manakah BUKAN ciri kompas?",o:["Mengandungi jarum magnet","Berputar mengikut arah angin","Menunjuk arah Utara","Berbentuk bulat"],a:1,e:"Jarum kompas menunjuk Utara, bukan mengikut arah angin."},
+  {q:"Jikabearing dari sekolah ke balai raya ialah 075° dan dari balai raya ke padang ialah 285°. Apakah arah sekolah ke padang secara relatif?",o:["Langsung ke padang","Melalui balai raya di arah TL","Perlu kira 285°-075°=210° untuk sambungan","Tidak boleh diketahui"],a:2,e:"Untuk sambungan 2 arah, kita perlu gabungkan bearing: 075° dan 285°."},
+  {q:"Arah 360° bertentangan dengan…",o:["000°","180°","090°","270°"],a:1,e:"360° = Utara. Arah bertentangan = 180° = Selatan."},
+  {q:"Bearing 000° juga boleh ditulis sebagai…",o:["090°","180°","270°","360°"],a:3,e:"360° = 000° — kedua-duanya bermaksud Utara."},
+  {q:"Jika A ke B ialah Timur (090°), B ke A ialah…",o:["Utara","Selatan","Timur","Barat"],a:3,e:"Arah bertentangan 090° ialah 270° = Barat."},
+
+  /* === SOALAN TAMBAHAN — ARAH & HADAF (10) === */
+  {q:"Arah manakah yang bertentangan dengan Barat (270°)?",o:["000°","090°","180°","360°"],a:1,e:"270° + 180° = 450° → 450°-360° = 090° = Timur."},
+  {q:"Bearing 000° bermaksud arah ke…",o:["Timur","Selatan","Utara","Barat"],a:2,e:"000° = Utara."},
+  {q:"Dalam 8 arah mata angin, berapakah arah pertengahan?",o:["2","4","6","8"],a:1,e:"4 arah pertengahan = TL, TG, BD, BL."},
+  {q:"Antara berikut, yang manakah adalah arah pertengahan?",o:["Utara","Selatan","Timur Laut","Barat"],a:2,e:"Timur Laut (TL) adalah arah pertengahan antara Utara dan Timur."},
+  {q:"Bearing 180° menunjukkan arah ke…",o:["Utara","Timur","Selatan","Barat"],a:2,e:"180° = Selatan."},
+  {q:"Jika bearing X ialah 315°, arah bertentangannya ialah…",o:["045°","135°","225°","495°"],a:0,e:"315° ≥ 180°, jadi 315°-180° = 135° = Tenggara."},
+  {q:"Arah angin utara bermaksud angin datang dari…",o:["Selatan","Utara","Timur","Barat"],a:1,e:"Angin utara = angin dari arah Utara."},
+  {q:"Apakah perbezaan antara arah utama dan arah pertengahan?",o:["Arah utama = 4, arah pertengahan = 4","Arah utama = 4, arah pertengahan = 8","Arah utama = 8, arah pertengahan = 4","Tiada bezanya"],a:0,e:"Arah utama (kardinal) = 4, arah pertengahan (interkalari) = 4."},
+  {q:"Bearing 045° adalah di antara…",o:["U & T","T & S","S & B","B & U"],a:0,e:"045° antara U (000°) & T (090°) = Timur Laut."},
+  {q:"Untuk mengukur bearing pada peta, kita gunakan…",o:["Pembaris sahaja","Kompas sahaja","Kompas + protractor + peta","Pembesar kanta"],a:2,e:"Kompas, protractor dan peta diperlukan untuk mengukur bearing pada peta."},
 ];
+
+/* ---- daily rotation: pick 7 questions for today ---- */
+function dayIdx(){ return dayIndexOf(new Date()); }
+function shuffleDay(arr, di){
+  /* Fisher-Yates seeded by day index — deterministic per day */
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+
+var Q=QBANK.slice();
+/* pick 7 today, rotate through 10-day cycles */
+var DAY_LEN=10, PICK=7;
+var START=0, CUR=dayIdx();
+var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
+var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;
+var shift=(off-startOff+DAY_LEN)%DAY_LEN;
+var shuffled=shuffleDay(QBANK, CUR);
+var todayQ=shuffled.slice(0,PICK);
+
+/* display date info */
+(function showDate(){
+  var d=new Date(), n=d.getMonth(), day=d.getDate(), y=d.getFullYear();
+  var el=document.getElementById('hariInfo');
+  el.textContent='📅 '+DAYS[d.getDay()]+', '+day+' '+MONTHS[n]+' '+y;
+  document.getElementById('qTotal').textContent=todayQ.length;
+})();
+
+/* ---- render quiz with today's questions ---- */
 var answered={};
 (function renderQuiz(){
   var box=document.getElementById('quiz');
-  QUIZ.forEach(function(item,qi){
+  todayQ.forEach(function(q,qi){
     var div=document.createElement('div'); div.className='q';
-    var opts=item.o.map(function(t,oi){
-      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    var opts=q.o.map(function(t,oi){
+      return '<div class="opt" onclick="pickQ('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
     }).join('');
-    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+q.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+q.e+'</div>';
     box.appendChild(div);
   });
 })();
-function pick(qi,oi){
+function pickQ(qi,oi){
   if(answered[qi]!==undefined) return;
   answered[qi]=oi;
-  var correct=QUIZ[qi].a;
-  for(var k=0;k<QUIZ[qi].o.length;k++){
+  var correct=todayQ[qi].a;
+  for(var k=0;k<todayQ[qi].o.length;k++){
     var el=document.getElementById('q'+qi+'o'+k); el.classList.add('lock');
     if(k===correct) el.classList.add('ok');
   }
@@ -299,24 +511,18 @@ function pick(qi,oi){
 }
 function submitQuiz(){
   var done=Object.keys(answered).length;
-  if(done<QUIZ.length){ alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')'); return; }
-  var score=0; QUIZ.forEach(function(it,qi){ if(answered[qi]===it.a) score++; });
-  var pct=Math.round(score/QUIZ.length*100);
-  var stars = pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
-  var msg = pct>=85?'Cemerlang! Kamu pakar arah! 🧭':pct>=60?'Bagus! Hampir sempurna.':'Cuba ulang nota & buat semula. 💪';
-  saveProgress(BAB,pct);
+  if(done<todayQ.length){ alert('Jawab semua '+todayQ.length+' soalan dulu! ('+done+'/'+todayQ.length+')'); return; }
+  var score=0; todayQ.forEach(function(q,qi){ if(answered[qi]===q.a) score++; });
+  var pct=Math.round(score/todayQ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Kamu pakar arah! 🧭':pct>=60?'Bagus! Hampir sempurna.':'Cuba ulang nota & buat semula. 💪';
+  /* save progress */
+  try{ var key="geo:bab1",prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}
   var r=document.getElementById('result');
-  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab2.html" style="color:#fff;font-weight:800">Teruskan ke Bab 2 →</a></div>';
+  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+todayQ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab2.html" style="color:#fff;font-weight:800">Teruskan ke Bab 2 →</a></div>';
   r.classList.add('show');
   document.getElementById('submitBtn').style.display='none';
   r.scrollIntoView({behavior:'smooth'});
-}
-function saveProgress(bab,pct){
-  try{
-    var key="geo:bab"+bab, prev=JSON.parse(localStorage.getItem(key))||{best:0};
-    var best=Math.max(prev.best||0,pct);
-    localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));
-  }catch(e){}
 }
 </script>
 </body>
