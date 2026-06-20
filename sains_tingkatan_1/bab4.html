@@ -37,6 +37,7 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .scoreline{text-align:center;margin-top:1rem;font-weight:800}.scoreline .s{color:var(--ok)}
 .btn{background:var(--c);color:#fff;border:none;padding:.6rem 1.4rem;border-radius:2rem;font-weight:800;cursor:pointer;font-size:.95rem}.btn:hover{filter:brightness(1.08)}
 .feedback{text-align:center;font-weight:800;min-height:1.4rem;margin-top:.6rem}.feedback.good{color:var(--ok)}.feedback.bad{color:var(--no)}
+.dailynote{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:.8rem;font-weight:700}
 .flowerbox{position:relative;width:100%;max-width:300px;margin:.4rem auto}
 .flowerbox svg{display:block;width:100%;height:auto}
 .hot{position:absolute;width:25px;height:25px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid var(--c2);transform:translate(-50%,-50%);cursor:pointer;font-size:.78rem;font-weight:900;color:var(--c2);display:flex;align-items:center;justify-content:center;animation:pulse 1.8s infinite}
@@ -58,12 +59,14 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 .between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
 .between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#e6f6ec;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
+.resetlink{display:block;text-align:center;margin-top:.8rem}
+.resetlink a{color:var(--c);font-size:.82rem;text-decoration:underline;cursor:pointer;border:none;background:none;font-weight:700}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="hero">
-  <div class="kicker">TEMA 2 · PENYENGGARAAN & KESINAMBUNGAN HIDUP</div>
+  <div class="kicker">TEMA 2 · PENYENGGARAAN &amp; KESINAMBUNGAN HIDUP</div>
   <div class="big">🌸</div>
   <h1>Bab 4: Pembiakan</h1>
 </header>
@@ -83,14 +86,14 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <div class="note">
     <h3>Dua jenis pembiakan</h3>
     <div class="two">
-      <div class="col"><b>Pembiakan Seks</b><small>Melibatkan 2 induk. Gamet jantan (sperma) + gamet betina (ovum) → zigot. Menghasilkan variasi.</small></div>
+      <div class="col"><b>Pembiakan Seks</b><small>Melibatkan 2 induk. Gamet jantan (sperma) + gamet betina (ovum) → zigot. Menghasilkan variasi genetik.</small></div>
       <div class="col"><b>Pembiakan Aseks</b><small>Hanya 1 induk. Anak serupa induk. Cth: belahan dua (ameba), tunas (yis), spora (kulat), keratan (tumbuhan).</small></div>
     </div>
   </div>
   <div class="note">
     <h3>👶 Pembiakan Manusia (ringkas)</h3>
     <p>Sistem pembiakan lelaki menghasilkan <b>sperma</b> di <b>testis</b>; sistem perempuan menghasilkan <b>ovum</b> di <b>ovari</b>. <b>Kitar haid</b> berlaku kira-kira setiap <b>28 hari</b>, dengan <b>ovulasi</b> (pembebasan ovum) sekitar hari ke-14.</p>
-    <p><b>Persenyawaan</b>: sperma + ovum → <b>zigot</b> → embrio → fetus. Kehamilan mengambil masa kira-kira <b>9 bulan</b>. Kesihatan ibu (pemakanan baik; elak rokok, alkohol & dadah) penting untuk perkembangan fetus.</p>
+    <p><b>Persenyawaan</b>: sperma + ovum → <b>zigot</b> → embrio → fetus. Kehamilan mengambil masa kira-kira <b>9 bulan</b>. Kesihatan ibu (pemakanan baik; elak rokok, alkohol &amp; dadah) penting untuk perkembangan fetus.</p>
   </div>
   <div class="note">
     <h3>🌼 Bahagian Bunga</h3>
@@ -108,21 +111,14 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
     <div class="prompt">Klik: <span id="flTarget">Stigma (Kepala Putik)</span></div>
     <div class="flowerbox" id="flowerbox">
       <svg viewBox="0 0 300 270" xmlns="http://www.w3.org/2000/svg">
-        <!-- petals -->
         <ellipse cx="92" cy="120" rx="42" ry="74" fill="#f9a8d4" stroke="#db2777" stroke-width="2" transform="rotate(-12 92 120)"/>
         <ellipse cx="208" cy="120" rx="42" ry="74" fill="#f9a8d4" stroke="#db2777" stroke-width="2" transform="rotate(12 208 120)"/>
-        <!-- stem -->
         <rect x="145" y="205" width="10" height="60" fill="#16a34a"/>
-        <!-- sepals -->
         <path d="M150,205 L120,196 L138,214 Z" fill="#22c55e"/><path d="M150,205 L180,196 L162,214 Z" fill="#22c55e"/>
-        <!-- ovary -->
         <ellipse cx="150" cy="186" rx="22" ry="28" fill="#a3b18a" stroke="#5c6b3f" stroke-width="2"/>
         <circle cx="150" cy="190" r="6" fill="#fff7d6"/>
-        <!-- style -->
         <rect x="146" y="96" width="8" height="70" fill="#84cc16"/>
-        <!-- stigma -->
         <ellipse cx="150" cy="90" rx="17" ry="10" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
-        <!-- stamens -->
         <line x1="128" y1="178" x2="112" y2="104" stroke="#eab308" stroke-width="4"/>
         <ellipse cx="110" cy="98" rx="11" ry="6" fill="#f59e0b"/>
         <line x1="172" y1="178" x2="188" y2="104" stroke="#eab308" stroke-width="4"/>
@@ -147,9 +143,11 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 
 <section id="kuiz" class="panel">
   <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <p class="dailynote" id="dailyNote">Siap menjawab...?</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
+  <div class="resetlink"><a onclick="resetDay()">🔄 Set semula soalan hari ini</a></div>
 </section>
 
 <div class="between">
@@ -160,7 +158,11 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </div>
 
 <script>
-function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+
+/* ============================================================
+   Aktiviti Interaktif
+   ============================================================ */
 
 /* flower labelling */
 var FL=[
@@ -182,7 +184,7 @@ function newFl(){
   if(pool.length===0){document.getElementById('flTarget').textContent='Semua dilabel! 🎉';return;}
   flTarget=pool[Math.floor(Math.random()*pool.length)];
   document.getElementById('flTarget').textContent=flTarget.name;
-  document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('no')});
+  document.querySelectorAll('.hot').forEach(function(x){x.classList.remove('no');});
   document.getElementById('flfb').textContent=' ';
 }
 function pickFl(f,el){
@@ -201,7 +203,13 @@ var REP=[
   {t:'Pendebungaan bunga menghasilkan biji benih',a:'seks'},
   {t:'Kulat menghasilkan spora',a:'aseks'},
   {t:'Ikan jantan menyenyawakan telur ikan betina',a:'seks'},
-  {t:'Pokok pisang membentuk anak melalui sucker/rizom',a:'aseks'}
+  {t:'Pokok pisang membentuk anak melalui sucker/rizom',a:'aseks'},
+  {t:'Pokok stroberi menghasilkan pucuk tegak (runner)',a:'aseks'},
+  {t:'Burung betina menetas telur selepas persenyawaan dalaman',a:'seks'},
+  {t:'Hydra menghasilkan tunas pada badannya',a:'aseks'},
+  {t:'Spura dihasilkan oleh kulat dan tersebar oleh angin',a:'aseks'},
+  {t:'Katak menjatuhkan telur yang telah disenyawakan di dalam air',a:'seks'},
+  {t:'Keratan batang ros ditanam untuk menghasilkan pokok baru',a:'aseks'}
 ];
 var rScore=0, rIdx=0, rOrder=[];
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -222,22 +230,213 @@ function pickRep(choice,btn){
 }
 rOrder=shuffle(REP.map(function(_,i){return i;})); newRep();
 
-/* quiz */
-var BAB=4;
-var QUIZ=[
-  {q:"Pembiakan yang melibatkan dua induk dan menghasilkan variasi ialah pembiakan…",o:["Aseks","Seks","Belahan dua","Tunas"],a:1,e:"Pembiakan seks melibatkan 2 induk (gamet jantan + betina)."},
-  {q:"Contoh pembiakan ASEKS ialah…",o:["Persenyawaan ovum","Ameba membahagi dua","Pendebungaan silang","Kacukan baka"],a:1,e:"Belahan dua (ameba) ialah pembiakan aseks — satu induk."},
-  {q:"Gamet betina pada manusia ialah…",o:["Sperma","Ovum","Zigot","Embrio"],a:1,e:"Ovum ialah gamet betina; sperma ialah gamet jantan."},
-  {q:"Hasil percantuman sperma dan ovum ialah…",o:["Zigot","Spora","Tunas","Debunga"],a:0,e:"Persenyawaan sperma + ovum menghasilkan zigot."},
-  {q:"Bahagian bunga yang menghasilkan debunga ialah…",o:["Stigma","Ovari","Anter","Stail"],a:2,e:"Anter (kepala sari) menghasilkan debunga (bahagian jantan)."},
-  {q:"Bahagian betina bunga yang mengandungi ovul ialah…",o:["Ovari","Anter","Filamen","Petal"],a:0,e:"Ovari mengandungi ovul yang akan menjadi biji benih."},
-  {q:"Kitar haid manusia berlaku kira-kira setiap…",o:["7 hari","14 hari","28 hari","90 hari"],a:2,e:"Kitar haid biasanya kira-kira 28 hari."},
+/* ============================================================
+   QBank: 50 soalan Bab 4 (Pembiakan)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
+
+  /* --- Pembiakan Aseks --- */
+  {q:"Pembiakan yang melibatkan satu induk sahaja dipanggil…",o:["Pembiakan seksual","Pembiakan aseks","Persenyawaan","Ovulasi"],a:1,e:"Pembiakan aseks hanya memerlukan satu induk. Anak yang terhasil serupa dengan induk."},
+  {q:"Antara berikut, yang manakah contoh pembiakan ASEKS?",o:["Persenyawaan ovum","Ameba membahagi dua","Pendebungaan","Pembuahan dalaman"],a:1,e:"Ameba membahagi dua badan kepada dua sel yang serupa — ini ialah pembiakan aseks (belahan dua)."},
+  {q:"Amoeba membiak diri melalui proses…",o:["Tunas","Belahan dua","Spora","Keratan"],a:1,e:"Amoeba menggunakan belahan dua (binary fission) — nukleus membahagi dua kemudian sitoplasma."},
+  {q:"Yis membiak melalui proses…",o:["Belahan dua","Tunas","Spora","Sperma"],a:1,e:"Yis menghasilkan tunas kecil pada badan induk. Tunas itu akhirnya terpisah menjadi yis baru."},
+  {q:"Kulat membiak melalui…",o:["Tunas","Sperma","Spora","Telur"],a:2,e:"Kulat menghasilkan spora dalam kantung spora. Spora diterbangkan angin ke tempat sesuai untuk tumbuh."},
+  {q:"Pokok pisang membiak secara aseks melalui…",o:["Biji benih","Spora","Sucker (anak)","Tunas"],a:2,e:"Pisang menghasilkan sucker (anak) melalui rizom di bawah tanah. Sucker ini menjadi pokok baharu."},
+  {q:"Pokok kentang membiak secara aseks melalui…",o:["Biji","Tunas di hujung daun","Umbi batang","Spura"],a:2,e:"Kentang membiak melalui umbi batang (potato tuber). Tunas pada umbi boleh tumbuh menjadi pokok baharu."},
+  {q:"Pembiakan aseks menghasilkan anak yang…",o:["Berbeza dengan induk","Seronok dengan induk","Seronok dengan induk","Seronok dengan induk"],a:0,e:"Anakan dari pembiakan aseks serupa dengan induk kerana tiada gabungan materi genetik daripada dua induk."},
+  {q:"Antara berikut, yang manakah BUKAN kelebihan pembiakan aseks?",o:["Pantas dan banyak anak","Induk tidak perlu mencari pasangan","Menghasilkan variasi genetik","Ringan dan mudah"],a:2,e:"Menghasilkan variasi genetik ialah ciri pembiakan seksual. Pembiakan aseks tidak menghasilkan variasi."},
+  {q:"Pokok geranium (pokok hiasan) sering membiak melalui…",o:["Benih","Geragih (steck)","Spora","Belahan dua"],a:1,e:"Geranium membiak melalui keratan batang (steck). Keratan batang yang ditanam akan tumbuh menjadi pokok baharu."},
+  {q:"Spura (gunnera) membiak secara aseks melalui…",o:["Umbi sejati","Geragih bawah tanah","Spora","Tunas"],a:1,e:"Spura membiak melalui geragih bawah tanah (rhizome) yang menghasilkan pucuk baharu."},
+  {q:"Hydra membiak melalui proses…",o:["Belahan dua","Pembentukan tunas","Pembentukan spora","Pembelahan berbilang"],a:1,e:"Hydra menghasilkan tunas kecil pada badannya. Tunas itu membesar dan akhirnya berpisah menjadi hydra baru."},
+  {q:"Antara berikut, yang manakah organisma membiak secara aseks melalui belahan dua?",o:["Hydra","Ameba","Kulat","Pisang"],a:1,e:"Ameba mengalami belahan dua (binary fission) — nukleus membahagi dua, diikuti sitoplasma."},
+  {q:"Memarut ubi keledek ke dalam tanah boleh menghasilkan pokok baharu. Ini ialah contoh pembiakan…",o:["Seksual","Aseks melalui tunas","Aseks melalui geragih","Melalui spora"],a:2,e:"Memarut ubi yang mempunyai 'mata' (pucuk) boleh tumbuh menjadi pokok baharu melalui pembiakan aseks vegetatif."},
+
+  /* --- Pembiakan Seks --- */
+  {q:"Pembiakan yang memerlukan dua induk (jantan dan betina) ialah…",o:["Pembiakan aseks","Pembiakan seksual","Pembelahan dua","Tunas"],a:1,e:"Pembiakan seks memerlukan gamet jantan (sperma) dan gamet betina (ovum) untuk menghasilkan zigot."},
+  {q:"Gamet jantan pada manusia ialah…",o:["Ovum","Sperma","Zigot","Embrio"],a:1,e:"Sperma ialah gamet jantan yang dihasilkan di testis. Ovum ialah gamet betina yang dihasilkan di ovari."},
+  {q:"Gamet betina pada manusia ialah…",o:["Sperma","Ovum","Zigot","Hormon"],a:1,e:"Ovum (sel telur) ialah gamet betina yang dihasilkan di ovari. Setiap bulan, satu ovum dibebaskan semasa ovulasi."},
+  {q:"Persenyawaan berlaku apabila…",o:["Sperma bertemu ovum","Ovum dikeluarkan dari ovari","Sperma dihasilkan di testis","Pheromone dibebaskan"],a:0,e:"Persenyawaan (fertilisasi) berlaku apabila sperma menenyunyai ovum → menghasilkan zigot."},
+  {q:"Organ yang menghasilkan sperma dalam badan lelaki ialah…",o:["Ovari","Testis","Hati","Ginjal"],a:1,e:"Testis menghasilkan sperma dan hormon testosteron. Sperma dihasilkan dalam kuantiti yang sangat banyak."},
+  {q:"Organ yang menghasilkan ovum dalam badan perempuan ialah…",o:["Uterus","Ovari","Pankreas","Jantung"],a:1,e:"Ovari menghasilkan ovum dan hormon estrogen. Setiap bulan, satu ovum masak dibebaskan dari ovari."},
+  {q:"Tempat persenyawaan berlaku pada manusia ialah…",o:["Uterus","Ovari","Tuba fallopi","Vagina"],a:2,e:"Persenyawaan (sperma + ovum) berlaku di tuba fallopi (saluran telur). Zigot kemudian bergerak ke uterus."},
+  {q:"Tempat perkembangan embrio/fetus ialah…",o:["Tuba fallopi","Ovari","Uterus (rahim)","Vagina"],a:2,e:"Zigot bergerak ke uterus (rahim) di mana ia tertanam dan berkembang menjadi embrio kemudian fetus."},
+  {q:"Kitar haid perempuan berlaku dalam tempoh kira-kira…",o:["7 hari","14 hari","28 hari","60 hari"],a:2,e:"Kitar haid perempuan berlangsung kira-kira 28 hari. Ovulasi berlaku pada hari ke-14."},
+  {q:"Ovulasi bermaksud…",o:["Haid bermula","Ovum masak dibebaskan dari ovari","Sperma dihasilkan","Uterus diluruh"],a:1,e:"Ovulasi ialah pelepasan ovum masak dari ovari ke tuba fallopi, berlaku pada hari ke-14 kitar haid."},
+
+  /* --- Pembunga & Pendebungaan --- */
+  {q:"Bahagian bunga yang merupakan alat pembiakan jantan ialah…",o:["Pistil","Stamen","Petal","Sepal"],a:1,e:"Stamen (benang sari) ialah alat pembiakan jantan bunga. Ia terdiri daripada anter dan filamen."},
+  {q:"Alat pembiakan betina pada bunga ialah…",o:["Stamen","Karpel (pistil)","Petal","Sepal"],a:1,e:"Karpel/pistil ialah alat pembiakan betina. Ia terdiri daripada stigma, stail dan ovari."},
+  {q:"Bagian stamen yang menghasilkan debunga ialah…",o:["Filamen","Anter","Stigma","Stail"],a:1,e:"Anter (kepala sari) menghasilkan debunga yang mengandungi sel sperma."},
+  {q:"Bahagian pistil yang menerima debunga ialah…",o:["Stail","Ovari","Stigma","Filamen"],a:1,e:"Stigma (kepala putik) ialah permukaan lekat di bahagian atas pistil yang menangkap debunga."},
+  {q:"Ovari bunga berkembang menjadi…",o:["Biji benih","Buah","Daun","Batang"],a:1,e:"Selepas persenyawaan, ovari berkembang menjadi buah yang melindungi biji benih."},
+  {q:"Ovul di dalam ovari berkembang menjadi…",o:["Buah","Biji benih","Daging buah","Daun"],a:1,e:"Ovul (sel telur di dalam ovari) selepas disenyawakan menjadi biji benih."},
+  {q:"Pendebungaan ialah proses…",o:["Sperma bertemu ovum","Debunga jatuh dan melekat di stigma","Buah terbentuk","Benih bercambah"],a:1,e:"Pendebungaan (pembuahan bunga) ialah proses debunga dari anter jatuh dan melekat pada stigma."},
+  {q:"Antara berikut, yang manakah membantu pendebungaan?",o:["Angin dan air sahaja","Insek dan angin","Hujan dan tanah","Angin, air, hewan, dan manusia"],a:3,e:"Pendebungaan boleh dibantu oleh angin (anemogami), air (hidrogami), hewan/insek (entomogami) dan manusia."},
+  {q:"Ciri bunga yang dibebakan oleh angin ialah…",o:["Warna cerah dan berbau","Debunga kecil dan ringan","Kelopak besar","Menghasilkan madu"],a:1,e:"Debunga bunga angin kecil, ringan dan licin supaya mudah ditiup angin. Stigmanya panjang dan berbulu."},
+  {q:"Ciri bunga yang dibebakan oleh insek ialah…",o:["Debunga kecil dan ringan","Warna cerah, wangi, menghasilkan nektar","Tiada nektar","Stigma panjang"],a:1,e:"Bunga yang dibebakan oleh insek mempunyai warna menarik, bau wangi, dan menghasilkan nektar untuk menarik insek."},
+
+  /* --- Persenyawaan & Perkembangan --- */
+  {q:"Hasil persenyawaan sperma dan ovum ialah…",o:["Spesies","Embrio","Zigot","Fetus"],a:2,e:"Zigot ialah hasil gabungan materi genetik daripada sperma dan ovum. Zigot kemudian membahagi berulang kali."},
+  {q:"Zigot berkembang menjadi…",o:["Spermatozoa","Ovum","Embrio","Debunga"],a:2,e:"Setelah beberapa pembahagian sel, zigot menjadi embrio yang mempunyai struktur asas tubuh."},
+  {q:"Fetus berkembang di dalam…",o:["Ovari","Tuba fallopi","Uterus","Vagina"],a:2,e:"Fetus (janin) berkembang di dalam uterus (rahim). Dinding uterus dilapisi oleh dinding yang kaya dengan darah dan vaskular."},
+  {q:"Tali pusat (plasenta) berfungsi untuk…",o:["Menghasilkan sperma","Menghubungi embrio/fetus dengan ibu untuk nutrien","Melindungi daripada cahaya","Menghasilkan hormon haid"],a:1,e:"Tali pusat dan plasenta membolehkan pertukaran nutrien, oksigen dan bahan buangan antara ibu dan fetus."},
+  {q:"Tempoh kehamilan manusia ialah kira-kira…",o:["3 bulan","6 bulan","9 bulan","12 bulan"],a:2,e:"Kehamilan manusia mengambil masa sekitar 9 bulan (40 minggu) dari persenyawaan hingga kelahiran."},
+  {q:"Apakah yang berlaku apabila ovum TIDAK disenyawakan?",o:["Ia menjadi fetus","Ia dibebaskan melalui haid","Ia menjadi embrio","Ia kekal di ovari"],a:1,e:"Jika ovum tidak disenyawakan sperma, dinding uterus yang tebal dibebaskan melalui haid (mens). Kitra haid bermula semula."},
+
+  /* --- Nilai & Kesihatan --- */
+  {q:"Apakah kepentingan menjaga kesihatan semasa hamil?",o:["Ibu sahaja yang sihat","Fetus berkembang dengan baik dan sihat","Tidak penting","Bayi akan lebih tinggi"],a:1,e:"Pemakanan baik, elak rokok, alkohol dan dadah penting bagi perkembangan fetus yang sihat."},
+  {q:"Antara berikut, yang manakah TIDAK disarankan semasa hamil?",o:["Makan makanan berzat","Merokok dan minum alkohol","Bersenam ringan","Rehat secukupnya"],a:1,e:"Merokok, alkohol dan dadah merosakkan perkembangan fetus dan boleh menyebabkan kecacatan lahir."},
+  {q:"Apakah sikap yang perlu ada semasa membuat eksperimen tentang pembiakan?",o:["Tidak teliti","Bertanggungjawab dan jujur","Terburu-buru","Mengabaikan arahan"],a:1,e:"Sikap teliti, bertanggungjawab, dan jujur dalam merekod data adalah penting dalam sains."},
+  {q:"Mengapa pembiakan seksual menghasilkan variasi?",o:["Kerana hanya satu induk","Kerana gabungan materi genetik dari dua induk","Kerana persekitaran berubah","Tiada variasi"],a:1,e:"Pembiakan seks menggabungkan materi genetik daripada dua induk yang berbeza, menghasilkan variasi genetik."},
+  {q:"Antara berikut, yang manakah kebaikan pembiakan seksual?",o:["Pantas dan mudah","Menghasilkan variasi genetik","Tidak perlukan pasangan","Anak seragam"],a:1,e:"Variasi genetik membolehkan spesies menyesuaikan diri dengan perubahan persekitaran dan melawan penyakit."},
+
+  /* --- Perbandingan & Aplikasi --- */
+  {q:"Perbezaan utama antara pembiakan seks dan aseks ialah…",o:["Seks memerlukan 1 induk","Aseks menghasilkan variasi","Seks memerlukan 2 induk, aseks hanya 1","Seks lebih perlahan"],a:2,e:"Pembiakan seks memerlukan 2 induk (jantan + betina) manakala aseks hanya memerlukan 1 induk."},
+  {q:"Antara berikut, yang manekahi menghasilkan variasi genetik?",o:["Amoeba belahan dua","Yis tunas","Keratan tumbuhan","Katak (persenyawaan)"],a:3,e:"Katak membiak secara seksual (persenyawaan). Pembiakan seksual menghasilkan variasi genetik."},
+  {q:"Pokok yang membiak secara aseks melalui geragih (runner) ialah…",o:["Pisang","Stroberi","Kentang","Paku-pakis"],a:1,e:"Stroberi menghasilkan geragih (runner) — batang yang merayap di atas tanah dan menghasilkan anak pokok pada hujungnya."},
+  {q:"Apakah yang berlaku pada bunga selepas pendebungaan berjaya?",o:["Kelopak bertambah besar","Benih dan buah mula terbentuk","Bunga gugur serta-merta","Daun gugur"],a:1,e:"Selepas pendebungaan dan persenyawaan, benih mula terbentuk dalam ovari dan buah berkembang dari ovari."},
+  {q:"Spesies yang membiak secara seksual mempunyai kelebihan kerana…",o:["Lebih cepat","Lebih banyak anak","Lebih mudah","Menghasilkan variasi untuk kelangsungan spesies"],a:3,e:"Variasi genetik membolehkan spesies menyesuaikan diri dengan perubahan persekitaran dan melawan penyakit."},
 ];
-var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🌸':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab5.html" style="color:#fff;font-weight:800">Teruskan ke Bab 5 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+
+/* ---------- Daily rotation (LCG — sama pola dengan bab2 & bab3) ---------- */
+var QUIZ=[];        // hari ini: 50 soalan (semua QBank)
+var answered={};    // indeks QUIZ → pilihan user (disimpan di localStorage)
+
+function dayIdx(d){
+  return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5);
+}
+function lcgDay(d){
+  return (dayIdx(d)*2654435761+16177013)>>>0;  // seed unik: 16177013 (bab4)
+}
+function pickDay(n,seed){
+  var sel=[],rem=[],r=seed;
+  for(var i=0;i<n;i++) rem.push(i);
+  for(var i=0;i<Math.min(n,rem.length);i++){
+    r=r*2654435761%4294967296;
+    var j=r%(rem.length);
+    sel.push(rem[j]);
+    rem.splice(j,1);
+  }
+  return sel;
+}
+
+/* Inisialisasi / ulang: semak localStorage untuk quiz hari ini */
+(function(){
+  var today=new Date(),sid="sains:day"+dayIdx(today);
+  var stored=localStorage.getItem(sid);
+  if(stored){
+    try{QUIZ=JSON.parse(stored);}catch(e){QUIZ=[];}
+  }
+  if(!QUIZ.length||QUIZ.length!==QBank.length){
+    var seed=lcgDay(today);
+    var idx=pickDay(QBank.length,seed);
+    QUIZ=idx.map(function(i){return QBank[i];});
+    localStorage.setItem(sid,JSON.stringify(QUIZ));
+  } else {
+    /* restore jawapan dari localStorage */
+    try{
+      var as=JSON.parse(localStorage.getItem("sains:a4")||"{}");
+      for(var k in as) answered[parseInt(k)]=as[k];
+    }catch(e){}
+  }
+})();
+
+/* ---------- Render quiz ---------- */
+(function(){
+  var box=document.getElementById('quiz');
+  QUIZ.forEach(function(item,qi){
+    var div=document.createElement('div');
+    div.className='q';
+    var opts=item.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    box.appendChild(div);
+  });
+  /* restore answered dari localStorage */
+  for(var k in answered){
+    var qi=parseInt(k),oi=answered[k];
+    if(qi<QUIZ.length){
+      var el=document.getElementById('q'+qi+'o'+oi);
+      if(el){
+        el.classList.add('lock');
+        var correct=QUIZ[qi].a;
+        for(var c=0;c<QUIZ[qi].o.length;c++){
+          var r=document.getElementById('q'+qi+'o'+c);
+          r.classList.add('lock');
+          if(c===correct) r.classList.add('ok');
+        }
+        if(oi!==correct) el.classList.add('no');
+        document.getElementById('exp'+qi).classList.add('show');
+      }
+    }
+  }
+  /* tunjuk progress */
+  var done=Object.keys(answered).length;
+  if(done>0) document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+})();
+
+/* ---------- Jawab soalan ---------- */
+function pick(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  localStorage.setItem("sains:a4",JSON.stringify(answered));
+  var correct=QUIZ[qi].a;
+  for(var k=0;k<QUIZ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k);
+    el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+  var done=Object.keys(answered).length;
+  document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+}
+
+/* ---------- Submit kuiz ---------- */
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<QUIZ.length){
+    alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');
+    return;
+  }
+  var score=0;
+  QUIZ.forEach(function(it,qi){if(answered[qi]===it.a) score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! 🌸':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  saveProgress(4,pct);
+  /* simpan skor harian */
+  try{
+    var best=parseInt(localStorage.getItem("sains:best4")||"0");
+    localStorage.setItem("sains:best4",String(Math.max(best,pct)));
+  }catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah hari ini</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab5.html" style="color:#fff;font-weight:800">Teruskan ke Bab 5 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Reset harian (refresh untuk set semula) ---------- */
+function resetDay(){
+  if(!confirm("Set semula semua soalan & jawapan Bab 4?")) return;
+  answered={};
+  localStorage.removeItem("sains:a4");
+  localStorage.removeItem("sains:day"+dayIdx(new Date()));
+  localStorage.removeItem("sains:best4");
+  location.reload();
+}
+
+/* ---------- Helpers ---------- */
+function saveProgress(bab,pct){
+  try{
+    var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};
+    var best=Math.max(prev.best||0,pct);
+    localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));
+  }catch(e){}
+}
 </script>
 </body>
 </html>
