@@ -74,6 +74,7 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .exp.show{display:block}
 .result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}
 .result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+.hari-info{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:.8rem;font-style:italic}
 footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 .between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
 .between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#eef3f9;color:var(--c2)}
@@ -95,7 +96,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 <div class="tabs">
   <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
   <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
-  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz Harian</button>
 </div>
 
 <section id="nota" class="panel on">
@@ -144,7 +145,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </section>
 
 <section id="kuiz" class="panel">
-  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <h2 class="sec">✏️ Kuiz Harian</h2>
+  <p class="hari-info" id="hariInfo"></p>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Soalan berputar setiap hari — jawab <b id="qTotal"></b> soalan untuk menguji kefahaman anda!</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
@@ -239,46 +242,164 @@ function pickLine(L,el){
 }
 buildWorld();
 
-/* ---- quiz ---- */
+/* ---------- quiz: daily rotation ---------- */
+var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
 var BAB=2;
-var QUIZ=[
-  {q:"Garisan menegak pada sistem grid dipanggil…",o:["Northing","Easting","Latitud","Khatulistiwa"],a:1,e:"Garisan menegak = Easting (dibaca kiri ke kanan)."},
-  {q:"Apabila membaca rujukan grid, nilai manakah dibaca dahulu?",o:["Northing","Easting","Yang lebih besar","Yang lebih kecil"],a:1,e:"Baca Easting dahulu, kemudian Northing."},
+
+/* ---- 70-question bank (6 categories) ---- */
+var QBANK=[
+  /* === RUJUKAN GRID (12) === */
+  {q:"Apakah yang dimaksudkan dengan kedudukan di dalam geografi?",o:["Ketinggian suatu tempat","Tempat letaknya sesuatu objek di atas peta","Saiz suatu kawasan","Jumlah penduduk sesuatu tempat"],a:1,e:"Kedudukan ialah tempat letaknya sesuatu objek di atas peta."},
+  {q:"Terdapat berapakah kaedah untuk menyatakan kedudukan?",o:["1","2","3","4"],a:1,e:"Terdapat 2 kaedah: Rujukan Grid (peta tempatan) dan Latitud & Longitud (peta dunia)."},
+  {q:"Rujukan grid digunakan untuk menyatakan kedudukan di atas…",o:["Peta dunia","Peta tempatan","Peta imej satelit","Peta topologi"],a:1,e:"Rujukan grid digunakan untuk peta tempatan manakala lat/long untuk peta dunia."},
+  {q:"Garisan menegak pada peta grid dipanggil…",o:["Northing","Latitud","Khatulistiwa","Easting"],a:3,e:"Garisan menegak = Easting. Garisan mendatar = Northing."},
+  {q:"Garisan mendatar pada peta grid dipanggil…",o:["Easting","Longitud","Meridian Greenwich","Northing"],a:3,e:"Garisan mendatar = Northing (garisan horizontal/melintang)."},
+  {q:"Apabila membaca rujukan grid, nilai manakah dibaca dahulu?",o:["Northing","Easting","Yang lebih besar","Yang lebih kecil"],a:1,e:"Baca Easting dahulu, kemudian Northing — 'masuk rumah dulu (kanan), baru naik tangga (atas)'."},
+  {q:"Rujukan grid '52' bermaksud…",o:["Easting 5, Northing 2","Easting 2, Northing 5","Latitud 5, Longitud 2","Baris 5, lajur 2 dari atas"],a:0,e:"Angka pertama = Easting (5), kedua = Northing (2)."},
+  {q:"Rujukan grid '34' bermaksud…",o:["Easting 4, Northing 3","Easting 3, Northing 4","Latitud 3, Longitud 4","Grid 34"],a:1,e:"Angka pertama (3) = Easting, angka kedua (4) = Northing."},
+  {q:"Kod 'E' dalam rujukan grid mewakili arah…",o:["Atas","Kanan","Bawah","Kiri"],a:1,e:"E = Easting = ke kanan (Timur)."},
+  {q:"Kod 'N' dalam rujukan grid mewakili arah…",o:["Kanan","Bawah","Atas","Kiri"],a:2,e:"N = Northing = ke atas (Utara)."},
+  {q:"Mengapa Easting dibaca dahulu sebelum Northing?",o:["Kerana lebih mudah","Konvensyen 'kanan dahulu, atas kemudian'","Kerana Easting lebih penting","Tiada sebab khusus"],a:1,e:"Konvensyen: baca 'kanan' (Easting) dahulu, kemudian 'atas' (Northing). Mudah diingati."},
+  {q:"Jika grid menunjukkan '79', apakah Northing-nya?",o:["7","9","0","79"],a:1,e:"9 = Northing (ke atas). 7 = Easting (ke kanan)."},
+
+  /* === LATITUD & LONGITUD (13) === */
   {q:"Garisan latitud 0° dikenali sebagai…",o:["Garisan Greenwich","Garisan Khatulistiwa","Garisan Tropika","Garisan Tarikh"],a:1,e:"Latitud 0° = Garisan Khatulistiwa."},
   {q:"Garisan longitud 0° dikenali sebagai…",o:["Garisan Khatulistiwa","Garisan Meridian Greenwich","Garisan Antartika","Garisan Sartan"],a:1,e:"Longitud 0° = Garisan Meridian Greenwich."},
-  {q:"Latitud diukur ke arah…",o:["Timur & Barat","Utara & Selatan","Timur Laut sahaja","Atas sahaja"],a:1,e:"Latitud diukur ke Utara & Selatan Khatulistiwa (0°–90°)."},
+  {q:"Latitud diukur dari arah…",o:["Timur & Barat","Utara & Selatan","Barat Daya","Utara Sahaja"],a:1,e:"Latitud diukur ke Utara & Selatan dari Garisan Khatulistiwa (0°–90°)."},
+  {q:"Longitud diukur dari arah…",o:["Utara & Selatan","Khatulistiwa sahaja","Timur & Barat","Selatan sahaja"],a:2,e:"Longitud diukur ke Timur & Barat dari Garisan Meridian Greenwich (0°–180°)."},
   {q:"Garisan Khatulistiwa membahagikan Bumi kepada…",o:["Timur & Barat","Hemisfera Utara & Selatan","4 suku","Tropika & Kutub"],a:1,e:"Khatulistiwa membahagi Bumi kepada Hemisfera Utara & Selatan."},
-  {q:"Rujukan grid '52' bermaksud…",o:["Easting 5, Northing 2","Easting 2, Northing 5","Latitud 5, Longitud 2","Baris 5, lajur 2 dari atas"],a:0,e:"Angka pertama = Easting (5), kedua = Northing (2)."},
+  {q:"Malaysia terletak di Hemisfera…",o:["Selatan","Utara & Timur","Utara & Barat","Selatan & Timur"],a:1,e:"Malaysia terletak di Hemisfera Utara (Utara Khatulistiwa) dan Timur Greenwich."},
+  {q:"Apakah perbezaan antara latitud dan longitud?",o:["Kedua-duanya sama","Latitud mendatar, longitud menegak","Latitud menegak, longitud mendatar","Latitud untuk peta tempatan"],a:1,e:"Latitud = garisan mendatar (melintang). Longitud = garisan menegak (membujur)."},
+  {q:"Suhu bumi paling panas di kawasan…",o:["Kutub Utara","Khatulistiwa","Greenwich","Selatan 60°"],a:1,e:"Khatulistiwa menerima sinaran matahari paling terurus → suhu paling panas."},
+  {q:"Berapakah julat pengukuran latitud?",o:["0°–180°","0°–90°","0°–360°","−90° hingga +90° sahaja"],a:1,e:"Latitud diukur 0° hingga 90° dari Khatulistiwa ke kutub."},
+  {q:"Berapakah julat pengukuran longitudinal?",o:["0°–90°","0°–180°","0°–360°","0°–100°"],a:1,e:"Longitud diukur 0° hingga 180° dari Greenwich ke Timur dan Barat."},
+  {q:"Garisan Meridian Greenwich terletak di negara…",o:["Amerika Syarikat","Inggris (United Kingdom)","Perancis","Jerman"],a:1,e:"Garisan Meridian Greenwich terletak di Greenwich, London, England."},
+  {q:"Kawasan yang berdekatan dengan Garisan Khatulistiwa biasanya mempunyai cuaca…",o:["Sejuk dan bersalji","Panas dan lembap","Kering dan berdebu","Berangin dan sejuk"],a:1,e:"Kawasan khatulistiwa menerima sinaran matahari langsung → panas dan lembap."},
+  {q:"Antara berikut, yang manakah benar tentang Garisan Khatulistiwa?",o:["Merupakan garisan menegak","Merupakan garisan latitud 0°","Mewakili 90°LU","Memotong Afrika sahaja"],a:1,e:"Garisan Khatulistiwa ialah latitud 0° — garisan mendatar melintasi Afrika, Asia, dan Amerika."},
+
+  /* === GRID SQUARES & MAPS (10) === */
+  {q:"Grid squares pada peta terbentuk hasil persilangan antara…",o:["Latitud & Longitud","Utara & Selatan","Easting & Northing","Timur & Barat"],a:2,e:"Grid squares terbentuk dari persilangan garisan Easting dan Northing."},
+  {q:"Bilangan grid squares pada peta bergantung kepada…",o:["Warna peta","Skala peta dan kawasan yang dipaparkan","Saiz kertas sahaja","Jumlah penduduk"],a:1,e:"Grid squares bergantung pada skala peta dan kawasan yang dipaparkan."},
+  {q:"Apakah kegunaan grid squares dalam peta topografi?",o:["Menentukan ketinggian","Menentukan kedudukan tepat sesuatu objek","Menentukan penduduk","Menentukan saiz peta"],a:1,e:"Grid squares membantu menentukan kedudukan tepat sesuatu objek di atas peta."},
+  {q:"Grid reference 4 angka memberi ketepatan…",o:["Sangat tepat","Sederhana / umum","Tidak tepat langsung","Lebih tepat dari 6 angka"],a:1,e:"Grid 4 angka (2E+2N) memberikan ketepatan sederhana — menunjukkan grid square sahaja."},
+  {q:"Grid reference 6 angka lebih tepat daripada grid reference 4 angka kerana…",o:["Menggunakan nombor lebih kecil","Menggunakan 3 digit untuk Easting dan 3 untuk Northing","Tidak memerlukan grid","Hanya untuk peta kecil"],a:1,e:"Grid 6 angka = 4 angka timur + 3 angka utara (4N3E), memberikan ketepatan lebih tinggi."},
+  {q:"Grid squares membolehkan kita mengenal pasti kedudukan secara…",o:["Subjektif","Berangka","Walaupun tanpa peta","Secara lisan sahaja"],a:1,e:"Grid squares memberikan lokasi berangka yang tepat dan konsisten."},
+  {q:"Kawasan yang mempunyai grid squares rapat menunjukkan kawasan yang…",o:["Luas","Tumpat / kecil kawasan","Tidak penting","Kurang populasi"],a:1,e:"Grid squares rapat menunjukkan kawasan yang tumpat atau peta berskala besar."},
+  {q:"Apakah bentuk geometri grid squares pada peta?",o:["Bulatan","Segi tiga","Segi empat sama rata","Bujur"],a:2,e:"Grid squares berbentuk segi empat sama — hasil persilangan garisan serenjang."},
+  {q:"Peta dengan skala 1:25 000 berbanding 1:50 000 adalah…",o:["Lebih kecil","Lebih besar / memberi butang lebih","Sama sahaja","Tidak boleh dibandingkan"],a:1,e:"Skala 1:25 000 ialah peta berskala besar — menunjukkan butang lebih terperinci."},
+  {q:"Untuk menyatakan kedudukan menggunakan grid, peta yang diperlukan mesti mempunyai…",o:["Warna menarik","Grid / garisan Easting & Northing","Gambar sahaja","Hanya nama tempat"],a:1,e:"Peta mesti mempunyai grid (Easting & Northing) untuk menentukan kedudukan."},
+
+  /* === LATIHAN PENGIRAAN (15) === */
+  {q:"Jika kedudukan X ialah di grid Easting 4, Northing 6, apakah rujukan grid-nya?",o:["64","46","4060","66"],a:1,e:"Easting 4, Northing 6 → Rujukan grid 46."},
+  {q:"Kedudukan Y: Easting 8, Northing 2. Apakah rujukan grid-nya?",o:["28","82","88","22"],a:1,e:"Easting 8, Northing 2 → 82."},
+  {q:"Grid 55 — berapakah Easting-nya?",o:["5","5","0","10"],a:0,e:"Grid 55: digit pertama = Easting = 5."},
+  {q:"Grid 73 — berapakah Northing-nya?",o:["7","3","0","73"],a:1,e:"Grid 73: digit kedua = Northing = 3."},
+  {q:"Apabila Easting bertambah, kedudukan bergerak ke…",o:["Kiri","Kanan (Timur)","Atas (Utara)","Bawah (Selatan)"],a:1,e:"Easting bertambah → bergerak ke kanan / Timur."},
+  {q:"Apabila Northing bertambah, kedudukan bergerak ke…",o:["Kanan","Kiri (Barat)","Atas (Utara)","Bawah (Selatan)"],a:2,e:"Northing bertambah → bergerak ke atas / Utara."},
+  {q:"Jika satu grid square bermula pada Easting 2 dan berakhir pada Easting 3, berapakah lebar grid square tersebut?",o:["1 unit","2 unit","3 unit","Tiada ukuran"],a:0,e:"Dari 2 ke 3 = 1 unit lebar."},
+  {q:"Bandingkan grid 35 dan grid 82. Yang manakah lebih ke Timur?",o:["35","82","Sama","Tidak boleh tentukan"],a:1,e:"82: Easting = 8. 35: Easting = 3. 8 > 3 → 82 lebih ke Timur."},
+  {q:"Bandingkan grid 35 dan grid 82. Yang manakah lebih ke Utara?",o:["35","82","Sama","Tidak boleh tentukan"],a:0,e:"35: Northing = 5. 82: Northing = 2. 5 > 2 → 35 lebih ke Utara."},
+  {q:"Grid reference 6 angka: Easting 45, Northing 67. Digit ke-3 (Easting) ialah…",o:["4","5","6","7"],a:1,e:"Grid 6 angka: digit 1-2 = Easting 45, digit 3 = pecahan Easting, digit 4-5 = Northing 67, digit 6 = pecahan Northing."},
+  {q:"Dalam grid 4N3E, apakah maksud '4N'?",o:["4 unit ke Timur","4 unit ke Utara","4 unit ke Selatan","4 unit ke Barat"],a:1,e:"4N = 4 unit ke Utara (Northing). 3E = 3 unit ke Timur (Easting)."},
+  {q:"Jika grid P ialah 24 dan grid Q ialah 28, P dan Q sama Easting tetapi berbeza…",o:["Tiada perbezaan","Northing","Warna peta","Skala"],a:1,e:"Kedua-duanya bermula dengan 2 (Easting sama). 4 vs 8 = berbeza Northing."},
+  {q:"Rujukan grid 91: berapakah jumlah digitnya?",o:["1","2","3","4"],a:1,e:"Rujukan grid 2 digit = 2 angka (Easting + Northing)."},
+  {q:"Kedudukan A (Easting 1, Northing 1) dan B (Easting 1, Northing 9). Yang mana lebih dekat ke kutub Utara?",o:["A","B","Sama jarak","Tidak boleh tentukan"],a:1,e:"B (Northing 9) lebih tinggi dari A (Northing 1), jadi lebih dekat ke Utara."},
+  {q:"Grid 66 berbanding grid 66 — adakah kedua-duanya berada di grid square yang sama?",o:["Ya","Tidak","Hanya jika peta sama","Tidak pasti"],a:0,e:"Grid 66 = Easting 6, Northing 6. Kedua-duanya tepat di tempat yang sama."},
+
+  /* === KEFAMAHAN & APLIKASI (10) === */
+  {q:"Mengapakah latitud dan longitud penting dalam dunia moden?",o:["Untuk menghias peta","Untuk GPS dan penentuan kedudukan tepat","Untuk melukis peta sahaja","Untuk mengira jumlah penduduk"],a:1,e:"Latitud & longitud asas kepada GPS, navigasi kapal terbang, dan penentuan kedudukan tepat."},
+  {q:"Apakah kepentingan Garisan Meridian Greenwich?",o:["Menunjuk arah Selatan","Merujuk longitud 0° sebagai rujukan dunia","Menandakan kutub","Mengukur suhu"],a:1,e:"Greenwich ialah titik rujukan 0° untuk mengukur longitud ke Timur dan Barat."},
+  {q:"Navigasi menggunakan GPS bergantung kepada sistem koordinat…",o:["Grid square sahaja","Latitud & Longitud","Warna peta","Nombor halaman"],a:1,e:"GPS menggunakan latitud dan longitud dalam format darjah (contoh: 3.1390°N, 101.6869°E)."},
+  {q:"Kenapa peti sejuk di kawasan kutub tidak boleh digunakan di khatulistiwa?",o:["Kerana suhu khatulistiwa terlalu panas dan mengganggu fungsi","Kerana kutub sahaja ada elektrik","Peti sejuk tidak memerlukan elektrik","Kerana kutub tiada makanan"],a:0,e:"Ini ialah contoh aplikasi latitud: kawasan berbeza latitud mempunyai suhu dan keadaan berbeza."},
+  {q:"Pelayaran antarabangsa menggunakan…",o:["Grid sahaja","Latitud & Longitud untuk laluan","Warna peta","Nombor grid"],a:1,e:"Kapal menggunakan lat/long untuk menentukan laluan pelayaran antarabangsa."},
+  {q:"Pusat cuaca dunia menggunakan koordinat untuk…",o:["Menamakan ribut","Menentukan lokasi tepat sistem cuaca","Mengira tekanan","Menentukan saiz hujan"],a:1,e:"Koordinat lat/long membantu memposisikan sistem cuaca di peta."},
+  {q:"Apakah fungsi grid pada peta topografi Malaysia?",o:["Hiasan sahaja","Membolehkan penentuan kedudukan secara berangka","Menunjukkan nama jalan","Menunjukkan lokasi restoran"],a:1,e:"Grid pada peta topografi membantu penentuan kedudukan tepat secara berangka."},
+  {q:"Apakah yang terjadi jika kita salah membaca Easting dan Northing?",o:["Tiada masalah","Kedudukan menjadi salah — tersilap lokasi","Kedudukan menjadi lebih tepat","Tiada kesan"],a:1,e:"Jika Easting dan Northing terbalik, kedudukan menjadi salah total."},
+  {q:"Satelit navigasi seperti GPS dan GLONASS bergantung kepada…",o:["Grid square sahaja","Latitud & Longitud untuk kedudukan 3D","Warna sahaja","Peta fizik"],a:1,e:"Satelit navigasi menentukan kedudukan 3D (lat, long, altitud) menggunakan koordinat geografi."},
+  {q:"Apakah kegunaan Garisan Khatulistiwa dalam meteorologi?",o:["Menentukan arah angin sahaja","Menunjukkan kawasan beriklim tropika yang panas dan lembap","Menunjuk saiz bumi","Menentukan masa siang"],a:1,e:"Khatulistiwa menandakan kawasan tropika — cuaca panas, lembap, dan hujan kerap."},
+
+  /* === SOALAN PEPERIKSAAN TIPE (10) === */
+  {q:"Antara berikut, yang manakah benar mengenai Easting?",o:["Garisan mendatar, dibaca kiri ke kanan","Garisan menegak, dibaca kiri ke kanan","Garisan mendatar, dibaca kanan ke kiri","Garisan menegak, dibaca kanan ke kiri"],a:1,e:"Easting = garisan menegak, dibaca dari kiri ke kanan."},
+  {q:"Antara berikut, yang manakah BUKAN kegunaan latitud & longitud?",o:["Navigasi GPS","Pemetaan penerbangan","Membuat resepi masakan","Menentukan zon waktu"],a:2,e:"Lat/long tidak digunakan untuk resepi — ia untuk lokasi geografi."},
+  {q:"Bilangan garisan Easting dan Northing pada peta grid membentuk…",o:["Bulatan","Segi empat / grid squares","Segi tiga","Lingkaran konsentrik"],a:1,e:"Grid squares = segi empat dari persilangan garisan Easting & Northing."},
+  {q:"Sistem rujukan grid menggunakan kod … untuk menunjukkan arah.",o:["A & B","E & N","U & S","T & B"],a:1,e:"Kod E = Easting (kanan), N = Northing (atas)."},
+  {q:"Apakah maksud 'grid reference 4 angka'?",o:["4 garisan pada peta","4 digit untuk menunjukkan grid square","4 warna pada peta","4 arah mata angin"],a:1,e:"4 angka = 2 digit Easting + 2 digit Northing, menunjukkan grid square."},
+  {q:"Kod '3E 5N' bermaksud…",o:["3 ke Utara, 5 ke Timur","3 ke Timur (Easting), 5 ke Utara (Northing)","3 ke Selatan, 5 ke Barat","3 jam, 5 minit"],a:1,e:"3E = 3 unit ke Timur (kanan). 5N = 5 unit ke Utara (atas)."},
+  {q:"Antara berikut, yang manakah merupakan kaedah menentukan kedudukan?",o:["Mengira penduduk","Rujukan grid dan latitud/longitud","Mengukur suhu","Menyanyi"],a:1,e:"Kedudukan ditentukan melalui Rujukan Grid (peta tempatan) dan Lat/Long (peta dunia)."},
+  {q:"Berdasarkan latitud, Malaysia berada di zon…",o:["Kutub","Sederhana","Tropika","Arktik"],a:2,e:"Malaysia dekat Khatulistiwa → zon tropika. Suhu panas sepanjang tahun."},
+  {q:"Antara berikut, yang manakah mempunyai grid reference paling tepat?",o:["2 angka","4 angka","6 angka","8 angka sahaja"],a:2,e:"Grid 6 angka (4N3E) lebih tepat daripada 4 angka (4N2E)."},
+  {q:"Jarak antara Garisan Khatulistiwa ke Kutub Utara dalam latitud ialah…",o:["0°","45°","90°","180°"],a:2,e:"Khatulistiwa = 0°, Kutub Utara = 90°LU. Jarak = 90°."},
 ];
+
+/* ---- daily rotation helpers ---- */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function isoOf(d){ var m=("0"+(d.getMonth()+1)).slice(-2),da=("0"+d.getDate()).slice(-2); return d.getFullYear()+"-"+m+"-"+da; }
+function dayIdx(){ return dayIndexOf(new Date()); }
+function shuffleDay(arr, di){
+  /* Fisher-Yates seeded by day index — deterministic per day */
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+
+/* pick 7 today, rotate through 10-day cycles */
+var Q=QBANK.slice();
+var DAY_LEN=10, PICK=7;
+var START=0, CUR=dayIdx();
+var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
+var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;
+var shift=(off-startOff+DAY_LEN)%DAY_LEN;
+var shuffled=shuffleDay(Q, CUR);
+var todayQ=shuffled.slice(0,PICK);
+
+/* display date info */
+(function showDate(){
+  var d=new Date(), n=d.getMonth(), day=d.getDate(), y=d.getFullYear();
+  var el=document.getElementById('hariInfo');
+  el.textContent='📅 '+DAYS[d.getDay()]+', '+day+' '+MONTHS[n]+' '+y;
+  document.getElementById('qTotal').textContent=todayQ.length;
+})();
+
+/* ---- render quiz with today's questions ---- */
 var answered={};
-(function(){
+(function renderQuiz(){
   var box=document.getElementById('quiz');
-  QUIZ.forEach(function(item,qi){
+  todayQ.forEach(function(q,qi){
     var div=document.createElement('div'); div.className='q';
-    var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');
-    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    var opts=q.o.map(function(t,oi){
+      return '<div class="opt" onclick="pickQ('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+q.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+q.e+'</div>';
     box.appendChild(div);
   });
 })();
-function pick(qi,oi){
-  if(answered[qi]!==undefined)return; answered[qi]=oi; var correct=QUIZ[qi].a;
-  for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}
-  if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');
+function pickQ(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  var correct=todayQ[qi].a;
+  for(var k=0;k<todayQ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k); el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
   document.getElementById('exp'+qi).classList.add('show');
 }
 function submitQuiz(){
   var done=Object.keys(answered).length;
-  if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}
-  var score=0; QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});
-  var pct=Math.round(score/QUIZ.length*100);
+  if(done<todayQ.length){ alert('Jawab semua '+todayQ.length+' soalan dulu! ('+done+'/'+todayQ.length+')'); return; }
+  var score=0; todayQ.forEach(function(q,qi){ if(answered[qi]===q.a) score++; });
+  var pct=Math.round(score/todayQ.length*100);
   var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
-  var msg=pct>=85?'Cemerlang! Kamu mahir kedudukan! 📍':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  var msg=pct>=85?'Cemerlang! Kamu pakar kedudukan! 📍':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
   saveProgress(BAB,pct);
   var r=document.getElementById('result');
-  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab3.html" style="color:#fff;font-weight:800">Teruskan ke Bab 3 →</a></div>';
-  r.classList.add('show'); document.getElementById('submitBtn').style.display='none'; r.scrollIntoView({behavior:'smooth'});
+  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+todayQ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab3.html" style="color:#fff;font-weight:800">Teruskan ke Bab 3 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
 }
-function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
 </script>
 </body>
 </html>
