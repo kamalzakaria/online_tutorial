@@ -216,9 +216,9 @@ function pickCap(c,btn){
 }
 newCap();
 
-/* quiz */
+/* ---------- quiz: full question bank + daily rotation ---------- */
 var BAB=4;
-var QUIZ=[
+var QBANK=[
   {q:"Berapakah jumlah negeri di Malaysia?",o:["11","13","14","16"],a:1,e:"Malaysia ada 13 negeri + 3 Wilayah Persekutuan."},
   {q:"Dua negeri di Malaysia Timur (Borneo) ialah…",o:["Sabah & Sarawak","Johor & Pahang","Perak & Kedah","Selangor & Melaka"],a:0,e:"Malaysia Timur = Sabah & Sarawak (+ WP Labuan)."},
   {q:"Ibu negeri Sarawak ialah…",o:["Kota Kinabalu","Kuching","Kuantan","Kangar"],a:1,e:"Ibu negeri Sarawak ialah Kuching."},
@@ -226,12 +226,63 @@ var QUIZ=[
   {q:"Negara jiran di sebelah utara Semenanjung Malaysia ialah…",o:["Indonesia","Singapura","Thailand","Brunei"],a:2,e:"Thailand berada di utara Semenanjung Malaysia."},
   {q:"Manakah antara berikut Wilayah Persekutuan?",o:["Perak","Putrajaya","Kelantan","Terengganu"],a:1,e:"WP Malaysia: Kuala Lumpur, Putrajaya & Labuan."},
   {q:"Ibu negeri Pahang ialah…",o:["Ipoh","Seremban","Kuantan","Alor Setar"],a:2,e:"Ibu negeri Pahang ialah Kuantan."},
+  {q:"Ibu negeri Sabah ialah…",o:["Kota Kinabalu","Kuching","Kuantan","Labuan"],a:0,e:"Ibu negeri Sabah ialah Kota Kinabalu."},
+  {q:"Berapakah jumlah Wilayah Persekutuan di Malaysia?",o:["1","2","3","4"],a:2,e:"3 Wilayah Persekutuan: KL, Putrajaya & Labuan."},
+  {q:"Negeri paling utara di Malaysia Barat ialah…",o:["Perlis","Kedah","Penang","Perak"],a:0,e:"Perlis terletak di paling utara Semenanjung."},
+  {q:"Negeri paling selatan di Semenanjung ialah…",o:["Melaka","Johor","Negeri Sembilan","Pahang"],a:1,e:"Johor terletak di paling selatan Semenanjung."},
+  {q:"Ibu negeri Melaka ialah…",o:["Bandar Melaka","Johor Bahru","Malacca Town","Alor Setar"],a:0,e:"Ibu negeri Melaka ialah Bandar Melaka."},
+  {q:"Kedudukan geografi Malaysia ialah…",o:["Di barat garisan Khatulistiwa","Di timur garisan Khatulistiwa","Di utara garisan Khatulistiwa","Di selatan garisan Khatulistiwa"],a:1,e:"Malaysia terletak di utara Khatulistiwa dan timur Meridian Greenwich."},
+  {q:"Ibu negeri Perlis ialah…",o:["Kangar","Alor Setar","George Town","Ipoh"],a:0,e:"Ibu negeri Perlis ialah Kangar."},
+  {q:"Negeri yang terkecil di Malaysia ialah…",o:["Perlis","Penang","Putrajaya","Labuan"],a:1,e:"Pulau Pinang (Penang) ialah negeri terkecil."},
+  {q:"Berapakah jumlah peta zon waktu di Malaysia?",o:["1","2","3","4"],a:0,e:"Malaysia menggunakan satu zon waktu sahaja (Waktu Malaysia, UTC+8)."},
+  {q:"Ibu negeri Negeri Sembilan ialah…",o:["Johor Bahru","Seremban","Kuala Lumpur","Kuantan"],a:1,e:"Ibu negeri Negeri Sembilan ialah Seremban."},
+  {q:"Ibu negeri Kelantan ialah…",o:["Kota Bharu","Kuantan","Kuching","Kangar"],a:0,e:"Ibu negeri Kelantan ialah Kota Bharu."},
+  {q:"Ibu negeri Terengganu ialah…",o:["Kuala Terengganu","Kuantan","Kuching","Kangar"],a:0,e:"Ibu negeri Terengganu ialah Kuala Terengganu."},
+  {q:"Manakah antara berikut BUKAN negara jiran Malaysia?",o:["Thailand","Indonesia","Jepun","Singapura"],a:2,e:"Jepun bukan negara jiran Malaysia—ia berada di Asia Timur."},
+  {q:"Ibu negeri Kedah ialah…",o:["Alor Setar","George Town","Ipoh","Kuala Lumpur"],a:0,e:"Ibu negeri Kedah ialah Alor Setar."},
+  {q:"Ibu negeri Perak ialah…",o:["Ipoh","Alor Setar","George Town","Johor Bahru"],a:0,e:"Ibu negeri Perak ialah Ipoh."},
+  {q:"Ibu negeri Selangor ialah…",o:["Kuala Lumpur","Shah Alam","Kuantan","Johor Bahru"],a:1,e:"Ibu negeri Selangor ialah Shah Alam (WP KL bukan sebahagian Selangor)."},
+  {q:"Ibu negeri Pulau Pinang ialah…",o:["George Town","Alor Setar","Ipoh","Johor Bahru"],a:0,e:"Ibu negeri Pulau Pinang ialah George Town."},
+  {q:"Kawasan yang terletak di paling timur Malaysia ialah…",o:["Johor","Sabah","Sarawak","Pahang"],a:1,e:"Sabah terletak di paling timur Malaysia (Borneo)."},
+  {q:"Kawasan yang terletak di paling selatan Malaysia ialah…",o:["Pulau Pinang","Johor","Sarawak","Kelantan"],a:1,e:"Johor terletak di paling selatan Malaysia (termasuk pulau-pulau)."},
+  {q:"Ibu negeri Labuan ialah…",o:["Kuala Lumpur","Victoria","Kuching","Kota Kinabalu"],a:1,e:"Ibu negeri Labuan ialah Victoria."},
+  {q:"Ibu negeri Putrajaya ialah…",o:["Putrajaya","Kuala Lumpur","Johor Bahru","Shah Alam"],a:0,e:"Putrajaya sendiri ialah ibu negara dan ibu negerinya."},
+  {q:"Manakah antara berikut BUKAN negeri di Malaysia Barat?",o:["Kedah","Sarawak","Perak","Kelantan"],a:1,e:"Sarawak ialah negeri di Malaysia Timur (Borneo)."},
+  {q:"Berapakah jumlah daerah kiraan di Malaysia?",o:["156","120","180","200"],a:0,e:"Malaysia mempunyai 156 daerah kiraan bagi pentadbiran tempatan."},
+  {q:"Kawasan pesisir pantai barat Semenanjung dihadapkan oleh…",o:["Laut China Selatan","Selat Melaka","Laut Sulu","Laut Sulawesi"],a:1,e:"Pantai barat Semenanjung dihadapkan oleh Selat Melaka."},
+  {q:"Kawasan pesisir pantai timur Semenanjung dihadapkan oleh…",o:["Laut Cina Selatan","Laut Sulu","Laut Sulawesi","Laut Andaman"],a:0,e:"Pantai timur Semenanjung menghadap Laut Cina Selatan."},
+  {q:"Ibu negeri Pahang yang terletak di pantai timur ialah…",o:["Kuantan","Kota Bharu","Kuala Terengganu","Kuching"],a:0,e:"Kuantan terletak di pantai timur Semenanjung."}
 ];
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu kenal Malaysia! 🇲🇾':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab5.html" style="color:#fff;font-weight:800">Teruskan ke Bab 5 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+
+/* ---- daily rotation helpers (same pattern as bahasa_melayu) ---- */
+var CUR=new Date();
+var dayIndexOf=function(d){var y=d.getFullYear()*10000,m=d.getMonth()*100,dd=d.getDate();return y*10000+m*100+dd};
+var di=dayIndexOf(CUR);
+function shuffleDay(arr, di){
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+var shuffled=shuffleDay(QBANK, di);
+var Q=shuffled.slice(0,10);
+
+(function renderQuiz(){
+  var box=document.getElementById('quiz');
+  Q.forEach(function(q,qi){
+    var div=document.createElement('div'); div.className='q';
+    var opts=q.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+q.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+q.e+'</div>';
+    box.appendChild(div);
+  });
+})();
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=Q[qi].a;for(var k=0;k<Q[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<Q.length){alert('Jawab semua '+Q.length+' soalan dulu! ('+done+'/'+Q.length+')');return;}var score=0;Q.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/Q.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu kenal Malaysia! 🇲🇾':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+Q.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab5.html" style="color:#fff;font-weight:800">Teruskan ke Bab 5 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}
+}
 </script>
 </body>
 </html>

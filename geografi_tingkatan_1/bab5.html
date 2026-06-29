@@ -62,6 +62,7 @@ h2.sec{font-size:1.3rem;margin:.4rem 0 1rem;display:flex;align-items:center;gap:
 .opt.lock{pointer-events:none;opacity:.95}
 .exp{display:none;background:#e9f7f5;border-radius:.6rem;padding:.6rem .8rem;margin-top:.4rem;font-size:.88rem;color:#33425b}.exp.show{display:block}
 .result{text-align:center;padding:1.6rem;border-radius:1rem;background:linear-gradient(150deg,var(--c),var(--c2));color:#fff;display:none}.result.show{display:block}.result .big{font-size:3rem;font-weight:900}.result .stars{font-size:1.8rem;margin:.3rem}
+.hari-info{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:.8rem;font-style:italic}
 footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 .between{display:flex;justify-content:space-between;gap:.6rem;padding:0 1.2rem 2rem}
 .between a{flex:1;text-align:center;text-decoration:none;font-weight:800;padding:.7rem;border-radius:.8rem;background:#e6f5f3;color:var(--c2)}.between a.next{background:var(--c);color:#fff}
@@ -82,7 +83,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 <div class="tabs">
   <button class="tab on" onclick="tab('nota',this)">📖 Nota</button>
   <button class="tab" onclick="tab('akt',this)">🎮 Aktiviti</button>
-  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz</button>
+  <button class="tab" onclick="tab('kuiz',this)">✏️ Kuiz Harian</button>
 </div>
 
 <section id="nota" class="panel on">
@@ -133,7 +134,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </section>
 
 <section id="kuiz" class="panel">
-  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <h2 class="sec">✏️ Kuiz Harian</h2>
+  <p class="hari-info" id="hariInfo"></p>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Soalan berputar setiap hari — jawab <b id="qTotal"></b> soalan untuk menguji kefahaman anda!</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
@@ -194,22 +197,153 @@ function pickLat(L,el){
 }
 buildLat();
 
-/* quiz */
-var BAB=5;
-var QUIZ=[
-  {q:"Putaran Bumi pada paksinya mengambil masa kira-kira…",o:["1 jam","24 jam","30 hari","365 hari"],a:1,e:"Satu putaran lengkap = 24 jam, menyebabkan siang & malam."},
+/* quiz: full question bank + daily rotation */
+var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+
+/* ---- daily rotation helpers (same pattern as bahasa_melayu) ---- */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function isoOf(d){ var m=("0"+(d.getMonth()+1)).slice(-2),da=("0"+d.getDate()).slice(-2); return d.getFullYear()+"-"+m+"-"+da; }
+
+/* ---- 45-question bank (6 categories) ---- */
+var QBANK=[
+  /* === PUTARAN & PEREDARAN (8) === */
+  {q:"Putaran Bumi pada paksinya mengambil masa kira-kira…",o:["12 jam","24 jam","30 hari","365 hari"],a:1,e:"Satu putaran lengkap = 24 jam, menyebabkan siang & malam."},
   {q:"Apakah kesan utama putaran (rotasi) Bumi?",o:["Musim","Siang dan malam","Hujan","Gerhana"],a:1,e:"Putaran menyebabkan kejadian siang dan malam."},
   {q:"Peredaran Bumi mengelilingi Matahari mengambil masa…",o:["24 jam","7 hari","1 bulan","365¼ hari"],a:3,e:"Satu peredaran = 365¼ hari (1 tahun), menyebabkan musim."},
   {q:"Paksi Bumi condong sebanyak…",o:["0°","23.5°","45°","90°"],a:1,e:"Paksi Bumi condong 23.5° dari garis tegak."},
-  {q:"Garisan latitud 0° dikenali sebagai…",o:["Garisan Sartan","Garisan Khatulistiwa","Garisan Artik","Garisan Jadi"],a:1,e:"Latitud 0° = Garisan Khatulistiwa."},
-  {q:"Malaysia terletak dalam zon iklim…",o:["Kutub","Sederhana","Tropika","Gurun"],a:2,e:"Malaysia berhampiran Khatulistiwa, jadi zon Tropika (panas & lembap)."},
   {q:"Bumi berputar ke arah…",o:["Timur ke Barat","Barat ke Timur","Utara ke Selatan","Selatan ke Utara"],a:1,e:"Bumi berputar dari Barat ke Timur, jadi Matahari nampak terbit di Timur."},
+  {q:"Apakah yang menyebabkan perubahan musim di bumi?",o:["Putaran Bumi","Peredaran Bumi","Gerakan Bulan","Perubahan matahari"],a:1,e:"Peredaran Bumi mengelilingi Matahari menyebabkan perubahan musim."},
+  {q:"Satu tahun kalendar Bumi bersamaan dengan…",o:["Satu putaran","Satu peredaran","Satu bulan","Satu minggu"],a:1,e:"Satu tahun = 365¼ hari = satu peredaran Bumi mengelilingi Matahari."},
+  {q:"Mengapakah masa siang dan malam berbeza-beza mengikut musim?",o:["Kerana putaran Bumi","Kerana condongnya paksi Bumi","Kerana peredaran Bumi","Kerana gerakan Bulan"],a:1,e:"Condongnya paksi Bumi 23.5° menyebabkan zaman siang dan malam berbeza mengikut musim."},
+
+  /* === ZON IKLIM & GARIS LATITUD (9) === */
+  {q:"Garisan latitud 0° dikenali sebagai…",o:["Garisan Sartan","Garisan Khatulistiwa","Garisan Artik","Garisan Jadi"],a:1,e:"Latitud 0° = Garisan Khatulistiwa."},
+  {q:"Garisan Sartan terletak pada latitud…",o:["23.5°U","23.5°S","66.5°U","66.5°S"],a:0,e:"Garisan Sartan = 23.5°U (Utara)."},
+  {q:"Garisan Jadi terletak pada latitud…",o:["23.5°U","23.5°S","66.5°U","66.5°S"],a:1,e:"Garisan Jadi = 23.5°S (Selatan)."},
+  {q:"Malaysia terletak dalam zon iklim…",o:["Kutub","Sederhana","Tropika","Gurun"],a:2,e:"Malaysia berhampiran Khatulistiwa, jadi zon Tropika (panas & lembap)."},
+  {q:"Zon iklim yang berhampiran Khatulistiwa ialah…",o:["Kutub","Sederhana","Tropika","Alpin"],a:2,e:"Zon Tropika terletak di sekitar Khatulistiwa (0°)."},
+  {q:"Zon iklim yang paling sejuk di bumi ialah…",o:["Kutub","Sederhana","Tropika","Lemann"],a:0,e:"Zon Kutub (berhampiran Kutub Utara & Selatan) paling sejuk."},
+  {q:"Berapakah peratus air yang meliputi permukaan bumi?",o:["21%","29%","71%","79%"],a:2,e:"Kira-kira 71% permukaan bumi diliputi air (lautan, lautan, tasik, dll)."},
+  {q:"Berapakah peratus daratan yang meliputi permukaan bumi?",o:["21%","29%","71%","79%"],a:1,e:"Kira-kira 29% permukaan bumi adalah daratan (benua & pulau)."},
+  {q:"Zon iklim Malaysia cenderung…",o:["Sejuk sepanjang tahun","Panas & lembap sepanjang tahun","Kering & panas","Beku sepanjang tahun"],a:1,e:"Malaysia di zon Tropika → panas & lembap sepanjang tahun."},
+
+  /* === SISTEM FIZIKAL BUMI (8) === */
+  {q:"Antara berikut, yang manakah BUKAN sistem fizikal bumi?",o:["Atmosfera","Hidrosfera","Biosfera","Tanah"],a:3,e:"Empat sistem fizikal: Atmosfera, Hidrosfera, Litosfera, Biosfera. Tanah adalah sebahagian daripada Litosfera."},
+  {q:"Komponen yang manakah terdiri daripada udara dan gas-gas?",o:["Hidrosfera","Litosfera","Atmosfera","Biosfera"],a:2,e:"Atmosfera = lapisan udara/gas yang menyelubungi bumi."},
+  {q:"Antara berikut, yang manakah termasuk dalam Hidrosfera?",o:["Gunung","Sungai","Hutan","Pasir"],a:1,e:"Hidrosfera = semua bahagian air (lautan, sungai, tasik, ais)."},
+  {q:"Lapisan bumi yang paling tebal ialah…",o:["Kerak bumi","Mantel","Teras luar","Teras dalam"],a:1,e:"Mantel = lapisan paling tebal (2,900 km)."},
+  {q:"Lapisan bumi yang berkeadaan cecair ialah…",o:["Kerak bumi","Mantel","Teras luar","Teras dalam"],a:2,e:"Teras luar = besi & nikel dalam bentuk cecair."},
+  {q:"Lapisan bumi yang paling panas ialah…",o:["Kerak bumi","Mantel","Teras luar","Teras dalam"],a:3,e:"Teras dalam = suhu paling tinggi (kira-kira 6000°C)."},
+  {q:"Antara berikut, yang manakah termasuk dalam Biosfera?",o:["Manusia","Batu","Air"," Udara"],a:0,e:"Biosfera = kawasan tempat benda hidup (manusia, haiwan, tumbuhan)."},
+  {q:"Sistem fizikal bumi yang bertanggungjawab untuk kehidupan ialah…",o:["Litosfera","Atmosfera","Hidrosfera","Biosfera"],a:3,e:"Biosfera = sistem tempat benda hidup menumpang."},
+
+  /* === STRUKTUR BUMI (7) === */
+  {q:"Urutan lapisan bumi dari luar ke dalam ialah…",o:["Kerak → Mantel → Teras","Teras → Mantel → Kerak","Mantel → Kerak → Teras","Kerak → Teras → Mantel"],a:0,e:"Urutan: Kerak (luar) → Mantel → Teras (dalam)."},
+  {q:"Lapisan bumi yang paling nipis ialah…",o:["Kerak bumi","Mantel","Teras luar","Teras dalam"],a:0,e:"Kerak bumi = lapisan paling nipis (5-70 km)."},
+  {q:"Lapisan bumi yang terdiri daripada Sial & Sima ialah…",o:["Kerak bumi","Mantel","Teras luar","Teras dalam"],a:0,e:"Kerak bumi = Sial (atas) & Sima (bawah)."},
+  {q:"Bahan utama Teras Dalam ialah…",o:["Gas","Cecair","Batuan pejal","Pasir"],a:2,e:"Teras dalam = besi & nikel dalam bentuk pejal (tekanan tinggi)."},
+  {q:"Kerak bumi terdiri daripada dua bahagian iaitu…",o:["Sial & Sima","Atmosfera & Hidrosfera","Biosfera & Litosfera","Udara & Air"],a:0,e:"Sial (silikon & aluminium) & Sima (silikon & magnesium)."},
+  {q:"Mantel terletak di antara…",o:["Kerak & Teras","Teras & Atmosfera","Biosfera & Hidrosfera","Litosfera & Biosfera"],a:0,e:"Mantel = di antara Kerak (luar) & Teras (dalam)."},
+  {q:"Magma terdapat dalam lapisan…",o:["Kerak bumi","Mantel","Teras luar","Teras dalam"],a:1,e:"Magma = batuan lebur dalam Mantel."},
+
+  /* === BENUA & LAUTAN (6) === */
+  {q:"Benua terbesar di dunia ialah…",o:["Afrika","Amerika Utara","Asia","Eropah"],a:2,e:"Asia = benua terbesar & terluas."},
+  {q:"Benua terkecil di dunia ialah…",o:["Eropah","Oceania","Afrika","Amerika Selatan"],a:1,e:"Oceania = benua terkecil (Australia & Kepulauan Pasifik)."},
+  {q:"Lautan terbesar di dunia ialah…",o:["Atlantik","Hindi","Pasifik","Artik"],a:2,e:"Lautan Pasifik = lautan terbesar & terluas."},
+  {q:"Lautan terkecil di dunia ialah…",o:["Atlantik","Hindi","Pasifik","Artik"],a:3,e:"Lautan Artik = lautan terkecil & tersejuk."},
+  {q:"Antara berikut, yang manakah BUKAN lautan?",o:["Pasifik","Atlantik","Mediterranean","Hindi"],a:2,e:"Laut Mediterranean = laut, bukan lautan (laut = lebih kecil daripada lautan)."},
+  {q:"Laut yang terletak di antara Semenanjung Malaysia & Sumatera ialah…",o:["Laut Cina Selatan","Laut Sulawesi","Selat Melaka","Laut Jawa"],a:2,e:"Selat Melaka = selat sempit antara Semenanjung Malaysia & Sumatera."},
+
+  /* === KESAN PERGERAKAN KERAK BUMI (7) === */
+  {q:"Gempa bumi berlaku akibat…",o:["Perubahan cuaca","Pertembungan plat tektonik","Peredaran Bumi","Putaran Bumi"],a:1,e:"Gempa bumi = akibat pertembungan atau perselisihan plat tektonik."},
+  {q:"Tsunami sering berlaku selepas…",o:["Gempa bumi di laut","Letusan gunung berapi","Tanah runtuh di pantai","Banjir besar"],a:0,e:"Tsunami = ombak raksasa akibat gempa bumi di dasar laut."},
+  {q:"Lava ialah…",o:["Beku magma","Magma yang keluar ke permukaan","Batu cigar","Mineral berkalori"],a:1,e:"Lava = magma yang telah keluar ke permukaan bumi."},
+  {q:"Antara berikut, yang manakah BUKAN kesan gempa bumi?",o:["Runtuhnya bangunan","Rusaknya jalan raya","Perubahan suhu global","Gangguan bekalan elektrik"],a:2,e:"Gempa bumi tidak menyebabkan perubahan suhu global secara langsung."},
+  {q:"Letusan gunung berapi boleh menyuburkan tanah kerana…",o:["Abunya mengandungi nutrien","Lavanya sejuk","Asapnya manis","Pasirnya halus"],a:0,e:"Abu gunung berapi mengandungi nutrien yang menjadikan tanah subur."},
+  {q:"Plat tektonik bergerak akibat…",o:["Angin","Arus perolakan magma","Air hujan","Tekanan matahari"],a:1,e:"Arus perolakan magma di Mantel menyebabkan Plat Tektonik bergerak."},
+  {q:"Kesan letusan gunung berapi yang positif ialah…",o:["Menghancurkan hutan","Menghancurkan petempatan","Tanah menjadi subur","Bertambahnya haiwan"],a:2,e:"Abu letusan menjadikan tanah sangat subur selepas beratus tahun."},
+
+  /* === SOALAN APLIKASI & KEFAMAHAN (10) === */
+  {q:"Manakah keadaan Bumi yang sesuai untuk kehidupan?",o:["Bumi sfera dengan sistem fizikal seimbang","Bumi datar tanpa atmosfera","Bumi sangat panas tanpa air","Bumi sejuk tanpa biosfera"],a:0,e:"Bumi sfera dengan Atmosfera, Hidrosfera, Litosfera & Biosfera yang seimbang membolehkan kehidupan."},
+  {q:"Mengapakah Teras Bumi tidak cair walaupun sangat panas?",o:["Kerana ia berada jauh dari Matahari","Kerana tekanan sangat tinggi","Kerana ia terdiri daripada batuan","Kerana ia terdiri daripada gas"],a:1,e:"Tekanan sangat tinggi dalam Teras Dalam menjadikannya pekal walaupun sangat panas."},
+  {q:"Jika paksi Bumi tidak condong, apa yang akan berlaku?",o:["Tiada siang & malam","Tiada perubahan musim","Bumi berhenti berputar","Matahari tidak terbit"],a:1,e:"Tanpa condongnya paksi, zon iklim akan statik & tiada perubahan musim."},
+  {q:"Antara berikut, yang manakah BUKAN fungsi Atmosfera?",o:["Melindungi daripada UV","Menjaga suhu bumi","Menyediakan oksigen untuk bernafas","Menyediakan makanan untuk tumbuhan"],a:3,e:"Atmosfera tidak menyediakan makanan untuk tumbuhan (tumbuhan buat makanan sendiri melalui fotosintesis)."},
+  {q:"Malaysia mengalami muson Timur Laut antara…",o:["Januari–Mac","Jun–Ogos","September–November","November–Februari"],a:3,e:"Muson Timur Laut = November hingga Februari, bawa hujan ke pantai timur."},
+  {q:"Antara berikut, yang manakah BUKAN komponen Atmosfera?",o:["Nitrogen","Oksigen","Karbon Dioksida","Kalsium"],a:3,e:"Komponen Atmosfera: Nitrogen (78%), Oksigen (21%), Karbon Dioksida (0.04%), dll. Kalsium = unsur dalam batuan."},
+  {q:"Tasik, sungai, dan ais kutub termasuk dalam sistem…",o:["Atmosfera","Litosfera","Hidrosfera","Biosfera"],a:2,e:"Semua air di bumi = Hidrosfera."},
+  {q:"Manakah antara berikut merupakan lautan yang berhampiran dengan Asia?",o:["Pasifik,Atlantik","Atlantik,Hindi","Pasifik,Hindi","Hindi,Atlantik"],a:2,e:"Asia berhadapan dengan Lautan Pasifik (timur) & Hindi (selatan)."},
+  {q:"Benua yang dilitupi ais secara kekal ialah…",o:["Afrika","Amerika Selatan","Antartika","Australia"],a:2,e:"Antartika = benua yang dilitupi ais kekal."},
+  {q:"Benua yang terletak di Utara Canada ialah…",o:["Eropah","Antartika","Arktik","Amerika Selatan"],a:2,e:"Arktik = kawasan di sekitar Kutub Utara (termasuk Lautan Artik & parts of Eurasia/North America)."}
 ];
+
+/* ---- daily rotation: pick 7 questions for today ---- */
+function dayIdx(){ return dayIndexOf(new Date()); }
+function shuffleDay(arr, di){
+  /* Fisher-Yates seeded by day index — deterministic per day */
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+
+var Q=QBANK.slice();
+/* pick 7 today, rotate through 10-day cycles */
+var DAY_LEN=10, PICK=7;
+var START=0, CUR=dayIdx();
+var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
+var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;
+var shift=(off-startOff+DAY_LEN)%DAY_LEN;
+var shuffled=shuffleDay(QBANK, CUR);
+var todayQ=shuffled.slice(0,PICK);
+
+/* display date info */
+(function showDate(){
+  var d=new Date(), n=d.getMonth(), day=d.getDate(), y=d.getFullYear();
+  var el=document.getElementById('hariInfo');
+  el.textContent='📅 '+DAYS[d.getDay()]+', '+day+' '+MONTHS[n]+' '+y;
+  document.getElementById('qTotal').textContent=todayQ.length;
+})();
+
+/* ---- render quiz with today's questions ---- */
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu faham Bumi! 🌏':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab6.html" style="color:#fff;font-weight:800">Teruskan ke Bab 6 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+(function renderQuiz(){
+  var box=document.getElementById('quiz');
+  todayQ.forEach(function(q,qi){
+    var div=document.createElement('div'); div.className='q';
+    var opts=q.o.map(function(t,oi){
+      return '<div class="opt" onclick="pickQ('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+q.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+q.e+'</div>';
+    box.appendChild(div);
+  });
+})();
+function pickQ(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  var correct=todayQ[qi].a;
+  for(var k=0;k<todayQ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k); el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+}
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<todayQ.length){ alert('Jawab semua '+todayQ.length+' soalan dulu! ('+done+'/'+todayQ.length+')'); return; }
+  var score=0; todayQ.forEach(function(q,qi){ if(answered[qi]===q.a) score++; });
+  var pct=Math.round(score/todayQ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Kamu pakar bumi! 🌏':pct>=60?'Bagus! Hampir sempurna.':'Cuba ulang nota & buat semula. 💪';
+  /* save progress */
+  try{ var key="geo:bab5",prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+todayQ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab6.html" style="color:#fff;font-weight:800">Teruskan ke Bab 6 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
 </script>
 </body>
 </html>

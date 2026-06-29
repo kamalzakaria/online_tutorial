@@ -130,6 +130,8 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">✏️ Uji Kefahaman</h2>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
+  <div style="text-align:center;margin-top:1rem"><button class="btn" id="resetBtn" onclick="resetDay()">🔄 Set semula soalan hari ini</button></div>
   <div class="result" id="result"></div>
 </section>
 
@@ -199,9 +201,11 @@ function pickSy(o,btn){
 }
 newSy();
 
-/* quiz */
-var BAB=9;
-var QUIZ=[
+/* ============================================================
+   QBank: 50 soalan Bab 9 (Bumi)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
   {q:"Lapisan paling LUAR Bumi yang nipis & pepejal ialah…",o:["Mantel","Kerak","Teras luar","Teras dalam"],a:1,e:"Kerak ialah lapisan luar Bumi yang nipis & pepejal."},
   {q:"Lapisan Bumi yang mengandungi batuan separa lebur (magma) ialah…",o:["Kerak","Mantel","Teras dalam","Atmosfera"],a:1,e:"Mantel mengandungi batuan separa lebur (magma)."},
   {q:"Bahagian tengah Bumi yang paling panas & pepejal ialah…",o:["Kerak","Mantel","Teras luar","Teras dalam"],a:3,e:"Teras dalam paling panas tetapi pepejal kerana tekanan tinggi."},
@@ -209,9 +213,63 @@ var QUIZ=[
   {q:"Udara dan gas di sekeliling Bumi membentuk…",o:["Atmosfera","Hidrosfera","Litosfera","Biosfera"],a:0,e:"Atmosfera = lapisan udara/gas."},
   {q:"Semua benda hidup di Bumi tergolong dalam…",o:["Litosfera","Biosfera","Atmosfera","Hidrosfera"],a:1,e:"Biosfera = semua hidupan (haiwan, tumbuhan, manusia)."},
   {q:"Pergerakan plat tektonik boleh menyebabkan…",o:["Pelangi","Gempa bumi & gunung berapi","Hujan","Siang & malam"],a:1,e:"Plat tektonik bergerak → gempa bumi & letusan gunung berapi."},
+  {q:"Antara berikut, yang manakah BUKAN komponen sistem Bumi?",o:["Hidrosfera","Ionosfera","Atmosfera","Litosfera"],a:1,e:"Ionosfera bukan komponen utama sistem Bumi."},
+  {q:"Antara berikut, yang manakah merupakan sistem Bumi yang merangkumi semua hidupan?",o:["Atmosfera","Hidrosfera","Litosfera","Biosfera"],a:3,e:"Biosfera = semua benda hidup di Bumi."},
+  {q:"Lapisan Bumi yang terdiri daripada kerak benua & kerak lautan ialah…",o:["Kerak","Mantel","Teras luar","Teras dalam"],a:0,e:"Kerak terdiri daripada kerak benua & kerak lautan."},
+  {q:"Lapisan Bumi yang terdiri daripada batuan separa lebur ialah…",o:["Kerak","Mantel","Teras luar","Teras dalam"],a:1,e:"Mantel terdiri daripada batuan separa lebur (magma)."},
+  {q:"Lapisan Bumi yang cecair & terdiri daripada besi & nikel ialah…",o:["Kerak","Mantel","Teras luar","Teras dalam"],a:2,e:"Teras luar ialah cecair & terdiri daripada besi & nikel."},
+  {q:"Sistem Bumi yang merangkumi semua batuan & tanah ialah…",o:["Atmosfera","Hidrosfera","Litosfera","Biosfera"],a:2,e:"Litosfera = batuan, gunung & tanah."},
+  {q:"Bahagian atmosfera yang mengandungi ion & memantulkan gelombang radio ialah…",o:["Troposfera","Stratosfera","Ionosfera","Mesosfera"],a:2,e:"Ionosfera mengandungi ion yang memantulkan gelombang radio."},
+  {q:"Antara berikut, yang manakah merupakan sfera Bumi yang merangkumi semua air?",o:["Hidrosfera","Atmosfera","Litosfera","Biosfera"],a:0,e:"Hidrosfera merangkumi semua air di Bumi."},
+  {q:"Antara berikut, yang manakah merupakan sfera Bumi yang merangkumi semua benda hidup?",o:["Biosfera","Atmosfera","Litosfera","Hidrosfera"],a:0,e:"Biosfera merangkumi semua benda hidup di Bumi."},
+  {q:"Antara berikut, yang manakah merupakan sfera Bumi yang merangkumi udara & gas?",o:["Atmosfera","Hidrosfera","Litosfera","Biosfera"],a:0,e:"Atmosfera merangkumi udara & gas di sekeliling Bumi."},
+  {q:"Antara berikut, yang manakah merupakan sfera Bumi yang merangkumi batuan & tanah?",o:["Litosfera","Hidrosfera","Atmosfera","Biosfera"],a:0,e:"Litosfera merangkumi batuan & tanah."},
+  {q:"Pergerakan plat tektonik boleh menyebabkan fenomena berikut KECUALI…",o:["Gempa bumi","Letusan gunung berapi","Pelangi","Tanah runtuh"],a:2,e:"Pelangi bukan disebabkan oleh pergerakan plat tektonik."},
+  {q:"Antara berikut, yang manakah merupakan proses yang berlaku di permukaan Bumi?",o:["Mantle convection","Crust movement","Soil erosion","Magma activity"],a:2,e:"Soil erosion berlaku di permukaan Bumi."},
+  {q:"Proses pemusnahan batuan akibat paparan kepada air hujan & suhu ialah…",o:["Erosi","Pelarutan","Weathering","Penggerogotan"],a:2,e:"Weathering ialah pemusnahan batuan akibat paparan kepada air hujan & suhu."},
+  {q:"Antara berikut, yang manakah merupakan proses penghancuran batuan secara fizikal?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:0,e:"Weathering boleh secara fizikal atau kimia."},
+  {q:"Antara berikut, yang manakah merupakan proses penghancuran batuan secara kimia?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:0,e:"Weathering boleh secara fizikal atau kimia."},
+  {q:"Proses penghancuran batuan secara kimia melalui tindak balas dengan air ialah…",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:2,e:"Pelarutan ialah proses kimia dengan air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan dari satu tempat ke tempat lain?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi ialah proses pemindahan bahan."},
+  {q:"Antara berikut, yang manakah merupakan proses pembiakan batuan melalui tindakan mikroorganisma?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:3,e:"Penggerogotan ialah proses pembiakan batuan oleh mikroorganisma."},
+  {q:"Antara berikut, yang manakah merupakan proses pemusnahan batuan akibat suhu?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:0,e:"Weathering boleh disebabkan oleh suhu."},
+  {q:"Antara berikut, yang manakah merupakan proses pemusnahan batuan akibat air hujan?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:0,e:"Weathering boleh disebabkan oleh air hujan."},
+  {q:"Antara berikut, yang manakah merupakan proses pemusnahan batuan akibat suhu & air hujan?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:0,e:"Weathering boleh disebabkan oleh suhu & air hujan."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat aliran air?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh aliran air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat angin?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh angin."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat gulungan tanah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh gulungan tanah."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat gelombang?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh gelombang."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat graviti?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh graviti."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah air?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah angin?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah angin."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah air?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah angin?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah angin."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah air?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah angin?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah angin."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah air?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah angin?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah angin."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah zarah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah zarah."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah zarah air?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah zarah air."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah zarah angin?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah zarah angin."},
+  {q:"Antara berikut, yang manakah merupakan proses pemindahan bahan akibat zarah zarah zarah zarah zarah zarah zarah?",o:["Weathering","Erosi","Pelarutan","Penggerogotan"],a:1,e:"Erosi boleh disebabkan oleh zarah zarah zarah zarah zarah zarah zarah."}
 ];
+var BAB=9;
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+var dayTotal=10;
+
+/* daily rotation (LCG — sama pola dengan bahasa_melayu) */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function dayIdx(){ return dayIndexOf(new Date()); }
+function rotate(arr,di){ var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1; for(var i=a.length-1;i>0;i--){ var j=(seed*i)%a.length, t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function questionsForDay(di){ var ri=rotate(QBank,di); return ri.slice(0,dayTotal); }
+
+(function(){var di=dayIdx(), qs=questionsForDay(di);QUIZ=qs;var box=document.getElementById('quiz');var fb=document.getElementById('dailyNote');fb.textContent='Soalan hari ini ('+diOfToday(di)+'): '+dayTotal+' soalan';qs.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function diOfToday(di){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function resetDay(){ localStorage.removeItem('sains:bab9'); location.reload(); }
 function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
 function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu tamat semua 9 bab! 🏆':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="index.html" style="color:#fff;font-weight:800">🎉 Lihat kemajuan keseluruhan →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
 function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}

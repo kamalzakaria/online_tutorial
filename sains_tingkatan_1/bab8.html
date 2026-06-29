@@ -131,6 +131,8 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">✏️ Uji Kefahaman</h2>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
+  <div style="text-align:center;margin-top:1rem"><button class="btn" id="resetBtn" onclick="resetDay()">🔄 Set semula soalan hari ini</button></div>
   <div class="result" id="result"></div>
 </section>
 
@@ -183,13 +185,14 @@ function pickPh(o,btn){
   document.querySelectorAll('#phOpts button').forEach(function(b){b.disabled=true;});
   if(o===phTarget.a){btn.classList.add('ok');phScore++;document.getElementById('phscore').textContent=phScore;fb.textContent='✅ Betul!';fb.className='feedback good';}
   else{btn.classList.add('no');document.querySelectorAll('#phOpts button').forEach(function(b){if(b.textContent===phTarget.a)b.classList.add('ok');});fb.textContent='❌ Jawapan: '+phTarget.a;fb.className='feedback bad';}
-  setTimeout(newPh,1200);
+   setTimeout(newPh,1200);
 }
-newPh();
 
-/* quiz */
-var BAB=8;
-var QUIZ=[
+/* ============================================================
+   QBank: 50 soalan Bab 8 (Cahaya dan Optik)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
   {q:"Cahaya bergerak dalam…",o:["Garis lengkung","Garis lurus","Bulatan","Zigzag"],a:1,e:"Cahaya bergerak dalam garis lurus — sebab itu bayang-bayang terbentuk."},
   {q:"Menurut hukum pantulan, sudut tuju adalah…",o:["Lebih besar daripada sudut pantulan","Sama dengan sudut pantulan","Lebih kecil daripada sudut pantulan","Sentiasa 90°"],a:1,e:"Sudut tuju = sudut pantulan."},
   {q:"Straw kelihatan bengkok dalam air disebabkan oleh…",o:["Pantulan","Pembiasan","Penyerakan","Bayang-bayang"],a:1,e:"Pembiasan — cahaya membengkok apabila melalui air & udara."},
@@ -197,9 +200,62 @@ var QUIZ=[
   {q:"Kanta yang menumpukan cahaya ialah kanta…",o:["Cekung","Cembung","Rata","Buram"],a:1,e:"Kanta cembung menumpukan cahaya (cth kanta pembesar)."},
   {q:"Bayang-bayang terbentuk kerana cahaya…",o:["Boleh membengkok","Tidak dapat menembusi objek legap","Berwarna","Bergerak perlahan"],a:1,e:"Cahaya bergerak lurus & tidak dapat menembusi objek legap → bayang-bayang."},
   {q:"Antara alat optik berikut ialah…",o:["Periskop","Termometer","Ammeter","Neraca"],a:0,e:"Periskop (juga kanta pembesar & kamera) ialah alat optik."},
+  {q:"Hukum pantulan menyatakan sudut tuju adalah…",o:["Lebih besar daripada sudut pantulan","Sama dengan sudut pantulan","Lebih kecil daripada sudut pantulan","Sentiasa 45°"],a:1,e:"Sudut tuju = sudut pantulan dalam hukum pantulan."},
+  {q:"Cahaya yang memantul daripada permukaan licin dipanggil…",o:["Pantulan biasa","Pantulan hampar","Pantulan ganda","Pantulan balik"],a:0,e:"Pantulan biasa berlaku pada permukaan licin seperti cermin."},
+  {q:"Cahaya yang memantul daripada permukaan kasar dipanggil…",o:["Pantulan biasa","Pantulan hampar","Pantulan ganda","Pantulan balik"],a:1,e:"Pantulan hampar berlaku pada permukaan kasar."},
+  {q:"Antara berikut, yang manakah merupakan sifat cahaya?",o:["Bergerak dalam garis lengkung","Bergerak dalam garis lurus","Berpantulan sahaja","Dibias sahaja"],a:1,e:"Cahaya bergerak dalam garis lurus & boleh dipantulkan & dibias."},
+  {q:"Cahaya putih terdiri daripada…",o:["Satu warna sahaja","7 warna spektrum","3 warna utama","Tanpa warna"],a:1,e:"Cahaya putih terdiri daripada 7 warna spektrum (merah hingga ungu)."},
+  {q:"Alat optik yang menggunakan kanta cembung ialah…",o:["Periskop","Kamera","Termometer","Neraca"],a:1,e:"Kamera menggunakan kanta cembung untuk menumpukan cahaya."},
+  {q:"Alat optik yang menggunakan cermin datar ialah…",o:["Periskop","Kamera","Termometer","Neraca"],a:0,e:"Periskop menggunakan cermin datar untuk memantulkan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan contoh pembiasan?",o:["Cermin","Pelangi","Bayang-bayang","Laser"],a:1,e:"Pelangi terbentuk kerana pembiasan & penyerakan cahaya dalam titisan air."},
+  {q:"Cermin yang memantulkan cahaya dengan baik ialah cermin…",o:["Datar","Cembung","Cekung","Buram"],a:0,e:"Cermin datar memantulkan cahaya dengan baik & menghasilkan imej yang jelas."},
+  {q:"Antara berikut, yang manakah merupakan sifat imej pada cermin datar?",o:["Maya & songsang","Nyata & tegak","Maya & tegak","Nyata & songsang"],a:2,e:"Imej pada cermin datar ialah maya & tegak."},
+  {q:"Kanta yang memantulkan cahaya ialah kanta…",o:["Cekung","Cembung","Rata","Gong"],a:0,e:"Kanta cekung memantulkan cahaya (cermin cekung)."},
+  {q:"Kanta yang menumpukan cahaya ialah kanta…",o:["Cekung","Cembung","Rata","Gong"],a:1,e:"Kanta cembung menumpukan cahaya (kanta pembesar)."},
+  {q:"Antara berikut, yang manakah merupakan sifat kanta cekung?",o:["Menumpukan cahaya","Mencapahkan cahaya","Memantulkan cahaya","Menyerakkan cahaya"],a:1,e:"Kanta cekung mencapahkan cahaya (kanta Penyaring)."},
+  {q:"Antara berikut, yang manakah merupakan sifat kanta cembung?",o:["Menumpukan cahaya","Mencapahkan cahaya","Memantulkan cahaya","Menyerakkan cahaya"],a:0,e:"Kanta cembung menumpukan cahaya (kanta pembesar)."},
+  {q:"Cermin yang menghasilkan imej lebih kecil ialah cermin…",o:["Datar","Cembung","Cekung","Gong"],a:1,e:"Cermin cembung menghasilkan imej lebih kecil & lebih luas cakupan."},
+  {q:"Cermin yang menghasilkan imej lebih besar ialah cermin…",o:["Datar","Cembung","Cekung","Gong"],a:2,e:"Cermin cekung menghasilkan imej lebih besar (cth kanta pembesar)."},
+  {q:"Antara berikut, yang manakah merupakan sifat cermin cekung?",o:["Menghasilkan imej lebih kecil","Menghasilkan imej lebih besar","Menghasilkan imej sama saiz","Tidak menghasilkan imej"],a:1,e:"Cermin cekung menghasilkan imej lebih besar apabila objek dekat."},
+  {q:"Antara berikut, yang manakah merupakan sifat cermin cembung?",o:["Menghasilkan imej lebih kecil","Menghasilkan imej lebih besar","Menghasilkan imej sama saiz","Tidak menghasilkan imej"],a:0,e:"Cermin cembung menghasilkan imej lebih kecil & lebih luas cakupan."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Kanta pembesar","Teropong"],a:2,e:"Kanta pembesar menggunakan cermin cekung untuk membesarkan objek."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Kanta pembesar","Teropong"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin mandi","Teropong"],a:2,e:"Cermin mandi menggunakan cermin datar untuk imej yang jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Teropong"],a:3,e:"Teropong menggunakan cermin cekung untuk membesarkan objek jauh."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Teropong"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Teropong"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cembung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:1,e:"Cermin belakang kenderaan menggunakan cermin cembung untuk cakupan luas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin datar?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:2,e:"Cermin depan kereta menggunakan cermin datar untuk pandangan jelas."},
+  {q:"Antara berikut, yang manakah merupakan kegunaan cermin cekung?",o:["Cermin sorot","Cermin belakang kenderaan","Cermin depan kereta","Lampu sorot"],a:3,e:"Lampu sorot menggunakan cermin cekung untuk memfokuskan cahaya."}
 ];
+var BAB=8;
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+var dayTotal=10;
+
+/* daily rotation (LCG — sama pola dengan bahasa_melayu) */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function dayIdx(){ return dayIndexOf(new Date()); }
+function rotate(arr,di){ var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1; for(var i=a.length-1;i>0;i--){ var j=(seed*i)%a.length, t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function questionsForDay(di){ var ri=rotate(QBank,di); return ri.slice(0,dayTotal); }
+
+(function(){var di=dayIdx(), qs=questionsForDay(di);QUIZ=qs;var box=document.getElementById('quiz');var fb=document.getElementById('dailyNote');fb.textContent='Soalan hari ini ('+diOfToday(di)+'): '+dayTotal+' soalan';qs.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function diOfToday(di){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
 function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
 function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 💡':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab9.html" style="color:#fff;font-weight:800">Teruskan ke Bab 9 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
 function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}

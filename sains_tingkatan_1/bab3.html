@@ -61,7 +61,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 <body>
 <div class="wrap">
 <header class="hero">
-  <div class="kicker">TEMA 2 · PENYENGGARAAN & KESINAMBUNGAN HIDUP</div>
+  <div class="kicker">TEMA 2 · PENYENGGARAAN &amp; KESINAMBUNGAN HIDUP</div>
   <div class="big">🧠</div>
   <h1>Bab 3: Koordinasi dan Gerak Balas</h1>
 </header>
@@ -77,9 +77,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </div>
 
 <section id="nota" class="panel on">
-  <h2 class="sec">📖 Mengesan & Bertindak Balas</h2>
+  <h2 class="sec">📖 Mengesan &amp; Bertindak Balas</h2>
   <div class="note">
-    <h3>Rangsangan & Gerak Balas</h3>
+    <h3>Rangsangan &amp; Gerak Balas</h3>
     <p><b>Rangsangan</b> ialah perubahan dalam persekitaran yang dapat dikesan (cahaya, bunyi, bau, suhu). <b>Gerak balas</b> ialah tindakan badan terhadap rangsangan itu.</p>
   </div>
   <div class="note">
@@ -94,13 +94,13 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   </div>
   <div class="note">
     <h3>⚖️ Homeostasis</h3>
-    <p><b>Homeostasis</b> ialah pengekalan keadaan dalaman badan yang stabil — contohnya suhu badan, kandungan air & gula dalam darah. Contoh: kita <b>berpeluh</b> untuk menyejukkan badan apabila panas.</p>
+    <p><b>Homeostasis</b> ialah pengekalan keadaan dalaman badan yang stabil — contohnya suhu badan, kandungan air &amp; gula dalam darah. Contoh: kita <b>berpeluh</b> untuk menyejukkan badan apabila panas.</p>
   </div>
   <div class="note">
     <h3>🌱 Gerak Balas Tumbuhan (Tropisme)</h3>
     <p><span class="tag">Fototropisme — ke arah cahaya</span><span class="tag">Geotropisme — ke arah graviti</span><span class="tag">Hidrotropisme — ke arah air</span><span class="tag">Tigmotropisme — ke arah sentuhan</span></p>
   </div>
-  <div class="callout"><b>💡 Ingat:</b> Sistem saraf (otak & saraf tunjang) menyelaras gerak balas badan. Organ deria mengesan rangsangan → otak memproses → badan bertindak balas.</div>
+  <div class="callout"><b>💡 Ingat:</b> Sistem saraf (otak &amp; saraf tunjang) menyelaras gerak balas badan. Organ deria mengesan rangsangan → otak memproses → badan bertindak balas.</div>
 </section>
 
 <section id="akt" class="panel">
@@ -194,22 +194,222 @@ function pickTr(o,btn){
 }
 newTr();
 
-/* quiz */
-var BAB=3;
-var QUIZ=[
-  {q:"Perubahan dalam persekitaran yang dapat dikesan dipanggil…",o:["Gerak balas","Rangsangan","Homeostasis","Tropisme"],a:1,e:"Rangsangan ialah perubahan persekitaran yang dikesan oleh deria."},
-  {q:"Organ deria untuk mengesan bunyi ialah…",o:["Mata","Telinga","Lidah","Kulit"],a:1,e:"Telinga mengesan bunyi (pendengaran)."},
-  {q:"Kulit ialah organ deria yang mengesan…",o:["Cahaya","Bau","Sentuhan & suhu","Bunyi"],a:2,e:"Kulit mengesan sentuhan, suhu, tekanan & sakit."},
-  {q:"Pengekalan keadaan dalaman badan yang stabil dipanggil…",o:["Homeostasis","Fotosintesis","Respirasi","Pembiakan"],a:0,e:"Homeostasis mengekalkan suhu, air & gula badan yang stabil."},
-  {q:"Pucuk tumbuh ke arah cahaya ialah contoh…",o:["Geotropisme","Fototropisme","Hidrotropisme","Tigmotropisme"],a:1,e:"Foto = cahaya. Fototropisme = gerak balas terhadap cahaya."},
-  {q:"Akar tumbuh ke bawah mengikut tarikan graviti ialah…",o:["Fototropisme","Geotropisme","Hidrotropisme","Tigmotropisme"],a:1,e:"Geo = bumi/graviti. Geotropisme = gerak balas terhadap graviti."},
-  {q:"Sistem yang menyelaras gerak balas badan ialah sistem…",o:["Saraf","Pencernaan","Pernafasan","Perkumuhan"],a:0,e:"Sistem saraf (otak & saraf tunjang) menyelaras gerak balas."},
+/* ============================================================
+   QBank: 50 soalan Bab 3 (Koordinasi dan Gerak Balas)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
+/* --- Rangsangan & Gerak Balas --- */
+{q:"Perubahan dalam persekitaran yang dapat dikesan dipanggil…",o:["Gerak balas","Rangsangan","Homeostasis","Tropisme"],a:1,e:"Rangsangan ialah perubahan persekitaran yang dikesan oleh deria."},
+{q:"Gerak balas ialah…",o:["Perubahan dalam persekitaran","Tindakan badan terhadap rangsangan","Pengesan deria","Sistem saraf"],a:1,e:"Gerak balas ialah tindak balas badan terhadap rangsangan yang dikesan."},
+{q:"Antara berikut, yang manakah BUKAN rangsangan?",o:["Cahaya terang","Bunyi kuat","Batu besar","Suhu panas"],a:2,e:"Batu besar bukan rangsangan kerana ia tidak menyebabkan perubahan dalam persekitaran yang dikesan oleh deria."},
+{q:"Apakah urutan yang betul bagi sistem koordinasi?",o:["Gerak balas → Rangsangan → Pengeesan → Pemprosesan","Rangsangan → Pengeesan → Pemprosesan → Gerak balas","Pemprosesan → Gerak balas → Rangsangan → Pengeesan","Rangsangan → Pemprosesan → Gerak balas → Pengeesan"],a:1,e:"Urutan: rangsangan dikesan → maklumat dihantar ke pusat pemprosesan → keputusan dibuat → gerak balas dilakukan."},
+{q:"Organ yang menjadi pusat pemprosesan maklumat ialah…",o:["Jantung","Hati","Otak","Ginjal"],a:2,e:"Otak merupakan pusat pemprosesan maklumat dalam sistem saraf."},
+{q:"Apabila anda melihat kereta datang laju, anda segera melompat ke tepi. Ini adalah contoh…",o:["Rangsangan sahaja","Gerak balas sahaja","Pemerhatian sahaja","Pernafasan"],a:1,e:"Melompat ke tepi ialah gerak balas terhadap rangsangan (kereta datang laju) yang dikesan oleh mata."},
+{q:"Pengeesan rangsangan dilakukan oleh…",o:["Otot","Organ deria","Tulang","Pankreas"],a:1,e:"Organ deria (mata, telinga, kulit, dll) mengesan rangsangan dari persekitaran."},
+
+/* --- Organ Deria --- */
+{q:"Organ deria untuk mengesan bunyi ialah…",o:["Mata","Telinga","Lidah","Kulit"],a:1,e:"Telinga mengesan bunyi (pendengaran)."},
+{q:"Mata berfungsi mengesan…",o:["Bunyi","Sentuhan","Cahaya","Bau"],a:2,e:"Mata mengesan cahaya untuk penglihatan."},
+{q:"Hidung mengesan…",o:["Cahaya","Bau","Rasa","Suhu"],a:1,e:"Hidung mengesan bau (hidu) melalui reseptor bau di rongga hidung."},
+{q:"Lidah mengesan…",o:["Cahaya","Bunyi","Rasa","Haba"],a:2,e:"Lidah mengesan rasa melalui kuncu rasa (taste buds). Lima rasa asas: manis, masin, masam, pahit, umami."},
+{q:"Kulit mengesan…",o:["Cahaya & bunyi","Sentuhan, suhu & tekanan","Bau sahaja","Rasa sahaja"],a:1,e:"Kulit mengesan sentuhan, suhu (panas/dingin), tekanan & sakit."},
+{q:"Bagian mata yang mengawal kuantiti cahaya yang masuk ialah…",o:["Kornea","Pupil/Iris","Kanta","Retina"],a:1,e:"Pupil (bulatan hitam di tengah mata) membesar dalam keadaan gelap dan mengecil dalam keadaan terang untuk mengawal cahaya."},
+{q:"Reseptor pada kulit yang paling banyak terdapat di hujung jari ialah…",o:["Reseptor sakit","Reseptor sentuhan","Reseptor suhu panas","Reseptor suhu sejuk"],a:1,e:"Reseptor sentuhan sangat banyak di hujung jari, tapak tangan, dan bibir — kawasan yang paling sensitif."},
+{q:"Bahagian telinga yang mengesan bunyi dan mengekalkan keseimbangan ialah…",o:["Lobus telinga","Telinga tengah","Telinga dalam (koklea)","Laluan udara"],a:2,e:"Telinga dalam mengandungi koklea (menangani bunyi) dan kanalis semisirkularis (menjaga keseimbangan)."},
+{q:"Apakah yang berlaku pada pupil apabila anda berada di tempat terang?",o:["Pupil membesar","Pupil mengecil","Tiada perubahan","Pupil hilang"],a:1,e:"Dalam cahaya terang, pupil mengecil supaya kurang cahaya masuk ke mata. Dalam gelap, pupil membesar."},
+
+/* --- Homeostasis --- */
+{q:"Pengekalan keadaan dalaman badan yang stabil dipanggil…",o:["Homeostasis","Fotosintesis","Respirasi","Pembiakan"],a:0,e:"Homeostasis mengekalkan suhu, air & gula badan yang stabil."},
+{q:"Apakah yang berlaku apabila badan kepanasan?",o:["Pori-pori kulit tertutup","Badan berpeluh untuk menyejukkan diri","Badan menggigil","Detak jantung perlahan"],a:1,e:"Badan berpeluh untuk menyejukkan diri. Peluh menguap dan membawa keluar haba dari badan."},
+{q:"Apakah yang berlaku apabila badan sejuk?",o:["Badan berpeluh","Badan menggigil","Pupil membesar","Nafas berhenti"],a:1,e:"Apabila sejuk, badan menggigil (otot berkontraksi dengan cepat) untuk menghasilkan haba."},
+{q:"Kandungan gula dalam darah dikawal oleh…",o:["Otak sahaja","Hormon insulin dari pankreas","Hati sahaja","Ginjal"],a:1,e:"Hormon insulin dari pankreas mengawal paras gula dalam darah — ia menurunkan gula darah apabila terlalu tinggi."},
+{q:"Apakah kepentingan homeostasis?",o:["Mengekalkan keadaan optimum untuk fungsi enzim","Menambah berat badan","Menghadkan pergerakan","Mempercepatkan pencernaan"],a:0,e:"Homeostasis mengekalkan suhu dan keadaan optimum supaya enzim dan proses badan berfungsi dengan baik."},
+{q:"Apabila anda bersenam, badan anda…",o:["Mengeluarkan peluh","Bernafas lebih laju","Kedua-duanya","Tiada perubahan"],a:2,e:"Bersenam menghasilkan haba (berpeluh) dan memerlukan lebih oksigen (nafas laju) — kedua-duanya homeostasis."},
+{q:"Apabila kita kecut perut kerana risau, sistem yang terlibat ialah…",o:["Sistem pernafasan","Sistem saraf","Sistem pencernaan sahaja","Sistem rangka"],a:1,e:"Sistem saraf bertindak balas terhadap rangsangan emosi (risau/gelisah) melalui isyarat elektrik ke organ sasaran."},
+
+/* --- Tropisme (Tumbuhan) --- */
+{q:"Pucuk tumbuh ke arah cahaya ialah contoh…",o:["Geotropisme","Fototropisme","Hidrotropisme","Tigmotropisme"],a:1,e:"Foto = cahaya. Fototropisme = gerak balas terhadap cahaya."},
+{q:"Akar tumbuh ke bawah mengikut tarikan graviti ialah…",o:["Fototropisme","Geotropisme","Hidrotropisme","Tigmotropisme"],a:1,e:"Geo = bumi/graviti. Geotropisme = gerak balas terhadap graviti."},
+{q:"Akar tumbuh ke arah sumber air ialah…",o:["Fototropisme","Geotropisme","Hidrotropisme","Tigmotropisme"],a:2,e:"Hidro = air. Hidrotropisme = gerak balas akar terhadap air — akar mencari air untuk tumbuhan."},
+{q:"Sulur pokok pea membelit kayu (sentuhan) ialah…",o:["Fototropisme","Geotropisme","Hidrotropisme","Tigmotropisme"],a:3,e:"Tigma = sentuhan. Tigmotropisme = gerak balas tumbuhan terhadap sentuhan."},
+{q:"Hormon yang mendorong pertumbuhan ke arah cahaya ialah…",o:["Adrenalin","Auksin","Insulin","Enzim"],a:1,e:"Auksin ialah hormon tumbuhan yang berkumpul di bahagian gelap pucuk dan merangsang pemanjangan sel — menyebabkan pucuk membengkok ke arah cahaya."},
+{q:"Bahagian tumbuhan yang mengesan cahaya ialah…",o:["Akar","Daun & pucuk","Bunga","Akarnya"],a:1,e:"Daun dan pucuk mengesan cahaya. Puncak pucuk (apical meristem) mengandungi auksin."},
+{q:"Mengapakah akar menunjukkan geotropisme positif (tumbuh ke bawah)?",o:["Untuk mencari cahaya","Untuk mencari air & garam mineral di dalam tanah","Untuk mengelakkan air","Untuk menghadapi angin"],a:1,e:"Akar tumbuh ke bawah (geotropisme positif) untuk mencari air dan garam mineral di dalam tanah serta mengokuhkan tumbuhan."},
+
+/* --- Sistem Saraf --- */
+{q:"Sistem yang menyelaras gerak balas badan ialah sistem…",o:["Sistem saraf","Pencernaan","Pernafasan","Perkumuhan"],a:0,e:"Sistem saraf (otak & saraf tunjang) menyelaras gerak balas."},
+{q:"Bahagian sistem saraf pusat (SSP) yang memproses maklumat ialah…",o:["Nervus spinalis","Otak","Saraf tepi","Mata"],a:1,e:"Otak memproses maklumat dari deria dan menghasilkan keputusan untuk gerak balas."},
+{q:"Saraf tunjang (sumsum belakang) berfungsi untuk…",o:["Menelan makanan","Menghantar impuls antara otak dan badan","Memompa darah","Menapasi udara"],a:1,e:"Saraf tunjang menghantar impuls antara otak dan seluruh badan serta mengawal gerak balas refleks."},
+{q:"Gerak balas refleks berbeza dari gerak balas biasa kerana…",o:["Lebih lambat","Tidak melibatkan otak dan berlaku serta-merta","Hanya berlaku pada manusia","Tidak perlu rangsangan"],a:1,e:"Gerak balas refleks berlaku sangat pantas tanpa memikirkan terlebih dahulu — ia melalui saraf tunjang sahaja, bukan otak."},
+{q:"Contoh gerak balas refleks ialah…",o:["Mengira nombor","Menarik tangan apabila kena benda panas","Membaca buku","Berfikir"],a:1,e:"Apabila jari menyentuh benda panas, tangan ditarik serta-merta melalui refleks — otak belum sempat memprosesnya."},
+{q:"Unit asas sistem saraf ialah…",o:["Hormon","Neuron (sel saraf)","Otot","Sel darah"],a:1,e:"Neuron (sel saraf) ialah unit asas sistem saraf. Ia menghantar impuls (isyarat elektrik) dengan pantas."},
+{q:"Bahagian neuron yang menghantar impuls menjauhi badan sel ialah…",o:["Dendrit","Akson","Nod skem","Sel Schwann"],a:1,e:"Akson (axon) menghantar impuls menjauhi badan sel ke neuron lain atau ke organ sasaran."},
+
+/* --- Nilai & Sikap --- */
+{q:"Apakah sikap saintifik yang penting dalam membuat pemerhatian?",o:["Terburu-buru","Teliti dan jujur","Subjektif","Tidak sabar"],a:1,e:"Sikap teliti dan jujur penting untuk merekod pemerhatian dengan betul dan tidak memanipulasi data."},
+{q:"Mengapakah kita perlu membuat pemerhatian yang teliti?",o:["Untuk menghabiskan masa","Untuk mendapatkan data yang sahih","Untuk membuat guru marah","Tidak penting"],a:1,e:"Pemerhatian yang teliti menghasilkan data yang sahih dan boleh dipercayai untuk membuat kesimpulan."},
+{q:"Apabila melakukan eksperimen, apakah yang perlu dilakukan apabila eksperimen selesai?",o:["Tinggalkan semua alat di meja","Kemas semua radas dan bersihkan kawasan","Tanggalkan peralatan sahaja","Simpan semua alat tanpa kemas"],a:1,e:"Selepas eksperimen, kemas semua radas dan bersihkan kawasan makmal untuk keselamatan dan kemas."},
+{q:"Sikap yang menunjukkan seorang saintis yang baik ialah…",o:["Menipu data","Bertanggungjawab dan jujur","Menyembunyikan maklumat","Tidak mahu menerima pandangan lain"],a:1,e:"Saintis yang bertanggungjawab dan jujur merekod dan melaporkan data dengan benar tanpa memanipulasi."},
+{q:"Apakah kepentingan bekerja dalam pasukan semasa eksperimen?",o:["Untuk membuat kerja lebih cepat dan tepat","Untuk membuang masa","Untuk tidak bekerja langsung","Untuk berseronok sahaja"],a:0,e:"Bekerja dalam pasukan membantu pengagihan tugas, ketepatan data, dan keselamatan semasa eksperimen."},
+
+/* --- Koordinasi & Pembiakan (Kaitan) --- */
+{q:"Organisma unisel (seperti ameba) merespon rangsangan melalui…",o:["Sistem saraf","Seluruh badannya","Tidak merespon","Hanya bahagian kepala"],a:1,e:"Organisma unisel tidak mempunyai sistem saraf, tetapi sel seluruh badan bertindak balas terhadap rangsangan."},
+{q:"Pepijat (belalang) menggunakan…",o:["Antena untuk mengesan bau dan sentuhan","Mata sahaja","Tungkai sahaja","Tidak mempunyai deria"],a:0,e:"Pepijat menggunakan antena untuk mengesan bau, sentuhan, dan rangsangan lain dalam persekitaran."},
+{q:"Apakah fungsi sistem saraf dalam koordinasi?",o:["Memompa darah","Menghantar impuls","Pencernaan makanan","Pengeluaran"],a:1,e:"Sistem saraf menghantar impuls elektrik pantas untuk koordinasikan gerak balas badan."},
+
+/* --- Nilai & Sikap --- */
+{q:"Apakah sikap saintifik yang penting dalam membuat pemerhatian?",o:["Terburu-buru","Teliti dan jujur","Subjektif","Tidak sabar"],a:1,e:"Sikap teliti dan jujur penting untuk merekod pemerhatian dengan betul dan tidak memanipulasi data."},
+{q:"Mengapakah kita perlu membuat pemerhatian yang teliti?",o:["Untuk menghabiskan masa","Untuk mendapatkan data yang sahih","Untuk membuat guru marah","Tidak penting"],a:1,e:"Pemerhatian yang teliti menghasilkan data yang sahih dan boleh dipercayai untuk membuat kesimpulan."},
+{q:"Apabila melakukan eksperimen, apakah yang perlu dilakukan apabila eksperimen selesai?",o:["Tinggalkan semua alat di meja","Kemas semua radas dan bersihkan kawasan","Tanggalkan peralatan sahaja","Simpan semua alat tanpa kemas"],a:1,e:"Selepas eksperimen, kemas semua radas dan bersihkan kawasan makmal untuk keselamatan dan kemas."},
+{q:"Sikap yang menunjukkan seorang saintis yang baik ialah…",o:["Menipu data","Bertanggungjawab dan jujur","Menyembunyikan maklumat","Tidak mahu menerima pandangan lain"],a:1,e:"Saintis yang bertanggungjawab dan jujur merekod dan melaporkan data dengan benar tanpa memanipulasi."},
+{q:"Apakah kepentingan bekerja dalam pasukan semasa eksperimen?",o:["Untuk membuat kerja lebih cepat dan tepat","Untuk membuang masa","Untuk tidak bekerja langsung","Untuk berseronok sahaja"],a:0,e:"Bekerja dalam pasukan membantu pengagihan tugas, ketepatan data, dan keselamatan semasa eksperimen."},
+
+/* --- Koordinasi & Pembiakan (Kaitan) --- */
+{q:"Organisma unisel (seperti ameba) merespon rangsangan melalui…",o:["Sistem saraf","Seluruh badannya","Tidak merespon","Hanya bahagian kepala"],a:1,e:"Organisma unisel tidak mempunyai sistem saraf, tetapi sel seluruh badan bertindak balas terhadap rangsangan."},
+{q:"Pepijat (belalang) menggunakan…",o:["Antena untuk mengesan bau dan sentuhan","Mata sahaja","Tungkai sahaja","Tidak mempunyai deria"],a:0,e:"Pepijat menggunakan antena untuk mengesan bau, sentuhan, dan rangsangan lain dalam persekitaran."},
+{q:"Apakah fungsi sistem saraf dalam koordinasi?",o:["Memompa darah","Menghantar impuls","Pencernaan makanan","Pengeluaran"],a:1,e:"Sistem saraf menghantar impuls elektrik pantas untuk koordinasikan gerak balas badan."},
 ];
-var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🧠':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab4.html" style="color:#fff;font-weight:800">Teruskan ke Bab 4 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
+
+/* ---------- Daily rotation (LCG — sama pola dengan bahasa_melayu) ---------- */
+var QUIZ=[];        // hari ini: 10 soalan terpilih dari QBank
+var answered={};    // indeks QUIZ → pilihan user (disimpan di localStorage)
+
+function dayIdx(d){
+  return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5);
+}
+function lcgDay(d){
+  return (dayIdx(d)*2654435761+20260617)>>>0;
+}
+function pickDay(n,seed){
+  var sel=[],rem=[],r=seed;
+  for(var i=0;i<n;i++) rem.push(i);
+  for(var i=0;i<Math.min(n,rem.length);i++){
+    r=r*2654435761%4294967296;
+    var j=r%(rem.length);
+    sel.push(rem[j]);
+    rem.splice(j,1);
+  }
+  return sel;
+}
+
+/* Inisialisasi / ulang: semak localStorage untuk quiz hari ini */
+(function(){
+  var today=new Date(),sid="sains:day"+dayIdx(today);
+  var stored=localStorage.getItem(sid);
+  if(stored){
+    try{QUIZ=JSON.parse(stored);}catch(e){QUIZ=[];}
+  }
+  if(!QUIZ.length||QUIZ.length!==QBank.length){
+    var seed=lcgDay(today);
+    var idx=pickDay(QBank.length,seed);
+    QUIZ=idx.map(function(i){return QBank[i];});
+    localStorage.setItem(sid,JSON.stringify(QUIZ));
+  } else {
+    /* restore jawapan dari localStorage */
+    try{
+      var as=JSON.parse(localStorage.getItem("sains:a")||"{}");
+      for(var k in as) answered[parseInt(k)]=as[k];
+    }catch(e){}
+  }
+})();
+
+/* ---------- Render quiz ---------- */
+(function(){
+  var box=document.getElementById('quiz');
+  QUIZ.forEach(function(item,qi){
+    var div=document.createElement('div');
+    div.className='q';
+    var opts=item.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    box.appendChild(div);
+  });
+  /* restore answered dari localStorage */
+  for(var k in answered){
+    var qi=parseInt(k),oi=answered[k];
+    if(qi<QUIZ.length){
+      var el=document.getElementById('q'+qi+'o'+oi);
+      if(el){
+        el.classList.add('lock');
+        var correct=QUIZ[qi].a;
+        for(var c=0;c<QUIZ[qi].o.length;c++){
+          var r=document.getElementById('q'+qi+'o'+c);
+          r.classList.add('lock');
+          if(c===correct) r.classList.add('ok');
+        }
+        if(oi!==correct) el.classList.add('no');
+        document.getElementById('exp'+qi).classList.add('show');
+      }
+    }
+  }
+  /* tunjuk progress */
+  var done=Object.keys(answered).length;
+  if(done>0) document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+})();
+
+/* ---------- Jawab soalan ---------- */
+function pick(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  localStorage.setItem("sains:a",JSON.stringify(answered));
+  var correct=QUIZ[qi].a;
+  for(var k=0;k<QUIZ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k);
+    el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+  var done=Object.keys(answered).length;
+  document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+}
+
+/* ---------- Submit kuiz ---------- */
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<QUIZ.length){
+    alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');
+    return;
+  }
+  var score=0;
+  QUIZ.forEach(function(it,qi){if(answered[qi]===it.a) score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Sistem saraf kamu cemerlang! 🧠':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  saveProgress(3,pct);
+  /* simpan skor harian */
+  try{
+    var best=parseInt(localStorage.getItem("sains:best")||"0");
+    localStorage.setItem("sains:best",String(Math.max(best,pct)));
+  }catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah hari ini</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab4.html" style="color:#fff;font-weight:800">Teruskan ke Bab 4 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Reset harian (refresh untuk set semula) ---------- */
+function resetDay(){
+  if(!confirm("Set semula semua soalan & jawapan Bab 3?")) return;
+  answered={};
+  localStorage.removeItem("sains:a");
+  localStorage.removeItem("sains:day"+dayIdx(new Date()));
+  localStorage.removeItem("sains:best");
+  location.reload();
+}
+
+/* ---------- Helpers ---------- */
+var BAB=3;
+function saveProgress(bab,pct){
+  try{
+    var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};
+    var best=Math.max(prev.best||0,pct);
+    localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));
+  }catch(e){}
+}
 </script>
 </body>
 </html>

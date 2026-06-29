@@ -136,6 +136,8 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">✏️ Uji Kefahaman</h2>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
+  <div style="text-align:center;margin-top:1rem"><button class="btn" id="resetBtn" onclick="resetDay()">🔄 Set semula soalan hari ini</button></div>
   <div class="result" id="result"></div>
 </section>
 
@@ -218,19 +220,76 @@ function pickCh(o,btn){
 }
 newCh();
 
-/* quiz */
-var BAB=5;
-var QUIZ=[
+/* ============================================================
+   QBank: 50 soalan Bab 5 (Jirim)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
   {q:"Jirim ialah sesuatu yang mempunyai…",o:["Warna sahaja","Jisim & memenuhi ruang","Bau sahaja","Tenaga sahaja"],a:1,e:"Jirim mempunyai jisim dan memenuhi ruang."},
-  {q:"Dalam keadaan manakah zarah tersusun paling rapat & teratur?",o:["Pepejal","Cecair","Gas","Wap"],a:0,e:"Zarah pepejal paling rapat & tersusun."},
+  {q:"Dalam keadaan manakah zarah tersusun paling rapat & teratur?",o:["Pepejal","Cecair","Gas","Plasma"],a:0,e:"Zarah pepejal paling rapat & tersusun."},
   {q:"Keadaan jirim yang isipadunya tetap tetapi bentuknya mengikut bekas ialah…",o:["Pepejal","Cecair","Gas","Plasma"],a:1,e:"Cecair: isipadu tetap, bentuk ikut bekas."},
   {q:"Perubahan pepejal kepada cecair dipanggil…",o:["Pembekuan","Peleburan","Kondensasi","Pendidihan"],a:1,e:"Peleburan (melting): pepejal → cecair."},
   {q:"Perubahan gas kepada cecair dipanggil…",o:["Kondensasi","Pemejalwapan","Peleburan","Pengewapan"],a:0,e:"Kondensasi: gas → cecair."},
   {q:"Apabila jirim dipanaskan, zarahnya akan…",o:["Bergerak lebih perlahan","Bergerak lebih laju & berjauhan","Berhenti","Menjadi lebih rapat"],a:1,e:"Pemanasan menjadikan zarah bergerak lebih laju & berjauhan."},
   {q:"Ais kering (karbon dioksida pepejal) terus menjadi gas. Proses ini ialah…",o:["Pembekuan","Pemejalwapan","Peleburan","Kondensasi"],a:1,e:"Pemejalwapan (sublimation): pepejal terus → gas."},
+  {q:"Antara berikut, yang manakah BUKAN jirim?",o:["Kayu","Udara","Cahaya","Besi"],a:2,e:"Cahaya bukan jirim kerana ia tidak mempunyai jisim & tidak memenuhi ruang."},
+  {q:"Zarah dalam cecair bergerak…",o:["Dengan bebas & pantas","Vibrasi dalam kedudukan tetap","Bebas bergerak & terapung","Tidak bergerak"],a:0,e:"Zarah cecair bergerak bebas & terapung antara satu sama lain."},
+  {q:"Apakah sifat fizikal jirim yang boleh diukur dengan alat ukur?",o:["Sifat fizikal","Sifat kimia","Sifat mekanikal","Sifat elektromagnetik"],a:0,e:"Sifat fizikal boleh diukur dengan alat ukur tanpa mengubah komposisi zat."},
+  {q:"Apakah sifat kimia jirim?",o:["Boleh diukur dengan alat","Boleh dilihat dengan mataTelah berubah menjadi zat baharu","Bertentangan dengan sifat fizikal"],a:1,e:"Sifat kimia timbul apabila zat mengalami perubahan kimia & menjadi zat baharu."},
+  {q:"Apakah sifat fizikal yang menunjukkan jisim bagi setiap unit isipadu?",o:["Ketumpatan","Kekuatan","Kekakuan","Keter阐muan"],a:0,e:"Ketumpatan = jisim ÷ isipadu (g/cm³ atau kg/m³)."},
+  {q:"Antara cecair berikut, yang manakah mempunyai ketumpatan paling tinggi?",o:["Minyak","Raksa","Air","Gliserol"],a:1,e:"Raksa mempunyai ketumpatan tertinggi antara cecair biasa."},
+  {q:"Objek yang mempunyai ketumpatan kurang daripada air akan…",o:["Tenggelam","Terapung","Tenggelam kemudian terapung","Tidak bergerak"],a:1,e:"Objek terapung jika ketumpatannya kurang daripada air (1.0 g/cm³)."},
+  {q:"Apakah unit SI bagi ketumpatan?",o:["kg/m","kg/m³","g/cm","g/cm³"],a:1,e:"Unit SI bagi ketumpatan ialah kg/m³. G/cm³ juga biasa digunakan."},
+  {q:"Apabila ais dipanaskan, ia akan mengalami…",o:["Peleburan","Pembekuan","Kondensasi","Pemejalwapan"],a:0,e:"Pemanasan ais (pepejal) menyebabkannya mencair — lebur."},
+  {q:"Apabila air ditambah haba, ia akan mengalami…",o:["Pembekuan","Peleburan","Pendidihan","Kondensasi"],a:2,e:"Pendidihan: cecair mendidih & berubah menjadi gas."},
+  {q:"Wap air menjadi titisan air di permukaan sebuah cawan dingin. Proses ini ialah…",o:["Kondensasi","Pemejalwapan","Peleburan","Pengewapan"],a:0,e:"Kondensasi: gas berubah menjadi cecair apabila sejuk."},
+  {q:"Apakah proses di mana cecair berubah terus menjadi gas?",o:["Pengewapan","Pendidihan","Pemejalwapan","Peleburan"],a:0,e:"Pengewapan (evaporation): cecair → gas pada suhu bawah takat didih."},
+  {q:"Antara berikut, yang manakah merupakan contoh jirim?",o:["Hawa"," Cahaya","Naga","Guruh"],a:0,e:"Hawa (udara) adalah jirim kerana ia mempunyai jisim & memenuhi ruang."},
+  {q:"Beg udara apabila diisi, ia menjadi keras. Ini membuktikan bahawa…",o:["Udara mempunyai jisim & memenuhi ruang","Udara mempunyai warna","Udara boleh dilihat","Udara tidak mempunyai jisim"],a:0,e:"Beg udara menjadi keras apabila diisi kerana udara mempunyai jisim & memenuhi ruang."},
+  {q:"Air di dalam sebuah gelas mempunyai…",o:["Bentuk tetap & isipadu tetap","Bentuk mengikut gelas & isipadu tetap","Bentuk & isipadu mengikut gelas","Bentuk tetap & isipadu berubah"],a:1,e:"Cecair mempunyai isipadu tetap tetapi bentuk mengikut bekas."},
+  {q:"Antara pepejal berikut, yang manakah zarah-zarahnya tersusun dalam pola yang teratur?",o:["Garam dapur","Kaca","Gelas","Kertas"],a:0,e:"Garam dapur (natrium klorida) adalah pepejal kristalin — zarah tersusun teratur."},
+  {q:"Antara berikut, yang manakah adalah contoh gas?",o:["Kertas","Kaca","Oksigen","Minyak"],a:2,e:"Oksigen adalah gas — zarah bergerak bebas & mengisi seluruh ruang."},
+  {q:"Apabila zarah jirim bergerak lebih laju, suhu jirim tersebut akan…",o:["Menurun","Meningkat","Tidak berubah","Berubah secara rawak"],a:1,e:"Zarah bergerak lebih laju apabila dipanaskan → suhu meningkat."},
+  {q:"Apakah ciri-ciri zarah dalam pepejal?",o:["Bebas bergerak","Terapung bebas","Vibrasi dalam kedudukan tetap","Tidak bergerak sama sekali"],a:2,e:"Zarah pepejal bergetar (vibrasi) dalam kedudukan tetap & tidak boleh bergerak bebas."},
+  {q:"Apakah ciri-ciri zarah dalam gas?",o:["Vibrasi dalam kedudukan tetap","Berkumpulan rapat","Bergerak bebas & pantas","Bergerak perlahan"],a:2,e:"Zarah gas bergerak bebas & pantas ke segala arah."},
+  {q:"Antara berikut, yang manakah menunjukkan perubahan kimia?",o:["Ais mencair","Air mendidih","Kertas terbakar","Buku dibentuk"],a:2,e:"Pembakaran kertas menghasilkan abu & gas — perubahan kimia."},
+  {q:"Apakah perbezaan antara sifat fizikal & sifat kimia?",o:["Sifat fizikal boleh diukur tanpa mengubah komposisi zat","Sifat fizikal boleh diukur dengan mengubah komposisi zat","Sifat kimia boleh dilihat dengan mata","Sifat fizikal tidak dapat diukur"],a:0,e:"Sifat fizikal boleh diukur tanpa mengubah komposisi zat. Sifat kimia timbul apabila zat berubah menjadi zat baharu."},
+  {q:"Apakah takat didih air pada standard atm?",o:["50°C","80°C","100°C","150°C"],a:2,e:"Takat didih air pada standard atm ialah 100°C."},
+  {q:"Apakah takat lebur ais?",o:["0°C","10°C","20°C","100°C"],a:0,e:"Takat lebur ais (air) ialah 0°C."},
+  {q:"Apabila air dipanaskan hingga mendidih, suhunya akan…",o:["Meningkat terus","Mencekah di takat didih","Menurun","Bertukar secara rawak"],a:1,e:"Apabila cecair mendidih, suhu mencekah pada takat didih walaupun terus dipanaskan."},
+  {q:"Antara berikut, yang manakah bukan ciri-ciri gas?",o:["Tidak mempunyai bentuk tetap","Tidak mempunyai isipadu tetap","Zarah bergerak bebas","Zarah tersusun rapat"],a:3,e:"Zarah gas tidak tersusun rapat — mereka bergerak bebas jauh antara satu sama lain."},
+  {q:"Antara berikut, yang manakah bukan ciri-ciri cecair?",o:["Mengisi ruang","Mempunyai isipadu tetap","Mengalir","Zarah tersusun rapat"],a:3,e:"Zarah cecair tidak tersusun rapat — mereka lebih lepas daripada pepejal."},
+  {q:"Antara berikut, yang manakah bukan ciri-ciri pepejal?",o:["Mempunyai bentuk tetap","Mempunyai isipadu tetap","Zarah vibrasi dalam kedudukan tetap","Mengalir dengan mudah"],a:3,e:"Pepejal tidak mengalir — zarahnya terikat rapat & hanya bergetar."},
+  {q:"Apakah perubahan keadaan jirim apabila cecair ditambah sejuk?",o:["Peleburan","Pembekuan","Kondensasi","Pengewapan"],a:1,e:"Cecair yang disejukkan akan membeku menjadi pepejal."},
+  {q:"Apakah perubahan keadaan jirim apabila gas disejukkan?",o:["Kondensasi","Pemejalwapan","Peleburan","Pendidihan"],a:0,e:"Gas yang disejukkan akan mencondensasi menjadi cecair."},
+  {q:"Manakah yang benar tentang ketumpatan?",o:["Ketumpatan = jisim × isipadu","Ketumpatan = jisim ÷ isipadu","Ketumpatan = isipadu ÷ jisim","Ketumpatan tidak berkaitan dengan jisim"],a:1,e:"Ketumpatan = jisim ÷ isipadu. Unit: g/cm³ atau kg/m³."},
+  {q:"Jika jisim suatu objek ialah 100g & isipadunya 50cm³, apakah ketumpatannya?",o:["1 g/cm³","2 g/cm³","5 g/cm³","10 g/cm³"],a:1,e:"Ketumpatan = 100g ÷ 50cm³ = 2 g/cm³."},
+  {q:"Jika suatu cecair mempunyai ketumpatan 0.8 g/cm³, apakah yang akan berlaku jika ia dicampurkan dengan air?",o:["Ia terapung di atas air","Ia tenggelam dalam air","Ia bercampur rata","Ia membeku"],a:0,e:"Cecair dengan ketumpatan kurang daripada air (1.0 g/cm³) akan terapung di atas air."},
+  {q:"Apakah yang berlaku apabila ais dimasukkan ke dalam air?",o:["Ais akan tenggelam","Ais akan terapung","Ais akan larut","Ais akan mengembang"],a:1,e:"Ais terapung di atas air kerana ketumpatannya kurang daripada air."},
+  {q:"Antara berikut, yang manakah mempunyai ketumpatan paling rendah?",o:["Besi","Kayu","Aluminium","Kaca"],a:1,e:"Kayu mempunyai ketumpatan paling rendah antara pepejal ini — ia terapung dalam air."},
+  {q:"Apakah unit SI bagi jisim?",o:["gram (g)","kilogram (kg)","ton (t)","peso (p)"],a:1,e:"Unit SI bagi jisim ialah kilogram (kg)."},
+  {q:"Apakah unit SI bagi isipadu?",o:["cm³","m³","litre (l)","ml"],a:1,e:"Unit SI bagi isipadu ialah meter kuasa tiga (m³)."},
+  {q:"Antara berikut, yang manakah merupakan perubahan fizikal?",o:["Kertas terbakar","Besi berkarat","Ais mencair","Makanan busuk"],a:2,e:"Ais mencair adalah perubahan fizikal — hanya keadaan berubah, bukan komposisi."},
+  {q:"Antara berikut, yang manakah merupakan perubahan kimia?",o:["Garam dilarutkan dalam air","Kayu dibakar","Kertas dirobek","Air mendidih"],a:1,e:"Pembakaran kayu menghasilkan abu & gas — perubahan kimia."},
+  {q:"Apakah sifat fizikal yang boleh diperhatikan tanpa mengubah komposisi zat?",o:["Kereaktifan","Keterbakaran","Ketumpatan","Keasaman"],a:2,e:"Ketumpatan boleh diukur tanpa mengubah komposisi zat — sifat fizikal."},
+  {q:"Antara berikut, yang manakah bukan sifat fizikal?",o:["Warna","Bau","Kereaktifan","Ketumpatan"],a:2,e:"Kereaktifan adalah sifat kimia — ia menunjukkan kecenderungan zat untuk bertindak balas kimia."},
+  {q:"Apakah ciri-ciri zarah dalam cecair?",o:["Vibrasi dalam kedudukan tetap","Berkumpulan rapat","Bebas bergerak & terapung","Tidak bergerak"],a:2,e:"Zarah cecair bergerak bebas & terapung antara satu sama lain."},
+  {q:"Antara berikut, yang manakah benar tentang zarah dalam gas?",o:["Mengisi seluruh ruang yang tersedia","Mempunyai bentuk tetap","Mempunyai isipadu tetap","Zarah tersusun rapat"],a:0,e:"Zarah gas bergerak bebas & mengisi seluruh ruang yang tersedia."},
+  {q:"Apakah yang menyebabkan zarah zat bergerak lebih laju?",o:["Mendinginkan zat","Memanaskan zat","Menambah tekanan","Mengurangkan suhu"],a:1,e:"Pemanasan memberi tenaga kinetik kepada zarah → bergerak lebih laju."},
+  {q:"Antara berikut, yang manakah merupakan contoh perubahan fizikal?",o:["Api membakar kertas","Besi berkarat","Air membeku","Kayu membakar"],a:2,e:"Air membeku adalah perubahan fizikal — hanya keadaan berubah."}
 ];
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+var dayTotal=10;
+
+/* daily rotation (LCG — sama pola dengan bahasa_melayu) */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function dayIdx(){ return dayIndexOf(new Date()); }
+function rotate(arr,di){ var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1; for(var i=a.length-1;i>0;i--){ var j=(seed*i)%a.length, t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function questionsForDay(di){ var ri=rotate(QBank,di); return ri.slice(0,dayTotal); }
+
+(function(){var di=dayIdx(), qs=questionsForDay(di);QUIZ=qs;var box=document.getElementById('quiz');var fb=document.getElementById('dailyNote');fb.textContent='Soalan hari ini ('+diOfToday(di)+'): '+dayTotal+' soalan';qs.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function diOfToday(di){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function resetDay(){ localStorage.removeItem('sains:bab5'); location.reload(); }
 function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
 function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🧊':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab6.html" style="color:#fff;font-weight:800">Teruskan ke Bab 6 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
 function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}

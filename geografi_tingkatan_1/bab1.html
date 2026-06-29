@@ -469,7 +469,7 @@ function shuffleDay(arr, di){
 
 var Q=QBANK.slice();
 /* pick 7 today, rotate through 10-day cycles */
-var DAY_LEN=10, PICK=7;
+var DAY_LEN=10, PICK=10;
 var START=0, CUR=dayIdx();
 var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
 var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;

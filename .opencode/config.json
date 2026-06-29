@@ -1,0 +1,9 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "searxng"
+  ],
+  "searxng": {
+    "url": "http://localhost:8080"
+  }
+}

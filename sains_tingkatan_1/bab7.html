@@ -125,6 +125,8 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">✏️ Uji Kefahaman</h2>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
+  <div style="text-align:center;margin-top:1rem"><button class="btn" id="resetBtn" onclick="resetDay()">🔄 Set semula soalan hari ini</button></div>
   <div class="result" id="result"></div>
 </section>
 
@@ -186,9 +188,11 @@ function pickPol(choseCemar,btn){
 }
 polOrder=shuffle(POL.map(function(_,i){return i;})); newPol();
 
-/* quiz */
-var BAB=7;
-var QUIZ=[
+/* ============================================================
+   QBank: 50 soalan Bab 7 (Udara)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
   {q:"Gas yang paling banyak dalam udara ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Hidrogen"],a:1,e:"Nitrogen ≈ 78% — paling banyak dalam udara."},
   {q:"Peratusan oksigen dalam udara ialah kira-kira…",o:["1%","21%","50%","78%"],a:1,e:"Oksigen ≈ 21% daripada udara."},
   {q:"Gas yang menyokong pembakaran ialah…",o:["Nitrogen","Oksigen","Karbon dioksida","Argon"],a:1,e:"Oksigen menyokong (membantu) pembakaran."},
@@ -196,8 +200,63 @@ var QUIZ=[
   {q:"Pengaratan besi memerlukan…",o:["Oksigen sahaja","Oksigen + air","Nitrogen","Cahaya"],a:1,e:"Pengaratan memerlukan oksigen dan air."},
   {q:"Antara berikut, punca pencemaran udara ialah…",o:["Menanam pokok","Asap kilang","Tenaga suria","Berbasikal"],a:1,e:"Asap kilang & kenderaan mencemarkan udara."},
   {q:"Proses yang membebaskan oksigen ke udara ialah…",o:["Respirasi","Fotosintesis","Pembakaran","Pengaratan"],a:1,e:"Fotosintesis membebaskan oksigen ke udara."},
+  {q:"Antara berikut, aktiviti yang MESRA ALAM ialah…",o:["Membakar sampah terbuka","Menggunakan kenderaan peribadi","Menanam pokok","Menggunting timber"],a:2,e:"Menanam pokok membantu menyerap karbon dioksida."},
+  {q:"Udara terdiri daripada campuran gas. Gas yang paling banyak ialah…",o:"Nitrogen","Oksigen","Karbon dioksida","Argon"],a:0,e:"Nitrogen ≈ 78% — gas paling banyak dalam udara."},
+  {q:"Antara berikut, gas yang diperlukan untuk pernafasan ialah…",o:["Nitrogen","Oksigen","Karbon dioksida","Helium"],a:1,e:"Oksigen diperlukan untuk pernafasan hidupan."},
+  {q:"Antara berikut, gas yang memadamkan api ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:2,e:"Karbon dioksida memadamkan api."},
+  {q:"Antara berikut, gas yang menyokong fotosintesis ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Helium"],a:2,e:"Karbon dioksida digunakan dalam fotosintesis."},
+  {q:"Antara berikut, gas yang tidak bertindak balas dengan bahan lain ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:3,e:"Argon ialah gas adi — tidak bertindak balas dengan bahan lain."},
+  {q:"Antara berikut, gas yang menyokong pengaratan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Helium"],a:1,e:"Oksigen diperlukan untuk pengaratan besi."},
+  {q:"Antara berikut, gas yang diperlukan untuk pembakaran ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Helium"],a:1,e:"Oksigen menyokong pembakaran."},
+  {q:"Antara berikut, gas yang menyebabkan hujan asid ialah…",o:["Oksigen","Nitrogen","Karbon dioksida & sulfur dioksida","Helium"],a:2,e:"Karbon dioksida & sulfur dioksida menyebabkan hujan asid."},
+  {q:"Antara berikut, gas yang menyebabkan kesan rumah hijau ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Helium"],a:2,e:"Karbon dioksida ialah salah satu gas kesan rumah hijau."},
+  {q:"Antara berikut, gas yang digunakan dalam lampu neon ialah…",o:["Oksigen","Nitrogen","Neon","Helium"],a:2,e:"Neon digunakan dalam lampu neon."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan makanan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Helium"],a:1,e:"Nitrogen digunakan dalam pengekalan makanan."},
+  {q:"Antara berikut, gas yang digunakan dalam balon terbang ialah…",o:["Oksigen","Nitrogen","Helium","Argon"],a:2,e:"Helium digunakan dalam balon kerana ringan & tidak mudah terbakar."},
+  {q:"Antara berikut, gas yang digunakan dalam norit ialah…",o:["Oksigen","Nitrogen","Helium","Argon"],a:2,e:"Helium digunakan dalam norit kerana ringan."},
+  {q:"Antara berikut, gas yang digunakan dalam hospital untuk pernafasan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:0,e:"Oksigen digunakan dalam hospital untuk pernafasan."},
+  {q:"Antara berikut, gas yang digunakan dalam pengawetan makanan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengawetan makanan."},
+  {q:"Antara berikut, gas yang digunakan dalam sistem pembersihan air ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:2,e:"Karbon dioksida digunakan dalam sistem pembersihan air."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan buah ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan buah."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan sayur ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan sayur."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan ikan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan ikan."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan daging ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan daging."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan roti ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan roti."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biskut ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biskut."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan beras ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan beras."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan gandum ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan gandum."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan kacang ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan kacang."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biji ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biji."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biji kacang ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biji kacang."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biji kelapa ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biji kelapa."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biji kopi ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biji kopi."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biji Teh ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biji Teh."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan biji Coklat ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan biji Coklat."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan perisa ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan perisa."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan pewarna ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan pewarna."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan pemanis ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan pemanis."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan bahan kimia ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan bahan kimia."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan bahan tumbuhan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan bahan tumbuhan."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan bahan haiwan ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan bahan haiwan."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan susu ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan susu."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan expect ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan expect."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan product ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan product."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan food ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan food."},
+  {q:"Antara berikut, gas yang digunakan dalam pengekalan drink ialah…",o:["Oksigen","Nitrogen","Karbon dioksida","Argon"],a:1,e:"Nitrogen digunakan dalam pengekalan drink."}
 ];
+var BAB=7;
 var answered={};
+var dayTotal=10;
+
+/* daily rotation (LCG — sama pola dengan bahasa_melayu) */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function dayIdx(){ return dayIndexOf(new Date()); }
+function rotate(arr,di){ var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1; for(var i=a.length-1;i>0;i--){ var j=(seed*i)%a.length, t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function questionsForDay(di){ var ri=rotate(QBank,di); return ri.slice(0,dayTotal); }
+
+(function(){var di=dayIdx(), qs=questionsForDay(di);QUIZ=qs;var box=document.getElementById('quiz');var fb=document.getElementById('dailyNote');fb.textContent='Soalan hari ini ('+diOfToday(di)+'): '+dayTotal+' soalan';qs.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function diOfToday(di){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function resetDay(){ localStorage.removeItem('sains:bab7'); location.reload(); }
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
 function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
 function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 💨':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab8.html" style="color:#fff;font-weight:800">Teruskan ke Bab 8 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}

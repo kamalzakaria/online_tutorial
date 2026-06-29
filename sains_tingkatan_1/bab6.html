@@ -128,6 +128,8 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">✏️ Uji Kefahaman</h2>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
+  <div style="text-align:center;margin-top:1rem"><button class="btn" id="resetBtn" onclick="resetDay()">🔄 Set semula soalan hari ini</button></div>
   <div class="result" id="result"></div>
 </section>
 
@@ -200,9 +202,11 @@ function pickCl(o,btn){
 }
 newCl();
 
-/* quiz */
-var BAB=6;
-var QUIZ=[
+/* ============================================================
+   QBank: 50 soalan Bab 6 (Jadual Berkala)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
   {q:"Bahan tulen yang tidak boleh diuraikan kepada bahan lebih ringkas ialah…",o:["Sebatian","Unsur","Campuran","Larutan"],a:1,e:"Unsur ialah bahan tulen paling asas — tidak boleh diuraikan secara kimia."},
   {q:"Simbol kimia bagi Ferum (besi) ialah…",o:["F","Fe","Fr","Ir"],a:1,e:"Simbol Ferum ialah Fe."},
   {q:"Simbol kimia bagi Oksigen ialah…",o:["O","Ox","Og","On"],a:0,e:"Simbol Oksigen ialah O."},
@@ -210,9 +214,62 @@ var QUIZ=[
   {q:"Udara ialah contoh…",o:["Unsur","Sebatian","Campuran","Atom"],a:2,e:"Udara ialah campuran beberapa gas."},
   {q:"Dalam jadual berkala, lajur menegak dipanggil…",o:["Kala","Kumpulan","Baris","Blok"],a:1,e:"Lajur menegak = Kumpulan; baris mendatar = Kala."},
   {q:"Antara berikut yang merupakan logam ialah…",o:["Oksigen","Karbon","Kuprum","Hidrogen"],a:2,e:"Kuprum (Cu) ialah logam; yang lain bukan logam."},
+  {q:"Atom terdiri daripada tiga zarah subatom, KECUALI…",o:["Elektron","Proton","Molekul","Neutron"],a:2,e:"Molekul bukan zarah subatom — ia terbina daripada atom."},
+  {q:"Elektron mempunyai cas…",o:["Negatif","Positif","Tiada cas","Neutral"],a:0,e:"Elektron mempunyai cas negatif."},
+  {q:"Proton mempunyai cas…",o:["Negatif","Positif","Tiada cas","Neutral"],a:1,e:"Proton mempunyai cas positif."},
+  {q:"Neutron mempunyai cas…",o:["Negatif","Positif","Tiada cas","Neutral"],a:2,e:"Neutron tidak bercas (neutral)."},
+  {q:"'Zarah neutral terdiri daripada dua atau lebih atom' ialah definisi bagi…",o:["Unsur","Atom","Molekul","Campuran"],a:2,e:"Molekul ialah zarah neutral yang terdiri daripada dua atau lebih atom."},
+  {q:"Antara berikut, yang manakah merupakan contoh unsr?",o:["Kaca","Garam","Karbon dioksida","Tambang gas"],a:3,e:"Tambang gas (oksigen) ialah unsur; yang lain sebatian/campuran."},
+  {q:"Sebatian terdiri daripada dua atau lebih unsur yang bergabung secara…",o:["Fizikal","Kimia","Mekanikal","Pemisahan"],a:1,e:"Sebatian terbentuk melalui tindak balas kimia."},
+  {q:"Garam (NaCl) ialah sebatian. Unsur apa yang terdapat dalam garam?",o:["Karbon, kalsium & oksigen","Karbon, hidrogen & oksigen","Natrium & klorida","Oksigen & karbon"],a:2,e:"Garam (natrium klorida) mengandungi natrium dan klorida."},
+  {q:" Jadual Berkala ialah jadual yang tersusun mengikut…",o:["Sebatian","Campuran","Atom","Unsur"],a:3,e:"Jadual Berkala menyusun semua unsur secara teratur."},
+  {q:"Antara berikut, yang manakah merupakan contoh sebatian?",o:["Air","Oksigen","Udara","Emas"],a:0,e:"Air (H₂O) ialah sebatian; oksigen unsur, udara campuran."},
+  {q:"Antara berikut, yang manakah merupakan contoh campuran?",o:["Air","Oksigen","Karbon dioksida","Udara"],a:3,e:"Udara ialah campuran nitrogen, oksigen, argon & gas lain."},
+  {q:"Antara berikut, yang manakah bukan logam?",o:["Kuprum","Besi","Oksigen","Emas"],a:2,e:"Oksigen ialah bukan logam; yang lain logam."},
+  {q:"Antara berikut, yang manakah merupakan sifat logam?",o:["Boleh mengalirkan haba & elektrik","Takat lebur & didih rendah","Kekuatan rentang rendah","Kilauan kurang"],a:0,e:"Logam boleh mengalirkan haba & elektrik dengan baik."},
+  {q:"Antara berikut, yang manakah merupakan sifat logam?",o:["Kekuatan rentang tinggi","Kilauan","Ketumpatan tinggi","Semua di atas"],a:3,e:"Logam mempunyai kekuatan rentang tinggi, kilauan, & ketumpatan tinggi."},
+  {q:"Antara berikut, yang manakah merupakan bukan logam?",o:["Magneesium","Aluminium","Karbon","Kalsium"],a:2,e:"Karbon ialah bukan logam; yang lain logam."},
+  {q:"Unsur yang terdapat di sebelah kiri jadual berkala ialah…",o:["Bukan logam","Logam","Semi-logam","Gas adi"],a:1,e:"Logam terletak di sebelah kiri jadual berkala."},
+  {q:"Lajur pertama daripada kanan jadual berkala ialah…",o:["Semi-logam","Logam","Gas adi","Bukan logam"],a:2,e:"Gas adi (kumpulan 18) terletak di lajur paling kanan."},
+  {q:"Antara berikut, yang manakah merupakan semi-logam?",o:["Boron","Silikon","Germanium","Semua di atas"],a:3,e:"Boron, silikon & germanium ialah semi-logam."},
+  {q:"Antara berikut, yang manakah merupakan gas adi?",o:["Helium","Argon","Neon","Semua di atas"],a:3,e:"Helium, argon & neon ialah gas adi."},
+  {q:"Tumbuhan memerlukan karbon dioksida untuk proses…",o:["Respirasi","Fotosintesis","Pembakaran","Pernafasan"],a:1,e:"Fotosintesis menggunakan karbon dioksida & menghasilkan oksigen."},
+  {q:"Antara berikut, yang manakah merupakan elemen asas dalam protein?",o:["Karbohidrat","Asid amino","Lipid","Vitamin"],a:1,e:"Protein terdiri daripada asid amino yang mengandungi karbon, hidrogen, oksigen & nitrogen."},
+  {q:"Antara berikut, yang manakah merupakan elemen asal dalam gula?",o:["Karbohidrat","Asid amino","Lipid","Vitamin"],a:0,e:"Gula ialah karbohidrat yang terdiri daripada karbon, hidrogen & oksigen."},
+  {q:"Antara berikut, yang manakah merupakan elemen asal dalam garam?",o:["Natrium & klorida","Kalium & klorida","Kalsium & klorida","Magnesium & klorida"],a:0,e:"Garam dapur ialah natrium klorida (NaCl)."},
+  {q:"Simbol kimia bagi Natrium ialah…",o:["Na","N","Ni","Nr"],a:0,e:"Simbol Natrium ialah Na (natrium)."},
+  {q:"Simbol kimia bagi Kalium ialah…",o:["K","Ca","Co","Cu"],a:0,e:"Simbol Kalium ialah K (kalium)."},
+  {q:"Simbol kimia bagi Argentum (perak) ialah…",o:["Ag","Ar","Au","As"],a:0,e:"Simbol Argentum ialah Ag (argentum)."},
+  {q:"Simbol kimia bagi Aurum (emas) ialah…",o:["Au","Ag","Ar","As"],a:0,e:"Simbol Aurum ialah Au (emas)."},
+  {q:"Simbol kimia bagi kuprum ialah…",o:["Cu","Co","Cr","Cn"],a:0,e:"Simbol Kuprum ialah Cu (cuprum)."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi ferum?",o:["Fe","F","Fr","Fi"],a:0,e:"Simbol Ferum ialah Fe (ferrum)."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi natrium?",o:["Na","N","Ni","Nr"],a:0,e:"Simbol Natrium ialah Na (natrium)."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi kalium?",o:["K","Ca","Co","Cu"],a:0,e:"Simbol Kalium ialah K (kalium)."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi argen",o:["Ag","Ar","Au","As"],a:0,e:"Simbol Argentum ialah Ag (argentum)."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi emas?",o:["Au","Ag","Ar","As"],a:0,e:"Simbol Aurum (emas) ialah Au."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi kalsium?",o:["Ca","Co","Cr","Cn"],a:0,e:"Simbol Kalsium ialah Ca."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi magnesium?",o:["Mg","Mn","Mo","Mb"],a:0,e:"Simbol Magneesium ialah Mg."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi aluminium?",o:["Al","Ag","Ar","Au"],a:0,e:"Simbol Aluminium ialah Al."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi zink?",o:["Zn","Zi","Zk","Zc"],a:0,e:"Simbol Zink ialah Zn."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi tembaga?",o:["Cu","Co","Cr","Cn"],a:0,e:"Simbol Kuprum (tembaga) ialah Cu."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi kasium?",o:["Ca","Co","Cr","Cn"],a:0,e:"Simbol Kalsium ialah Ca."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi besi?",o:["Fe","F","Fr","Fi"],a:0,e:"Simbol Ferum (besi) ialah Fe."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi emas?",o:["Au","Ag","Ar","As"],a:0,e:"Simbol Aurum (emas) ialah Au."},
+  {q:"Antara berikut, yang manakah merupakan simbol bagi perak?",o:["Ag","Ar","Au","As"],a:0,e:"Simbol Argentum (perak) ialah Ag."}
 ];
+var BAB=6;
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+var dayTotal=10;
+
+/* daily rotation (LCG — sama pola dengan bahasa_melayu) */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+function dayIdx(){ return dayIndexOf(new Date()); }
+function rotate(arr,di){ var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1; for(var i=a.length-1;i>0;i--){ var j=(seed*i)%a.length, t=a[i];a[i]=a[j];a[j]=t; } return a; }
+function questionsForDay(di){ var ri=rotate(QBank,di); return ri.slice(0,dayTotal); }
+
+(function(){var di=dayIdx(), qs=questionsForDay(di);QUIZ=qs;var box=document.getElementById('quiz');var fb=document.getElementById('dailyNote');fb.textContent='Soalan hari ini ('+diOfToday(di)+'): '+dayTotal+' soalan';qs.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+function diOfToday(di){ var d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function resetDay(){ localStorage.removeItem('sains:bab6'); location.reload(); }
 function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
 function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! ⚛️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab7.html" style="color:#fff;font-weight:800">Teruskan ke Bab 7 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
 function saveProgress(bab,pct){try{var key="sains:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
