@@ -217,16 +217,19 @@ function pickMT(o,btn){
 }
 newMT();
 
-/* ---- quiz ---- */
+/* ---- quiz: 10 real exam questions (based on KSSM format) ---- */
 var BAB=14;
 var QUIZ=[
-  {q:"Kerja lapangan ialah kajian yang dijalankan…",o:["Di dalam bilik darjah sahaja","Di luar bilik darjah (di lapangan)","Di rumah sahaja","Melalui buku sahaja"],a:1,e:"Kerja lapangan dijalankan di kawasan kajian sebenar, di luar kelas."},
-  {q:"Langkah PERTAMA dalam kerja lapangan ialah…",o:["Membuat laporan","Memilih tajuk kajian","Mengumpul data","Menganalisis data"],a:1,e:"Mula dengan memilih tajuk/tema kajian."},
-  {q:"Langkah TERAKHIR dalam kerja lapangan ialah…",o:["Memilih kawasan","Membuat rumusan & laporan","Menyatakan objektif","Menyediakan soalan"],a:1,e:"Akhir sekali: membuat rumusan & menulis laporan."},
-  {q:"Bertanya soalan secara bersemuka kepada responden ialah kaedah…",o:["Soal selidik","Temu bual","Pemerhatian","Rujukan"],a:1,e:"Temu bual = bertanya bersemuka."},
-  {q:"Mengedar borang soalan untuk dijawab ialah kaedah…",o:["Soal selidik","Temu bual","Pemerhatian","Rujukan"],a:0,e:"Soal selidik menggunakan borang soalan."},
-  {q:"Melihat dan mencatat keadaan kawasan secara langsung ialah kaedah…",o:["Rujukan","Pemerhatian","Temu bual","Soal selidik"],a:1,e:"Pemerhatian = melihat & merekod sendiri di lapangan."},
-  {q:"Antara alatan kerja lapangan ialah…",o:["Kompas & pita ukur","Ketuhar","Mesin basuh","Peti sejuk"],a:0,e:"Kompas, pita ukur, kamera & buku catatan ialah alatan kerja lapangan."},
+  {q:"Seorang pelajar ingin mengkaji masalah pembuangan sampah haram di kawasan perumahannya. Apakah langkah PERTAMA yang perlu dilakukan?",o:["Menulis laporan kajian","Menentukan kaedah kajian","Memilih isu atau tajuk kajian","Mengumpul data dan maklumat"],a:2,e:"Langkah pertama: memilih isu atau tajuk kajian supaya fokus kajian jelas."},
+  {q:"Objektif kajian lapangan mestilah jelas dan spesifik. Antara berikut, manakah contoh objektif yang baik bagi tajuk 'Kesan Pembangunan Terhadap Alam Sekitar'?",o:["Untuk mengetahui tentang alam sekitar","Untuk menyenaraikan jenis-jenis pembangunan","Untuk mengenal pasti impak pembangunan terhadap ekosistem","Untuk berjalan-jalan di kawasan pembangunan"],a:2,e:"Objektif yang baik harus spesifik dan boleh diukur: mengenal pasti impak terhadap ekosistem."},
+  {q:"Kaedah pengumpulan maklumat yang paling sesuai untuk mendapatkan pandangan penduduk tempatan mengenai kesesakan lalu lintas ialah…",o:["Pemerhatian","Temu bual","Rujukan buku","Analisis peta"],a:1,e:"Temu bual = berjumpa & bersoal jawab secara lisan untuk mendapatkan pendapat orang."},
+  {q:"Seorang pelajar mendapati banyak maklumat mengenai pencemaran air daripada akhbar lama dan artikel jurnal. Kaedah kajian yang sesuai ialah…",o:["Soal selidik","Temu bual","Rujukan","Pemerhatian"],a:2,e:"Rujukan = mengumpul maklumat daripada sumber tertulis seperti buku, akhbar dan jurnal."},
+  {q:"Selepas mengumpul semua data dan maklumat, langkah seterusnya dalam proses kerja lapangan ialah…",o:["Membuat rumusan kajian","Menganalisis data dan maklumat","Menentukan kawasan kajian","Menulis penghargaan"],a:1,e:"Menganalisis data = mengkelaskan, membandingkan dan mencari pola dalam data yang dikumpul."},
+  {q:"Antara komponen berikut, yang manakah WAJIB ada dalam laporan kajian lapangan yang lengkap?",o:["Carta organisasi sekolah","Senarai nama rakan sekelas","Objektif kajian","Gambar-gambar peribadi"],a:2,e:"Objektif kajian ialah komponen wajib yang menjelaskan tujuan kerja lapangan."},
+  {q:"Jika seorang pelajar ingin mengetahui jenis tanaman yang paling banyak ditanam di sebuah kampung, kaedah pengumpulan data yang paling berkesan ialah…",o:["Menonton televisyen","Membuat pemerhatian secara langsung di kebun","Membaca komik","Mendengar radio"],a:1,e:"Pemerhatian secara langsung di kawasan kajian (di kebun/kampung) memberi data autentik tentang jenis tanaman."},
+  {q:"Apakah tujuan utama menganalisis data yang telah dikumpul dalam kerja lapangan?",o:["Membazirkan masa","Membiarkan data berserakan","Menyusun data mengikut kriteria dan memudahkan interpretasi","Menyimpan data tanpa tujuan"],a:2,e:"Menganalisis data = menyusun, mengkelaskan dan memudahkan pemahaman serta interpretasi maklumat."},
+  {q:"Seorang pelajar sedang mengkaji pola taburan kedai runcit di kawasan perumahan. Cara merekod maklumat yang paling berkesan ialah…",o:["Menulis senarai nama kedai","Melukis peta lakaran yang menunjukkan lokasi","Mengumpul gambar kedai secara rawak","Merekod nombor telefon pemilik kedai"],a:1,e:"Peta lakaran menunjukkan lokasi dan taburan kedai dengan jelas dan visual."},
+  {q:"Mengapakah penting membuat jadual perancangan kerja sebelum memulakan kerja lapangan?",o:["Supaya kerja tidak perlu disiapkan","Supaya semua tugas diselesaikan tepat pada masanya","Supaya guru tidak menyemak kemajuan","Supaya pelajar boleh menangguhkan kerja"],a:1,e:"Jadual perancangan memastikan kerja diselesaikan mengikut tarikh dan mengelakkan kelewatan."},
 ];
 var answered={};
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
