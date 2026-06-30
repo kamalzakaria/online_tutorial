@@ -218,13 +218,16 @@ newCN();
 /* quiz */
 var BAB=10;
 var QUIZ=[
-  {q:"Sungai terpanjang di Asia Tenggara ialah…",o:["Sungai Rajang","Sungai Mekong","Sungai Pahang","Sungai Chao Phraya"],a:1,e:"Sungai Mekong ialah yang terpanjang, mengalir melalui banyak negara."},
-  {q:"Negara yang TERKENAL dengan banyak gunung berapi ialah…",o:["Singapura","Laos","Indonesia","Brunei"],a:2,e:"Indonesia (dan Filipina) banyak gunung berapi kerana Lingkaran Api Pasifik."},
-  {q:"Tasik terbesar di Asia Tenggara ialah…",o:["Tasik Kenyir","Tasik Tonle Sap","Tasik Bera","Tasik Toba"],a:1,e:"Tasik Tonle Sap di Kemboja ialah tasik air tawar terbesar di rantau ini."},
-  {q:"Sungai Irrawaddy mengalir di negara…",o:["Vietnam","Thailand","Myanmar","Filipina"],a:2,e:"Sungai Irrawaddy ialah sungai utama Myanmar."},
-  {q:"Asia Tenggara mempunyai berapa buah negara?",o:["7","9","11","13"],a:2,e:"Terdapat 11 negara di Asia Tenggara."},
-  {q:"Tanih di kawasan gunung berapi biasanya…",o:["Sangat subur","Tandus","Berbatu sahaja","Berpasir kering"],a:0,e:"Tanih gunung berapi subur, sesuai untuk pertanian."},
-  {q:"Negara Asia Tenggara Tanah Besar termasuk…",o:["Indonesia & Filipina","Thailand & Vietnam","Malaysia & Brunei","Singapura & Timor Leste"],a:1,e:"Tanah Besar: Myanmar, Thailand, Laos, Kemboja, Vietnam."},
+  {q:"Sungai terpanjang di Asia Tenggara ialah…",o:["Sungai Rajang","Sungai Mekong","Sungai Pahang","Sungai Chao Phraya"],a:1,e:"Sungai Mekong ialah yang terpanjang, mengalir melalui China, Myanmar, Laos, Thailand, Kemboja & Vietnam."},
+  {q:"Negara yang TERKENAL dengan banyak gunung berapi ialah…",o:["Singapura","Laos","Indonesia","Brunei"],a:2,e:"Indonesia (dan Filipina) banyak gunung berapi kerana berada di Lingkaran Api Pasifik."},
+  {q:"Tasik terbesar di Asia Tenggara ialah…",o:["Tasik Kenyir","Tasik Tonle Sap","Tasik Bera","Tasik Toba"],a:1,e:"Tasik Tonle Sap di Kemboja ialah tasik air tawar semula jadi terbesar di rantau ini."},
+  {q:"Sungai Irrawaddy mengalir di negara…",o:["Vietnam","Thailand","Myanmar","Filipina"],a:2,e:"Sungai Irrawaddy ialah sungai utama di Myanmar."},
+  {q:"Asia Tenggara mempunyai berapa buah negara?",o:["10","11","12","13"],a:1,e:"Terdapat 11 negara di Asia Tenggara — 5 Tanah Besar dan 6 Kepulauan."},
+  {q:"Tanih di kawasan gunung berapi biasanya…",o:["Sangat subur","Tandus","Berbatu sahaja","Berpasir kering"],a:0,e:"Tanih gunung berapi sangat subur kerana kaya dengan bahan organik dan mineral."},
+  {q:"Negara Asia Tenggara Tanah Besar termasuk…",o:["Indonesia & Filipina","Thailand & Vietnam","Malaysia & Brunei","Singapura & Timor Leste"],a:1,e:"Tanah Besar: Myanmar, Thailand, Laos, Kemboja, Vietnam. Kepulauan: Malaysia, Indonesia, Filipina, Brunei, Singapura, Timor Leste."},
+  {q:"Negara di Asia Tenggara yang tiada pinggir laut ialah…",o:["Laos","Vietnam","Thailand","Kemboja"],a:0,e:"Laos ialah satu-satunya negara tanpa pantai di Asia Tenggara."},
+  {q:"Gunung tertinggi di Malaysia ialah…",o:["Gunung Tahan","Gunung Ledang","Gunung Kinabalu","Gunung Kerinci"],a:2,e:"Gunung Kinabalu (4,095m) di Banjaran Crocker, Sabah, ialah gunung tertinggi di Malaysia."},
+  {q:"Antara berikut, yang manakah merupakan gunung berapi di Asia Tenggara?",o:["Gunung Kinabalu","Gunung Hkakabo Razi","Gunung Krakatau","Gunung Elbrus"],a:2,e:"Gunung Krakatau di Indonesia ialah gunung berapi terkenal di Asia Tenggara. Kinabalu batu, Hkakabo Razi di Myanmar, Elbrus di Eropah."},
 ];
 var answered={};
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();

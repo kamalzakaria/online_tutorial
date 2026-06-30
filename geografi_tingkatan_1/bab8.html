@@ -78,7 +78,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 <section id="nota" class="panel on">
   <h2 class="sec">📖 Taburan & Ketumpatan Penduduk</h2>
   <div class="note">
-    <h3>Taburan penduduk tidak sekata</h3>
+    <h3>-taburan penduduk tidak sekata</h3>
     <p><b>Taburan penduduk</b> ialah cara penduduk tersebar di sesuatu kawasan. Di Malaysia, taburan adalah <b>tidak sekata</b>.</p>
     <p><b>Padat:</b> <span class="tag">Pantai barat Semenanjung</span><span class="tag">Lembah Klang (KL/Selangor)</span><span class="tag">Pulau Pinang</span><span class="tag">Johor Bahru</span></p>
     <p><b>Jarang:</b> <span class="tag">Kawasan tanah tinggi</span><span class="tag">Pedalaman Sabah & Sarawak</span><span class="tag">Kawasan hutan/paya</span></p>
@@ -86,13 +86,20 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <div class="note">
     <h3>📊 Ketumpatan Penduduk</h3>
     <p><b>Ketumpatan penduduk</b> = bilangan penduduk dalam setiap <b>1 km²</b>. <br/>Rumus: <span class="tag">Ketumpatan = Jumlah Penduduk ÷ Keluasan (km²)</span></p>
+    <p><b>Anggaran penduduk Malaysia (2016):</b> 31.7 juta</p>
+  </div>
+  <div class="note">
+    <h3>📈 Tiga Tahap Kepadatan</h3>
+    <p><b>Padat (＞200 org/km²):</b> Kawasan bandar utama, pusat perniagaan. Contoh: Lembah Klang, Georgetown, JB.</p>
+    <p><b>Sederhana (50-200 org/km²):</b> Kawasan pertanian, pantai, bandar kecil. Contoh: Dataran Kedah-Perlis, Pantai Timur.</p>
+    <p><b>Jarang (＜50 org/km²):</b> Kawasan pergunungan berhutan, pedalaman. Contoh: Banjaran Titiwangsa, Kapit (Sarawak).</p>
   </div>
   <div class="note">
     <h3>🧭 Faktor Mempengaruhi Taburan</h3>
-    <div class="grid2">
-      <div class="mini"><div class="e">🌾</div><b>Fizikal</b><small>Bentuk muka bumi, iklim, tanih, saliran</small></div>
-      <div class="mini"><div class="e">💼</div><b>Manusia</b><small>Peluang pekerjaan, pengangkutan, kemudahan, sejarah</small></div>
-    </div>
+    <p><b>Faktor Fizikal:</b> Bentuk muka bumi, iklim, tanih, saliran.</p>
+    <p><b>Faktor Ekonomi:</b> Perindustrian, perniagaan, pertanian, perlombongan.</p>
+    <p><b>Faktor Sosial:</b> Kemudahan (sekolah, hospital, jalan), infrastruktur.</p>
+    <p><b>Dasar Kerajaan:</b> Pusat pentadbiran (Putrajaya), tanah rancangan (FELDA), hutan simpan.</p>
   </div>
   <div class="callout"><b>💡 Ingat:</b> Tanah pamah rata + ekonomi maju + kemudahan lengkap → penduduk <b>padat</b>. Tanah tinggi/berhutan + kurang peluang kerja → penduduk <b>jarang</b>.</div>
 </section>
@@ -192,6 +199,9 @@ var QUIZ=[
   {q:"Mengapa kawasan tanah tinggi biasanya JARANG penduduk?",o:["Terlalu panas","Sukar diteroka & kurang peluang kerja","Banyak bandar","Tanih sangat subur"],a:1,e:"Cerun curam & kurang peluang ekonomi menjadikannya jarang."},
   {q:"Rumus mengira ketumpatan penduduk ialah…",o:["Penduduk × Keluasan","Penduduk ÷ Keluasan","Keluasan ÷ Penduduk","Penduduk + Keluasan"],a:1,e:"Ketumpatan = Jumlah Penduduk ÷ Keluasan (km²)."},
   {q:"Peluang pekerjaan dan kemudahan lengkap akan menyebabkan penduduk…",o:["Berkurang","Bertumpu (padat)","Berpindah ke hutan","Tidak berubah"],a:1,e:"Faktor menggalakkan → penduduk bertumpu/padat."},
+  {q:"Kawasan berpenduduk JARANG biasanya mempunyai ketumpatan kurang daripada…",o:["10 orang/km²","50 orang/km²","100 orang/km²","200 orang/km²"],a:1,e:"Kawasan jarang mempunyai ketumpatan kurang daripada 50 orang per km²."},
+  {q:"Antara berikut, manakah BUKAN faktor fizikal yang mempengaruhi taburan penduduk?",o:["Iklim","Bentuk muka bumi","Tanih","Kemudahan asas"],a:3,e:"Kemudahan asas ialah faktor sosial, bukan fizikal."},
+  {q:"Kawasan berpenduduk sederhana mempunyai ketumpatan antara…",o:["0-50 orang/km²","50-200 orang/km²","200-500 orang/km²","500+ orang/km²"],a:1,e:"Kawasan sederhana mempunyai ketumpatan 50-200 orang per km²."},
 ];
 var answered={};
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();

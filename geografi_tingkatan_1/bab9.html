@@ -83,14 +83,15 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">📖 Pola Petempatan</h2>
   <div class="note">
     <h3>Apa itu petempatan?</h3>
-    <p><b>Petempatan</b> ialah kawasan tempat tinggal manusia beserta kemudahan. Ia terbahagi kepada petempatan <b>luar bandar</b> (kampung) dan <b>bandar</b>.</p>
+    <p><b>Petempatan</b> ialah kawasan tempat tinggal manusia beserta kemudahan. Ia terbahagi kepada dua jenis utama: <b>petempatan bandar</b> (kota, bandar, pusat perbandaran) dan <b>petempatan luar bandar</b> (kampung).</p>
   </div>
   <div class="note">
-    <h3>🗺️ 3 Pola Utama</h3>
+    <h3>🗺️ 4 Pola Utama</h3>
     <div class="patrow">
       <div class="patcard"><div class="patmini" id="m1"></div><b>Berpusat</b><small>Rumah berkumpul di satu pusat (cth simpang/pasar)</small></div>
       <div class="patcard"><div class="patmini" id="m2"></div><b>Berjajar</b><small>Rumah berderet sepanjang jalan / sungai / pantai</small></div>
       <div class="patcard"><div class="patmini" id="m3"></div><b>Berselerak</b><small>Rumah berjauhan & bertaburan</small></div>
+      <div class="patcard"><div class="patmini" id="m4"></div><b>Berkelompok</b><small>Rumah disusun terancang di kawasan rancangan (cth FELDA)</small></div>
     </div>
   </div>
   <div class="note">
@@ -98,7 +99,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
     <p><b>Faktor petempatan:</b> <span class="tag">bekalan air</span><span class="tag">tanah rata</span><span class="tag">tanih subur</span><span class="tag">pengangkutan</span><span class="tag">keselamatan</span></p>
     <p><b>Fungsi petempatan:</b> <span class="tag">pertanian</span><span class="tag">pentadbiran</span><span class="tag">perdagangan</span><span class="tag">pelabuhan</span><span class="tag">pelancongan</span></p>
   </div>
-  <div class="callout"><b>💡 Ingat:</b> Ber<b>jajar</b> = berderet ikut <b>garisan</b> (jalan/sungai). Ber<b>pusat</b> = berkumpul di satu <b>titik</b>. Ber<b>selerak</b> = bertaburan jauh-jauh.</div>
+  <div class="callout"><b>💡 Ingat:</b> Ber<b>jajar</b> = berderet ikut <b>garisan</b> (jalan/sungai). Ber<b>pusat</b> = berkumpul di satu <b>titik</b>. Ber<b>selerak</b> = bertaburan jauh-jauh. Ber<b>kelompok</b> = disusun <b>terancang</b> (cth FELDA).</div>
 </section>
 
 <section id="akt" class="panel">
@@ -147,6 +148,8 @@ function renderPattern(el, type){
     for(var i=0;i<n;i++){ addH(el,(8+i*(84/(n-1)))+'%', (50+rnd(-6,6))+'%'); }
   }else if(type==='berpusat'){
     for(var i=0;i<n;i++){ var ang=Math.random()*6.28, r=rnd(0,26); addH(el,(50+Math.cos(ang)*r)+'%',(50+Math.sin(ang)*r*1.2)+'%'); }
+  }else if(type==='berkelompok'){
+    for(var i=0;i<3;i++){ for(var j=0;j<3;j++){ addH(el,(20+j*20+rnd(-2,2))+'%',(20+i*20+rnd(-2,2))+'%'); } }
   }else{ // berselerak
     var used=[]; for(var i=0;i<n;i++){ addH(el, rnd(8,92)+'%', rnd(10,90)+'%'); }
   }
@@ -156,9 +159,10 @@ function addH(el,x,y){ var h=document.createElement('div'); h.className='h'; h.t
 renderPattern(document.getElementById('m1'),'berpusat');
 renderPattern(document.getElementById('m2'),'berjajar');
 renderPattern(document.getElementById('m3'),'berselerak');
+renderPattern(document.getElementById('m4'),'berkelompok');
 
 /* pattern game */
-var TYPES=[{k:'berpusat',n:'Berpusat'},{k:'berjajar',n:'Berjajar'},{k:'berselerak',n:'Berselerak'}];
+var TYPES=[{k:'berpusat',n:'Berpusat'},{k:'berjajar',n:'Berjajar'},{k:'berselerak',n:'Berselerak'},{k:'berkelompok',n:'Berkelompok'}];
 var pScore=0, pTarget;
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function newPat(){
@@ -209,13 +213,16 @@ newFunc();
 /* quiz */
 var BAB=9;
 var QUIZ=[
+  {q:"Petempatan di Malaysia terbahagi kepada dua jenis iaitu…",o:["Bandar dan luar bandar","Pantai dan pedalaman","Rata dan bergunung","Malaysia Barat dan Malaysia Timur"],a:0,e:"Petempatan di Malaysia terbahagi kepada bandar dan luar bandar."},
+  {q:"Jumlah penduduk bagi petempatan bandar melebihi…",o:["5,000 orang","10,000 orang","50,000 orang","100,000 orang"],a:1,e:"Petempatan bandar mempunyai jumlah penduduk melebihi 10,000 orang."},
+  {q:"Antara berikut, yang manakah merupakan ciri petempatan luar bandar?",o:["Kemudahan asas lengkap","Kegiatan ekonomi berasaskan pertanian","Penduduk padat","Rumah berciri moden"],a:1,e:"Petempatan luar bandar mempunyai kegiatan ekonomi berasaskan pertanian, penternakan dan perikanan."},
   {q:"Pola petempatan di mana rumah berderet sepanjang jalan atau sungai ialah…",o:["Berpusat","Berjajar","Berselerak","Berkelompok"],a:1,e:"Berjajar = rumah berderet mengikut garisan jalan/sungai/pantai."},
-  {q:"Pola petempatan di mana rumah berkumpul di satu pusat ialah…",o:["Berpusat","Berjajar","Berselerak","Bertingkat"],a:0,e:"Berpusat = rumah berkumpul di satu titik tumpuan."},
-  {q:"Rumah yang bertaburan dan berjauhan menunjukkan pola…",o:["Berpusat","Berjajar","Berselerak","Berderet"],a:2,e:"Berselerak = petempatan bertaburan & berjauhan."},
-  {q:"Antara faktor yang menggalakkan petempatan ialah…",o:["Tanah curam","Bekalan air & tanah rata","Banjir kerap","Tiada jalan"],a:1,e:"Bekalan air, tanah rata & tanih subur menggalakkan petempatan."},
-  {q:"Putrajaya merupakan petempatan yang berfungsi sebagai pusat…",o:["Pelabuhan","Pentadbiran","Perlombongan","Pelancongan pantai"],a:1,e:"Putrajaya ialah pusat pentadbiran kerajaan."},
-  {q:"Petempatan di Cameron Highlands banyak berfungsi untuk…",o:["Pelabuhan","Pertanian hawa dingin & pelancongan","Perindustrian berat","Perlombongan bijih timah"],a:1,e:"Cameron Highlands: sayur/teh & pelancongan."},
-  {q:"Petempatan luar bandar biasanya merujuk kepada…",o:["Bandar besar","Kampung","Pelabuhan antarabangsa","Kawasan industri"],a:1,e:"Luar bandar = kampung, biasanya berasaskan pertanian."},
+  {q:"Pola petempatan di mana rumah berkumpul di satu pusat ialah…",o:["Berpusat","Berjajar","Berselerak","Bertingkat"],a:0,e:"Berpusat = rumah berkumpul di satu titik tumpuan seperti persimpangan jalan."},
+  {q:"Rumah yang bertaburan dan berjauhan menunjukkan pola…",o:["Berpusat","Berjajar","Berselerak","Berderet"],a:2,e:"Berselerak = petempatan bertaburan & berjauhan antara satu sama lain."},
+  {q:"Petempatan berjajar sering dijumpai di…",o:["Kawasan pedalaman jauh","Sepanjang sungai dan pantai","Puncak gunung yang tinggi","Pusat bandar yang padat"],a:1,e:"Berjajar = rumah berderet sepanjang jalan raya, sungai atau pantai seperti Sungai Rajang dan Pantai Kualar Besut."},
+  {q:"Contoh petempatan berkelompok ialah…",o:["Kampung di kaki gunung","FELDA & FELDA Tanah Rata","Rumah di tepi laut","Kawasan perindustrian"],a:1,e:"Berkelompok = rumah disusun terancang di kawasan rancangan pembangunan tanah seperti FELDA Trolak, FELDA Air Tawar & FELDA Sahabat."},
+  {q:"Putrajaya merupakan petempatan yang berfungsi sebagai pusat…",o:["Pelabuhan","Pentadbiran","Perlombongan","Pelancongan pantai"],a:1,e:"Putrajaya ialah pusat pentadbiran kerajaan Persekutuan."},
+  {q:"Antara berikut, yang manakah BUKAN fungsi petempatan?",o:["Pertanian","Pentadbiran","Perdagangan","Iklim"],a:2,e:"Fungsi petempatan merujuk kepada kegiatan ekonomi seperti pertanian, pentadbiran, perdagangan, pelabuhan dan pelancongan. Iklim bukan fungsi."},
 ];
 var answered={};
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();

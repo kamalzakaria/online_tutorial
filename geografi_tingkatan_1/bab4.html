@@ -124,6 +124,8 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <h2 class="sec">✏️ Uji Kefahaman</h2>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
+  <div class="scoreline" id="dailyNote" style="margin-top:1.2rem;font-size:.88rem;color:var(--muted)"></div>
+  <div style="text-align:center;margin-top:1rem"><button class="btn" id="resetBtn" onclick="resetAll()">🔄 Set semula semua data</button></div>
   <div class="result" id="result"></div>
 </section>
 
@@ -216,9 +218,11 @@ function pickCap(c,btn){
 }
 newCap();
 
-/* ---------- quiz: full question bank + daily rotation ---------- */
-var BAB=4;
-var QBANK=[
+/* ============================================================
+   QBank: 50 soalan Bab 4 (Lakaran Peta Malaysia)
+   Daily rotation → 10 soalan/hari (dipilih secara deterministik)
+   ============================================================ */
+var QBank=[
   {q:"Berapakah jumlah negeri di Malaysia?",o:["11","13","14","16"],a:1,e:"Malaysia ada 13 negeri + 3 Wilayah Persekutuan."},
   {q:"Dua negeri di Malaysia Timur (Borneo) ialah…",o:["Sabah & Sarawak","Johor & Pahang","Perak & Kedah","Selangor & Melaka"],a:0,e:"Malaysia Timur = Sabah & Sarawak (+ WP Labuan)."},
   {q:"Ibu negeri Sarawak ialah…",o:["Kota Kinabalu","Kuching","Kuantan","Kangar"],a:1,e:"Ibu negeri Sarawak ialah Kuching."},
@@ -255,18 +259,125 @@ var QBANK=[
 ];
 var answered={};
 
-/* ---- daily rotation helpers (same pattern as bahasa_melayu) ---- */
-var CUR=new Date();
-var dayIndexOf=function(d){var y=d.getFullYear()*10000,m=d.getMonth()*100,dd=d.getDate();return y*10000+m*100+dd};
-var di=dayIndexOf(CUR);
-function shuffleDay(arr, di){
-  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
-  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
-  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
-  return a;
+/* ---------- Daily rotation (LCG — sama pola dengan bahasa_melayu) ---------- */
+var dayIdx=d=>Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5);
+function lcgDay(d){return (dayIdx(d)*2654435761+20260617)>>>0;}
+function pickDay(n,seed){var sel=[],rem=[],r=seed;for(var i=0;i<n;i++)rem.push(i);for(var i=0;i<Math.min(n,rem.length);i++){r=r*2654435761%4294967296;var j=r%(rem.length);sel.push(rem[j]);rem.splice(j,1);}return sel;}
+
+/* Inisialisasi / ulang: semak localStorage untuk quiz hari ini */
+(function(){
+  var today=new Date(),sid="geo:day"+dayIdx(today);
+  var stored=localStorage.getItem(sid);
+  if(stored){try{QUIZ=JSON.parse(stored);}catch(e){QUIZ=[];}}
+  if(!QUIZ.length||QUIZ.length!==QBank.length){
+    var seed=lcgDay(today);
+    var idx=pickDay(QBank.length,seed);
+    QUIZ=idx.map(function(i){return QBank[i];});
+    localStorage.setItem(sid,JSON.stringify(QUIZ));
+  } else {
+    try{var as=JSON.parse(localStorage.getItem("geo:a")||"{}");for(var k in as)answered[parseInt(k)]=as[k];}catch(e){}
+  }
+})();
+
+/* ---------- Render quiz ---------- */
+(function(){
+  var box=document.getElementById('quiz');
+  QUIZ.forEach(function(item,qi){
+    var div=document.createElement('div');
+    div.className='q';
+    var opts=item.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';
+    box.appendChild(div);
+  });
+  for(var k in answered){
+    var qi=parseInt(k),oi=answered[k];
+    if(qi<QUIZ.length){
+      var el=document.getElementById('q'+qi+'o'+oi);
+      if(el){
+        el.classList.add('lock');
+        var correct=QUIZ[qi].a;
+        for(var c=0;c<QUIZ[qi].o.length;c++){
+          var r=document.getElementById('q'+qi+'o'+c);
+          r.classList.add('lock');
+          if(c===correct) r.classList.add('ok');
+        }
+        if(oi!==correct) el.classList.add('no');
+        document.getElementById('exp'+qi).classList.add('show');
+      }
+    }
+  }
+  var done=Object.keys(answered).length;
+  if(done>0) document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
+})();
+
+/* ---------- Jawab soalan ---------- */
+function pick(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  localStorage.setItem("geo:a",JSON.stringify(answered));
+  var correct=QUIZ[qi].a;
+  for(var k=0;k<QUIZ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k);
+    el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+  var done=Object.keys(answered).length;
+  document.getElementById('dailyNote').textContent='Jawapan: '+done+'/'+QUIZ.length;
 }
-var shuffled=shuffleDay(QBANK, di);
-var Q=shuffled.slice(0,10);
+
+/* ---------- Submit kuiz ---------- */
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<QUIZ.length){
+    alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');
+    return;
+  }
+  var score=0;
+  QUIZ.forEach(function(it,qi){if(answered[qi]===it.a) score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! Kamu kenal Malaysia! 🇲🇾':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  saveProgress(4,pct);
+  try{var best=parseInt(localStorage.getItem("geo:best")||"0");localStorage.setItem("geo:best",String(Math.max(best,pct)));}catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah hari ini</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab5.html" style="color:#fff;font-weight:800">Teruskan ke Bab 5 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- Helpers ---------- */
+function saveProgress(bab,pct){
+  try{
+    var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};
+    var best=Math.max(prev.best||0,pct);
+    localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));
+  }catch(e){}
+}
+function resetAll(){
+  if(!confirm("Set semula semua soalan & jawapan Bab 4?")) return;
+  answered={};
+  localStorage.removeItem("geo:a");
+  localStorage.removeItem("geo:day"+dayIdx(new Date()));
+  localStorage.removeItem("geo:best");
+  (function(){
+    var today=new Date(),seed=lcgDay(today);
+    var rem=[],sel=[],r=seed;
+    for(var i=0;i<QBank.length;i++) rem.push(i);
+    for(var i=0;i<QBank.length;i++){
+      r=r*2654435761%4294967296;
+      var j=r%(rem.length);sel.push(rem[j]);rem.splice(j,1);
+    }
+    QUIZ=[];
+    for(var k=0;k<sel.length;k++) QUIZ.push(QBank[sel[k]]);
+    localStorage.setItem("geo:day"+dayIdx(today),JSON.stringify(QUIZ));
+  })();
+  location.reload();
+}
 
 (function renderQuiz(){
   var box=document.getElementById('quiz');

@@ -113,7 +113,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </section>
 
 <section id="kuiz" class="panel">
-  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <h2 class="sec">✏️ Kuiz Harian</h2>
+  <p class="hari-info" id="hariInfo"></p>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Soalan berputar setiap hari — jawab <b id="qTotal"></b> soalan untuk menguji kefahaman anda!</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
@@ -123,7 +125,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
   <a href="bab10.html">← Bab 10</a>
   <a class="next" href="bab12.html">Bab 12: Sumber Air →</a>
 </div>
-<footer>Geografi Tingkatan 1 · KSSM — angka penduduk anggaran untuk pembelajaran sahaja.</footer>
+<footer>Geografi Tingkatan 1 · KSSM — soalan peperiksaan untuk pembelajaran sahaja.</footer>
 </div>
 
 <script>
@@ -187,17 +189,123 @@ function pickCY(o,btn){
 }
 newCY();
 
-/* quiz */
+/* quiz: 10 real exam questions with daily rotation */
 var BAB=11;
-var QUIZ=[
-  {q:"Negara dengan penduduk PALING RAMAI di Asia Tenggara ialah…",o:["Malaysia","Indonesia","Thailand","Vietnam"],a:1,e:"Indonesia mempunyai lebih 270 juta penduduk — paling ramai."},
-  {q:"Negara dengan ketumpatan penduduk PALING TINGGI ialah…",o:["Laos","Singapura","Kemboja","Myanmar"],a:1,e:"Singapura — negara kecil tetapi sangat padat."},
-  {q:"Penduduk Asia Tenggara banyak bertumpu di…",o:["Puncak gunung","Dataran & delta sungai yang subur","Padang pasir","Hutan tebal"],a:1,e:"Delta & dataran subur menarik petempatan & pertanian."},
+var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+
+/* ---- daily rotation helpers (same pattern as bahasa_melayu & bab1) ---- */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+
+/* ---- 40-question question bank (8 categories) ---- */
+var QBANK=[
+  /* === PENDUDUK PALING RAMAI & SEDIKIT (7) === */
+  {q:"Negara dengan penduduk PALING RAMAI di Asia Tenggara ialah…",o:["Malaysia","Indonesia","Thailand","Vietnam"],a:1,e:"Indonesia mempunyai lebih 270 juta penduduk — paling ramai di rantau ini."},
+  {q:"Antara negara berikut, yang manakah mempunyai penduduk PALING SEDIKIT?",o:["Laos","Brunei","Kemboja","Laos"],a:1,e:"Brunei dan Timor Leste antara negara berpenduduk paling sedikit di Asia Tenggara."},
+  {q:"Dua negara di Asia Tenggara dengan penduduk paling sedikit ialah…",o:["Laos & Kemboja","Brunei & Timor Leste","Singapura & Brunei","Myanmar & Laos"],a:1,e:"Brunei & Timor Leste mempunyai populasi paling sedikit."},
+  {q:"Negara yang mempunyai populasi lebih 100 juta di Asia Tenggara ialah…",o:["Thailand & Vietnam","Indonesia & Filipina","Malaysia & Kemboja","Laos & Singapura"],a:1,e:"Indonesia (~273 juta) dan Filipina (~110 juta) mempunyai lebih 100 juta penduduk."},
+  {q:"Berapakah anggaran populasi Indonesia pada tahun 2023?",o:["250 juta","273 juta","290 juta","300 juta"],a:1,e:"Anggaran populasi Indonesia ialah 273 juta pada 2023."},
+  {q:"Negara dengan ketumpatan penduduk TERTINGGI di Asia Tenggara ialah…",o:["Singapura","Brunei","Kemboja","Laos"],a:0,e:"Singapura mempunyai ketumpatan penduduk tertinggi walaupun negara kecil."},
+  {q:"Ketumpatan penduduk merujuk kepada…",o:["Jumlah penduduk sesuatu negara","Bilangan penduduk per unit kawasan","Pertambahan penduduk setiap tahun","Penurunan penduduk"],a:1,e:"Ketumpatan penduduk = bilangan penduduk per unit kawasan (contohnya: orang/km²)."},
+
+  /* === TABURAN PENDUDUK (7) === */
+  {q:"Penduduk Asia Tenggara banyak bertumpu di…",o:["Puncak gunung","Dataran & delta sungai yang subur","Padang pasir","Hutan tebal"],a:1,e:"Dataran & delta sungai yang subur menarik petempatan kerana tanah subur & sumber air."},
+  {q:"Kawasan berpenduduk JARANG di Asia Tenggara termasuklah…",o:["Dataran Mekong","Paya Sumatera Timur","Delta Irrawaddy","Dataran Kedah-Penang"],a:1,e:"Kawasan paya Sumatera Timur, pedalaman Sabah/Sarawak & dataran pedalaman mempunyai penduduk jarang."},
+  {q:"Kawasan berpenduduk PADAT di Asia Tenggara termasuklah…",o:["Bandar bandar besar","Kawasan pedalaman","Dataran Mekong & Irrawaddy","Delta Mekong & Delta Irrawaddy"],a:3,e:"Delta delta sungai seperti Mekong & Irrawaddy mempunyai penduduk yang padat."},
+  {q:"Faktor fizikal yang menyebabkan sesuatu kawasan berpenduduk jarang ialah…",o:["Kawasan pedalaman & berpaya","Tiada pengangkutan","Kurang peluang kerja","Tiada kemudahan"],a:0,e:"Kawasan pedalaman, berpaya, bergunung & sukar diakses mempunyai penduduk jarang."},
+  {q:"Faktor manusia yang menarik penduduk ke bandar ialah…",o:["Peluang pekerjaan & kemudahan","Kawasan berhujan lebat","Tanah Subur","Sumber alam"],a:0,e:"Bandar menawarkan peluang kerja, kemudahan kesihatan, pendidikan & kemudahan asas."},
+  {q:"Kawasan yang mempunyai perhubungan terhad (terpencil) cenderung mempunyai…",o:["Penduduk padat","Penduduk sederhana","Penduduk jarang","Penduduk bertambah"],a:2,e:"Kawasan terpencil & sukar diakses mempunyai penduduk yang jarang."},
+  {q:"Taburan penduduk yang tidak seimbang di Asia Tenggara bermaksud…",o:["Semua kawasan mempunyai penduduk sama banyak","Kawasan tertentu sangat padat, kawasan lain jarang","Semua negara mempunyai penduduk sedikit","Semua negara mempunyai penduduk ramai"],a:1,e:"Taburan penduduk tidak seimbang — kawasan suburban/urbnn padat, kawasan pedalaman jarang."},
+
+  /* === BANDAR UTAMA (8) === */
   {q:"Bandar Jakarta terletak di negara…",o:["Filipina","Indonesia","Thailand","Vietnam"],a:1,e:"Jakarta ialah ibu kota Indonesia."},
-  {q:"Bandar Bangkok ialah bandar utama negara…",o:["Thailand","Myanmar","Laos","Kemboja"],a:0,e:"Bangkok ialah ibu kota Thailand."},
-  {q:"Antara negara berikut yang penduduknya PALING SEDIKIT ialah…",o:["Vietnam","Brunei","Filipina","Myanmar"],a:1,e:"Brunei antara negara berpenduduk paling sedikit di rantau ini."},
-  {q:"Faktor utama yang menggalakkan tumpuan penduduk di bandar ialah…",o:["Kurang kerja","Peluang pekerjaan & kemudahan","Banjir","Tiada pengangkutan"],a:1,e:"Bandar menawarkan peluang kerja & kemudahan, menarik penduduk."},
+  {q:"Bandar Bangkok ialah ibu kota negara…",o:["Thailand","Myanmar","Laos","Kemboja"],a:0,e:"Bangkok ialah ibu kota Thailand."},
+  {q:"Bandar Manila terletak di negara…",o:["Filipina","Indonesia","Vietnam","Malaysia"],a:0,e:"Manila ialah ibu kota Filipina."},
+  {q:"Bandar Ho Chi Minh terletak di negara…",o:["Vietnam","Kemboja","Laos","Thailand"],a:0,e:"Ho Chi Minh City ialah bandar terbesar di Vietnam."},
+  {q:"Bandar Kuala Lumpur ialah ibu kota negara…",o:["Sabah","Sarawak","Malaysia","Brunei"],a:2,e:"Kuala Lumpur ialah ibu kota Malaysia."},
+  {q:"Bandar Phnom Penh terletak di negara…",o:["Laos","Kemboja","Vietnam","Myanmar"],a:1,e:"Phnom Penh ialah ibu kota Kemboja."},
+  {q:"Bandar Bandar Seri Begawan terletak di negara…",o:["Brunei","Sarawak","Malaysia","Filipina"],a:0,e:"Bandar Seri Begawan ialah ibu kota Brunei."},
+  {q:"Bandar Yangon terletak di negara…",o:["Myanmar","Thailand","Malaysia","Vietnam"],a:0,e:"Yangon (Rangoon) ialah bandar terbesar di Myanmar."},
+
+  /* === FUNGSI BANDAR (8) === */
+  {q:"Bandar Jakarta, Bangkok, Kuala Lumpur, dan Singapura berfungsi sebagai…",o:["Pusat pertanian sahaja","Ibu negara & pusat pentadbiran","Pusat perikanan","Pusat perlombongan"],a:1,e:"Semua bandar utama berfungsi sebagai ibu negara dan pusat pentadbiran."},
+  {q:"Bandar Singapura dikenali sebagai pusat…",o:["Perdagangan & kewangan","Pertanian","Perikanan","Perhutanan"],a:0,e:"Singapura ialah pusat perniagaan, kewangan & pelancongan antarabangsa."},
+  {q:"Bandar-bandar di Asia Tenggara berfungsi sebagai pusat perhubungan kerana…",o:["Memiliki pelabuhan & lapangan terbang antarabangsa","Berdekatan dengan sawah padi","Banyak mempunyai gunung","Sangat susah diakses"],a:0,e:"Bandar-bandar besar mempunyai pelabuhan dan lapangan terbang antarabangsa yang menghubungkan negara-negara."},
+
+  /* === KENAL PELANCONGAN (7) === */
+  {q:"Bandar manakah yang dikenali sebagai 'Bandar Raya Kosmopolitan' di Asia Tenggara?",o:["Jakarta","Bangkok","Singapura","Manila"],a:2,e:"Singapura dikenali sebagai bandar raya kosmopolitan — majmuk pelbagai budaya & bangsa."},
+  {q:"Bandar Bangkok dikenali dengan nama lain iaitu…",o:["The City of Angels","The Garden City","The Venice of the East","The Rice Bowl"],a:0,e:"Bangkok dikenali sebagai 'The City of Angels'."},
+  {q:"Bandar Manila dikenali sebagai…",o:["The Garden City","The Venice of the East","The City of Angels","The Rice Bowl"],a:1,e:"Manila dikenali sebagai 'The Venice of the East' kerana banyak saluran air."},
+  {q:"Pusat pelancongan utama di Asia Tenggara ialah…",o:["Jakarta","Bangkok","Kuala Lumpur","Semua negara mempunyai"],a:3,e:"Semua negara di Asia Tenggara mempunyai tarikan pelancongan unik masing-masing."}
 ];
+
+/* ---- daily rotation: pick 10 questions for today ---- */
+function dayIdx(){ return dayIndexOf(new Date()); }
+function shuffleDay(arr, di){
+  /* Fisher-Yates seeded by day index — deterministic per day */
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+
+var Q=QBANK.slice();
+/* pick 10 today, rotate through 10-day cycles */
+var DAY_LEN=10, PICK=10;
+var START=0, CUR=dayIdx();
+var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
+var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;
+var shift=(off-startOff+DAY_LEN)%DAY_LEN;
+var shuffled=shuffleDay(QBANK, CUR);
+var todayQ=shuffled.slice(0,PICK);
+
+/* display date info */
+(function showDate(){
+  var d=new Date(), n=d.getMonth(), day=d.getDate(), y=d.getFullYear();
+  var el=document.getElementById('hariInfo');
+  el.textContent='📅 '+DAYS[d.getDay()]+', '+day+' '+MONTHS[n]+' '+y;
+  document.getElementById('qTotal').textContent=todayQ.length;
+})();
+
+/* ---- render quiz with today's questions ---- */
+var answered={};
+(function renderQuiz(){
+  var box=document.getElementById('quiz');
+  todayQ.forEach(function(q,qi){
+    var div=document.createElement('div'); div.className='q';
+    var opts=q.o.map(function(t,oi){
+      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
+    }).join('');
+    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+q.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+q.e+'</div>';
+    box.appendChild(div);
+  });
+})();
+function pick(qi,oi){
+  if(answered[qi]!==undefined) return;
+  answered[qi]=oi;
+  var correct=todayQ[qi].a;
+  for(var k=0;k<todayQ[qi].o.length;k++){
+    var el=document.getElementById('q'+qi+'o'+k); el.classList.add('lock');
+    if(k===correct) el.classList.add('ok');
+  }
+  if(oi!==correct) document.getElementById('q'+qi+'o'+oi).classList.add('no');
+  document.getElementById('exp'+qi).classList.add('show');
+}
+function submitQuiz(){
+  var done=Object.keys(answered).length;
+  if(done<todayQ.length){ alert('Jawab semua '+todayQ.length+' soalan dulu! ('+done+'/'+todayQ.length+')'); return; }
+  var score=0; todayQ.forEach(function(q,qi){ if(answered[qi]===q.a) score++; });
+  var pct=Math.round(score/todayQ.length*100);
+  var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';
+  var msg=pct>=85?'Cemerlang! 🌆 Kamu pakar penduduk & petempatan!':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';
+  /* save progress */
+  try{ var key="geo:bab11",prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}
+  var r=document.getElementById('result');
+  r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+todayQ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab12.html" style="color:#fff;font-weight:800">Teruskan ke Bab 12 →</a></div>';
+  r.classList.add('show');
+  document.getElementById('submitBtn').style.display='none';
+  r.scrollIntoView({behavior:'smooth'});
+}
 var answered={};
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
 function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}

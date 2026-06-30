@@ -138,7 +138,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </section>
 
 <section id="kuiz" class="panel">
-  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <h2 class="sec">✏️ Kuiz Harian</h2>
+  <p class="hari-info" id="hariInfo"></p>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Soalan berputar setiap hari — jawab <b id="qTotal"></b> soalan untuk menguji kefahaman anda!</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
@@ -152,6 +154,11 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </div>
 
 <script>
+/* ---- daily rotation helpers (same pattern as bahasa_melayu) ---- */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+
+var BAB=7;
+
 function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
 
 var RV=[
@@ -212,21 +219,121 @@ function pickStg(o,btn){
 }
 newStg();
 
-/* quiz */
-var BAB=7;
-var QUIZ=[
+/* ---- 70-question bank (6 categories) ---- */
+var QBANK=[
+  /* === PERINGKAT SUNGAI (12) === */
   {q:"Tempat sungai bermula (kawasan tinggi) dipanggil…",o:["Hilir","Muara","Hulu","Delta"],a:2,e:"Hulu ialah bahagian permulaan sungai di kawasan tinggi."},
   {q:"Sungai kecil yang mengalir masuk ke sungai utama ialah…",o:["Anak sungai","Delta","Tasik","Kuala"],a:0,e:"Anak sungai (tributary) menyumbang air ke sungai utama."},
   {q:"Air terjun dan jeram biasanya terdapat di peringkat…",o:["Hulu","Tengah","Hilir","Muara"],a:0,e:"Aliran deras di peringkat hulu membentuk air terjun & jeram."},
   {q:"Tempat pertemuan sungai dengan laut dipanggil…",o:["Hulu","Lembah","Muara / Kuala","Banjaran"],a:2,e:"Muara/kuala ialah tempat sungai bertemu laut."},
   {q:"Tanah mendap berbentuk kipas di muara sungai ialah…",o:["Delta","Tasik","Jeram","Meander"],a:0,e:"Delta terbentuk daripada pemendapan di muara."},
-  {q:"Sungai terpanjang di Malaysia ialah…",o:["Sungai Pahang","Sungai Rajang","Sungai Klang","Sungai Perak"],a:1,e:"Sungai Rajang (Sarawak) ialah sungai terpanjang di Malaysia."},
   {q:"Likuan sungai (meander) biasanya terbentuk di peringkat…",o:["Hulu","Tengah","Atas gunung","Delta"],a:1,e:"Meander/likuan banyak di peringkat tengah sungai."},
+  {q:"Aliran sungai paling perlahan berlaku di peringkat…",o:["Hulu","Tengah","Hilir","Puncak"],a:2,e:"Aliran perlahan berlaku di peringkat hilir kerana cerun landai."},
+  {q:"Lurah berbentuk 'U' terbentuk di peringkat…",o:["Hulu","Tengah","Hilir","Puncak"],a:1,e:"Lurah berbentuk 'U' terbentuk di peringkat tengah kerana proses hakisan sisi."},
+  {q:"Lurah sempit berbentuk 'V' ciri khas peringkat…",o:["Hulu","Tengah","Hilir","Kuala"],a:0,e:"Lurah V ciri khas peringkat hulu dengan cerun curam."},
+  {q:"Proses pemendapan sungai berlaku di peringkat…",o:["Hulu","Tengah","Hilir","Jeram"],a:2,e:"Pemendapan berlaku di peringkat hilir apabila aliran melambat."},
+  {q:"Sungai yang mengalir ke sungai utama dipanggil…",o:["Anak sungai","Kuala","Delta","Muara"],a:0,e:"Anak sungai atau tributary mengalir ke sungai utama."},
+  {q:"Ciri peringkat hulu yang manakah BUKAN benar?",o:["Aliran deras","Lurah berbentuk V","Cerun landai","Air cetek"],a:2,e:"Peringkat hulu mempunyai cerun curam, bukan landai."},
+
+  /* === SUNGAI & TASIK MALAYSIA (12) === */
+  {q:"Sungai terpanjang di Malaysia ialah…",o:["Sungai Pahang","Sungai Rajang","Sungai Klang","Sungai Perak"],a:1,e:"Sungai Rajang (Sarawak) ialah sungai terpanjang di Malaysia."},
+  {q:"Sungai terpanjang di Semenanjung Malaysia ialah…",o:["Sungai Dungun","Sungai Pahang","Sungai Melaka","Sungai Kinta"],a:1,e:"Sungai Pahang ialah sungai terpanjang di Semenanjung Malaysia."},
+  {q:"Sungai yang terdapat di Sabah ialah…",o:["Sungai Rajang","Sungai Kinabatangan","Sungai Klang","Sungai Perak"],a:1,e:"Sungai Kinabatangan terdapat di Sabah."},
+  {q:"Tasik semula jadi di Malaysia ialah…",o:["Tasik Kenyir","Tasik Chini","Tasik Temenggor","Tasik Bakun"],a:1,e:"Tasik Chini ialah satu tasik semula jadi di Pahang."},
+  {q:"Tasik buatan yang terdapat di Kelantan ialah…",o:["Tasik Kenyir","Tasik Bera","Tasik Chini","Tasik Kedung"],a:0,e:"Tasik Kenyir ialah tasik buatan di Pasir Mas, Kelantan."},
+  {q:"Kawasan tadahan hujan di tanah tinggi ialah…",o:["Lembangan sungai","Dataran banjir","Delta","Muara"],a:0,e:"Lembangan sungai atau kawasan tadahan hujan mengumpulkan air untuk sungai."},
+  {q:"Sungai yang terdapat di Sarawak ialah…",o:["Sungai Rajang","Sungai Pahang","Sungai Klang","Sungai Melaka"],a:0,e:"Sungai Rajang terdapat di Sarawak dan ialah sungai terpanjang di Malaysia."},
+  {q:"Tasik yang terdapat di Pahang ialah…",o:["Tasik Bera","Tasik Kenyir","Tasik Temenggor","Tasik Bakun"],a:0,e:"Tasik Bera terdapat di Pahang dan ialah tasik semula jadi terbesar di Malaysia."},
+  {q:"Tasik buatan yang terdapat di Perak ialah…",o:["Tasik Kenyir","Tasik Bera","Tasik Temenggor","Tasik Kedung"],a:2,e:"Tasik Temenggor terdapat di Perak dan ialah tasik buatan."},
+  {q:"Panjang Sungai Rajang ialah lebih…",o:["500 km","700 km","900 km","1100 km"],a:1,e:"Sungai Rajang mempunyai panjang lebih kurang 563 km."},
+  {q:"Antara berikut, yang manakah ialah tasik semula jadi?",o:["Tasik Kenyir","Tasik Bakun","Tasik Chini","Tasik Temenggor"],a:2,e:"Tasik Chini ialah tasik semula jadi manakala yang lain ialah tasik buatan."},
+  {q:"Antara berikut, yang manakah ialah tasik buatan?",o:["Tasik Bera","Tasik Chini","Tasik Kenyir","Tasik Ara"],a:2,e:"Tasik Kenyir ialah tasik buatan manakala yang lain ialah tasik semula jadi."},
+
+  /* === KEPENTINGAN SUNGAI & TASIK (12) === */
+  {q:"Sungai digunakan sebagai sumber pengairan untuk…",o:["Kawasan padi","Kawasan perumahan","Kawasan perindustrian","Kawasan bandar"],a:0,e:"Sungai menyediakan air untuk mengairi kawasan padi."},
+  {q:"Sungai merupakan sumber protein kerana…",o:["Mengandungi ikan","Mengandungi tumbuhan","Mengandungi pasir","Mengandungi batu"],a:0,e:"Sungai menyediakan sumber protein melalui ikan dan biota air."},
+  {q:"Sungai digunakan sebagai sempadan semula jadi antara…",o:["Dua bandar","Dua negara atau negeri","Dua kawasan padi","Dua desa"],a:1,e:"Sungai sering digunakan sebagai sempadan semula jadi antara wilayah."},
+  {q:"Sungai digunakan untuk jana kuasa hidroelektrik kerana…",o:["Aliran air boleh.putar turbin","Sungai kaya ikan","Air sungai jernih","Laluan pengangkutan"],a:0,e:"Aliran air sungai memutar turbin untuk menjana kuasa hidroelektrik."},
+  {q:"Kegunaan domestik sungai termasuklah…",o:["Membaca","Mandi dan mencuci","Bermain bola","Menanam padi"],a:1,e:"Sungai menyediakan air untuk kegunaan domestik seperti mandi dan mencuci."},
+  {q:"Rekreasi dan pelancongan di sungai termasuklah…",o:["Membaca di perpustakaan","Mengambang dan memancing","Menonton televisyen","Berdagang di pasar"],a:1,e:"Mengambang (rafting) dan memancing ialah aktiviti rekreasi di sungai."},
+  {q:"Tasik digunakan sebagai sumber protein kerana…",o:["Mengandungi ikan dan udang","Mengandungi pasir","Mengandungi batu","Mengandungi tanah"],a:0,e:"Tasik menyediakan sumber protein melalui ikan dan udang."},
+  {q:"Tasik buatan digunakan untuk jana kuasa…",o:["Tenaga suria","Hidroelektrik","Angin","Nuklear"],a:1,e:"Tasik buatan seperti Tasik Kenyir digunakan untuk jana kuasa hidroelektrik."},
+  {q:"Sungai di Malaysia menyokong kegiatan…",o:["Perikanan dan pengangkutan","Perhutanan dan perlombongan","Perindustrian dan perniagaan","Perumahan dan pembiayaan"],a:0,e:"Sungai menyokong kegiatan perikanan dan pengangkutan air."},
+  {q:"Saluran pengairan daripada sungai membantu petani dalam…",o:["Pengeluaran padi","Kegunaan domestik","Pengangkutan","Rekreasi"],a:0,e:"Saluran pengairan membantu petani dalam pengeluaran padi."},
+
+  /* === BENTUK MUKA BUMI SALIRAN (12) === */
+  {q:"Proses hakisan di sungai menyebabkan terbentuknya…",o:["Dataran banjir","Lurah","Delta","Tasik ladam"],a:1,e:"Hakisan sungai membentuk lurah dan lembah."},
+  {q:"Tasik ladam terbentuk daripada…",o:["Likuan sungai yang terputus","Air terjun","Jeram","Dataran banjir"],a:0,e:"Tasik ladam terbentuk apabila likuan sungai terputus."},
+  {q:"Dataran banjir terbentuk di peringkat…",o:["Hulu","Tengah","Hilir","Puncak"],a:2,e:"Dataran banjir terbentuk di peringkat hilir akibat pemendapan semasa banjir."},
+  {q:"Air terjun terbentuk kerana…",o:["Pemendapan yang tidak merata","Hakisan yang tidak merata","Pengkisan oleh angin","Pengkisan oleh gelombang"],a:1,e:"Air terjun terbentuk kerana hakisan yang tidak merata pada batuan."},
+  {q:"Likuan sungai terbentuk kerana…",o:["Hakisan luar dan pemendapan dalaman","Hakisan dalaman dan pemendapan luar","Pengkisan oleh angin","Pengkisan oleh air hujan"],a:0,e:"Likuan terbentuk kerana hakisan luar dan pemendapan dalaman pada lekukan sungai."},
+  {q:"Tetambak terbentuk di…",o:["Kuala sungai","Pertengahan sungai","Hulu sungai","Sumber sungai"],a:0,e:"Tetambak terbentuk di kuala sungai apabila sungai bercabang."},
+  {q:"Formasi batuan berlapis yang terhakis di sungai ialah…",o:["Susuh bukit","Dataran banjir","Delta","Tasik"],a:0,e:"Susuh bukit berpancar terbentuk di peringkat tengah akibat hakisan."},
+  {q:"Bentuk muka bumi saliran di peringkat hulu ialah…",o:["Lurah V, air terjun","Dataran banjir, delta","Likuan, tasik ladam","Tetambak, kuala"],a:0,e:"Bentuk muka bumi hulu ialah lurah V, air terjun, dan jeram."},
+  {q:"Bentuk muka bumi saliran di peringkat tengah ialah…",o:["Likuan sungai, susuh bukit","Dataran banjir, delta","Lurah V, air terjun","Tasik ladam, tetambak"],a:0,e:"Bentuk muka bumi tengah ialah likuan sungai dan susuh bukit berpancar."},
+  {q:"Bentuk muka bumi saliran di peringkat hilir ialah…",o:["Dataran banjir, delta","Lurah V, air terjun","Likuan sungai, jeram","Susuh bukit, tasik ladam"],a:0,e:"Bentuk muka bumi hilir ialah dataran banjir, delta, dan tasik ladam."},
+
+  /* === ISTILAH & KONSEP (10) === */
+  {q:"Lembangan saliran ialah…",o:["Kawasan yang dialirkan oleh sungai","Kawasan muara sungai","Kawasan hulu sungai","Kawasan tasik"],a:0,e:"Lembangan saliran ialah kawasan yang dialirkan oleh sungai dan cabang-cabangnya."},
+  {q:"Anak sungai ialah…",o:["Sungai besar","Sungai yang mengalir ke sungai utama","Sungai yang mengalir ke laut","Sungai kering"],a:1,e:"Anak sungai atau tributary ialah sungai kecil yang mengalir ke sungai utama."},
+  {q:"Muara ialah…",o:["Sumber sungai","Sungai yang mengalir ke laut","Sungai kecil","Sungai yang mengalir ke tasik"],a:1,e:"Muara ialah tempat sungai bertemu laut atau Tasik."},
+  {q:"Delta ialah…",o:["Tanah mendap berbentuk kipas di muara","Tasik di peringkat hulu","Lurah berbentuk U","Air terjun yang tinggi"],a:0,e:"Delta ialah tanah mendap berbentuk kipas yang terbentuk di muara sungai."},
+  {q:"Peringkat hulu memiliki ciri…",o:["Aliran perlahan, cerun landai","Aliran deras, cerun curam","Aliran sederhana, lurah lebar","Aliran perlahan, lurah sempit"],a:1,e:"Peringkat hulu mempunyai aliran deras dan cerun curam."},
+  {q:"Peringkat tengah memiliki ciri…",o:["Aliran deras, cerun curam","Aliran sederhana, lurah berbentuk U","Aliran perlahan, cerun landai","Aliran deras, lurah sempit"],a:1,e:"Peringkat tengah mempunyai aliran sederhana dan lurah berbentuk U."},
+  {q:"Peringkat hilir memiliki ciri…",o:["Aliran deras, cerun curam","Aliran sederhana, lurah berbentuk U","Aliran perlahan, cerun landai","Aliran deras, lurah sempit"],a:2,e:"Peringkat hilir mempunyai aliran perlahan dan cerun landai."},
+  {q:"Sungai yang mengalir ke laut dipanggil…",o:["Sungai utama","Sungai temporari","Sungai yang mengalir ke laut","Sungai kering"],a:2,e:"Sungai utama ialah sungai yang mengalir ke laut."},
+  {q:"Sungai temporari ialah sungai yang…",o:["Mengalir sepanjang tahun","Mengalir hanya semasa hujan","Mengalir hanya di musim panas","Tidak mengalir"],a:1,e:"Sungai temporari mengalir hanya semasa hujan dan kering semusim."},
+
+  /* === APLIKASI & SITUASI (10) === */
+  {q:"Jika anda ingin memancing di sungai, anda perlu pergi ke…",o:["Hulu sungai","Tengah atau hilir sungai","Puncak sungai","Sumber sungai"],a:1,e:"Memancing biasanya dilakukan di tengah atau hilir sungai kerana terdapat lebih ikan."},
+  {q:"Kawasan yang sesuai untuk aktiviti mengambang (rafting) ialah di…",o:["Hulu sungai","Tengah sungai","Hilir sungai","Muara sungai"],a:0,e:"Rafting dilakukan di hulu sungai kerana aliran deras dan likuan."},
+  {q:"Kawasan yang sesuai untuk membina empangan ialah di…",o:["Hulu sungai","Tengah sungai","Hilir sungai","Muara sungai"],a:0,e:"Empangan dibina di hulu sungai untuk mengawal aliran air."},
+
+  /* === SOALAN PEPERIKSAAN (10) === */
+  {q:"Antara berikut, yang manakah BUKAN ciri peringkat hulu?",o:["Lurah sempit berbentuk V","Cerun curam","Aliran air perlahan","Air cetek"],a:2,e:"Peringkat hulu mempunyai aliran air yang deras, bukan perlahan."},
+  {q:"Antara berikut, yang manakah ialah tasik semula jadi di Malaysia?",o:["Tasik Kenyir","Tasik Temenggor","Tasik Bera","Tasik Bakun"],a:2,e:"Tasik Bera ialah tasik semula jadi manakala yang lain ialah tasik buatan."},
+  {q:"Sungai yang terpanjang di Semenanjung Malaysia ialah…",o:["Sungai Dungun","Sungai Pahang","Sungai Melaka","Sungai Perak"],a:1,e:"Sungai Pahang ialah sungai terpanjang di Semenanjung Malaysia."},
+  {q:"Tasik Kenyir terdapat di negeri…",o:["Pahang","Kelantan","Perak","Terengganu"],a:1,e:"Tasik Kenyir terdapat di Pasir Mas, Kelantan."},
+  {q:"Proses pemendapan di sungai berlaku apabila…",o:["Aliran air deras","Aliran air melambat","Aliran air cepat","Aliran air turbulen"],a:1,e:"Pemendapan berlaku apabila aliran air melambat dan kehilangan tenaga."},
+  {q:"Tasik ladam terbentuk daripada…",o:["Air terjun yang runtuh","Likuan sungai yang terputus","Jeram yang tinggi","Dataran banjir"],a:1,e:"Tasik ladam terbentuk apabila likuan sungai terputus akibat proses hakisan."},
+  {q:"Antara berikut, yang manakah ialah kegunaan tasik?",o:["Sumber protein","Sumber bahan galian","Sumber bahan petrokimia","Sumber bahan radioaktif"],a:0,e:"Tasik menyediakan sumber protein melalui perikanan."},
+  {q:"Kegunaan sungai sebagai sempadan semula jadi ialah antara…",o:["Dua kampung","Dua negara atau negeri","Dua desa","Dua dusun"],a:1,e:"Sungai sering digunakan sebagai sempadan semula jadi antara negeri atau negara."},
+  {q:"Likuan sungai banyak terdapat di peringkat…",o:["Hulu","Tengah","Hilir","Puncak"],a:1,e:"Likuan sungai banyak terdapat di peringkat tengah sungai."},
+  {q:"Ciri peringkat hilir yang manakah benar?",o:["Aliran deras, cerun curam","Aliran sederhana, lurah berbentuk U","Aliran perlahan, cerun landai","Aliran deras, lurah sempit"],a:2,e:"Peringkat hilir mempunyai aliran perlahan dan cerun landai."}
 ];
+
+/* ---- daily rotation: pick 7 questions for today ---- */
+function dayIdx(){ return dayIndexOf(new Date()); }
+function shuffleDay(arr, di){
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+
+var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+
+var Q=QBANK.slice();
+var DAY_LEN=10, PICK=10;
+var START=0, CUR=dayIdx();
+var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
+var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;
+var shift=(off-startOff+DAY_LEN)%DAY_LEN;
+var shuffled=shuffleDay(QBANK, CUR);
+var todayQ=shuffled.slice(0,PICK);
+
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🏞️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab8.html" style="color:#fff;font-weight:800">Teruskan ke Bab 8 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+(function(){var box=document.getElementById('quiz');todayQ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+(function showDate(){
+  var d=new Date(), n=d.getMonth(), day=d.getDate(), y=d.getFullYear();
+  var el=document.getElementById('hariInfo');
+  el.textContent='📅 '+DAYS[d.getDay()]+', '+day+' '+MONTHS[n]+' '+y;
+  document.getElementById('qTotal').textContent=todayQ.length;
+})();
+
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=todayQ[qi].a;for(var k=0;k<todayQ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<todayQ.length){alert('Jawab semua '+todayQ.length+' soalan dulu! ('+done+'/'+todayQ.length+')');return;}var score=0;todayQ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/todayQ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🏞️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+todayQ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab8.html" style="color:#fff;font-weight:800">Teruskan ke Bab 8 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
 function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
 </script>
 </body>

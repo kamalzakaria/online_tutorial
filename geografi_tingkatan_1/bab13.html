@@ -226,13 +226,16 @@ newR();
 /* ---- quiz ---- */
 var BAB=13;
 var QUIZ=[
-  {q:"Sisa domestik bermaksud…",o:["Sampah dari kilang besar","Sampah dari rumah & aktiviti harian","Sisa toksik nuklear","Sisa pertanian sahaja"],a:1,e:"Sisa domestik = sampah dari rumah/aktiviti harian."},
-  {q:"3R merujuk kepada…",o:["Run, Read, Rest","Kurangkan, Guna Semula, Kitar Semula","Rebus, Rendam, Reput","Recycle sahaja"],a:1,e:"3R: Reduce (Kurangkan), Reuse (Guna Semula), Recycle (Kitar Semula)."},
-  {q:"Tong kitar semula berwarna BIRU adalah untuk…",o:["Kaca","Plastik","Kertas","Sisa makanan"],a:2,e:"Biru = kertas, Coklat = kaca, Oren = plastik & tin."},
-  {q:"Botol kaca patut dimasukkan ke dalam tong berwarna…",o:["Biru","Coklat","Oren","Hitam"],a:1,e:"Tong Coklat untuk kaca."},
-  {q:"Tin minuman aluminium patut dibuang ke dalam tong…",o:["Biru","Coklat","Oren","Merah"],a:2,e:"Tong Oren untuk plastik, tin & aluminium."},
-  {q:"Antara KESAN sampah yang tidak diurus dengan baik ialah…",o:["Udara lebih bersih","Banjir & pembiakan nyamuk","Air lebih jernih","Tanah lebih subur"],a:1,e:"Sampah menyumbat longkang → banjir, & membiak nyamuk → penyakit."},
-  {q:"Menggunakan semula beg membeli-belah ialah contoh…",o:["Kurangkan/Guna semula","Pembaziran","Pencemaran","Pelupusan"],a:0,e:"Membawa beg sendiri = kurangkan beg plastik & guna semula."},
+  {q:"Apakah yang dimaksudkan dengan sisa domestik?",o:["Sampah dari kilang besar","Sampah dari rumah & aktiviti harian","Sisa toksik nuklear","Sisa pertanian sahaja"],a:1,e:"Sisa domestik adalah sisa yang terhasil dari kawasan perumahan/aktiviti harian."},
+  {q:"3R merujuk kepada…",o:["Kurangkan, Guna Semula, Kitar Semula","Run, Read, Rest","Recycle sahaja","Rebus, Rendam, Reput"],a:0,e:"3R: Reduce (Kurangkan), Reuse (Guna Semula), Recycle (Kitar Semula)."},
+  {q:"Tong kitar semula berwarna BIRU adalah untuk jenis sampah…",o:["Kaca","Plastik","Kertas","Logam"],a:2,e:"Biru = kertas, Coklat = kaca, Oren = plastik & tin."},
+  {q:"Botol kaca patut dimasukkan ke dalam tong berwarna…",o:["Biru","Coklat","Oren","Hitam"],a:1,e:"Tong Coklat khas untuk kaca."},
+  {q:"Tin minuman aluminium patut dibuang ke dalam tong berwarna…",o:["Biru","Coklat","Oren","Merah"],a:2,e:"Tong Oren untuk plastik, tin & aluminium."},
+  {q:"Antara berikut, yang manakah BUKAN kesan pembuangan sisa domestik yang tidak diurus?",o:["Pencemaran udara","Banjir kilat","Udara lebih bersih","Pembiakan nyamuk"],a:2,e:"Sampah tidak diurus → pencemaran, banjir, & pembiakan nyamuk."},
+  {q:"Menggunakan semula beg membeli-belah ialah contoh amalan…",o:["Kurangkan & Guna Semula","Pembaziran","Pencemaran","Pelupusan"],a:0,e:"Membawa beg sendiri = kurangkan beg plastik & guna semula."},
+  {q:"Antara berikut, yang manakah BUKAN jenis sisa domestik?",o:["Sisa makanan","Sisa kain","Sisa nuklear","Kertas lama"],a:2,e:"Sisa nuklear bukan sisa domestik — ia sisa perindustrian."},
+  {q:"Kesan pembuangan sisa domestik yang tidak diurus dengan baik termasuk…",o:["Pencemaran & banjir","Udara lebih bersih","Tanah lebih subur","Air lebih jernih"],a:0,e:"Sampah menyumbat longkang → banjir & pencemaran."},
+  {q:"Amalan 3R bertujuan untuk…",o:["Mengurangkan pembaziran & pencemaran","Meningkatkan penggunaan plastik","Meningkatkan kos penyelenggaraan","Menghasilkan lebih sisa"],a:0,e:"3R mengurangkan pembaziran sisa & pencemaran alam sekitar."},
 ];
 var answered={};
 (function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
