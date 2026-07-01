@@ -149,6 +149,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </div>
 
 <script>
+var BAB=5;
 function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
 function rnd(a,b){return a+Math.random()*(b-a);}
 

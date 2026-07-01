@@ -306,7 +306,7 @@ function pickDay(n,seed){
   }
   if(!QUIZ.length||QUIZ.length!==QBank.length){
     var seed=lcgDay(today);
-    var idx=pickDay(QBank.length,seed);
+    var idx=pickDay(QBank.length,seed).slice(0,10);
     QUIZ=idx.map(function(i){return QBank[i];});
     localStorage.setItem(sid,JSON.stringify(QUIZ));
   } else {

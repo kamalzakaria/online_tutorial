@@ -144,7 +144,9 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </section>
 
 <section id="kuiz" class="panel">
-  <h2 class="sec">✏️ Uji Kefahaman</h2>
+  <h2 class="sec">✏️ Kuiz Harian</h2>
+  <p class="hari-info" id="hariInfo"></p>
+  <p style="font-size:.85rem;color:var(--muted);margin-bottom:1rem">Soalan berputar setiap hari — jawab <b id="qTotal"></b> soalan untuk menguji kefahaman anda!</p>
   <div id="quiz"></div>
   <div style="text-align:center"><button class="btn" id="submitBtn" onclick="submitQuiz()">Lihat Keputusan</button></div>
   <div class="result" id="result"></div>
@@ -158,6 +160,11 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:1.4rem}
 </div>
 
 <script>
+/* ---- daily rotation helpers (same pattern as bahasa_melayu) ---- */
+function dayIndexOf(d){ return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+
+var BAB=6;
+
 function tab(id,el){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById(id).classList.add('on');el.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
 
 /* landform hotspots (positions in % of scene) */
@@ -223,21 +230,125 @@ function pickDesc(o,btn){
 }
 newDesc();
 
-/* quiz */
-var BAB=6;
-var QUIZ=[
-  {q:"Deretan gunung yang panjang dan bersambung dipanggil…",o:["Lembah","Banjaran","Dataran","Teluk"],a:1,e:"Banjaran ialah deretan gunung yang panjang, cth Banjaran Titiwangsa."},
-  {q:"Gunung tertinggi di Malaysia ialah…",o:["Gunung Tahan","Gunung Kinabalu","Gunung Ledang","Gunung Jerai"],a:1,e:"Gunung Kinabalu (4095 m) di Sabah ialah yang tertinggi."},
-  {q:"Kawasan rendah dan rata yang sesuai untuk pertanian ialah…",o:["Banjaran","Plato","Dataran / tanah pamah","Tanjung"],a:2,e:"Dataran (tanah pamah) sesuai untuk pertanian & petempatan."},
-  {q:"Kawasan rendah yang terletak di antara dua kawasan tinggi ialah…",o:["Lembah","Tanjung","Delta","Plato"],a:0,e:"Lembah ialah kawasan rendah antara gunung/bukit."},
-  {q:"Banjaran utama di Semenanjung Malaysia ialah Banjaran…",o:["Crocker","Titiwangsa","Himalaya","Andes"],a:1,e:"Banjaran Titiwangsa membentang di tengah Semenanjung."},
-  {q:"Tanah tinggi seperti Cameron Highlands penting untuk…",o:["Perikanan laut dalam","Pelancongan & pertanian hawa dingin","Pelabuhan","Industri berat"],a:1,e:"Tanah tinggi yang sejuk sesuai untuk pelancongan & sayur/teh."},
-  {q:"Bentuk muka bumi di pinggir laut termasuk…",o:["Teluk & tanjung","Lembah & plato","Banjaran & gunung","Tasik & sungai"],a:0,e:"Pinggir laut: pantai, teluk, tanjung."},
+/* ---- 70-question bank (7 categories) ---- */
+var QBANK=[
+  /* === TANAH TINGGI (12) === */
+  {q:"Tanah tinggi ialah kawasan ketinggian melebihi…",o:["100 m","180 m","500 m","1000 m"],a:1,e:"Tanah tinggi melebihi 180 m dari aras laut."},
+  {q:"Tanah tinggi merangkumi banjaran gunung dan…",o:["Dataran","Dataran tinggi","Lembah","Pantai"],a:1,e:"Tanah tinggi merangkumi banjaran gunung dan dataran tinggi."},
+  {q:"Banjaran gunung di Malaysia terbentuk akibat…",o:["Proses lipatan","Proses erosi","Proses pengkisan","Proses pengangkutan"],a:0,e:"Banjaran gunung di Malaysia terbentuk akibat proses lipatan kerak bumi."},
+  {q:"Banjaran Titiwangsa terletak di bahagian…",o:["Utara","Barat","Tengah","Timur"],a:2,e:"Banjaran Titiwangsa membentang di tengah Semenanjung Malaysia."},
+  {q:"Banjaran Titiwangsa dikenali sebagai…",o:["Tulang belakang Semenanjung","Punggung darat Semenanjung","Sg. Titiwangsa","Pasar Titiwangsa"],a:0,e:"Banjaran Titiwingsa dikenali sebagai tulang belakang Semenanjung Malaysia."},
+  {q:"Gunung tertinggi di Semenanjung Malaysia ialah…",o:["Gunung Tahan","Gunung Ledang","Gunung Jerai","Gunung Kerinci"],a:0,e:"Gunung Tahan (2187 m) ialah gunung tertinggi di Semenanjung."},
+  {q:"Gunung Kinabalu terletak di…",o:["Sarawak","Sabah","Kelantan","Johor"],a:1,e:"Gunung Kinabalu (4095 m) terletak di Sabah."},
+  {q:"Tanah tinggi Cameron penting untuk…",o:["Perikanan","Pelancongan & pertanian hawa dingin","Pelabuhan","Industri berat"],a:1,e:"Tanah tinggi Cameron sesuai untuk pelancongan & pertanian hawa dingin如茶、蔬菜."},
+  {q:"Tanah tinggi di Semenanjung Malaysia berpunca daripada…",o:["Dataran Tinggi Yunan","Dataran Tinggi Nepal","Dataran Tinggi Tibet","Dataran Tinggi Ethiopia"],a:0,e:"Tanah tinggi di Semenanjung berpunca daripada Dataran Tinggi Yunan."},
+  {q:"Ciri tanah tinggi termasuklah…",o:["Cerun landai","Aliran deras","Cerun curam & berbatu","Kawasan rendah"],a:2,e:"Tanah tinggi mempunyai cerun curam dan berbatu."},
+  {q:"Kawasan tanah tinggi sesuai untuk aktiviti…",o:["Membajak","Pelancongan","Perikanan","Pembinaan bandar"],a:1,e:"Tanah tinggi sesuai untuk aktiviti pelancongan & rekreasi."},
+
+  /* === TANAH PAMAH (10) === */
+  {q:"Tanah pamah ialah kawasan yang rendah dan ketinggian tidak melebihi…",o:["100 m","180 m","300 m","500 m"],a:1,e:"Tanah pamah tidak melebihi 180 m dari aras laut."},
+  {q:"Kebanyakan tanah pamah terdapat di…",o:["Lembangan sungai, dataran, delta, dataran pantai","Gunung, banjaran, lembah","Pantai, teluk, tanjung","Dataran tinggi"],a:0,e:"Tanah pamah terdapat di lembangan sungai, dataran, delta dan dataran pantai."},
+  {q:"Contoh tanah pamah di Kedah dan Perlis ialah…",o:["Dataran Kelantan","Dataran Kedah-Perlis","Dataran Pahang","Dataran Johor"],a:1,e:"Dataran Kedah-Perlis ialah contoh tanah pamah di utara Semenanjung."},
+  {q:"Dataran yang terdapat di Kelantan ialah…",o:["Dataran Kelantan","Dataran Pahang","Dataran Terengganu","Dataran Perak"],a:0,e:"Dataran Kelantan terletak di pantai timur Semenanjung."},
+  {q:"Dataran yang terdapat di Pahang ialah…",o:["Dataran Kelantan","Dataran Pahang","Dataran Perak","Dataran Perlis"],a:1,e:"Dataran Pahang terdapat di pantai timur Malaysia."},
+  {q:"Delta ialah tanah mendap berbentuk…",o:["Bulat","Segi empat","Kipas","Linear"],a:2,e:"Delta berbentuk kipas apabila sungai bercabang di muara."},
+  {q:"Delta Rajang terdapat di…",o:["Sarawak","Sabah","Kelantan","Pahang"],a:0,e:"Delta Rajang terdapat di Kuching, Sarawak."},
+  {q:"Delta Segamat terdapat di…",o:["Johor","Melaka","Negeri Sembilan","Perak"],a:0,e:"Delta Segamat terdapat di Johor."},
+  {q:"Kawasan tanah pamah di pantai barat Malaysia sesuai untuk…",o:["Perniagaan","Pertanian","Perikanan","Pembinaan"],a:1,e:"Tanah pamah pantai barat sesuai untuk pertanian kerana tanah subur."},
+  {q:"Tanah pamah di pantai timur cenderung…",o:["Subur","Kurang subur","Kering","Berdasaran"],a:1,e:"Tanah pamah pantai timur kurang subur berbanding pantai barat."},
+
+  /* === PINGGIR LAUT (10) === */
+  {q:"Pinggir laut merujuk kepada…",o:["Pertemuan daratan dan laut","Kawasan gunung","Kawasan lembah","Kawasan sungai"],a:0,e:"Pinggir laut ialah pertemuan antara daratan dan laut."},
+  {q:"Contoh bentuk pinggir laut ialah…",o:["Pulau, teluk, tanjung, lagun","Gunung, banjaran, lembah","Dataran, pegunungan","Pantai, sungai"],a:0,e:"Contoh bentuk pinggir laut: pulau, teluk, tanjung, lagun."},
+  {q:"Malaysia dikelilingi laut cetek yang dikenali sebagai…",o:["Pantai Timur","Pentas benua","Laut Dalam","Pantai Barat"],a:1,e:"Malaysia dikelilingi Pentas Sunda yang cetek berkedalaman sehingga 180 m."},
+  {q:"Pentas benua di pantai barat dikenali sebagai…",o:["Pentas Sunda","Pentas Malaya","Pentas Jawa","Pentas Sumatera"],a:0,e:"Pentas Sunda terdapat di pantai barat Semenanjung Malaysia."},
+  {q:"Ciri fizikal di pinggir pantai termasuklah…",o:["Pantai, tebing tinggi, tanjung, teluk","Gunung, banjaran, lembah","Dataran, pegunungan","Sungai, tasik, empangan"],a:0,e:"Ciri fizikal pinggir pantai: pantai, tebing tinggi, tanjung, teluk, batu tunggul, batu sisal."},
+  {q:"Tanah di pantai barat lebih sesuai untuk pertanian kerana…",o:["Tanah lebih subur","Tanah lebih kering","Tanah lebih berbatu","Tanah lebih rendah"],a:0,e:"Tanah di pantai barat lebih subur berbanding pantai timur."},
+  {q:"Teluk Klang terdapat di negeri…",o:["Selangor","Perak","Pahang","Negeri Sembilan"],a:0,e:"Teluk Klang terdapat di Selangor dekat Pelabuhan Klang."},
+  {q:"Tanjung hangtu ayu terdapat di…",o:["Melaka","Johor","Pahang","Terengganu"],a:0,e:"Tanjung hangtu ayu terdapat di Melaka."},
+  {q:"Lagun terbentuk apabila…",o:["Sungai bercabang","Tanah tertimbun","Tanah terkakis","Tanah luluh"],a:0,e:"Lagun terbentuk apabila sungai bercabang dan membentuk kawasan berair terpisah."},
+  {q:"Bentuk pinggir laut yang sesuai untuk pelabuhan ialah…",o:["Pulau","Teluk","Tanjung","Pantai terbuka"],a:1,e:"Teluk lebih sesuai untuk pelabuhan kerana boleh menampung banyak kapal."},
+
+  /* === BATU TUNGGUL & BATU SISAL (6) === */
+  {q:"Batu tunggul terbentuk apabila…",o:["Tanah di sekeliling batu luluh","Tanah di sekeliling batu tertimbun","Tanah di sekeliling batu terkakis","Tanah di sekeliling batu terkakis"],a:0,e:"Batu tunggul terbentuk apabila tanah di sekeliling batu luluh dan hancur."},
+  {q:"Batu sisal terbentuk apabila…",o:["Tanah di sekeliling batu luluh","Tanah di sekeliling batu tertimbun","Tanah di sekeliling batu terkakis","Tanah di sekeliling batu terkakis"],a:0,e:"Batu sisal terbentuk apabila batu batuan menghancurkan tanah di sekelilingnya."},
+  {q:"Batu tunggul dan sisal terdapat di…",o:["Kawasan pantai","Kawasan gunung","Kawasan lembah","Kawasan dataran"],a:0,e:"Batu tunggul dan sisal terdapat di kawasan pantai."},
+  {q:"Batu sisal sering digunakan untuk…",o:["Binaan jalan","Pembuatan batu bata","Kerja taman","Kerja pertanian"],a:2,e:"Batu sisal sering digunakan untuk kerja taman dan hiasan."},
+  {q:"Batu tunggul tidak boleh digunakan untuk binaan kerana…",o:["Sangat keras","Berkualiti rendah","Mudah luluh","Sangat besar"],a:2,e:"Batu tunggul mudah luluh dan tidak sesuai untuk binaan."},
+
+  /* === PERANAN & KEPENTINGAN (10) === */
+  {q:"Tanah tinggi penting untuk pelancongan kerana…",o:["Cuaca sejuk & pemandangan cantik","Tanah subur","Sesuai untuk pertanian","Tanah rata"],a:0,e:"Tanah tinggi sejuk dan mempunyai pemandangan cantik untuk pelancongan."},
+  {q:"Tanah tinggi penting untuk jana kuasa hidroelektrik kerana…",o:["Ada sumber air melimpah","Ada banyak matahari","Ada banyak angin","Tanah subur"],a:0,e:"Tanah tinggi mempunyai sungai deras untuk jana kuasa hidroelektrik."},
+  {q:"Dataran penting untuk pertanian kerana…",o:["Tanah subur & rata","Tanah berbatu","Tanah kering","Tanah asam"],a:0,e:"Dataran mempunyai tanah subur dan rata untuk pertanian."},
+  {q:"Pinggir laut penting untuk perikanan kerana…",o:["Ada banyak ikan","Ada banyak batu","Ada banyak pasir","Ada banyak alga"],a:0,e:"Pinggir laut kaya dengan ikan dan biota laut untuk perikanan."},
+  {q:"Pinggir laut penting untuk pelabuhan kerana…",o:["Boleh bina pelabuhan & pelancongan","Boleh bina bandar","Boleh bina gunung","Boleh bina laluan kereta"],a:0,e:"Pinggir laut sesuai untuk bina pelabuhan dan aktiviti pelancongan."},
+  {q:"Kawasan tanah pamah di pantai barat lebih subur kerana…",o:["Ada alluvium dari sungai","Ada pasir dari laut","Ada batu dari gunung","Ada tanah from barat"],a:0,e:"Tanah pamah pantai barat lebih subur kerana ada alluvium dari sungai."},
+
+  /* === ISTILAH & KONSEP (8) === */
+  {q:"Bentuk muka bumi terdiri daripada…",o:["Tanah tinggi, tanah pamah, pinggir laut dan saliran","Tanah tinggi, tanah pamah, gunung dan sungai","Tanah tinggi, tanah pamah, pantai dan tasik","Tanah tinggi, tanah pamah, pantai dan muara"],a:0,e:"Empat bentuk muka bumi utama: tanah tinggi, tanah pamah, pinggir laut dan saliran."},
+  {q:"Tanah tinggi merangkumi…",o:["Gunung, banjaran, dataran tinggi","Gunung, banjaran, dataran","Gunung, banjaran, lembah","Gunung, banjaran, pantai"],a:0,e:"Tanah tinggi merangkumi gunung, banjaran dan dataran tinggi (plato)."},
+  {q:"Tanah pamah merangkumi…",o:["Dataran, delta, teluk","Dataran, delta, tanjung","Dataran, delta, lagun","Dataran, delta, pulau"],a:0,e:"Tanah pamah merangkumi dataran, delta, dan beberapa bentuk pinggir laut."},
+  {q:"Saliran merujuk kepada…",o:["Sungai dan tasik","Sungai dan laut","Sungai dan pantai","Sungai dan delta"],a:0,e:"Saliran merujuk kepada sungai dan tasik."},
+  {q:"Peringkat sungai terdiri daripada…",o:["Hulu, tengah, hilir","Atas, tengah, bawah","Depan, tengah, belakang","Awal, sederhana, akhir"],a:0,e:"Tiga peringkat sungai: hulu (atas), tengah, hilir (bawah)."},
+  {q:"Lembangan sungai ialah…",o:["Kawasan yang dialirkan oleh sungai","Kawasan muara sungai","Kawasan hulu sungai","Kawasan sungai"],a:0,e:"Lembangan sungai ialah kawasan yang dialirkan oleh sungai dan cabang-cabangnya."},
+
+  /* === SOALAN PEPERIKSAAN (10) === */
+  {q:"Antara berikut, yang manakah BUKAN bentuk muka bumi?",o:["Gunung","Sungai","Banjaran","Pantai"],a:1,e:"Sungai ialah saliran, bukan bentuk muka bumi."},
+  {q:"Banjaran Titiwangsa membentang di bahagian…",o:["Utara","Barat","Tengah","Timur"],a:2,e:"Banjaran Titiwangsa membentang di tengah Semenanjung Malaysia."},
+  {q:"Kawasan tanah rendah yang terbentuk di kaki gunung ialah…",o:["Dataran alluvial","Delta","Lembah","Tasik"],a:0,e:"Dataran alluvial terbentuk di kaki gunung dari endapan sungai."},
+  {q:"Pulau Langkawi terletak di negeri…",o:["Perak","Kedah","Pulau Pinang","Kelantan"],a:1,e:"Pulau Langkawi terletak di Kedah di pantai barat."},
+  {q:"Antara berikut, yang manakah ialah tasik buatan?",o:["Tasik Chini","Tasik Bera","Tasik Kenyir","Tasik Temenggor"],a:2,e:"Tasik Kenyir ialah tasik buatan manakala yang lain ialah tasik semula jadi."},
+  {q:"Sungai yang terpanjang di Malaysia ialah…",o:["Sungai Rajang","Sungai Pahang","Sungai Klang","Sungai Perak"],a:0,e:"Sungai Rajang (Sarawak) ialah sungai terpanjang di Malaysia."},
+  {q:"Tanah tinggi Cameron terletak di negeri…",o:["Perak","Pahang","Kelantan","Terengganu"],a:0,e:"Tanah Tinggi Cameron terletak di Perak."},
+  {q:"Banjaran Crocker terdapat di…",o:["Sarawak","Sabah","Kelantan","Pahang"],a:1,e:"Banjaran Crocker terdapat di Sabah."},
+  {q:"Tanah tinggi di Sabah ialah…",o:["Banjaran Crocker","Banjaran Titiwangsa","Banjaran Himalaya","Banjaran Andes"],a:0,e:"Banjaran Crocker ialah banjaran di Sabah."},
+  {q:"Dataran yang terdapat di Perak ialah…",o:["Dataran Kedah-Perlis","Dataran Kelantan","Dataran Perak","Dataran Pahang"],a:2,e:"Dataran Perak terletak di Perak."},
+  {q:"Dataran yang terdapat di Terengganu ialah…",o:["Dataran Terengganu","Dataran Kelantan","Dataran Pahang","Dataran Johor"],a:0,e:"Dataran Terengganu terletak di Terengganu."},
+  {q:"Dataran yang terdapat di Johor ialah…",o:["Dataran Johor","Dataran Kedah-Perlis","Dataran Kelantan","Dataran Perak"],a:0,e:"Dataran Johor terletak di Johor."},
+  {q:"Bentuk pinggir laut yang terbentuk akibat sungai bercabang ialah…",o:["Pulau","Teluk","Tanjung","Delta"],a:3,e:"Delta terbentuk apabila sungai bercabang di muara."},
+  {q:"Batu sisal sering ditemui di…",o:["Kawasan hulu sungai","Kawasan pantai","Kawasan dataran tinggi","Kawasan lembah"],a:1,e:"Batu sisal sering ditemui di kawasan pantai."},
+  {q:"Kawasan tanah pamah di Malaysia terdapat di…",o:["Pantai barat dan pantai timur","Hanya pantai barat","Hanya pantai timur","Gunung dan banjaran"],a:0,e:"Tanah pamah terdapat di kedua-dua pantai barat dan timur Malaysia."},
+  {q:"Pulau yang terdapat di Perak ialah…",o:["Pulau Langkawi","Pulau Pinang","Pulau Termasang","Pulau Legian"],a:2,e:"Pulau Termasang terdapat di Perak."},
+  {q:"Antara berikut, yang manakah ialah lagun?",o:["Teluk Klang","Tasik Chini","Lagun Dusun","Tanjung hangtu ayu"],a:2,e:"Lagun Dusun ialah contoh lagun di Malaysia."},
+  {q:"Ciri-ciri tanah tinggi termasuklah…",o:["Cerun landai, kawasan rata","Cerun curam, berbatu, kawasan tinggi","Kawasan rendah, berpasir","Kawasan berair"],a:1,e:"Tanah tinggi mempunyai cerun curam, berbatu dan berada di kawasan tinggi."},
+  {q:"Ciri-ciri tanah pamah termasuklah…",o:["Cerun curam, berbatu","Kawasan rendah, rata, subur","Kawasan tinggi, kering","Kawasan berair, berbatu"],a:1,e:"Tanah pamah ialah kawasan rendah, rata dan subur."},
+  {q:"Bentuk muka bumi pinggir laut yang sesuai untuk aktiviti pelancongan ialah…",o:["Pulau","Pantai","Tanjung","Semua di atas"],a:3,e:"Semua bentuk pinggir laut (pulau, pantai, tanjung) sesuai untuk pelancongan."},
+  {q:"Peranan pinggir laut dalam ekonomi Malaysia termasuklah…",o:["Perikanan, pelabuhan, pelancongan","Pertanian, pengangkutan","Perhutanan, penggalian","Pembinaan, pengangkutan"],a:0,e:"Pinggir laut menyumbang kepada perikanan, pelabuhan dan pelancongan."},
+  {q:"Antara berikut, yang manakah BUKAN ciri bentuk muka bumi di Malaysia?",o:["Tanah tinggi","Tanah pamah","Pinggir laut","Kawasan vulkanik"],a:3,e:"Kawasan vulkanik bukan ciri utama bentuk muka bumi di Malaysia."}
 ];
+
+/* ---- daily rotation: pick 10 questions for today ---- */
+function dayIdx(){ return dayIndexOf(new Date()); }
+function shuffleDay(arr, di){
+  var a=arr.slice(), seed=(di*2654435761 % 2147483647)||1;
+  function rnd(){ seed=(seed*48271)%2147483647; return seed/2147483647; }
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
+  return a;
+}
+
+var MONTHS=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+var DAYS=["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+
+var Q=QBANK.slice();
+var DAY_LEN=10, PICK=10;
+var START=0, CUR=dayIdx();
+var startOff=(START%DAY_LEN+DAY_LEN)%DAY_LEN;
+var off=(CUR%DAY_LEN+DAY_LEN)%DAY_LEN;
+var shift=(off-startOff+DAY_LEN)%DAY_LEN;
+var shuffled=shuffleDay(QBANK, CUR);
+var todayQ=shuffled.slice(0,PICK);
+
 var answered={};
-(function(){var box=document.getElementById('quiz');QUIZ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=QUIZ[qi].a;for(var k=0;k<QUIZ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<QUIZ.length){alert('Jawab semua '+QUIZ.length+' soalan dulu! ('+done+'/'+QUIZ.length+')');return;}var score=0;QUIZ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/QUIZ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🏔️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+QUIZ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab7.html" style="color:#fff;font-weight:800">Teruskan ke Bab 7 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
+(function(){var box=document.getElementById('quiz');todayQ.forEach(function(item,qi){var div=document.createElement('div');div.className='q';var opts=item.o.map(function(t,oi){return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';}).join('');div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+item.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+item.e+'</div>';box.appendChild(div);});})();
+(function showDate(){
+  var d=new Date(), n=d.getMonth(), day=d.getDate(), y=d.getFullYear();
+  var el=document.getElementById('hariInfo');
+  el.textContent='📅 '+DAYS[d.getDay()]+', '+day+' '+MONTHS[n]+' '+y;
+  document.getElementById('qTotal').textContent=todayQ.length;
+})();
+
+function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=todayQ[qi].a;for(var k=0;k<todayQ[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
+function submitQuiz(){var done=Object.keys(answered).length;if(done<todayQ.length){alert('Jawab semua '+todayQ.length+' soalan dulu! ('+done+'/'+todayQ.length+')');return;}var score=0;todayQ.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/todayQ.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! 🏔️':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+todayQ.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab7.html" style="color:#fff;font-weight:800">Teruskan ke Bab 7 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
 function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}}
 </script>
 </body>

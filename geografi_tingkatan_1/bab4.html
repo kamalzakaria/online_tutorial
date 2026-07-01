@@ -262,16 +262,16 @@ var answered={};
 /* ---------- Daily rotation (LCG — sama pola dengan bahasa_melayu) ---------- */
 var dayIdx=d=>Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5);
 function lcgDay(d){return (dayIdx(d)*2654435761+20260617)>>>0;}
-function pickDay(n,seed){var sel=[],rem=[],r=seed;for(var i=0;i<n;i++)rem.push(i);for(var i=0;i<Math.min(n,rem.length);i++){r=r*2654435761%4294967296;var j=r%(rem.length);sel.push(rem[j]);rem.splice(j,1);}return sel;}
+function pickDay(n,seed,total){var sel=[],rem=[],r=seed;for(var i=0;i<total;i++)rem.push(i);for(var i=0;i<Math.min(n,total);i++){r=r*2654435761%4294967296;var j=r%(rem.length);sel.push(rem[j]);rem.splice(j,1);}return sel;}
 
 /* Inisialisasi / ulang: semak localStorage untuk quiz hari ini */
 (function(){
   var today=new Date(),sid="geo:day"+dayIdx(today);
   var stored=localStorage.getItem(sid);
-  if(stored){try{QUIZ=JSON.parse(stored);}catch(e){QUIZ=[];}}
-  if(!QUIZ.length||QUIZ.length!==QBank.length){
+  QUIZ=stored?JSON.parse(stored):[];
+  if(!QUIZ.length||QUIZ.length!==10){
     var seed=lcgDay(today);
-    var idx=pickDay(QBank.length,seed);
+    var idx=pickDay(10,seed,QBank.length);
     QUIZ=idx.map(function(i){return QBank[i];});
     localStorage.setItem(sid,JSON.stringify(QUIZ));
   } else {
@@ -377,22 +377,6 @@ function resetAll(){
     localStorage.setItem("geo:day"+dayIdx(today),JSON.stringify(QUIZ));
   })();
   location.reload();
-}
-
-(function renderQuiz(){
-  var box=document.getElementById('quiz');
-  Q.forEach(function(q,qi){
-    var div=document.createElement('div'); div.className='q';
-    var opts=q.o.map(function(t,oi){
-      return '<div class="opt" onclick="pick('+qi+','+oi+')" id="q'+qi+'o'+oi+'"><span class="lt">'+'ABCD'[oi]+'</span><span>'+t+'</span></div>';
-    }).join('');
-    div.innerHTML='<div class="qn">SOALAN '+(qi+1)+'</div><h4>'+q.q+'</h4>'+opts+'<div class="exp" id="exp'+qi+'">💡 '+q.e+'</div>';
-    box.appendChild(div);
-  });
-})();
-function pick(qi,oi){if(answered[qi]!==undefined)return;answered[qi]=oi;var correct=Q[qi].a;for(var k=0;k<Q[qi].o.length;k++){var el=document.getElementById('q'+qi+'o'+k);el.classList.add('lock');if(k===correct)el.classList.add('ok');}if(oi!==correct)document.getElementById('q'+qi+'o'+oi).classList.add('no');document.getElementById('exp'+qi).classList.add('show');}
-function submitQuiz(){var done=Object.keys(answered).length;if(done<Q.length){alert('Jawab semua '+Q.length+' soalan dulu! ('+done+'/'+Q.length+')');return;}var score=0;Q.forEach(function(it,qi){if(answered[qi]===it.a)score++;});var pct=Math.round(score/Q.length*100);var stars=pct>=85?'⭐⭐⭐':pct>=60?'⭐⭐':pct>=40?'⭐':'';var msg=pct>=85?'Cemerlang! Kamu kenal Malaysia! 🇲🇾':pct>=60?'Bagus! Hampir sempurna.':'Ulang nota & cuba lagi. 💪';saveProgress(BAB,pct);var r=document.getElementById('result');r.innerHTML='<div>Markah kamu</div><div class="big">'+score+'/'+Q.length+'</div><div class="stars">'+stars+'</div><div>'+pct+'% — '+msg+'</div><div style="margin-top:1rem"><a href="bab5.html" style="color:#fff;font-weight:800">Teruskan ke Bab 5 →</a></div>';r.classList.add('show');document.getElementById('submitBtn').style.display='none';r.scrollIntoView({behavior:'smooth'});}
-function saveProgress(bab,pct){try{var key="geo:bab"+bab,prev=JSON.parse(localStorage.getItem(key))||{best:0};var best=Math.max(prev.best||0,pct);localStorage.setItem(key,JSON.stringify({done:true,best:best,last:pct}));}catch(e){}
 }
 </script>
 </body>
